@@ -6,8 +6,8 @@ This project has a repository on the sourceforge (I created it in 2013 year), bu
 <img src="Screenshots/1.png" width=33% alt="screenshot"> <img src="Screenshots/2.png" width=33% alt="screenshot"> <img src="Screenshots/3.png" width=32% alt="screenshot">
 
 # Download
-Last version: <a href=https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/tag/v0.3pre-beta>open</a><br>
-All versions: <a href=https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases>open</a>
+Last version: <a href=https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/tag/v0.3pre-beta target="_blank">open</a><br>
+All versions: <a href=https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases target="_blank">open</a>
 
 # Attention
 Almost all English texts in the accompanying files (documentation, readme, changes) are translated automatically, therefore, most likely, they contain any inconsistencies or incidents. If you notice something like this, then you can create issue.
