@@ -12,7 +12,7 @@ Last version: <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modific
 All versions: <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases" target="_blank">open</a>
 
 # Control
-Arrow keys for run and aim; ctrl - jump; left alt - shoot. This setting you can change in DD2.ini.
+Arrow keys for run and aim; left ctrl - jump; left alt - shoot. This setting you can change in DD2.ini.
 
 # Attention
 Almost all English texts in the accompanying files (documentation, readme, changes) are translated automatically, therefore, most likely, they contain any inconsistencies or incidents. If you notice something like this, then you can create issue.
