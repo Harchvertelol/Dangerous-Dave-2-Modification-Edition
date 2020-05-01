@@ -12,7 +12,6 @@ Last version: <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modific
 All versions: <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases" target="_blank">open</a>
 
 # Control
-
 Arrow keys for run and aim; ctrl - jump; left alt - shoot. This setting you can change in DD2.ini.
 
 # Attention
