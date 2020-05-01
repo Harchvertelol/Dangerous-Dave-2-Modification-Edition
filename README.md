@@ -11,8 +11,9 @@ Warning: game versions 0.2 and 0.3 do not have source code and are laid out with
 2. Any number of monsters, things, and so on.
 3. When creating a card, you can put a monster on a bonus, on leaving the door, and so on (many masks).
 4. Animation of tiles + it is possible to change their type depending on the animation frame (for example, make traveling shelves).
-5. All resources are taken out with parameters, which allows you to change something very simply. Support for various "packs". While packs are supported:
- - Texture pack
+5. All resources are taken out with parameters, which allows you to change something very simply. Support for various "packs".  
+While packs are supported:
+ - Texturepack
  - Monsterpack
  - Davepack
  - Levelpack
