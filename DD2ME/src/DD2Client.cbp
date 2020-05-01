@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="DD2Client" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../bin/Client/DD2Debug" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../bin/Client/" />
+				<Option object_output="../obj/Client/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="../bin/Client/DD2" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../bin/Client/" />
+				<Option object_output="../obj/Client/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-DWIN32" />
+		</Compiler>
+		<Linker>
+			<Add library="gdi32" />
+			<Add library="C:/Program Files (x86)/CodeBlocks/MinGW/lib/libws2_32.a" />
+		</Linker>
+		<Unit filename="AI.cpp" />
+		<Unit filename="AI.h" />
+		<Unit filename="Bonuses.cpp" />
+		<Unit filename="Bonuses.h" />
+		<Unit filename="Creature.cpp" />
+		<Unit filename="Creature.h" />
+		<Unit filename="CreatureMonster.cpp" />
+		<Unit filename="CreatureMonster.h" />
+		<Unit filename="Dave.cpp" />
+		<Unit filename="Dave.h" />
+		<Unit filename="Defines.h" />
+		<Unit filename="DisplayStruct.h" />
+		<Unit filename="FactoryMonsters.cpp" />
+		<Unit filename="FactoryMonsters.h" />
+		<Unit filename="FactoryTemporaryImages.cpp" />
+		<Unit filename="FactoryTemporaryImages.h" />
+		<Unit filename="Game.cpp" />
+		<Unit filename="Game.h" />
+		<Unit filename="GameData.cpp" />
+		<Unit filename="GameData.h" />
+		<Unit filename="GameInfo.cpp" />
+		<Unit filename="GameInfo.h" />
+		<Unit filename="Gui.cpp" />
+		<Unit filename="Gui.h" />
+		<Unit filename="IniParser/ParserInfoFile.cpp" />
+		<Unit filename="IniParser/ParserInfoFile.h" />
+		<Unit filename="IniParser/PostParsingStruct.cpp" />
+		<Unit filename="IniParser/PostParsingStruct.h" />
+		<Unit filename="KeysState.h" />
+		<Unit filename="Level.cpp" />
+		<Unit filename="Level.h" />
+		<Unit filename="LuaBindFunctions.cpp" />
+		<Unit filename="LuaBindFunctions.h" />
+		<Unit filename="Monsters.cpp" />
+		<Unit filename="Monsters.h" />
+		<Unit filename="NetClient/Client.cpp" />
+		<Unit filename="NetClient/Client.h" />
+		<Unit filename="NetClient/NetClient.cpp" />
+		<Unit filename="NetClient/NetClient.h" />
+		<Unit filename="NetClient/NetInfoStruct.h" />
+		<Unit filename="Net/Client.h" />
+		<Unit filename="Net/NetClient.h" />
+		<Unit filename="Net/NetInfoStruct.h" />
+		<Unit filename="Screens.cpp" />
+		<Unit filename="Screens.h" />
+		<Unit filename="Square.cpp" />
+		<Unit filename="Square.h" />
+		<Unit filename="StateManager.cpp" />
+		<Unit filename="StateManager.h" />
+		<Unit filename="TemporaryImageInfo.cpp" />
+		<Unit filename="TemporaryImageInfo.h" />
+		<Unit filename="Textures.cpp" />
+		<Unit filename="Textures.h" />
+		<Unit filename="Thread/Thread.cpp" />
+		<Unit filename="Thread/Thread.h" />
+		<Unit filename="Version.h" />
+		<Unit filename="WorkFunction.cpp" />
+		<Unit filename="WorkFunction.h" />
+		<Unit filename="canvas.hpp" />
+		<Unit filename="lua/lapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lapi.h" />
+		<Unit filename="lua/lauxlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lauxlib.h" />
+		<Unit filename="lua/lbaselib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lbitlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lcode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lcode.h" />
+		<Unit filename="lua/lcorolib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lctype.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lctype.h" />
+		<Unit filename="lua/ldblib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/ldebug.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/ldebug.h" />
+		<Unit filename="lua/ldo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/ldo.h" />
+		<Unit filename="lua/ldump.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lfunc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lfunc.h" />
+		<Unit filename="lua/lgc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lgc.h" />
+		<Unit filename="lua/linit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/liolib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/llex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/llex.h" />
+		<Unit filename="lua/llimits.h" />
+		<Unit filename="lua/lmathlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lmem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lmem.h" />
+		<Unit filename="lua/loadlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lobject.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lobject.h" />
+		<Unit filename="lua/lopcodes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lopcodes.h" />
+		<Unit filename="lua/loslib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lparser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lparser.h" />
+		<Unit filename="lua/lstate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lstate.h" />
+		<Unit filename="lua/lstring.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lstring.h" />
+		<Unit filename="lua/lstrlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/ltable.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/ltable.h" />
+		<Unit filename="lua/ltablib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/ltm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/ltm.h" />
+		<Unit filename="lua/lua.h" />
+		<Unit filename="lua/lua.hpp" />
+		<Unit filename="lua/luaconf.h" />
+		<Unit filename="lua/lualib.h" />
+		<Unit filename="lua/lundump.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lundump.h" />
+		<Unit filename="lua/lvm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lvm.h" />
+		<Unit filename="lua/lzio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lua/lzio.h" />
+		<Unit filename="main_client.cpp" />
+		<Unit filename="shabbynet/shabbynet.cpp" />
+		<Unit filename="shabbynet/shabbynet.hpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+			<envvars />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

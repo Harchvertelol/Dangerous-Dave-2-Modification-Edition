@@ -1,0 +1,2 @@
+DD2ServerDebug
+pause

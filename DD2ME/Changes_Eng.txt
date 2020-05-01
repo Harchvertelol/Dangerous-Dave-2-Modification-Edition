@@ -1,0 +1,191 @@
+-------------------------------------------------------------------------------------
+Changes in version 0.4 pre-beta: (-- -- ----)
+
+- This is the pre-beta version of the game Dangerous Dave 2: Modification Edition.
+  While there is an active search for bugs and their correction.
+  
+- Changes:
+  
+  1) Optimization of work with memory.
+  2) Added FPS display function.
+  3) The transition to a new version of the engine.
+  4) Added transparency mask in modpacks. Also added the option to enable / disable it in DD2.ini.
+  5) Updating the API. Now any function can be applied to any monster with a level, if you know its "key".
+     The key so far can only be obtained by creating a duplicate of the monster. This gave incompatibility to scripts of previous versions.
+     with the current version of the API. Files in the original delivery have been overwritten.
+  6) The ability to use a temporary image factory has been added to the API. Strongly improved spider intelligence in terms of
+     performance.
+  7) The functions onDamage () and onKill () appeared, which are called when the monster receives damage and the death of the monster, respectively.
+     Additional API changes.
+  8) Fixed a bug in the API associated with the crash of the program when moving by 0 pixels.
+  9) Fixed a bug in the inner workings of the intelligence of monsters.
+
+- Bugs fixed:
+  
+  1) Fixed a bug in the animation of Dave's death not at first when interrupting it in the previous game.
+  2) Fixed all bugs found intelligence zombies. Including walking through the void and a bug with stairs.
+    
+- Detected bugs:
+
+  1) Go close to the wall to the left. Lower the gun down. Turn right. Click jump. Take off on the wall.
+  2) Will not fall from the shelves from recoil when shooting to the left. If you shoot up or down - does not fall from the shelves. (found that in the original
+     Dave also decided not to fix it yet).
+  3) When caching is off, the transparency mask does not work. The reason is known until corrected.
+
+- Minuses:
+
+  1) Bugs, bugs, bugs (already less than before, but still).
+  2) ALL settings are in the .ini file.
+  3) There is no illumination of a monster when hit.
+  4) The initial screen saver is not the same as in the original Dave.
+
+-------------------------------------------------------------------------------------
+Changes in version 0.3 pre-beta: (June 23, 2013)
+
+- This is the pre-beta version of the game Dangerous Dave 2: Modification Edition.
+  While there is an active search for bugs and their correction.
+  
+- Changes:
+  
+  1) Completely redesigned project architecture. Global preparations for the addition of the network.
+  2) Added the ability to set many Daves per level.
+  3) Two types of client launch have been added: in singleplayer mode and multiplayer mode. In network mode
+     login, password, address and connection port are set when the client starts. If the host or port is not specified
+     assignment of a standard address, i.e. localhost.
+  4) The transition to a new version of the rendering engine, which is why caching has become unnecessary, as it
+     built into the engine. Caching variables are temporarily left, but disabled, if enabled, they will begin
+     artifacts and the program will crash.
+  5) Added a full connection to the server and synchronize monsters with it. Those. when you enter the server you will see
+     all monsters, but standing still, because while Daves are not connecting to the server and, accordingly, monsters
+     not processed.
+  6) When the network game DD2.ini is not used, all information is received from the server, so it was entered
+     file Launcher.ini, the settings in which are server-independent.
+  7) Made a complete synchronization of players with the server and play on it. Monsters still do not respond
+     on a player in an online game.
+  8) Above each player in the network game, his nickname is now shown.
+  9) As a result of testing, it was found that caching was not fully integrated into the engine, so it was
+     rewritten and returned.
+
+- Bugs fixed:
+  
+  1) The bug of intelligence is fixed, namely the check of "walking" on something.
+  2) The animation of the door entrance has been fixed, namely its displacement by one frame.
+  3) Fixed a bug of shots in a row.
+  4) Fixed a bug of the new architecture, leading to a quick crash of the program.
+  5) Fixed many errors and memory leaks.
+  6) Fixed a bug that resulted in a server crash when closing a socket on the client side.
+    
+- Detected bugs:
+
+  1) Go close to the wall to the left. Lower the gun down. Turn right. Click jump. Take off on the wall.
+  2) Will not fall from the shelves from recoil when shooting to the left. If you shoot up or down - does not fall from the shelves. (found that in the original
+     Dave also decided not to fix it yet).
+  3) Zombie intelligence bug. Can be made to walk "through the void." If you stand on the stairs with your gun
+     down - the zombies will go down half a step lower.
+
+- Minuses:
+
+  1) Bugs, bugs, bugs (already less than before, but still).
+  2) ALL settings are in the .ini file.
+  3) There is no illumination of a monster when hit.
+  4) The initial screen saver is not the same as in the original Dave.
+
+-------------------------------------------------------------------------------------
+Changes in version 0.2 pre-beta: (February 06, 2013)
+
+- This is the pre-beta version of the game Dangerous Dave 2: Modification Edition.
+  While there is an active search for bugs and their correction.
+  
+- Changes:
+  
+  1) Added monster intelligence on Lua. The intelligence of zombies, "Igor", lamblia and spider is written.
+     Playable 1st and 2nd levels. There is no documentation on writing intelligence yet.
+  2) Added shots, their miscalculation, reload.
+  3) If you kill a monster like "boss", while at the level there are no other monsters like "boss", then
+     will go to the next level.
+  4) Fixed a very serious bug in the API for intelligence. Function: addDublicateMonster (...).
+     The error caused the script to stop after calling this function.
+
+- Bugs fixed:
+  
+  1) Transition to another level during the shot. Error states.
+  2) If you hold the shot, then Dave shot continuously.
+    
+- Detected bugs:
+
+  1) Go close to the wall to the left. Lower the gun down. Turn right. Click jump. Take off on the wall.
+  2) Will not fall from the shelves from recoil when shooting to the left. If you shoot up or down - does not fall from the shelves.
+  3) Zombie intelligence bug. Can be made to walk "through the void." If you stand on the stairs with your gun down
+     down - the zombies will go down half a step lower.
+
+- Minuses:
+
+  1) Bugs, bugs, bugs (already less than before, but still).
+  2) ALL settings are in the .ini file.
+  3) There is no illumination of a monster when hit.
+  4) The initial screen saver is not the same as in the original Dave.
+
+-------------------------------------------------- -----------------------------------
+Changes in version 0.1 pre-beta: (December 17, 2012)
+
+- This is the pre-beta version of the game Dangerous Dave 2: Modification Edition.
+  While there is an active search for bugs and their correction.
+  
+- Done:
+  
+  1) Any level size.
+  2) Any number of monsters, things, and so on.
+  3) When creating a card, you can put a monster on a bonus, on leaving the door, and so on (many masks).
+  4) Animation of tiles + it is possible to change their type depending on the animation frame (for example, make traveling shelves).
+  5) All resources are taken out with parameters, which allows you to change something very simply. Support for various "packs".
+    While packs are supported:
+      Texturepack
+      Monsterpack
+      Davepack
+      Levelpack
+      Sound package (not yet supported, format not ready)
+      Bonuspak
+      Screenpack
+  6) Flexible settings.
+  7) The new card format, that is, the original cards from the deiva will NOT work. But, thanks to Crazy Daver, he wrote the converter.
+  8) All the features of the original Dangerous Dave 2 are supported, except for the intelligence of monsters, miscalculation of a player’s shots, reload.
+  9) Scaling of the game window has been done (the scale variable in DD2.ini, defaults to 2).
+  10) The modpack has the ability to load its .ini settings file. Not particularly tested. Possible terrible bugs with a difference in values
+      variables in the video section.
+  11) Added console. Press '~', switch to the MS-DOS emulator window, enter commands.
+
+- In the plans:
+  
+  1) Monster generators (read "respawn points"). Needed for arena maps.
+  2) Network mode:
+        Cooperative
+        Deathmatch
+        Deathmatch team
+        Last Hero
+        Co-op team against monsters. Who remained in the end - won.
+        Each type will have the ability to enable and disable monsters (exception - cooperative).
+  3) Fix the first splash screen.
+  4) Add menus with text, as in the original dave.
+  5) Write a launcher for the interface for changing various "packs" and settings.
+  6) Make a compatibility check of any packs with the mod.
+  7) Make a port on android (this is in the distant plans).
+  8) Add save points directly on the map.
+  9) There will be no bugs of the old deiva, like shooting through a wall, going through a wall and so on.
+
+- Bugs fixed:
+  
+  1) Shoot all the ammo. Press up. Release and shoot right there. Sticking condition. Game crash.
+  2) Quickly change state and shoot. State merge error. Game crash.
+    
+- Detected bugs:
+
+  1) Go close to the wall to the left. Lower the gun down. Turn right. Click jump.
+  2) Will not fall from the shelves from recoil when shooting to the left. If you shoot up or down - does not fall from the shelves.
+
+- Minuses:
+
+  1) Bugs, bugs, bugs (already less than before, but still).
+  2) ALL settings are in the .ini file.
+  3) Due to bugs, reloading is disabled.
+
+-------------------------------------------------------------------------------------

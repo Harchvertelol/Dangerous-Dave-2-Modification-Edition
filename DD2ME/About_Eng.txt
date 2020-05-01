@@ -1,0 +1,103 @@
+I will write a little about what is. This is not really a game. Almost all parameters, and
+all resources are also brought out. A folder with resources of all types is called
+"Modpack". For standard Dave, the "StandartDave" modpack is used. Anyone
+can create your own modpack. For example, Mario. That is, my program turns out even
+some game editor. Unfortunately, this is not an ideal editor. While it is impossible
+go beyond the capabilities of Dangerous Dave 2. That is, there is a walk, the choice of direction
+weapons and shots. All. That is, a fundamentally different platformer is impossible to do
+(but I planned to do it later). This program so far only works on the platform
+Windows, but rewriting the Canvas library can achieve compatibility with any
+platform, including Android and iOS. With Windows Mobile 8, my program seems to be practically
+Perfectly compatible, but I have not tested.
+I will sign that is already there:
+1) Creating modpacks.
+2) Each modpack is a collection of packs, where there is one pack of each type. Every pack
+contains all the parameters and pictures of the required type.
+Types of Packs:
+a) BonusPacks - bonus packs.
+b) DavePacks - packs of daves.
+c) LevelPacks - packs of levels.
+d) MonsterPacks - packs of monsters.
+e) ScreenPacks - packs of screens.
+f) SoundPacks - packs of sounds.
+g) TexturePacks - texture packs (tiles for levels)
+Sound packs are not yet supported.
+
+It is also possible to connect your packs to modpacks.
+That is, for example, to connect the texture of level tiles to the modpack of a standard dave.
+Or connect your level pack.
+It is also planned to make a font package and bring the intelligence of monsters to external Lua-based files.
+Monsters have no intelligence yet. Also on the initial screen, the flight of the picture is not the same as in the original
+Dave, since I'm a bummer. While I will not paint all the parameters of each pack, in fact there
+everything is clear by the name of the variables.
+
+Description of variables in DD2.ini:
+
+[video]
+resolutionX=320 - resolution on X
+resolutionY=200 - resolution in Y
+drawstep=32 - draw step. That is, once every 32 ms the screen will be redrawn. And basic event handling
+animationstep=192 - step of drawing the animation.
+creaturesanimationstep=64 - step to draw monster animations.
+usetilecache=true - use the tile cache.
+usebonuscache=true - use the bonus picture cache.
+usescreencache=true - use screen cache.
+usedavecache=true - use Dave's image cache.
+usemonstercache=true - use the monster picture cache.
+animation=true - enable/disable animation (ANY animation, that is, even monsters, deiva, tiles, so disabling
+prevents the use of texture packs with traveling shelves, stakes, and so on).
+tileanimation=true - enable/disable tile animation, disable does not allow does not use texturepacks with traveling
+shelves, stakes and so on.
+bonusanimation=true - enable/disable bonus animations.
+mainscreentimefreez=10 - delay time when scrolling the main screen.
+scale=2 - scaling the game window
+
+[resources]
+pooling=false - enable/disable pooling of resources. That is, the inclusion allows you to connect third-party packs to the modpack.
+standart=true - whether to enable the standard modpack. When shutting down, the modpack from the modpack variable is used.
+modpack=- name of modpack. Used only with standart=false.
+texturepack=- name of texturepack. Used only with pooling=true.
+monsterpack=- the name of monsterpack. Used only with pooling=true.
+bonuspack=- name of bonuspack. Used only with pooling=true.
+screenpack=- name of the screens pack. Used only with pooling=true.
+soundpack=- name of the sound pack. Used only with pooling=true.
+levelpack=- the name of the levelpack. Used only with pooling=true.
+davepack=- the name of Dave's pack. Used only with pooling=true.
+
+[settings]
+correctionphysics=true - enable/disable physics correction. It is not recommended to disconnect.
+gravity=6 - gravity force.
+jumpstep=3 - the number of stages of acceleration during the fall and jump.
+maxnumberoftilesforjump=3 - number of jump stages
+jumpspeed=6 - shift by the number of pixels up per tick when jumping.
+timedooropen=10 - time to open the door in ms.
+timeexitdoor=1 - time of leaving the door in ms.
+timefreezejump=1 - time of freezing in a jump in ms.
+timeshoot=12 - time of one stage of a shot in ms.
+realisticphysics=false - enable/disable realistic physics (in standard Dave, it is unrealistic).
+distancelivemonstersX=2 - distance processing monsters at the edge of the screen in X.
+distancelivemonstersY=2 - distance processing monsters at the edge of the screen in Y.
+maxdistanceshoot=-1 - maximum shot processing distance (in pixels).
+stepcalculateshoot=3 - step of processing the shot (in pixels). There will be no hits in monsters with sizes less than this value.
+
+[effects]
+timelivepointseffect=16 - lifetime of flying points.
+changeXpointseffect=0 - change in one tick of flying points by X.
+changeYpointseffect=-2 - change in one tick of flying points in Y.
+
+[keys]
+left=37 - key code for a step to the left.
+right=39 - key code for a step to the right.
+up=38 - key code for the up action.
+down=40 - key code for the down action.
+shoot=18 - key code for the shot.
+jump=17 - key code for the jump.
+console=192 - key code for calling the console (you can enter level NUMBER into the console - go to the NUMBER level).
+
+[loggers]
+correctionphysics=false - enable/disable logging of physics correction.
+
+[system]
+consolemode=true - start the game with/without access/access to the console
+
+Information on what is available and planned can be found in Changes.txt.

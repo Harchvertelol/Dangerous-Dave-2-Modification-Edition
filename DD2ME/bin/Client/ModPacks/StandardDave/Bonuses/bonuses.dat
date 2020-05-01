@@ -1,0 +1,12 @@
+[info]
+numberofbonuses=6
+pointforup=10000
+
+[settings]
+speedflypoint=4
+timeflypoint=12
+
+[draw]
+transparentmaskR=204
+transparentmaskG=255
+transparentmaskB=204
