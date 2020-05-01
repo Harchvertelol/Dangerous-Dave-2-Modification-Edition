@@ -2,7 +2,7 @@
 This is an open-source remake of a well-known platform game Dangerous Dave 2 with flexible and highly customizable core and many new features.
 This project has a repository on the sourceforge (I created it in 2013 year), but it is currently not supported there. Link: https://sourceforge.net/projects/dd2moded/
 
-Attention: this development is a software shell that loads external modules (modpacks). The program code does not contain anything copyrighted by the original dangerous dave.
+**Attention**: this development is a software shell that loads external modules (modpacks). The program code does not contain anything copyrighted by the original dangerous dave.
 
 # Screenshots
 <img src="Screenshots/1.png" width=33% alt="screenshot"> <img src="Screenshots/2.png" width=33% alt="screenshot"> <img src="Screenshots/3.png" width=32% alt="screenshot">
