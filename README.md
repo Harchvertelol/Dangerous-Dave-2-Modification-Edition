@@ -11,6 +11,10 @@ Attention: this development is a software shell that loads external modules (mod
 Last version: <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/tag/v0.3pre-beta" target="_blank">open</a>, <a href=https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/download/v0.3pre-beta/DD2MEv0.3pb.rar>direct link</a><br>
 All versions: <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases" target="_blank">open</a>
 
+# Control
+
+Arrow keys for run and aim; ctrl - jump; left alt - shoot. This setting you can change in DD2.ini.
+
 # Attention
 Almost all English texts in the accompanying files (documentation, readme, changes) are translated automatically, therefore, most likely, they contain any inconsistencies or incidents. If you notice something like this, then you can create issue.
 
