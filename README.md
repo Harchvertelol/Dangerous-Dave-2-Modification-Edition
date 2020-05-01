@@ -2,6 +2,8 @@
 This is an open-source remake of a well-known platform game Dangerous Dave 2 with flexible and highly customizable core and many new features.
 This project has a repository on the sourceforge (I created it in 2013 year), but it is currently not supported there. Link: https://sourceforge.net/projects/dd2moded/
 
+Attention: this development is a software shell that loads external modules (modpacks). The program code does not contain anything copyrighted by the original dangerous dave.
+
 # Screenshots
 <img src="Screenshots/1.png" width=33% alt="screenshot"> <img src="Screenshots/2.png" width=33% alt="screenshot"> <img src="Screenshots/3.png" width=32% alt="screenshot">
 
@@ -31,11 +33,10 @@ While packs are supported:
  - Bonuspak
  - Screenpack
 6. Flexible settings.
-7. The new card format, that is, the original cards from the deiva will NOT work. But, thanks to Crazy Daver, he wrote the converter.
-8. All the features of the original Dangerous Dave 2 are supported, except for the intelligence of monsters, miscalculation of a player’s shots, reload.
-9. Scaling of the game window has been done (the scale variable in DD2.ini, defaults to 2).
-10 The modpack has the ability to load its .ini settings file. Not particularly tested. Possible terrible bugs with a difference in values variables in the video section.
-11. Added console. Press '~', switch to the MS-DOS emulator window, enter commands.
+7. The new level format, that is, the original levels from the deiva will NOT work. But, thanks to Crazy Daver, he wrote the converter.
+8. All the features of the original Dangerous Dave 2 are supported, except some monsters (their intelligence has not yet been written, but if you wish and if you can’t wait, you can do it yourself by creating your own modpack or modifying the standard modpack).
+9. The modpack has the ability to load its .ini settings file. Not particularly tested. Possible terrible bugs with a difference in values variables in the video section.
+10. Added console. Press '~', switch to the MS-DOS emulator window, enter commands.
 
 ## In the plans
 1. Monster generators (read "respawn points"). Needed for arena maps.
