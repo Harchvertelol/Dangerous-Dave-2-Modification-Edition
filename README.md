@@ -7,20 +7,33 @@ Warning: game versions 0.2 and 0.3 do not have source code and are laid out with
 
 # About project (plans)
 - Done:
+
   1) Any level size.
   
   2) Any number of monsters, things, and so on.
+  
   3) When creating a card, you can put a monster on a bonus, on leaving the door, and so on (many masks).
+  
   4) Animation of tiles + it is possible to change their type depending on the animation frame (for example, make traveling shelves).
+  
   5) All resources are taken out with parameters, which allows you to change something very simply. Support for various "packs".
+  
     While packs are supported:
+    
       Texture pack
+      
       Monsterpack
+      
       Daypack
+      
       Levelpack
+      
       Sound package (not yet supported, format not ready)
+      
       Bonuspak
+      
       Screenpack
+      
   6) Flexible settings.
   7) The new card format, that is, the original cards from the deiva will NOT work. But, thanks to Crazy Daver, he wrote the converter.
   8) All the features of the original Dangerous Dave 2 are supported, except for the intelligence of monsters, miscalculation of a player’s shots, reload.
