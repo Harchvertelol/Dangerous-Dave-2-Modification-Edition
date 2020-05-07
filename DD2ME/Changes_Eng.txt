@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------------
-Changes in version 0.4 pre-beta: (May 06, 2020)
+Changes in version 0.4 pre-beta: (May 08, 2020)
 
 - This is the pre-beta version of the game Dangerous Dave 2: Modification Edition.
   While there is an active search for bugs and their correction.
@@ -9,10 +9,10 @@ Changes in version 0.4 pre-beta: (May 06, 2020)
   1) Optimization of work with memory.
   2) Added FPS display function.
   3) The transition to a new version of the engine.
-  4) Added transparency mask in modpacks. Also added the option to enable / disable it in DD2.ini.
+  4) Added transparency mask in modpacks. Also added the option to enable/disable it in DD2.ini.
   5) Updating the API. Now any function can be applied to any monster with a level, if you know its "key".
-     The key so far can only be obtained by creating a duplicate of the monster. This gave incompatibility to scripts of previous versions.
-     with the current version of the API. Files in the original delivery have been overwritten.
+     The key so far can only be obtained by creating a duplicate of the monster. This gave incompatibility to scripts of previous versions
+     with the current version of the API. Files in the original delivery have been overwritten.
   6) The ability to use a temporary image factory has been added to the API. Strongly improved spider intelligence in terms of
      performance.
   7) The functions onDamage () and onKill () appeared, which are called when the monster receives damage and the death of the monster, respectively.
