@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------------
-Changes in version 0.4 pre-beta: (-- -- ----)
+Changes in version 0.4 pre-beta: (May 06, 2020)
 
 - This is the pre-beta version of the game Dangerous Dave 2: Modification Edition.
   While there is an active search for bugs and their correction.
