@@ -22,7 +22,7 @@ GameInfo::GameInfo(Game* gameclass):
     s_KeyJump(0),
     s_OldAnSt(0),
     s_CheatGod(false),
-    s_AIOn(true)
+    s_IsAIOn(true)
 {
     s_MyDave = new Creature(gameclass);
     s_FactoryMonsters = new FactoryMonsters(gameclass);

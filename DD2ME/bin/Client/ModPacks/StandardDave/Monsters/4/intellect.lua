@@ -22,7 +22,8 @@ function mainFunc()
 	if getState(-1) == "attack" then
 		noa = getGlobalValue(-1, "numberofattack")
 		when = getGlobalValue(-1, "when")
-		if when == "1" and noa*speedattack > 16*6 then
+		local ma = tonumber(getGlobalValue(-1, "maxattack"))
+		if when == "1" and noa*speedattack > (ma + 2) * 16 then
 			setGlobalValue(-1, "when", "-1")
 			when = -1
 			return
@@ -38,7 +39,7 @@ function mainFunc()
 		end
 		setGlobalValue(-1, "numberofattack", noa)
 		if when == "1" then
-			addImageToFactoryTemporaryImage("monsters", 4, "web", 1, getCoordMonsterX(-1) + 4, getCoordMonsterY(-1) + 0, 2*(16*6/speedattack - noa) + 4, 0, 0, "web")
+			addImageToFactoryTemporaryImage("monsters", 4, "web", 1, getCoordMonsterX(-1) + 4, getCoordMonsterY(-1) + 0, 2*((ma + 2) * 16 / speedattack - noa) + 4, 0, 0, "web")
 			goDown(-1, speedattack, 0)
 		else
 			goUp(-1, speedattack, 0)
@@ -59,6 +60,7 @@ function mainFunc()
 		setState(-1, "attack")
 		setGlobalValue(-1, "numberofattack", "0")
 		setGlobalValue(-1, "when", "1")
+		setGlobalValue(-1, "maxattack", tostring(getDistanceToDaveY(-1) / 16))
 	end
 	nextAdditionalNumberOfAction(-1)
 	if getAdditionalNumberOfAction(-1) % getMonsterValue(-1, "other", "animationstep") == 0 then

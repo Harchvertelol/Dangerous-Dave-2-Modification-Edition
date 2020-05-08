@@ -317,7 +317,7 @@ void Game::drawAll()
     if(s_GameInfo->s_Stop == true && s_GameInfo->s_DeathType == 0)
     {
         s_Window->draw(Label("Thank you for playing in DD2:ME", s_DisplayStruct->s_ResolutionX/2 - 110, s_DisplayStruct->s_ResolutionY/2 - 30), Pen(255, 255, 20));
-        s_Window->draw(Label("pre-beta 0.4!", s_DisplayStruct->s_ResolutionX/2 - 40, s_DisplayStruct->s_ResolutionY/2), Pen(255, 255, 20));
+        s_Window->draw(Label("pre-beta 0.5!", s_DisplayStruct->s_ResolutionX/2 - 40, s_DisplayStruct->s_ResolutionY/2), Pen(255, 255, 20));
         s_Window->draw(Label("You win!", s_DisplayStruct->s_ResolutionX/2 - 20, s_DisplayStruct->s_ResolutionY/2 + 30), Pen(255, 255, 20));
     }
     s_Window->paint();

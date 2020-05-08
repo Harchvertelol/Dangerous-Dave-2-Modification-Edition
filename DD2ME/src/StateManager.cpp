@@ -83,13 +83,34 @@ LRESULT StateManager::s3(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                             }
                             if(str.find("god ") == 0)
                             {
-                                if(str.substr(str.find(" ") + 1) == "on") s_GameClass->s_GameInfo->s_CheatGod = true;
-                                if(str.substr(str.find(" ") + 1) == "off") s_GameClass->s_GameInfo->s_CheatGod = false;
+                                if(str.substr(str.find(" ") + 1) == "on")
+                                {
+                                    s_GameClass->s_GameInfo->s_CheatGod = true;
+                                    cout << "God on." << endl;
+                                }
+                                if(str.substr(str.find(" ") + 1) == "off")
+                                {
+                                    s_GameClass->s_GameInfo->s_CheatGod = false;
+                                    cout << "God off." << endl;
+                                }
                             }
                             if(str.find("AI ") == 0)
                             {
-                                if(str.substr(str.find(" ") + 1) == "on") s_GameClass->s_GameInfo->s_AIOn = true;
-                                if(str.substr(str.find(" ") + 1) == "off") s_GameClass->s_GameInfo->s_AIOn = false;
+                                if(str.substr(str.find(" ") + 1) == "on")
+                                {
+                                    s_GameClass->s_GameInfo->s_IsAIOn = true;
+                                    cout << "AI on." << endl;
+                                }
+                                if(str.substr(str.find(" ") + 1) == "off")
+                                {
+                                    s_GameClass->s_GameInfo->s_IsAIOn = false;
+                                    cout << "AI off." << endl;
+                                }
+                                if(str.substr(str.find(" ") + 1) == "reload")
+                                {
+                                    s_GameClass->s_GameInfo->s_FactoryMonsters->reloadAIAll();
+                                    cout << "Reload AI completed." << endl;
+                                }
                             }
                         }
                         break;

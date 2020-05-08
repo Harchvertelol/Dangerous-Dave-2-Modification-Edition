@@ -11,38 +11,33 @@ using namespace GameFunction;
 using namespace ConvertFunction;
 
 AI::AI(Game* gameclass):
-    s_GameClass(gameclass),
-    s_AIRun(0)
+    s_GameClass(gameclass)
 {
     s_LuaBindFunctions = new LuaBindFunctions(gameclass);
-    createLuaState();
 }
 
 AI::~AI()
 {
     if(s_LuaBindFunctions != 0) delete s_LuaBindFunctions;
-    if(s_AIRun != 0) lua_close(s_AIRun);
-}
-
-void AI::createLuaState()
-{
-    if(s_AIRun != 0) lua_close(s_AIRun);
-    s_AIRun = luaL_newstate();
-    luaL_openlibs(s_AIRun);
-    s_LuaBindFunctions->registerFunctions(s_AIRun, "AI");
 }
 
 void AI::createOptions(CreatureMonster* monster, int number, bool getstate)
 {
-    lua_settop(s_AIRun, 0);
+    if(!monster->s_AILuaState)
+    {
+        cout << "Error! Lua state of monster not created!" << endl;
+        return;
+    }
+    lua_settop(monster->s_AILuaState, 0);
     monster->s_CurrentLives = atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[number - 1]->getValue("options","lives").c_str() );
+    if(!preLuaRun(monster, false)) return;
+    if(!loadAI(monster)) return;
     if(getstate == false) return;
-    if(!preLuaRun(monster)) cout<<"Error! Intellect Lua file is missing!"<<endl;
     else
     {
-        lua_getglobal(s_AIRun, "setFirstState");
-        lua_call(s_AIRun, 0, 1);
-        monster->s_State = lua_tostring(s_AIRun, -1);
+        lua_getglobal(monster->s_AILuaState, "setFirstState");
+        lua_call(monster->s_AILuaState, 0, 1);
+        monster->s_State = lua_tostring(monster->s_AILuaState, -1);
     }
 }
 
@@ -50,8 +45,8 @@ void AI::runAI(CreatureMonster* monster)
 {
     if(!preLuaRun(monster)) return;
     s_LuaBindFunctions->prepareAIRun();
-    lua_getglobal(s_AIRun, "mainFunc");
-    lua_call(s_AIRun, 0, 0);
+    lua_getglobal(monster->s_AILuaState, "mainFunc");
+    lua_call(monster->s_AILuaState, 0, 0);
 }
 
 void AI::runSpecialFunction(CreatureMonster* monster, TYPE_SPECIAL_FUNCTION tsf, info_for_spec_func ifsf)
@@ -63,25 +58,31 @@ void AI::runSpecialFunction(CreatureMonster* monster, TYPE_SPECIAL_FUNCTION tsf,
     {
         specfunc = "onKill";
         narg = 1;
-        lua_getglobal(s_AIRun, specfunc.c_str());
-        lua_pushnumber(s_AIRun, ifsf.killtype);
+        lua_getglobal(monster->s_AILuaState, specfunc.c_str());
+        lua_pushnumber(monster->s_AILuaState, ifsf.killtype);
     }
     else if(tsf == TSF_ON_DAMAGE)
     {
         specfunc = "onDamage";
         narg = 1;
-        lua_getglobal(s_AIRun, specfunc.c_str());
-        lua_pushnumber(s_AIRun, ifsf.damage);
+        lua_getglobal(monster->s_AILuaState, specfunc.c_str());
+        lua_pushnumber(monster->s_AILuaState, ifsf.damage);
     }
-    lua_call(s_AIRun, narg, retres);
+    lua_call(monster->s_AILuaState, narg, retres);
 }
 
-bool AI::preLuaRun(CreatureMonster* monster)
+bool AI::preLuaRun(CreatureMonster* monster, bool testAIon)
 {
-    if(s_GameClass->s_GameInfo->s_AIOn == false) return false;
+    if(testAIon && !s_GameClass->s_GameInfo->s_IsAIOn) return false;
     s_LuaBindFunctions->s_CurrentMonster = monster;
-    luaL_dostring(s_AIRun, "function mainFunc()\nprint(\"Error: mainFunc is missed!\")\nend\nfunction setFirstState()\nprint(\"Error: setFirstState is missed!\")\nreturn \"errorstate\"\nend\nfunction onKill(type)\nend\nfunction onDamage(damage)\nend\n");
-    if(luaL_dofile(s_AIRun, (s_GameClass->s_Data->PathToMonsterPack + WorkFunction::ConvertFunction::itos(monster->s_Number) + "/intellect.lua").c_str()))
+    return true;
+}
+
+bool AI::loadAI(CreatureMonster* monster)
+{
+    luaL_dostring(monster->s_AILuaState, "math.randomseed(os.time())");
+    luaL_dostring(monster->s_AILuaState, "function mainFunc()\nprint(\"Error: mainFunc is missed!\")\nend\nfunction setFirstState()\nprint(\"Error: setFirstState is missed!\")\nreturn \"errorstate\"\nend\nfunction onKill(type)\nend\nfunction onDamage(damage)\nend\n");
+    if(luaL_dofile(monster->s_AILuaState, (s_GameClass->s_Data->PathToMonsterPack + WorkFunction::ConvertFunction::itos(monster->s_Number) + "/intellect.lua").c_str()))
     {
         cout<<"Error! Intellect Lua file is missing!"<<endl;
         return false;

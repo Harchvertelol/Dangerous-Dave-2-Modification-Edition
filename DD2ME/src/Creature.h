@@ -57,6 +57,6 @@ class Creature
         void calculateDoKey();
         PostParsingStruct* getKeys();
         void setKeys(PostParsingStruct*);
-        void mergerDave(Creature*);
+        void mergeDave(Creature*);
 };
 #endif

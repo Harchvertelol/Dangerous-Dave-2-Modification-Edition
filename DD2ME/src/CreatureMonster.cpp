@@ -5,6 +5,8 @@
 #include "WorkFunction.h"
 #include "Defines.h"
 
+using namespace std;
+
 using namespace WorkFunction;
 using namespace MathFunction;
 using namespace GameFunction;
@@ -20,14 +22,24 @@ CreatureMonster::CreatureMonster(Game* gameclass, int number, bool getstate):
     s_Number(number),
     s_NumberOfAction(0),
     s_AdditionalNumberOfAction(0),
-    s_IsAlwaysLiveInStep(false)
+    s_IsAlwaysLiveInStep(false),
+    s_AILuaState(0)
 {
+    createLuaState();
     s_GameClass->s_AI->createOptions(this, s_Number, getstate);
 }
 
 CreatureMonster::~CreatureMonster()
 {
-    //...
+    if(s_AILuaState != 0) lua_close(s_AILuaState);
+}
+
+void CreatureMonster::createLuaState()
+{
+    if(s_AILuaState != 0) lua_close(s_AILuaState);
+    s_AILuaState = luaL_newstate();
+    luaL_openlibs(s_AILuaState);
+    s_GameClass->s_AI->s_LuaBindFunctions->registerFunctions(s_AILuaState, "AI");
 }
 
 void CreatureMonster::live()

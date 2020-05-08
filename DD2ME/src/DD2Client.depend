@@ -793,14 +793,13 @@
 	"Gui.h"
 	"Game.h"
 
-1588317838 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\ai.cpp
+1588898419 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\ai.cpp
 	"AI.h"
 	"Game.h"
 	"WorkFunction.h"
 	"Defines.h"
 
-1588312522 e:\github\dangerous-dave-2-modification-edition\dd2me\src\ai.h
-	"lua/lua.hpp"
+1588897881 e:\github\dangerous-dave-2-modification-edition\dd2me\src\ai.h
 	"CreatureMonster.h"
 	"LuaBindFunctions.h"
 
@@ -828,11 +827,12 @@
 	<stdio.h>
 	"lua.h"
 
-1452282790 e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturemonster.h
+1588892441 e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturemonster.h
 	<iostream>
 	<map>
+	"lua/lua.hpp"
 
-1588317811 e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.h
+1588892464 e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.h
 	"lua/lua.hpp"
 	<math.h>
 	"CreatureMonster.h"
@@ -911,17 +911,17 @@
 	"Square.h"
 	"IniParser/PostParsingStruct.h"
 
-1371487129 e:\github\dangerous-dave-2-modification-edition\dd2me\src\gameinfo.h
+1588898429 e:\github\dangerous-dave-2-modification-edition\dd2me\src\gameinfo.h
 	<map>
 	"canvas.hpp"
 	"Creature.h"
 	"FactoryMonsters.h"
 
-1452282790 e:\github\dangerous-dave-2-modification-edition\dd2me\src\creature.h
+1588899927 e:\github\dangerous-dave-2-modification-edition\dd2me\src\creature.h
 	<iostream>
 	"IniParser/PostParsingStruct.h"
 
-1363270645 e:\github\dangerous-dave-2-modification-edition\dd2me\src\factorymonsters.h
+1588896431 e:\github\dangerous-dave-2-modification-edition\dd2me\src\factorymonsters.h
 	<iostream>
 	<map>
 	"CreatureMonster.h"
@@ -983,14 +983,14 @@
 	<iostream>
 	"PostParsingStruct.h"
 
-1452344679 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creature.cpp
+1588899922 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creature.cpp
 	"Creature.h"
 	"Game.h"
 	"WorkFunction.h"
 	"Defines.h"
 	"KeysState.h"
 
-1452344668 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturemonster.cpp
+1588892828 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturemonster.cpp
 	"CreatureMonster.h"
 	"Game.h"
 	"WorkFunction.h"
@@ -1002,7 +1002,7 @@
 	"IniParser/ParserInfoFile.h"
 	"WorkFunction.h"
 
-1364396117 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\factorymonsters.cpp
+1588896687 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\factorymonsters.cpp
 	"FactoryMonsters.h"
 	"Game.h"
 	"WorkFunction.h"
@@ -1019,7 +1019,7 @@
 	"FactoryTemporaryImages.h"
 	"Game.h"
 
-1453305305 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\game.cpp
+1588900284 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\game.cpp
 	"Game.h"
 	"WorkFunction.h"
 	"Defines.h"
@@ -1032,7 +1032,7 @@
 	"WorkFunction.h"
 	"Defines.h"
 
-1387270373 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gameinfo.cpp
+1588898440 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gameinfo.cpp
 	"GameInfo.h"
 	"Game.h"
 
@@ -1523,7 +1523,7 @@
 	"WorkFunction.h"
 	"Defines.h"
 
-1452114606 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\client.cpp
+1588899935 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\client.cpp
 	"Client.h"
 	<iostream>
 	<string>
@@ -1564,7 +1564,7 @@
 1363272861 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\square.cpp
 	"Square.h"
 
-1363514225 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\statemanager.cpp
+1588898503 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\statemanager.cpp
 	"StateManager.h"
 	"Game.h"
 

@@ -133,7 +133,7 @@ void Creature::live()
         y = s_CoordY;
         s_CoordY -= atoi( s_GameClass->s_IniFile->getValue("settings","jumpspeed").c_str() );
         bool cor = correctionPhys(s_CoordY + atoi( s_GameClass->s_IniFile->getValue("settings","jumpspeed").c_str() ), 1);
-        if( cor == true && s_FreezeJump == false && s_GameClass->s_IniFile->getValue("settings", "realisticphysics") == "true" ) s_JumpStep = 0;
+        if(cor == true && s_FreezeJump == false && s_GameClass->s_IniFile->getValue("settings", "realisticphysics") == "true") s_JumpStep = 0;
         else if(cor == true && s_FreezeJump == false) s_JumpStep--;
         direction = s_State.substr(0, s_State.find("jumpup"));
         if(s_JumpStep <= 0)
@@ -923,7 +923,7 @@ void Creature::setKeys(PostParsingStruct* cpps)
     s_KeysState->s_KeyJump = (bool)atoi( cpps->getValue("Keys", "s_KeyJump").c_str() );
 }
 
-void Creature::mergerDave(Creature* cr)
+void Creature::mergeDave(Creature* cr)
 {
         s_CurrentPoints = cr->s_CurrentPoints;
         s_CurrentHealth = cr->s_CurrentHealth;

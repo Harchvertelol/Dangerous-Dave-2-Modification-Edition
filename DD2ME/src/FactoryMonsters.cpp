@@ -54,7 +54,7 @@ void FactoryMonsters::live()
                         iter->second->s_IsAlwaysLiveInStep = true;
                     }
     map<int, Creature*>::iterator iter1;
-    for ( iter1 = s_GameClass->s_GameInfo->s_Daves.begin(); iter1 != s_GameClass->s_GameInfo->s_Daves.end(); iter1++)
+    for(iter1 = s_GameClass->s_GameInfo->s_Daves.begin(); iter1 != s_GameClass->s_GameInfo->s_Daves.end(); iter1++)
     {
         for ( iter = s_Monsters.begin(); iter != s_Monsters.end(); iter++)
             if(iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_ResolutionX + iter1->second->s_ScreenCoordX + 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersX").c_str() ) &&
@@ -67,7 +67,7 @@ void FactoryMonsters::live()
                             iter->second->s_IsAlwaysLiveInStep = true;
                         }
     }
-    for (iter = s_Monsters.begin(), iter2 = s_Monsters.end(); iter != iter2;)
+    for(iter = s_Monsters.begin(), iter2 = s_Monsters.end(); iter != iter2;)
     {
        iter->second->s_IsAlwaysLiveInStep = false;
        if(iter->second->s_DeleteNow == true)
@@ -94,6 +94,12 @@ void FactoryMonsters::clear()
        delete iter->second;
        s_Monsters.erase(iter++);
     }
+}
+
+void FactoryMonsters::reloadAIAll()
+{
+    map<int, CreatureMonster*>::iterator iter, iter2;
+    for (iter = s_Monsters.begin(), iter2 = s_Monsters.end(); iter != iter2; iter++) s_GameClass->s_AI->loadAI(iter->second);
 }
 
 void FactoryMonsters::drawAll()

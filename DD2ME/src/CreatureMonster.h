@@ -2,7 +2,8 @@
 #define CREATUREMONSTER_H
 #include <iostream>
 #include <map>
-using namespace std;
+
+#include "lua/lua.hpp"
 
 class Game;
 
@@ -16,12 +17,14 @@ class CreatureMonster
         int s_CoordY;
         int s_CurrentLives;
         bool s_DeleteNow;
-        string s_State;
+        std::string s_State;
         int s_Number;
         unsigned int s_NumberOfAction;
         unsigned int s_AdditionalNumberOfAction;
-        map<string, string> s_GlobalValues;
+        std::map<std::string, std::string> s_GlobalValues;
         bool s_IsAlwaysLiveInStep;
+        lua_State* s_AILuaState;
+        void createLuaState();
         void live();
         bool correctionPhys(int,int, bool ladder = false);
         void draw();

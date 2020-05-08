@@ -36,7 +36,7 @@ class GameInfo
         unsigned int s_OldAnSt;
         Creature* s_MyDave;
         bool s_CheatGod;
-        bool s_AIOn;
+        bool s_IsAIOn;
         void live();
         void deathDave(int);
         void playDeath();

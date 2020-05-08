@@ -17,7 +17,7 @@ class LuaBindFunctions
         Game* s_GameClass;
         CreatureMonster* s_CurrentMonster;
         void prepareAIRun();
-        void registerFunctions(lua_State* s_Lua, string);
+        void registerFunctions(lua_State* s_Lua, std::string);
         void registerFunctionsMonster(lua_State* s_Lua);
         void registerFunctionsAll(lua_State* s_Lua);
         //Lua Functions All

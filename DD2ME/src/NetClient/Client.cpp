@@ -123,7 +123,7 @@ void Client::workStr(string s)
     {
         s_NetClient->s_GameClass->setObjects(pps);
         int MyID = atoi( pps->getValue("SystemInfo", "MyID").c_str() );
-        s_NetClient->s_GameClass->s_GameInfo->s_MyDave->mergerDave(s_NetClient->s_GameClass->s_GameInfo->s_Daves[MyID]);
+        s_NetClient->s_GameClass->s_GameInfo->s_MyDave->mergeDave(s_NetClient->s_GameClass->s_GameInfo->s_Daves[MyID]);
         s_NetClient->s_GameClass->removeDave(MyID);
         s_NetClient->s_NetInfoStruct->s_WaitingGettingCreatureList = false;
     }
