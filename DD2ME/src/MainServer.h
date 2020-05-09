@@ -10,9 +10,9 @@ class MainServer
     public:
         MainServer();
         ~MainServer();
-        PostParsingStruct* s_ServerList;
-        map<string, Game*> s_ListGameClass;
-        map<unsigned int, Game*> s_ListTimerId;
+        IniParser::PostParsingStruct* s_ServerList;
+        std::map<std::string, Game*> s_ListGameClass;
+        std::map<unsigned int, Game*> s_ListTimerId;
         Server* s_Server;
         bool load();
         bool run();

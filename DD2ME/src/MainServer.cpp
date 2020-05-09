@@ -3,6 +3,8 @@
 #include "IniParser/ParserInfoFile.h"
 #include "IniParser/PostParsingStruct.h"
 
+using namespace IniParser;
+
 MainServer::MainServer()
 {
     s_Server = new Server(this);
@@ -20,7 +22,7 @@ bool MainServer::load()
     s_ServerList = prs.getParsedFromFile("ServerData/ServerList.ini");
     if(!s_ServerList) return false;
     map<string, map<string, string > >::iterator iter;
-    for(iter = s_ServerList->s_Variables.begin(); iter != s_ServerList->s_Variables.end(); iter++)
+    for(iter = s_ServerList->getMapVariables().begin(); iter != s_ServerList->getMapVariables().end(); iter++)
     {
         if(iter->first.find("Server") == 0)
         {

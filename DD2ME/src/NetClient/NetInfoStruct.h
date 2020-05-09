@@ -7,29 +7,29 @@
 
 namespace SERVER_COMMANDS_FROM_CLIENT
 {
-    const string SCFC_connectToServer = "connectToServer";
-    const string SCFC_getCreaturesList = "getCreaturesList";
-    const string SCFC_getServerList = "getServerList";
-    const string SCFC_leaveServer = "leaveServer";
+    const std::string SCFC_connectToServer = "connectToServer";
+    const std::string SCFC_getCreaturesList = "getCreaturesList";
+    const std::string SCFC_getServerList = "getServerList";
+    const std::string SCFC_leaveServer = "leaveServer";
 }
 
 namespace FROM_CLIENT_IDS_MESSAGES
 {
-    const string FCIM_PlayerAuth = "PlayerAuth";
-    const string FCIM_Command = "Command";
-    const string FCIM_InfoFromClient = "InfoFromClient";
+    const std::string FCIM_PlayerAuth = "PlayerAuth";
+    const std::string FCIM_Command = "Command";
+    const std::string FCIM_InfoFromClient = "InfoFromClient";
 }
 
 namespace FROM_SERVER_IDS_MESSAGES
 {
-    const string FSIM_ConfirmConnection = "ConfirmConnection";
-    const string FSIM_PlayerAuth = "PlayerAuth";
-    const string FSIM_ServerList = "ServerList";
-    const string FSIM_MainIniFile = "MainIniFile";
-    const string FSIM_ListCreatures = "ListCreatures";
-    const string FSIM_ConfirmGettingInfoFromClient = "ConfirmGettingInfoFromClient";
-    const string FSIM_ConfirmLeaveServer = "ConfirmLeaveServer";
-    const string FSIM_Command = "Command";
+    const std::string FSIM_ConfirmConnection = "ConfirmConnection";
+    const std::string FSIM_PlayerAuth = "PlayerAuth";
+    const std::string FSIM_ServerList = "ServerList";
+    const std::string FSIM_MainIniFile = "MainIniFile";
+    const std::string FSIM_ListCreatures = "ListCreatures";
+    const std::string FSIM_ConfirmGettingInfoFromClient = "ConfirmGettingInfoFromClient";
+    const std::string FSIM_ConfirmLeaveServer = "ConfirmLeaveServer";
+    const std::string FSIM_Command = "Command";
 }
 
 struct NetInfoStruct
@@ -56,7 +56,7 @@ struct NetInfoStruct
     bool s_WaitingConfirmGettingInfoFromClient;
     bool s_WaitingConfirmLeaveServer;
     //...
-    PostParsingStruct* s_ServerList;
+    IniParser::PostParsingStruct* s_ServerList;
     unsigned int s_ServerIdNow;
 };
 

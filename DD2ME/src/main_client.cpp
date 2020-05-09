@@ -1,17 +1,20 @@
 #include <ctime>
 
 #include "canvas.hpp"
-using namespace cnv;
 
 #include "Game.h"
 
 #include "IniParser/ParserInfoFile.h"
 #include "IniParser/PostParsingStruct.h"
 
-#include "WorkFunction.h"
+#include "WorkFunctions.h"
 #include "Defines.h"
 
 #include "NetClient/NetClient.h"
+
+using namespace IniParser;
+
+using namespace cnv;
 
 int main(int argc, char** argv)
 {
@@ -105,7 +108,7 @@ int main(int argc, char** argv)
         {
             string keySL = "";
             map<string, map<string, string > >::iterator iter__;
-            for(iter__ = nc->s_NetInfoStruct->s_ServerList->s_Variables.begin(); iter__ != nc->s_NetInfoStruct->s_ServerList->s_Variables.end(); iter__++)
+            for(iter__ = nc->s_NetInfoStruct->s_ServerList->getMapVariables().begin(); iter__ != nc->s_NetInfoStruct->s_ServerList->getMapVariables().end(); iter__++)
             {
                 if(iter__->first.find("Server") == 0 && atoi( nc->s_NetInfoStruct->s_ServerList->getValue(iter__->first, "id").c_str() ) == nc->s_NetInfoStruct->s_ServerIdNow)
                 {

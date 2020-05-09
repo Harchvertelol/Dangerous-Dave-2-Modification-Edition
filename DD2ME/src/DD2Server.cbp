@@ -32,6 +32,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-DWIN32" />
 		</Compiler>
 		<Linker>
 			<Add library="gdi32" />
@@ -96,8 +97,8 @@
 		<Unit filename="UserData.cpp" />
 		<Unit filename="UserData.h" />
 		<Unit filename="Version.h" />
-		<Unit filename="WorkFunction.cpp" />
-		<Unit filename="WorkFunction.h" />
+		<Unit filename="WorkFunctions.cpp" />
+		<Unit filename="WorkFunctions.h" />
 		<Unit filename="lua/lapi.c">
 			<Option compilerVar="CC" />
 		</Unit>

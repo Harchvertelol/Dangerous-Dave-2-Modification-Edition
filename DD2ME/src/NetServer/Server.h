@@ -20,11 +20,11 @@ class Server
         void run(int port);
         void close(SClient*);
         void on_command(SClient*, const std::string&);
-        void doCommand(SClient*, std::string, PostParsingStruct*);
+        void doCommand(SClient*, std::string, IniParser::PostParsingStruct*);
 
     private:
         void tick();
-        std::map<string, int> s_ClientsId;
+        std::map<std::string, int> s_ClientsId;
         std::map<int, SClient*> s_Clients;
         int s_MaxIdClient;
 };

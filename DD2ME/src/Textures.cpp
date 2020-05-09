@@ -3,10 +3,12 @@
 #include "Textures.h"
 
 #include "IniParser/ParserInfoFile.h"
-#include "WorkFunction.h"
+#include "WorkFunctions.h"
 
 #include "Game.h"
 #include "Defines.h"
+
+using namespace IniParser;
 
 using namespace std;
 
@@ -78,13 +80,13 @@ bool Textures::load(string PathToTexturePack)
     s_TilesInfo = prs.getParsedFromFile(PathToTexturePack + "tiles.info");
     if(!s_TilesInfo) return false;
     int numberofframes = atoi( s_TilesInfo->getValue("info", "numberofframes").c_str() );
-    for(int i = 0; i < numberofframes; i++) s_Tiles[i] = new Bitmap(PathToTexturePack + "tiles_" + WorkFunction::ConvertFunction::itos(i+1) + ".bmp");
+    for(int i = 0; i < numberofframes; i++) s_Tiles[i] = new Bitmap(PathToTexturePack + "tiles_" + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp");
     int sizeXTiles = atoi( s_TilesInfo->getValue("info", "sizeX").c_str() );
     int sizeYTiles = atoi( s_TilesInfo->getValue("info", "sizeY").c_str() );
     int numberoftiles = sizeXTiles * sizeYTiles;
     for(int i = 0; i < numberofframes; i++)
     {
-        ifstream mask( (PathToTexturePack + "tiles_" + WorkFunction::ConvertFunction::itos(i+1) + ".mask").c_str() );
+        ifstream mask( (PathToTexturePack + "tiles_" + WorkFunctions::ConvertFunctions::itos(i+1) + ".mask").c_str() );
         if(!mask) return false;
         for(int j = 0; mask && j < numberoftiles; j++)
         {
@@ -99,11 +101,11 @@ bool Textures::load(string PathToTexturePack)
         {
             if(s_MaskTiles[j][i] == DEATH)
             {
-                if(!s_DeathTilesInfo[i]) s_DeathTilesInfo[i] = prs.getParsedFromFile(PathToTexturePack + "DeathTiles/" + WorkFunction::ConvertFunction::itos(i) + "/tile.info");
+                if(!s_DeathTilesInfo[i]) s_DeathTilesInfo[i] = prs.getParsedFromFile(PathToTexturePack + "DeathTiles/" + WorkFunctions::ConvertFunctions::itos(i) + "/tile.info");
                 if(!s_DeathTilesInfo[i]) return false;
                 numberofdeathframes = atoi( s_DeathTilesInfo[i]->getValue("info","numberofframes").c_str() );
                 for(int q = 0; q < numberofdeathframes; q++)
-                    if(!s_DeathTiles[i][q]) s_DeathTiles[i][q] = new Bitmap(PathToTexturePack + "DeathTiles/" + WorkFunction::ConvertFunction::itos(i) + "/" + WorkFunction::ConvertFunction::itos(q+1) + ".bmp");
+                    if(!s_DeathTiles[i][q]) s_DeathTiles[i][q] = new Bitmap(PathToTexturePack + "DeathTiles/" + WorkFunctions::ConvertFunctions::itos(i) + "/" + WorkFunctions::ConvertFunctions::itos(q+1) + ".bmp");
             }
         }
     return true;

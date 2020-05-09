@@ -17,7 +17,7 @@ class Client: public Socket
         NetClient* s_NetClient;
         std::string s_ReceiveBuffer;
         void workStr(std::string);
-        void doCommand(Client*, std::string, PostParsingStruct*);
+        void doCommand(Client*, std::string, IniParser::PostParsingStruct*);
         void connect(const std::string&, int port);
 
     private:

@@ -1,46 +1,64 @@
-#include "WorkFunction.h"
+#include "WorkFunctions.h"
 
-#include <stdlib.h>
+#include <cstdlib>
 
-string WorkFunction::WordFunction::FirstWord(string str)
+#ifdef _LINUX_
+#include <sys/io.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#endif
+
+#ifdef WIN32
+#include <io.h>
+#include <direct.h>
+#endif
+
+string WorkFunctions::WordFunctions::FirstWord(string str)
 {
     if(str == "" || str.find(" ") == string::npos) return str;
     return str.substr(0, str.find(" "));
 }
 
-string WorkFunction::WordFunction::RemoveFirstWord(string str)
+string WorkFunctions::WordFunctions::RemoveFirstWord(string str)
 {
     if(str == "" || str.find(" ") == string::npos) return "";
     return str.substr(str.find(" ") + 1);
 }
 
-string WorkFunction::ConvertFunction::itos(int s_Number)
+string WorkFunctions::ConvertFunctions::itos(int s_Number)
 {
     stringstream s_Str;
     s_Str << s_Number;
     return s_Str.str();
 }
 
-string WorkFunction::ParserFunction::getNameMainVariable(string str)
+string WorkFunctions::ConvertFunctions::ftos(float s_Number)
+{
+    stringstream s_Str;
+    s_Str << s_Number;
+    return s_Str.str();
+}
+
+string WorkFunctions::ParserFunctions::getNameMainVariable(string str)
 {
     if( str == "" || ( str.find("[") == string::npos || str.find("[") != 0 )
        || (str.find("]") == string::npos || str.find("]") != str.size() - 1) ) return "";
     return str.substr(1, str.find("]") - 1);
 }
 
-string WorkFunction::ParserFunction::getNameSecondaryVariable(string str)
+string WorkFunctions::ParserFunctions::getNameSecondaryVariable(string str)
 {
     if(str == "" || str.find("=") == string::npos || str.find("=") == 0) return "";
     return str.substr(0, str.find("="));
 }
 
-string WorkFunction::ParserFunction::getValueSecondaryVariable(string str)
+string WorkFunctions::ParserFunctions::getValueSecondaryVariable(string str)
 {
     if(str == "" || str.find("=") == string::npos) return "";
     return str.substr(str.find("=") + 1);
 }
 
-int WorkFunction::ParserFunction::splitMass(map<int,int>* mas, int size, int point, string str, string splitter)
+int WorkFunctions::ParserFunctions::splitMass(map<int,int>* mas, int size, int point, string str, string splitter)
 {
     while(str.find(splitter) != string::npos)
     {
@@ -53,7 +71,7 @@ int WorkFunction::ParserFunction::splitMass(map<int,int>* mas, int size, int poi
     return point;
 }
 
-int WorkFunction::ParserFunction::splitMassString(map<int,string>* mas, int size, int point, string str, string splitter)
+int WorkFunctions::ParserFunctions::splitMassString(map<int,string>* mas, int size, int point, string str, string splitter)
 {
     while(str.find(splitter) != string::npos)
     {
@@ -66,23 +84,46 @@ int WorkFunction::ParserFunction::splitMassString(map<int,string>* mas, int size
     return point;
 }
 
-string WorkFunction::ParserFunction::addMainVariableString(string str, string name, string splitter)
+string WorkFunctions::ParserFunctions::addMainVariableString(string str, string name, string splitter)
 {
     return str + "[" + name + "]" + splitter;
 }
 
-string WorkFunction::ParserFunction::addSecondaryVariableString(string str, string name, string value, string splitter)
+string WorkFunctions::ParserFunctions::addSecondaryVariableString(string str, string name, string value, string splitter)
 {
     return str + name + "=" + value + splitter;
 }
 
-int WorkFunction::MathFunction::roundNumber(int number, int divide, int change)
+int WorkFunctions::MathFunctions::roundNumber(int number, int divide, int change)
 {
     for(; number % divide != 0; number += change);
     return number;
 }
 
-bool WorkFunction::GameFunction::testCollision(int x, int y, int x1, int y1, Square ent, Square ent1, bool stand, string where)
+bool WorkFunctions::FileFunctions::isFileExists(string name)
+{
+    return access(name.c_str(), 0) != -1;
+}
+
+bool WorkFunctions::FileFunctions::createFolders(string folder, string foldersplitter)
+{
+    string tempfolder = "";
+    map<int,string> mas;
+    int sizemas = WorkFunctions::ParserFunctions::splitMassString(&mas, 0, 0, folder, foldersplitter);
+    for(int i = 0; i < sizemas; i++)
+    {
+        tempfolder += mas[i];
+        #ifdef _LINUX_
+        mkdir(tempfolder.c_str(), S_IRWXU);
+        #else
+        mkdir(tempfolder.c_str());
+        #endif // _LINUX_
+        tempfolder += foldersplitter;
+    }
+    return true;
+}
+
+bool WorkFunctions::GameFunctions::testCollision(int x, int y, int x1, int y1, Square ent, Square ent1, bool stand, string where)
 {
     int newLX = x + ent.s_XL;
     int newLY = y + ent.s_YL;

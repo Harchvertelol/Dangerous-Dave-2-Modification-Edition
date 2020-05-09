@@ -4,7 +4,7 @@
 #include <cstdlib>
 
 #include "../Game.h"
-#include "../WorkFunction.h"
+#include "../WorkFunctions.h"
 #include "../IniParser/ParserInfoFile.h"
 #include "../IniParser/PostParsingStruct.h"
 
@@ -12,9 +12,11 @@
 
 using namespace std;
 
-using namespace WorkFunction;
-using namespace ParserFunction;
+using namespace WorkFunctions;
+using namespace ParserFunctions;
 using namespace STRING_CONSTANTS;
+
+using namespace IniParser;
 
 NetClient::NetClient(Game* gameclass):
     s_GameClass(gameclass),
@@ -144,7 +146,7 @@ bool NetClient::choiceServer()
         return false;
     }
     map<string, map<string, string > >::iterator iter;
-    for(iter = s_NetInfoStruct->s_ServerList->s_Variables.begin(); iter != s_NetInfoStruct->s_ServerList->s_Variables.end(); iter++)
+    for(iter = s_NetInfoStruct->s_ServerList->getMapVariables().begin(); iter != s_NetInfoStruct->s_ServerList->getMapVariables().end(); iter++)
     {
         if(iter->first.find("Server") == 0) number++;
         if(number == num) break;
@@ -208,7 +210,7 @@ void NetClient::sendCommandToServer(string command)
     str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_CLIENT_IDS_MESSAGES::FCIM_Command, SPLITTER_STR_VARIABLE);
     str_send = addMainVariableString(str_send, "command", SPLITTER_STR_VARIABLE);
 	str_send = addSecondaryVariableString(str_send, "do", command, SPLITTER_STR_VARIABLE);
-	str_send = addSecondaryVariableString(str_send, "id", WorkFunction::ConvertFunction::itos(s_NetInfoStruct->s_ServerIdNow), SPLITTER_STR_VARIABLE);
+	str_send = addSecondaryVariableString(str_send, "id", WorkFunctions::ConvertFunctions::itos(s_NetInfoStruct->s_ServerIdNow), SPLITTER_STR_VARIABLE);
 	str_send += "\n";
 	s_Client->send(str_send);
 }

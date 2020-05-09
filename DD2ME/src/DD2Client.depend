@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1588898419 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\ai.cpp
+1589021225 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\ai.cpp
 	"AI.h"
 	"Game.h"
-	"WorkFunction.h"
+	"WorkFunctions.h"
 	"Defines.h"
 
 1588897881 e:\github\dangerous-dave-2-modification-edition\dd2me\src\ai.h
@@ -43,7 +43,7 @@
 	<math.h>
 	"CreatureMonster.h"
 
-1588312942 e:\github\dangerous-dave-2-modification-edition\dd2me\src\game.h
+1589019965 e:\github\dangerous-dave-2-modification-edition\dd2me\src\game.h
 	"DisplayStruct.h"
 	"IniParser/PostParsingStruct.h"
 	"GameData.h"
@@ -58,11 +58,11 @@
 
 1341671042 e:\github\dangerous-dave-2-modification-edition\dd2me\src\displaystruct.h
 
-1588979758 e:\github\dangerous-dave-2-modification-edition\dd2me\src\iniparser\postparsingstruct.h
+1589020075 e:\github\dangerous-dave-2-modification-edition\dd2me\src\iniparser\postparsingstruct.h
 	<map>
 	<string>
 
-1381614837 e:\github\dangerous-dave-2-modification-edition\dd2me\src\gamedata.h
+1589019898 e:\github\dangerous-dave-2-modification-edition\dd2me\src\gamedata.h
 	"Level.h"
 	"Textures.h"
 	"Bonuses.h"
@@ -70,12 +70,12 @@
 	"Dave.h"
 	"Monsters.h"
 
-1363271513 e:\github\dangerous-dave-2-modification-edition\dd2me\src\level.h
+1589019647 e:\github\dangerous-dave-2-modification-edition\dd2me\src\level.h
 	<map>
 	<cstring>
 	"IniParser/PostParsingStruct.h"
 
-1387271518 e:\github\dangerous-dave-2-modification-edition\dd2me\src\textures.h
+1589019720 e:\github\dangerous-dave-2-modification-edition\dd2me\src\textures.h
 	"IniParser/PostParsingStruct.h"
 	"canvas.hpp"
 
@@ -92,7 +92,7 @@
 	<iostream>
 	<iostream>
 
-1387271298 e:\github\dangerous-dave-2-modification-edition\dd2me\src\bonuses.h
+1589019769 e:\github\dangerous-dave-2-modification-edition\dd2me\src\bonuses.h
 	<map>
 	"canvas.hpp"
 	"IniParser/PostParsingStruct.h"
@@ -100,18 +100,18 @@
 
 1363272848 e:\github\dangerous-dave-2-modification-edition\dd2me\src\square.h
 
-1452114606 e:\github\dangerous-dave-2-modification-edition\dd2me\src\screens.h
+1589019783 e:\github\dangerous-dave-2-modification-edition\dd2me\src\screens.h
 	<map>
 	"canvas.hpp"
 	"IniParser/PostParsingStruct.h"
 
-1387271452 e:\github\dangerous-dave-2-modification-edition\dd2me\src\dave.h
+1589020001 e:\github\dangerous-dave-2-modification-edition\dd2me\src\dave.h
 	<map>
 	"canvas.hpp"
 	"Square.h"
 	"IniParser/PostParsingStruct.h"
 
-1387271522 e:\github\dangerous-dave-2-modification-edition\dd2me\src\monsters.h
+1589019870 e:\github\dangerous-dave-2-modification-edition\dd2me\src\monsters.h
 	<map>
 	"canvas.hpp"
 	"Square.h"
@@ -123,7 +123,7 @@
 	"CreatureDave.h"
 	"FactoryMonsters.h"
 
-1588987932 e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturedave.h
+1589019677 e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturedave.h
 	<iostream>
 	"IniParser/PostParsingStruct.h"
 
@@ -145,7 +145,7 @@
 	<iostream>
 	"canvas.hpp"
 
-1588977937 e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\netclient.h
+1589019922 e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\netclient.h
 	<string>
 	"../shabbynet/shabbynet.hpp"
 	"Client.h"
@@ -158,12 +158,12 @@
 	<queue>
 	<set>
 
-1588985353 e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\client.h
+1589019908 e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\client.h
 	<string>
 	"../shabbynet/shabbynet.hpp"
 	"../IniParser/PostParsingStruct.h"
 
-1588985594 e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\netinfostruct.h
+1589020356 e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\netinfostruct.h
 	<iostream>
 	"../IniParser/PostParsingStruct.h"
 
@@ -171,40 +171,49 @@
 
 1363267640 e:\github\dangerous-dave-2-modification-edition\dd2me\src\keysstate.h
 
-1363012458 e:\github\dangerous-dave-2-modification-edition\dd2me\src\workfunction.h
+1589022356 e:\github\dangerous-dave-2-modification-edition\dd2me\src\workfunctions.h
 	<iostream>
 	<sstream>
 	<map>
+	"Defines.h"
 	"Square.h"
 
-1452348440 e:\github\dangerous-dave-2-modification-edition\dd2me\src\defines.h
+1589022338 e:\github\dangerous-dave-2-modification-edition\dd2me\src\defines.h
+	<string>
 
-1387271326 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\bonuses.cpp
+1589021124 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\bonuses.cpp
 	"Bonuses.h"
 	"IniParser/ParserInfoFile.h"
-	"WorkFunction.h"
+	"WorkFunctions.h"
 	"Game.h"
 
-1363363017 e:\github\dangerous-dave-2-modification-edition\dd2me\src\iniparser\parserinfofile.h
-	<iostream>
+1419363618 e:\github\dangerous-dave-2-modification-edition\dd2me\src\iniparser\parserinfofile.h
+	<string>
 	"PostParsingStruct.h"
 
-1588892828 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturemonster.cpp
+1589021289 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturedave.cpp
+	"CreatureDave.h"
+	"Game.h"
+	"WorkFunctions.h"
+	"Defines.h"
+	"KeysState.h"
+
+1589021289 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturemonster.cpp
 	"CreatureMonster.h"
 	"Game.h"
-	"WorkFunction.h"
+	"WorkFunctions.h"
 	"Defines.h"
 
-1387539986 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\dave.cpp
+1589021267 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\dave.cpp
 	"Dave.h"
 	"Game.h"
 	"IniParser/ParserInfoFile.h"
-	"WorkFunction.h"
+	"WorkFunctions.h"
 
-1588969275 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\factorymonsters.cpp
+1589021289 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\factorymonsters.cpp
 	"FactoryMonsters.h"
 	"Game.h"
-	"WorkFunction.h"
+	"WorkFunctions.h"
 	"Defines.h"
 	"Thread/Thread.h"
 
@@ -218,17 +227,17 @@
 	"FactoryTemporaryImages.h"
 	"Game.h"
 
-1588981343 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\game.cpp
+1589021144 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\game.cpp
 	"Game.h"
-	"WorkFunction.h"
+	"WorkFunctions.h"
 	"Defines.h"
 	<ctime>
 
-1515552083 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gamedata.cpp
+1589021148 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gamedata.cpp
 	"GameData.h"
 	"Game.h"
 	"IniParser/ParserInfoFile.h"
-	"WorkFunction.h"
+	"WorkFunctions.h"
 	"Defines.h"
 
 1588987956 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gameinfo.cpp
@@ -239,22 +248,22 @@
 	"Gui.h"
 	"Game.h"
 
-1363363379 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\iniparser\parserinfofile.cpp
+1589021197 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\iniparser\parserinfofile.cpp
 	<fstream>
 	<iostream>
 	"ParserInfoFile.h"
 	"PostParsingStruct.h"
+	"../WorkFunctions.h"
 	"../Defines.h"
-	"../WorkFunction.h"
 
-1588982676 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\iniparser\postparsingstruct.cpp
+1589019620 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\iniparser\postparsingstruct.cpp
 	"PostParsingStruct.h"
 	<iostream>
 
-1588969442 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\level.cpp
+1589021327 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\level.cpp
 	"Level.h"
 	"IniParser/ParserInfoFile.h"
-	"WorkFunction.h"
+	"WorkFunctions.h"
 	"Defines.h"
 	"Game.h"
 	<fstream>
@@ -699,55 +708,45 @@
 	"lstate.h"
 	"lzio.h"
 
-1588317800 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.cpp
+1589021347 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.cpp
 	"LuaBindFunctions.h"
 	"Game.h"
-	"WorkFunction.h"
+	"WorkFunctions.h"
 	"Defines.h"
 
-1588987753 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\main_client.cpp
-	<ctime>
-	"canvas.hpp"
-	"Game.h"
-	"IniParser/ParserInfoFile.h"
-	"IniParser/PostParsingStruct.h"
-	"WorkFunction.h"
-	"Defines.h"
-	"NetClient/NetClient.h"
-
-1515552077 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\monsters.cpp
+1589021289 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\monsters.cpp
 	"Monsters.h"
 	"Game.h"
 	"IniParser/ParserInfoFile.h"
-	"WorkFunction.h"
+	"WorkFunctions.h"
 	"Defines.h"
 
-1588988745 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\client.cpp
+1589021303 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\client.cpp
 	"Client.h"
 	<iostream>
 	<string>
-	"../WorkFunction.h"
+	"../WorkFunctions.h"
 	"../IniParser/ParserInfoFile.h"
 	"../IniParser/PostParsingStruct.h"
 	"NetClient.h"
 	"../Defines.h"
 	"../Game.h"
 
-1588986859 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\netclient.cpp
+1589021303 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\netclient.cpp
 	"NetClient.h"
 	<iostream>
 	<sstream>
 	<cstdlib>
 	"../Game.h"
-	"../WorkFunction.h"
+	"../WorkFunctions.h"
 	"../IniParser/ParserInfoFile.h"
 	"../IniParser/PostParsingStruct.h"
 	"../Defines.h"
 
-1452114606 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\screens.cpp
+1589021213 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\screens.cpp
 	"Screens.h"
 	"IniParser/ParserInfoFile.h"
-	"WorkFunction.h"
+	"WorkFunctions.h"
 	"Game.h"
 
 1363374469 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\shabbynet\shabbynet.cpp
@@ -771,25 +770,28 @@
 	"TemporaryImageInfo.h"
 	"Game.h"
 
-1387271842 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\textures.cpp
+1589021216 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\textures.cpp
 	<fstream>
 	"Textures.h"
 	"IniParser/ParserInfoFile.h"
-	"WorkFunction.h"
+	"WorkFunctions.h"
 	"Game.h"
 	"Defines.h"
 
 1364387175 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\thread\thread.cpp
 	"Thread.h"
 
-1363012579 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\workfunction.cpp
-	"WorkFunction.h"
-	<stdlib.h>
-
-1588988311 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturedave.cpp
-	"CreatureDave.h"
+1589021395 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\main_client.cpp
+	<ctime>
+	"canvas.hpp"
 	"Game.h"
-	"WorkFunction.h"
+	"IniParser/ParserInfoFile.h"
+	"IniParser/PostParsingStruct.h"
+	"WorkFunctions.h"
 	"Defines.h"
-	"KeysState.h"
+	"NetClient/NetClient.h"
+
+1589021011 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\workfunctions.cpp
+	"WorkFunctions.h"
+	<stdlib.h>
 

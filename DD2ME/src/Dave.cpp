@@ -3,10 +3,12 @@
 #include "Game.h"
 
 #include "IniParser/ParserInfoFile.h"
-#include "WorkFunction.h"
+#include "WorkFunctions.h"
 
-using namespace WorkFunction;
-using namespace ConvertFunction;
+using namespace WorkFunctions;
+using namespace ConvertFunctions;
+
+using namespace IniParser;
 
 Dave::Dave(Game* gameclass):
     s_GameClass(gameclass),
@@ -56,7 +58,7 @@ bool Dave::load(string PathToDavePack)
     s_DaveInfo = prs.getParsedFromFile(PathToDavePack + "dave.dat");
     if(!s_DaveInfo) return false;
     map<string, string>::iterator iter;
-    for ( iter = s_DaveInfo->s_Variables["info"].begin(); iter != s_DaveInfo->s_Variables["info"].end(); iter++ )
+    for ( iter = s_DaveInfo->getMapVariables()["info"].begin(); iter != s_DaveInfo->getMapVariables()["info"].end(); iter++ )
     {
         state = iter->first.substr(14);
         numberofframes = atoi( iter->second.c_str() );
@@ -78,7 +80,7 @@ bool Dave::createCache()
     int numberofframes, xSize, ySize;
     string state;
     map<string, string>::iterator iter;
-    for ( iter = s_DaveInfo->s_Variables["info"].begin(); iter != s_DaveInfo->s_Variables["info"].end(); iter++ )
+    for ( iter = s_DaveInfo->getMapVariables()["info"].begin(); iter != s_DaveInfo->getMapVariables()["info"].end(); iter++ )
     {
         state = iter->first.substr(14);
         numberofframes = atoi( iter->second.c_str() );

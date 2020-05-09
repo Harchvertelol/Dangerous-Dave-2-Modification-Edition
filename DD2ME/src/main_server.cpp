@@ -9,7 +9,7 @@ using namespace cnv;
 #include "IniParser/ParserInfoFile.h"
 #include "IniParser/PostParsingStruct.h"
 
-#include "WorkFunction.h"
+#include "WorkFunctions.h"
 
 int main(int argc, char** argv)
 {

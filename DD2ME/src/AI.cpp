@@ -2,13 +2,13 @@
 
 #include "Game.h"
 
-#include "WorkFunction.h"
+#include "WorkFunctions.h"
 #include "Defines.h"
 
-using namespace WorkFunction;
-using namespace MathFunction;
-using namespace GameFunction;
-using namespace ConvertFunction;
+using namespace WorkFunctions;
+using namespace MathFunctions;
+using namespace GameFunctions;
+using namespace ConvertFunctions;
 
 AI::AI(Game* gameclass):
     s_GameClass(gameclass)
@@ -82,7 +82,7 @@ bool AI::loadAI(CreatureMonster* monster)
 {
     luaL_dostring(monster->s_AILuaState, "math.randomseed(os.time())");
     luaL_dostring(monster->s_AILuaState, "function mainFunc()\nprint(\"Error: mainFunc is missed!\")\nend\nfunction setFirstState()\nprint(\"Error: setFirstState is missed!\")\nreturn \"errorstate\"\nend\nfunction onKill(type)\nend\nfunction onDamage(damage)\nend\n");
-    if(luaL_dofile(monster->s_AILuaState, (s_GameClass->s_Data->PathToMonsterPack + WorkFunction::ConvertFunction::itos(monster->s_Number) + "/intellect.lua").c_str()))
+    if(luaL_dofile(monster->s_AILuaState, (s_GameClass->s_Data->PathToMonsterPack + WorkFunctions::ConvertFunctions::itos(monster->s_Number) + "/intellect.lua").c_str()))
     {
         cout<<"Error! Intellect Lua file is missing!"<<endl;
         return false;

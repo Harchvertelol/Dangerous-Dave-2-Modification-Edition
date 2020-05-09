@@ -3,7 +3,6 @@
 #include <map>
 #include <cstring>
 #include "IniParser/PostParsingStruct.h"
-using namespace std;
 
 class Game;
 
@@ -13,9 +12,9 @@ class Level
         Level(Game*);
         ~Level();
         Game* s_GameClass;
-        PostParsingStruct* s_Params;
-        map<string, map<int,int> > s_Fields;
-        bool loadLevel(string);
+        IniParser::PostParsingStruct* s_Params;
+        std::map<std::string, std::map<int,int> > s_Fields;
+        bool loadLevel(std::string);
         void draw();
         int getTileType(int,int);
 };

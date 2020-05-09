@@ -2,15 +2,15 @@
 
 #include "Game.h"
 
-#include "WorkFunction.h"
+#include "WorkFunctions.h"
 #include "Defines.h"
 
 #include "Thread/Thread.h"
 
-using namespace WorkFunction;
-using namespace MathFunction;
-using namespace GameFunction;
-using namespace ConvertFunction;
+using namespace WorkFunctions;
+using namespace MathFunctions;
+using namespace GameFunctions;
+using namespace ConvertFunctions;
 
 FactoryMonsters::FactoryMonsters(Game* gameclass):
     s_GameClass(gameclass),

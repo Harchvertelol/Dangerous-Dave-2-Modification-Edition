@@ -8,8 +8,8 @@ class UserData
     public:
         UserData();
         ~UserData();
-        PostParsingStruct* s_UserInfo;
-        string s_IdServerConnected;
+        IniParser::PostParsingStruct* s_UserInfo;
+        std::string s_IdServerConnected;
 };
 
 #endif // USERDATA_H

@@ -1,9 +1,11 @@
 #include "Bonuses.h"
 
 #include "IniParser/ParserInfoFile.h"
-#include "WorkFunction.h"
+#include "WorkFunctions.h"
 
 #include "Game.h"
+
+using namespace IniParser;
 
 Bonuses::Bonuses(Game* gameclass):
     s_GameClass(gameclass),
@@ -60,16 +62,16 @@ bool Bonuses::load(string PathToBonusPack)
     int numberofbonuses = atoi( s_GlobBonusesInfo->getValue("info", "numberofbonuses").c_str() );
     for(int i = 0; i < numberofbonuses; i++)
     {
-        s_BonusesInfo[i] = prs.getParsedFromFile(PathToBonusPack + WorkFunction::ConvertFunction::itos(i+1) + ".info");
+        s_BonusesInfo[i] = prs.getParsedFromFile(PathToBonusPack + WorkFunctions::ConvertFunctions::itos(i+1) + ".info");
         if(!s_BonusesInfo[i]) return false;
-        s_BonusesBitmaps[i][0] = new Bitmap(PathToBonusPack + WorkFunction::ConvertFunction::itos(i+1) + ".bmp");
+        s_BonusesBitmaps[i][0] = new Bitmap(PathToBonusPack + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp");
         numberofframes = atoi ( s_BonusesInfo[i]->getValue("info", "numberofframes").c_str() );
         for(int j = 0; j < numberofframes; j++)
         {
-            s_BonusesBitmaps[i][j+1] = new Bitmap(PathToBonusPack + WorkFunction::ConvertFunction::itos(i+1) + "_" + WorkFunction::ConvertFunction::itos(j+1) + ".bmp");
+            s_BonusesBitmaps[i][j+1] = new Bitmap(PathToBonusPack + WorkFunctions::ConvertFunctions::itos(i+1) + "_" + WorkFunctions::ConvertFunctions::itos(j+1) + ".bmp");
             collisionAnalyze(i, j+1);
         }
-        s_BonusesBitmaps[i][numberofframes + 1] = new Bitmap(PathToBonusPack + WorkFunction::ConvertFunction::itos(i+1) + "_p.bmp");
+        s_BonusesBitmaps[i][numberofframes + 1] = new Bitmap(PathToBonusPack + WorkFunctions::ConvertFunctions::itos(i+1) + "_p.bmp");
         collisionAnalyze(i, numberofframes + 1);
     }
     return true;

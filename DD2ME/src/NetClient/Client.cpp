@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-#include "../WorkFunction.h"
+#include "../WorkFunctions.h"
 #include "../IniParser/ParserInfoFile.h"
 #include "../IniParser/PostParsingStruct.h"
 #include "NetClient.h"
@@ -13,9 +13,11 @@
 
 using namespace std;
 
-using namespace WorkFunction;
-using namespace ParserFunction;
+using namespace WorkFunctions;
+using namespace ParserFunctions;
 using namespace STRING_CONSTANTS;
+
+using namespace IniParser;
 
 Client::Client(NetClient* g):
     s_NetClient(g),
@@ -79,7 +81,7 @@ void Client::workStr(string s)
         s_NetClient->s_NetInfoStruct->s_Sleep_3 = false;
         int number = 1;
         map<string, map<string, string > >::iterator iter;
-        for(iter = pps->s_Variables.begin(); iter != pps->s_Variables.end(); iter++)
+        for(iter = pps->getMapVariables().begin(); iter != pps->getMapVariables().end(); iter++)
         {
             if(iter->first.find("Server") == 0)
             {

@@ -5,9 +5,6 @@
 #include "IniParser/PostParsingStruct.h"
 #include "Square.h"
 
-using namespace std;
-using namespace cnv;
-
 class Game;
 
 class Bonuses
@@ -16,17 +13,17 @@ class Bonuses
         Bonuses(Game*);
         ~Bonuses();
         Game* s_GameClass;
-        PostParsingStruct* s_GlobBonusesInfo;
-        map<int, PostParsingStruct*> s_BonusesInfo;
-        map<int, map<int, Bitmap* > > s_BonusesBitmaps;
-        map<int, map<int, Bitmap* > > s_BonusesCache;
-        map<int, map<int, Square> > s_Collisions;
+        IniParser::PostParsingStruct* s_GlobBonusesInfo;
+        std::map<int, IniParser::PostParsingStruct*> s_BonusesInfo;
+        std::map<int, std::map<int, Bitmap* > > s_BonusesBitmaps;
+        std::map<int, std::map<int, Bitmap* > > s_BonusesCache;
+        std::map<int, std::map<int, Square> > s_Collisions;
         bool s_CacheCreated;
-        bool load(string);
+        bool load(std::string);
         bool createCache();
-        void drawBonus(int bonus,int x,int y,bool anim = true);
-        void collisionAnalyze(int,int);
+        void drawBonus(int bonus, int x, int y, bool anim = true);
+        void collisionAnalyze(int, int);
         void deleteAllGDIObjects();
-        void createMaskTransparent(int,int,int);
+        void createMaskTransparent(int, int, int);
 };
 #endif

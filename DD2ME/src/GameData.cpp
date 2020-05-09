@@ -2,8 +2,10 @@
 
 #include "Game.h"
 #include "IniParser/ParserInfoFile.h"
-#include "WorkFunction.h"
+#include "WorkFunctions.h"
 #include "Defines.h"
+
+using namespace IniParser;
 
 GameData::GameData(Game* gameclass):
     s_ModSetted(false),
@@ -58,7 +60,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     PathToSoundPack = "PacksData/SoundPacks/" + s_IniFile->getValue("resources", "soundpack") + "/";
     PathToLevelPack = "PacksData/LevelPacks/" + s_IniFile->getValue("resources", "levelpack") + "/";
     PathToDavePack = "PacksData/DavePacks/" + s_IniFile->getValue("resources", "davepack") + "/";
-    if( s_IniFile->getValue("resources", "standard") == "true" ) s_IniFile->s_Variables["resources"]["modpack"] = "standardDave";
+    if( s_IniFile->getValue("resources", "standard") == "true" ) s_IniFile->getMapVariables()["resources"]["modpack"] = "standardDave";
     if( s_IniFile->getValue("resources", "modpack") != "")
     {
         s_NameMod = s_IniFile->getValue("resources", "modpack");
@@ -157,13 +159,13 @@ bool GameData::drawScreenState2()
     while(hlvl > 0 && scr < atoi( s_Screens->s_ChangeLevelInfo->getValue("info", "numberofscreens").c_str() ) )
     {
         scr++;
-        hlvl -= atoi( s_Screens->s_ChangeLevelInfo->getValue("screen_" + WorkFunction::ConvertFunction::itos(scr + 1), "numberoflevels").c_str() );
+        hlvl -= atoi( s_Screens->s_ChangeLevelInfo->getValue("screen_" + WorkFunctions::ConvertFunctions::itos(scr + 1), "numberoflevels").c_str() );
     }
-    hlvl += atoi( s_Screens->s_ChangeLevelInfo->getValue("screen_" + WorkFunction::ConvertFunction::itos(scr + 1), "numberoflevels").c_str() );
+    hlvl += atoi( s_Screens->s_ChangeLevelInfo->getValue("screen_" + WorkFunctions::ConvertFunctions::itos(scr + 1), "numberoflevels").c_str() );
     s_Screens->drawScreen("changelevelscreen", 0, 0, scr);
     int drawingBonus = atoi( s_Screens->s_ChangeLevelInfo->getValue("info", "numberofbonusfordave").c_str() );
-    int coordX = atoi( s_Screens->s_ChangeLevelInfo->getValue("screen_" + WorkFunction::ConvertFunction::itos(scr + 1), "x" + WorkFunction::ConvertFunction::itos(hlvl)).c_str() );
-    int coordY = atoi( s_Screens->s_ChangeLevelInfo->getValue("screen_" + WorkFunction::ConvertFunction::itos(scr + 1), "y" + WorkFunction::ConvertFunction::itos(hlvl)).c_str() );
+    int coordX = atoi( s_Screens->s_ChangeLevelInfo->getValue("screen_" + WorkFunctions::ConvertFunctions::itos(scr + 1), "x" + WorkFunctions::ConvertFunctions::itos(hlvl)).c_str() );
+    int coordY = atoi( s_Screens->s_ChangeLevelInfo->getValue("screen_" + WorkFunctions::ConvertFunctions::itos(scr + 1), "y" + WorkFunctions::ConvertFunctions::itos(hlvl)).c_str() );
     s_Bonuses->drawBonus(drawingBonus, coordX, coordY, false);
     s_GameClass->s_Gui->drawGuiState2();
     return true;

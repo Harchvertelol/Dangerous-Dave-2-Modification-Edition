@@ -1,7 +1,7 @@
 #include "Level.h"
 
 #include "IniParser/ParserInfoFile.h"
-#include "WorkFunction.h"
+#include "WorkFunctions.h"
 #include "Defines.h"
 #include "Game.h"
 
@@ -9,9 +9,11 @@
 #include <iostream>
 #include <stdlib.h>
 
-using namespace WorkFunction;
-using namespace ParserFunction;
-using namespace MathFunction;
+using namespace WorkFunctions;
+using namespace ParserFunctions;
+using namespace MathFunctions;
+
+using namespace IniParser;
 
 Level::Level(Game* gameclass):
     s_GameClass(gameclass),
@@ -51,7 +53,7 @@ bool Level::loadLevel(string file_name)
             {
                 f.getline(buf, FILE_READ_SIZE_STR);
                 str = buf;
-                i = WorkFunction::ParserFunction::splitMass(field, size_y*size_x, i, str, " ") - 1;
+                i = WorkFunctions::ParserFunctions::splitMass(field, size_y*size_x, i, str, " ") - 1;
             }
             f.getline(buf, FILE_READ_SIZE_STR);
             str = buf;

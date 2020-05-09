@@ -1,5 +1,8 @@
 #ifndef DEFINES_H
 #define DEFINES_H
+
+#include <string>
+
 enum WORK_CONSTANTS
 {
     FILE_READ_SIZE_STR = 5000,
@@ -8,9 +11,10 @@ enum WORK_CONSTANTS
 };
 namespace STRING_CONSTANTS
 {
-    const string SPLITTER_STR_VARIABLE = ";";
-    const string MISSING_ID_SERVER = "-1";
-    const string SC_TITLE_WINDOW = "DD2 Remake: ME v0.4 pre-beta";
+    const std::string SPLITTER_STR_VARIABLE = ";";
+    const std::string MISSING_ID_SERVER = "-1";
+    const std::string SC_TITLE_WINDOW = "DD2 Remake: ME v0.5 pre-beta";
+    const std::string DEFAULT_FOLDER_SPLITTER = "/";
 }
 enum TILEMASK
 {

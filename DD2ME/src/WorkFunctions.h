@@ -3,18 +3,21 @@
 #include <iostream>
 #include <sstream>
 #include <map>
+
+#include "Defines.h"
+
 #include "Square.h"
 
 using namespace std;
 
-namespace WorkFunction
+namespace WorkFunctions
 {
-    namespace WordFunction
+    namespace WordFunctions
     {
         string FirstWord(string);
         string RemoveFirstWord(string);
     };
-    namespace ParserFunction
+    namespace ParserFunctions
     {
         string getNameMainVariable(string);
         string getNameSecondaryVariable(string);
@@ -24,15 +27,22 @@ namespace WorkFunction
         string addMainVariableString(string,string,string);
         string addSecondaryVariableString(string,string,string,string);
     };
-    namespace ConvertFunction
+    namespace ConvertFunctions
     {
         string itos(int);
+        std::string ftos(float number);
     };
-    namespace MathFunction
+    namespace MathFunctions
     {
         int roundNumber(int,int,int);
     };
-    namespace GameFunction
+    //! Функции работы с файлами.
+    namespace FileFunctions
+    {
+        bool isFileExists(std::string name);
+        bool createFolders(std::string folder, std::string foldersplitter = STRING_CONSTANTS::DEFAULT_FOLDER_SPLITTER);
+    };
+    namespace GameFunctions
     {
         bool testCollision(int,int,int,int,Square,Square,bool stand = false, string where = "up");
     };

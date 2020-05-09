@@ -4,8 +4,6 @@
 #include "canvas.hpp"
 #include "Square.h"
 #include "IniParser/PostParsingStruct.h"
-using namespace cnv;
-using namespace std;
 
 class Game;
 
@@ -15,18 +13,18 @@ class Monsters
         Monsters(Game*);
         ~Monsters();
         Game* s_GameClass;
-        PostParsingStruct* s_GlobMonstersInfo;
-        map<int, PostParsingStruct*> s_MonstersInfo;
-        map<int, map<string, map<int, Bitmap*> > > s_Bitmaps;
-        map<int, map<string, map<int, Bitmap*> > > s_CacheImages;
-        map<int, map<string, map<int, Square> > > s_Collisions;
+        IniParser::PostParsingStruct* s_GlobMonstersInfo;
+        std::map<int, IniParser::PostParsingStruct*> s_MonstersInfo;
+        std::map<int, std::map<std::string, std::map<int, Bitmap*> > > s_Bitmaps;
+        std::map<int, std::map<std::string, std::map<int, Bitmap*> > > s_CacheImages;
+        std::map<int, std::map<std::string, std::map<int, Square> > > s_Collisions;
         bool s_CacheCreated;
-        bool load(string);
-        bool loadMonster(string,int);
-        void collisionAnalyze(int,string,int);
+        bool load(std::string);
+        bool loadMonster(std::string, int);
+        void collisionAnalyze(int, std::string, int);
         bool createCache();
-        void drawMonster(int,string,int,int,int);
+        void drawMonster(int, std::string, int, int, int);
         void deleteAllGDIObjects();
-        void createMaskTransparent(int,int,int);
+        void createMaskTransparent(int, int, int);
 };
 #endif

@@ -11,7 +11,7 @@
 #include "Gui.h"
 #include "KeysState.h"
 #include "canvas.hpp"
-using namespace cnv;
+
 class Game
 {
     public:
@@ -20,7 +20,7 @@ class Game
         Window* s_Window;
         GameInfo* s_GameInfo;
         DisplayStruct* s_DisplayStruct;
-        PostParsingStruct* s_IniFile;
+        IniParser::PostParsingStruct* s_IniFile;
         GameData* s_Data;
         StateManager* s_StateManager;
         FactoryTemporaryImages* s_FactoryTmpImgs;
@@ -53,14 +53,14 @@ class Game
         void startGame(int);
         void play();
         void drawAll();
-        bool changeLevel(int,bool switchstate = true);
+        bool changeLevel(int, bool switchstate = true);
         bool changeNextLevel(bool switchstate = true);
         void onTimer(unsigned int);
         void configureForGame();
-        PostParsingStruct* getObjects();
-        void setObjects(PostParsingStruct*);
+        IniParser::PostParsingStruct* getObjects();
+        void setObjects(IniParser::PostParsingStruct*);
         void processAllEvents(int);
-        bool insertDave(int,int,string);
+        bool insertDave(int, int, std::string);
         bool removeDave(int);
         void deleteAllGDIObjects();
 };

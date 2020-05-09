@@ -16,9 +16,9 @@ class Screens
         Screens(Game*);
         ~Screens();
         Game* s_GameClass;
-        PostParsingStruct* s_ScreensInfo;
-        PostParsingStruct* s_ChangeLevelInfo;
-        PostParsingStruct* s_MainScreenInfo;
+        IniParser::PostParsingStruct* s_ScreensInfo;
+        IniParser::PostParsingStruct* s_ChangeLevelInfo;
+        IniParser::PostParsingStruct* s_MainScreenInfo;
         map<string, Bitmap*> s_StandardScreens;
         map<string, map<int, Bitmap*> > s_MCScreens;
         bool s_CacheCreated;

@@ -2,23 +2,42 @@
 #include <iostream>
 #include "ParserInfoFile.h"
 #include "PostParsingStruct.h"
+#include "../WorkFunctions.h"
 #include "../Defines.h"
-#include "../WorkFunction.h"
 using namespace std;
-using namespace WorkFunction;
-using namespace ParserFunction;
+using namespace WorkFunctions;
+using namespace ParserFunctions;
+using namespace IniParser;
 
-ParserInfoFile::ParserInfoFile()
+IniParser::ParserInfoFile::ParserInfoFile()
 {
     //...
 }
 
-ParserInfoFile::~ParserInfoFile()
+IniParser::ParserInfoFile::~ParserInfoFile()
 {
     //...
 }
 
-PostParsingStruct* ParserInfoFile::getParsedFromFile(string s_FileName, bool log)
+bool IniParser::ParserInfoFile::writeParsedToFile(PostParsingStruct* pps, string filename, bool log)
+{
+    ofstream FileInfo(filename.c_str());
+    if(!FileInfo) return false;
+    map<string, map<string, string> >::iterator iter;
+    for(iter = pps->getMapVariables().begin(); iter != pps->getMapVariables().end(); iter++)
+    {
+        map<string, string>::iterator iter1;
+        FileInfo << "[" + iter->first + "]" << endl;
+        for(iter1 = iter->second.begin(); iter1 != iter->second.end(); iter1++)
+        {
+            FileInfo << iter1->first + "=" + iter1->second << endl;
+        }
+        FileInfo << endl;
+    }
+    return true;
+}
+
+PostParsingStruct* IniParser::ParserInfoFile::getParsedFromFile(string s_FileName, bool log)
 {
     char buf[FILE_READ_SIZE_STR];
     string str;
@@ -26,7 +45,7 @@ PostParsingStruct* ParserInfoFile::getParsedFromFile(string s_FileName, bool log
     string NameSecondaryVariable;
     string ValueSecondaryVariable;
     PostParsingStruct* s_PrsStr = new PostParsingStruct;
-    map<string, map<string, string> >* s_Variables = &s_PrsStr->s_Variables;
+    map<string, map<string, string> >* s_Variables = &s_PrsStr->getMapVariables();
     ifstream FileInfo(s_FileName.c_str());
     if(!FileInfo)
     {
@@ -62,19 +81,20 @@ PostParsingStruct* ParserInfoFile::getParsedFromFile(string s_FileName, bool log
         }
         NameMainVariable = getNameMainVariable(str);
     }
+    FileInfo.close();
     return s_PrsStr;
 }
 
-PostParsingStruct* ParserInfoFile::getParsedFromString(string str_s, string splitter)
+PostParsingStruct* IniParser::ParserInfoFile::getParsedFromString(string str_s, string splitter)
 {
     map<int, string> str_mas;
-	int numberofstr = WorkFunction::ParserFunction::splitMassString(&str_mas, -1, 0, str_s, splitter);
+	int numberofstr = WorkFunctions::ParserFunctions::splitMassString(&str_mas, -1, 0, str_s, splitter);
     string str;
     string NameMainVariable;
     string NameSecondaryVariable;
     string ValueSecondaryVariable;
     PostParsingStruct* s_PrsStr = new PostParsingStruct;
-    map<string, map<string, string> >* s_Variables = &s_PrsStr->s_Variables;
+    map<string, map<string, string> >* s_Variables = &s_PrsStr->getMapVariables();
     str = str_mas[0];
     NameMainVariable = getNameMainVariable(str);
     for(int i = 0; i < numberofstr;)
@@ -106,11 +126,11 @@ PostParsingStruct* ParserInfoFile::getParsedFromString(string str_s, string spli
     return s_PrsStr;
 }
 
-string ParserInfoFile::convertPostParsingStructToString(PostParsingStruct* pps, string splitter)
+string IniParser::ParserInfoFile::convertPostParsingStructToString(PostParsingStruct* pps, string splitter)
 {
     string str = "";
     map<string, map<string, string> >::iterator iter;
-    for(iter = pps->s_Variables.begin(); iter != pps->s_Variables.end(); iter++)
+    for(iter = pps->getMapVariables().begin(); iter != pps->getMapVariables().end(); iter++)
     {
         map<string, string>::iterator iter1;
         str += "[" + iter->first + "]" + splitter;

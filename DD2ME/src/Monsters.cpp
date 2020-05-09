@@ -3,13 +3,15 @@
 #include "Game.h"
 
 #include "IniParser/ParserInfoFile.h"
-#include "WorkFunction.h"
+#include "WorkFunctions.h"
 #include "Defines.h"
 
-using namespace WorkFunction;
-using namespace MathFunction;
-using namespace GameFunction;
-using namespace ConvertFunction;
+using namespace WorkFunctions;
+using namespace MathFunctions;
+using namespace GameFunctions;
+using namespace ConvertFunctions;
+
+using namespace IniParser;
 
 Monsters::Monsters(Game* gameclass):
     s_GameClass(gameclass),
@@ -87,7 +89,7 @@ bool Monsters::loadMonster(string PathToMonster, int number)
     s_MonstersInfo[number] = prs.getParsedFromFile(PathToMonster + "monster.info");
     if(!s_MonstersInfo[number]) return false;
     map<string, string>::iterator iter;
-    for ( iter = s_MonstersInfo[number]->s_Variables["info"].begin(); iter != s_MonstersInfo[number]->s_Variables["info"].end(); iter++ )
+    for ( iter = s_MonstersInfo[number]->getMapVariables()["info"].begin(); iter != s_MonstersInfo[number]->getMapVariables()["info"].end(); iter++ )
     {
         state = iter->first.substr(14);
         numberofframes = atoi( iter->second.c_str() );
@@ -116,7 +118,7 @@ bool Monsters::createCache()
     for(int number = 0; number < numberofmonsters; number++)
     {
         map<string, string>::iterator iter;
-        for ( iter = s_MonstersInfo[number]->s_Variables["info"].begin(); iter != s_MonstersInfo[number]->s_Variables["info"].end(); iter++ )
+        for ( iter = s_MonstersInfo[number]->getMapVariables()["info"].begin(); iter != s_MonstersInfo[number]->getMapVariables()["info"].end(); iter++ )
         {
             state = iter->first.substr(14);
             numberofframes = atoi( iter->second.c_str() );

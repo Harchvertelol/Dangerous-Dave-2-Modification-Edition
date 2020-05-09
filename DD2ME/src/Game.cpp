@@ -1,10 +1,12 @@
 #include "Game.h"
 
-#include "WorkFunction.h"
+#include "WorkFunctions.h"
 
 #include "Defines.h"
 
 #include <ctime>
+
+using namespace IniParser;
 
 namespace
 {
@@ -150,7 +152,7 @@ bool Game::changeLevel(int number, bool switchstate)
     }
     s_GameInfo->s_CurrentLevel = number;
     s_GameInfo->s_FactoryMonsters->clear();
-    if(!s_Data->s_Level->loadLevel( s_Data->PathToLevelPack + WorkFunction::ConvertFunction::itos(number))) return false;
+    if(!s_Data->s_Level->loadLevel( s_Data->PathToLevelPack + WorkFunctions::ConvertFunctions::itos(number))) return false;
     //...
     map<int, CreatureDave*>::iterator iter;
     for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)
@@ -333,18 +335,18 @@ PostParsingStruct* Game::getObjects()
         if(iter->second->s_DeleteNow == false)
         {
             monsterid++;
-            cpps->setValue("monster_" + WorkFunction::ConvertFunction::itos(monsterid), "coordX", WorkFunction::ConvertFunction::itos(iter->second->s_CoordX) );
-            cpps->setValue("monster_" + WorkFunction::ConvertFunction::itos(monsterid), "coordY", WorkFunction::ConvertFunction::itos(iter->second->s_CoordY) );
-            cpps->setValue("monster_" + WorkFunction::ConvertFunction::itos(monsterid), "currentLives", WorkFunction::ConvertFunction::itos(iter->second->s_CurrentLives) );
-            cpps->setValue("monster_" + WorkFunction::ConvertFunction::itos(monsterid), "state", iter->second->s_State);
-            cpps->setValue("monster_" + WorkFunction::ConvertFunction::itos(monsterid), "number", WorkFunction::ConvertFunction::itos(iter->second->s_Number) );
-            cpps->setValue("monster_" + WorkFunction::ConvertFunction::itos(monsterid), "numberOfAction", WorkFunction::ConvertFunction::itos(iter->second->s_NumberOfAction) );
-            cpps->setValue("monster_" + WorkFunction::ConvertFunction::itos(monsterid), "dopNumberOfAction", WorkFunction::ConvertFunction::itos(iter->second->s_AdditionalNumberOfAction) );
-            cpps->setValue("monster_" + WorkFunction::ConvertFunction::itos(monsterid), "id", WorkFunction::ConvertFunction::itos(monsterid) );
+            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "coordX", WorkFunctions::ConvertFunctions::itos(iter->second->s_CoordX) );
+            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "coordY", WorkFunctions::ConvertFunctions::itos(iter->second->s_CoordY) );
+            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "currentLives", WorkFunctions::ConvertFunctions::itos(iter->second->s_CurrentLives) );
+            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "state", iter->second->s_State);
+            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "number", WorkFunctions::ConvertFunctions::itos(iter->second->s_Number) );
+            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "numberOfAction", WorkFunctions::ConvertFunctions::itos(iter->second->s_NumberOfAction) );
+            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "dopNumberOfAction", WorkFunctions::ConvertFunctions::itos(iter->second->s_AdditionalNumberOfAction) );
+            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "id", WorkFunctions::ConvertFunctions::itos(monsterid) );
             map<string, string>::iterator iter1;
             for( iter1 = iter->second->s_GlobalValues.begin(); iter1 != iter->second->s_GlobalValues.end(); iter1++)
             {
-                cpps->setValue("GlobalValues_monster_" + WorkFunction::ConvertFunction::itos(monsterid), iter1->first, iter1->second );
+                cpps->setValue("GlobalValues_monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), iter1->first, iter1->second );
             }
         }
     map<int, CreatureDave*>::iterator iter1;
@@ -352,18 +354,18 @@ PostParsingStruct* Game::getObjects()
     {
         //daveid++;
         daveid = iter1->first;
-        PostParsingStruct* gdpps = iter1->second->getListOfVariables("dave_" + WorkFunction::ConvertFunction::itos(daveid));
+        PostParsingStruct* gdpps = iter1->second->getListOfVariables("dave_" + WorkFunctions::ConvertFunctions::itos(daveid));
         cpps->addPostParsingStruct(gdpps);
         delete gdpps;
 
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "id", WorkFunction::ConvertFunction::itos(daveid) );
+        cpps->setValue("dave_" + WorkFunctions::ConvertFunctions::itos(daveid), "id", WorkFunctions::ConvertFunctions::itos(daveid) );
         //...
-        cpps->setValue("KeysState_dave_" + WorkFunction::ConvertFunction::itos(daveid), "keyLeft", WorkFunction::ConvertFunction::itos( (int)iter1->second->s_KeysState->s_KeyLeft) );
-        cpps->setValue("KeysState_dave_" + WorkFunction::ConvertFunction::itos(daveid), "keyRight", WorkFunction::ConvertFunction::itos( (int)iter1->second->s_KeysState->s_KeyRight) );
-        cpps->setValue("KeysState_dave_" + WorkFunction::ConvertFunction::itos(daveid), "keyUp", WorkFunction::ConvertFunction::itos( (int)iter1->second->s_KeysState->s_KeyUp) );
-        cpps->setValue("KeysState_dave_" + WorkFunction::ConvertFunction::itos(daveid), "keyDown", WorkFunction::ConvertFunction::itos( (int)iter1->second->s_KeysState->s_KeyDown) );
-        cpps->setValue("KeysState_dave_" + WorkFunction::ConvertFunction::itos(daveid), "keyShoot", WorkFunction::ConvertFunction::itos( (int)iter1->second->s_KeysState->s_KeyShoot) );
-        cpps->setValue("KeysState_dave_" + WorkFunction::ConvertFunction::itos(daveid), "keyJump", WorkFunction::ConvertFunction::itos( (int)iter1->second->s_KeysState->s_KeyJump) );
+        cpps->setValue("KeysState_dave_" + WorkFunctions::ConvertFunctions::itos(daveid), "keyLeft", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyLeft) );
+        cpps->setValue("KeysState_dave_" + WorkFunctions::ConvertFunctions::itos(daveid), "keyRight", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyRight) );
+        cpps->setValue("KeysState_dave_" + WorkFunctions::ConvertFunctions::itos(daveid), "keyUp", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyUp) );
+        cpps->setValue("KeysState_dave_" + WorkFunctions::ConvertFunctions::itos(daveid), "keyDown", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyDown) );
+        cpps->setValue("KeysState_dave_" + WorkFunctions::ConvertFunctions::itos(daveid), "keyShoot", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyShoot) );
+        cpps->setValue("KeysState_dave_" + WorkFunctions::ConvertFunctions::itos(daveid), "keyJump", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyJump) );
     }
     int size_x_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeX").c_str() );
     int size_y_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeY").c_str() );
@@ -371,23 +373,23 @@ PostParsingStruct* Game::getObjects()
     {
         if(s_Data->s_Level->s_Fields["FieldBonuses"][i] != 0)
         {
-            cpps->setValue("bonuse_" + WorkFunction::ConvertFunction::itos(i), "i", WorkFunction::ConvertFunction::itos(s_Data->s_Level->s_Fields["FieldBonuses"][i]));
-            cpps->setValue("bonuse_" + WorkFunction::ConvertFunction::itos(i), "id", WorkFunction::ConvertFunction::itos(i) );
+            cpps->setValue("bonuse_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields["FieldBonuses"][i]));
+            cpps->setValue("bonuse_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
         }
         if(s_Data->s_Level->s_Fields["FieldBonusDoors"][i] != 0)
         {
-            cpps->setValue("bonusdoor_" + WorkFunction::ConvertFunction::itos(i), "i", WorkFunction::ConvertFunction::itos(s_Data->s_Level->s_Fields["FieldBonusDoors"][i]));
-            cpps->setValue("bonusdoor_" + WorkFunction::ConvertFunction::itos(i), "id", WorkFunction::ConvertFunction::itos(i) );
+            cpps->setValue("bonusdoor_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields["FieldBonusDoors"][i]));
+            cpps->setValue("bonusdoor_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
         }
         if(s_Data->s_Level->s_Fields["FieldDoors"][i] != 0)
         {
-            cpps->setValue("door_" + WorkFunction::ConvertFunction::itos(i), "i", WorkFunction::ConvertFunction::itos(s_Data->s_Level->s_Fields["FieldDoors"][i]));
-            cpps->setValue("door_" + WorkFunction::ConvertFunction::itos(i), "id", WorkFunction::ConvertFunction::itos(i) );
+            cpps->setValue("door_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields["FieldDoors"][i]));
+            cpps->setValue("door_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
         }
         if(s_Data->s_Level->s_Fields["FieldExitLevelDoors"][i] != 0)
         {
-            cpps->setValue("exitleveldoor_" + WorkFunction::ConvertFunction::itos(i), "i", WorkFunction::ConvertFunction::itos(s_Data->s_Level->s_Fields["FieldExitLevelDoors"][i]));
-            cpps->setValue("exitleveldoor_" + WorkFunction::ConvertFunction::itos(i), "id", WorkFunction::ConvertFunction::itos(i) );
+            cpps->setValue("exitleveldoor_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields["FieldExitLevelDoors"][i]));
+            cpps->setValue("exitleveldoor_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
         }
     }
     return cpps;
@@ -420,7 +422,7 @@ void Game::setObjects(PostParsingStruct* cpps)
     }
     string monsterid = "";
     map<string, map<string, string> >::iterator iter;
-    for( iter = cpps->s_Variables.begin(); iter != cpps->s_Variables.end(); iter++)
+    for( iter = cpps->getMapVariables().begin(); iter != cpps->getMapVariables().end(); iter++)
         if(iter->first.find("monster_") == 0)
         {
             monsterid = cpps->getValue(iter->first, "id");
@@ -437,7 +439,7 @@ void Game::setObjects(PostParsingStruct* cpps)
             s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_NumberOfAction = numberOfAction;
             s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_AdditionalNumberOfAction = dopNumberOfAction;
             map<string, string>::iterator iter1;
-            for( iter1 = cpps->s_Variables["GlobalValues_monster_" + monsterid].begin(); iter1 != cpps->s_Variables["GlobalValues_monster_" + monsterid].end(); iter1++)
+            for( iter1 = cpps->getMapVariables()["GlobalValues_monster_" + monsterid].begin(); iter1 != cpps->getMapVariables()["GlobalValues_monster_" + monsterid].end(); iter1++)
             {
                 s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_GlobalValues[iter1->first] = iter1->second;
             }
@@ -498,10 +500,10 @@ bool Game::insertDave(int id, int numberOfSpawn, string nickname)
         cout<<"Error: this level haven't point of spawn with this number."<<endl;
         return false;
     }
-    str = s_Data->s_Level->s_Params->getValue("daves", "dave" + WorkFunction::ConvertFunction::itos(numberOfSpawn) + "X");
+    str = s_Data->s_Level->s_Params->getValue("daves", "dave" + WorkFunctions::ConvertFunctions::itos(numberOfSpawn) + "X");
     if(str == "") str = "0";
     s_Dave->s_CoordX = 16*atoi( str.c_str() );
-    str = s_Data->s_Level->s_Params->getValue("daves", "dave" + WorkFunction::ConvertFunction::itos(numberOfSpawn) + "Y");
+    str = s_Data->s_Level->s_Params->getValue("daves", "dave" + WorkFunctions::ConvertFunctions::itos(numberOfSpawn) + "Y");
     if(str == "") str = "0";
     s_Dave->s_CoordY = 16*atoi( str.c_str() );
     s_Dave->s_NickName = nickname;

@@ -18,7 +18,7 @@ class NetClient
         Client* s_Client;
         NetInfoStruct* s_NetInfoStruct;
         Game* s_GameClass;
-        PostParsingStruct* s_NetInfo;
+        IniParser::PostParsingStruct* s_NetInfo;
         bool connect();
         bool netGameStartWork();
         bool getServerList();

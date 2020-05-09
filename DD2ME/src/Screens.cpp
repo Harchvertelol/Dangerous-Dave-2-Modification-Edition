@@ -1,9 +1,11 @@
 #include "Screens.h"
 
 #include "IniParser/ParserInfoFile.h"
-#include "WorkFunction.h"
+#include "WorkFunctions.h"
 
 #include "Game.h"
+
+using namespace IniParser;
 
 Screens::Screens(Game* gameclass):
     s_GameClass(gameclass),
@@ -80,9 +82,9 @@ bool Screens::load(string PathToScreenPack)
     s_StandardScreens["flybackground"] = new Bitmap(PathToScreenPack + flybackground + ".bmp");
     s_StandardScreens["endscreen"] = new Bitmap(PathToScreenPack + endscreen + ".bmp");
     numberofscreens = atoi( s_MainScreenInfo->getValue("info", "numberofscreens").c_str() );
-    for(int i = 0; i < numberofscreens; i++) s_MCScreens["mainscreen"][i] = new Bitmap(PathToScreenPack + mainscreenprefix + WorkFunction::ConvertFunction::itos(i+1) + ".bmp");
+    for(int i = 0; i < numberofscreens; i++) s_MCScreens["mainscreen"][i] = new Bitmap(PathToScreenPack + mainscreenprefix + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp");
     numberofscreens = atoi( s_ChangeLevelInfo->getValue("info", "numberofscreens").c_str() );
-    for(int i = 0; i < numberofscreens; i++) s_MCScreens["changelevelscreen"][i] = new Bitmap(PathToScreenPack + changelevelprefix + WorkFunction::ConvertFunction::itos(i+1) + ".bmp");
+    for(int i = 0; i < numberofscreens; i++) s_MCScreens["changelevelscreen"][i] = new Bitmap(PathToScreenPack + changelevelprefix + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp");
     return true;
 }
 

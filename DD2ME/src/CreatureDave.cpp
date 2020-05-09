@@ -2,15 +2,17 @@
 
 #include "Game.h"
 
-#include "WorkFunction.h"
+#include "WorkFunctions.h"
 #include "Defines.h"
 
 #include "KeysState.h"
 
-using namespace WorkFunction;
-using namespace MathFunction;
-using namespace GameFunction;
-using namespace ConvertFunction;
+using namespace WorkFunctions;
+using namespace MathFunctions;
+using namespace GameFunctions;
+using namespace ConvertFunctions;
+
+using namespace IniParser;
 
 CreatureDave::CreatureDave(Game* gameclass):
     s_GameClass(gameclass),
@@ -904,12 +906,12 @@ void CreatureDave::calculateDoKey()
 PostParsingStruct* CreatureDave::getKeys(string mainvariablename, PostParsingStruct* cpps)
 {
     if(!cpps) cpps = new PostParsingStruct;
-    cpps->setValue(mainvariablename, "s_KeyLeft", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyLeft) );
-    cpps->setValue(mainvariablename, "s_KeyRight", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyRight) );
-    cpps->setValue(mainvariablename, "s_KeyUp", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyUp) );
-    cpps->setValue(mainvariablename, "s_KeyDown", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyDown) );
-    cpps->setValue(mainvariablename, "s_KeyShoot", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyShoot) );
-    cpps->setValue(mainvariablename, "s_KeyJump", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyJump) );
+    cpps->setValue(mainvariablename, "s_KeyLeft", WorkFunctions::ConvertFunctions::itos( (int)s_KeysState->s_KeyLeft) );
+    cpps->setValue(mainvariablename, "s_KeyRight", WorkFunctions::ConvertFunctions::itos( (int)s_KeysState->s_KeyRight) );
+    cpps->setValue(mainvariablename, "s_KeyUp", WorkFunctions::ConvertFunctions::itos( (int)s_KeysState->s_KeyUp) );
+    cpps->setValue(mainvariablename, "s_KeyDown", WorkFunctions::ConvertFunctions::itos( (int)s_KeysState->s_KeyDown) );
+    cpps->setValue(mainvariablename, "s_KeyShoot", WorkFunctions::ConvertFunctions::itos( (int)s_KeysState->s_KeyShoot) );
+    cpps->setValue(mainvariablename, "s_KeyJump", WorkFunctions::ConvertFunctions::itos( (int)s_KeysState->s_KeyJump) );
     return cpps;
 }
 
@@ -956,31 +958,31 @@ void CreatureDave::mergeDave(CreatureDave* cr)
 PostParsingStruct* CreatureDave::getListOfVariables(string mainvariablename, PostParsingStruct* dpps)
 {
     if(!dpps) dpps = new PostParsingStruct;
-    dpps->setValue(mainvariablename, "coordX", WorkFunction::ConvertFunction::itos(s_CoordX) );
-    dpps->setValue(mainvariablename, "coordY", WorkFunction::ConvertFunction::itos(s_CoordY) );
-    dpps->setValue(mainvariablename, "currentHealth", WorkFunction::ConvertFunction::itos(s_CurrentHealth) );
+    dpps->setValue(mainvariablename, "coordX", WorkFunctions::ConvertFunctions::itos(s_CoordX) );
+    dpps->setValue(mainvariablename, "coordY", WorkFunctions::ConvertFunctions::itos(s_CoordY) );
+    dpps->setValue(mainvariablename, "currentHealth", WorkFunctions::ConvertFunctions::itos(s_CurrentHealth) );
     dpps->setValue(mainvariablename, "state", s_State);
-    dpps->setValue(mainvariablename, "numberOfAction", WorkFunction::ConvertFunction::itos(s_NumberOfAction) );
-    dpps->setValue(mainvariablename, "dopNumberOfAction", WorkFunction::ConvertFunction::itos(s_AdditionalNumberOfAction) );
-    dpps->setValue(mainvariablename, "CurrentPoints", WorkFunction::ConvertFunction::itos(s_CurrentPoints) );
-    dpps->setValue(mainvariablename, "MaxHealth", WorkFunction::ConvertFunction::itos(s_MaxHealth) );
-    dpps->setValue(mainvariablename, "Cartridges", WorkFunction::ConvertFunction::itos(s_Cartridges) );
-    dpps->setValue(mainvariablename, "MaxCartridges", WorkFunction::ConvertFunction::itos(s_MaxCartridges) );
-    dpps->setValue(mainvariablename, "JumpStep", WorkFunction::ConvertFunction::itos(s_JumpStep) );
-    dpps->setValue(mainvariablename, "NumberOfTilesJump", WorkFunction::ConvertFunction::itos(s_NumberOfTilesJump) );
-    dpps->setValue(mainvariablename, "FreezeJump", WorkFunction::ConvertFunction::itos(s_FreezeJump) );
-    dpps->setValue(mainvariablename, "Acceleration", WorkFunction::ConvertFunction::itos(s_Acceleration) );
-    dpps->setValue(mainvariablename, "TimeDoorOpen", WorkFunction::ConvertFunction::itos(s_TimeDoorOpen) );
+    dpps->setValue(mainvariablename, "numberOfAction", WorkFunctions::ConvertFunctions::itos(s_NumberOfAction) );
+    dpps->setValue(mainvariablename, "dopNumberOfAction", WorkFunctions::ConvertFunctions::itos(s_AdditionalNumberOfAction) );
+    dpps->setValue(mainvariablename, "CurrentPoints", WorkFunctions::ConvertFunctions::itos(s_CurrentPoints) );
+    dpps->setValue(mainvariablename, "MaxHealth", WorkFunctions::ConvertFunctions::itos(s_MaxHealth) );
+    dpps->setValue(mainvariablename, "Cartridges", WorkFunctions::ConvertFunctions::itos(s_Cartridges) );
+    dpps->setValue(mainvariablename, "MaxCartridges", WorkFunctions::ConvertFunctions::itos(s_MaxCartridges) );
+    dpps->setValue(mainvariablename, "JumpStep", WorkFunctions::ConvertFunctions::itos(s_JumpStep) );
+    dpps->setValue(mainvariablename, "NumberOfTilesJump", WorkFunctions::ConvertFunctions::itos(s_NumberOfTilesJump) );
+    dpps->setValue(mainvariablename, "FreezeJump", WorkFunctions::ConvertFunctions::itos(s_FreezeJump) );
+    dpps->setValue(mainvariablename, "Acceleration", WorkFunctions::ConvertFunctions::itos(s_Acceleration) );
+    dpps->setValue(mainvariablename, "TimeDoorOpen", WorkFunctions::ConvertFunctions::itos(s_TimeDoorOpen) );
     dpps->setValue(mainvariablename, "StateBeforeOpenDoor", s_StateBeforeOpenDoor);
     dpps->setValue(mainvariablename, "HowDoorOpen", s_HowDoorOpen);
     dpps->setValue(mainvariablename, "DopState", s_DopState);
-    dpps->setValue(mainvariablename, "OldAnSt", WorkFunction::ConvertFunction::itos(s_OldAnSt) );
-    dpps->setValue(mainvariablename, "OldNumberOfAction", WorkFunction::ConvertFunction::itos(s_OldNumberOfAction) );
-    dpps->setValue(mainvariablename, "ShootNow", WorkFunction::ConvertFunction::itos(s_ShootNow) );
-    dpps->setValue(mainvariablename, "ScreenCoordX", WorkFunction::ConvertFunction::itos(s_ScreenCoordX) );
-    dpps->setValue(mainvariablename, "ScreenCoordY", WorkFunction::ConvertFunction::itos(s_ScreenCoordY) );
-    dpps->setValue(mainvariablename, "ControlJumpPressed", WorkFunction::ConvertFunction::itos( (bool)s_ControlJumpPressed) );
-    dpps->setValue(mainvariablename, "ControlShootPressed", WorkFunction::ConvertFunction::itos( (bool)s_ControlShootPressed) );
+    dpps->setValue(mainvariablename, "OldAnSt", WorkFunctions::ConvertFunctions::itos(s_OldAnSt) );
+    dpps->setValue(mainvariablename, "OldNumberOfAction", WorkFunctions::ConvertFunctions::itos(s_OldNumberOfAction) );
+    dpps->setValue(mainvariablename, "ShootNow", WorkFunctions::ConvertFunctions::itos(s_ShootNow) );
+    dpps->setValue(mainvariablename, "ScreenCoordX", WorkFunctions::ConvertFunctions::itos(s_ScreenCoordX) );
+    dpps->setValue(mainvariablename, "ScreenCoordY", WorkFunctions::ConvertFunctions::itos(s_ScreenCoordY) );
+    dpps->setValue(mainvariablename, "ControlJumpPressed", WorkFunctions::ConvertFunctions::itos( (bool)s_ControlJumpPressed) );
+    dpps->setValue(mainvariablename, "ControlShootPressed", WorkFunctions::ConvertFunctions::itos( (bool)s_ControlShootPressed) );
     dpps->setValue(mainvariablename, "NickName", s_NickName );
     return dpps;
 }
