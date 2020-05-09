@@ -116,7 +116,7 @@ int main(int argc, char** argv)
             while(nc->s_NetInfoStruct->s_goGameOnServer)
             {
                 if(nc->s_NetInfoStruct->s_WaitingGettingCreatureList == false) nc->getCreaturesList();
-                if(nc->s_NetInfoStruct->s_WaitingConfirmGettingKeysState == false) nc->sendKeysState();
+                if(nc->s_NetInfoStruct->s_WaitingConfirmGettingInfoFromClient == false) nc->sendInfoFromClient();
                 gm->processAllEvents( atoi( nc->s_NetInfo->getValue("internet", "maxnumberofeventsatatime").c_str() ) );
                 net::run( atoi( nc->s_NetInfo->getValue("internet", "sleepfornetwork").c_str() ) );
             }

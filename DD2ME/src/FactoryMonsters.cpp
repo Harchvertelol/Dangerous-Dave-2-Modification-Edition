@@ -53,7 +53,7 @@ void FactoryMonsters::live()
                         iter->second->live();
                         iter->second->s_IsAlwaysLiveInStep = true;
                     }
-    map<int, Creature*>::iterator iter1;
+    map<int, CreatureDave*>::iterator iter1;
     for(iter1 = s_GameClass->s_GameInfo->s_Daves.begin(); iter1 != s_GameClass->s_GameInfo->s_Daves.end(); iter1++)
     {
         for ( iter = s_Monsters.begin(); iter != s_Monsters.end(); iter++)

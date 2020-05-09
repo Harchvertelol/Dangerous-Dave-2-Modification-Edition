@@ -25,7 +25,7 @@ NetClient::NetClient(Game* gameclass):
     s_NetInfoStruct->s_Error = "";
     s_NetInfoStruct->s_ServerList = 0;
     s_NetInfoStruct->s_ServerIdNow = 0;
-    s_NetInfoStruct->s_WaitingConfirmGettingKeysState = false;
+    s_NetInfoStruct->s_WaitingConfirmGettingInfoFromClient = false;
     s_NetInfoStruct->s_WaitingGettingCreatureList = false;
     s_NetInfoStruct->s_WaitingConfirmLeaveServer = false;
 }
@@ -73,7 +73,7 @@ bool NetClient::connect()
 	str_send = addSecondaryVariableString(str_send, "name", s_NetInfoStruct->s_Name, SPLITTER_STR_VARIABLE);
 	str_send = addSecondaryVariableString(str_send, "pass", s_NetInfoStruct->s_Pass, SPLITTER_STR_VARIABLE);
 	str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
-	str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", "PlayerAuth", SPLITTER_STR_VARIABLE);
+	str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_CLIENT_IDS_MESSAGES::FCIM_PlayerAuth, SPLITTER_STR_VARIABLE);
 	str_send += "\n";
 	s_Client->send(str_send);
 	str_send = "";
@@ -117,13 +117,7 @@ bool NetClient::getServerList()
 {
     string str_send;
     cout<<"Getting server list..."<<endl;
-    str_send = "";
-    str_send = addMainVariableString(str_send, "command", SPLITTER_STR_VARIABLE);
-	str_send = addSecondaryVariableString(str_send, "do", "getServerList", SPLITTER_STR_VARIABLE);
-	str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
-	str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", "Command", SPLITTER_STR_VARIABLE);
-	str_send += "\n";
-	s_Client->send(str_send);
+    sendCommandToServer(SERVER_COMMANDS_FROM_CLIENT::SCFC_getServerList);
     s_NetInfoStruct->s_Sleep_3 = true;
     for(int i = 0; s_NetInfoStruct->s_Sleep_3 == true; i++)
     {
@@ -161,14 +155,7 @@ bool NetClient::choiceServer()
         return false;
     }
     s_NetInfoStruct->s_ServerIdNow = atoi( s_NetInfoStruct->s_ServerList->getValue(iter->first, "id").c_str() );
-    string str_send = "";
-    str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
-    str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", "Command", SPLITTER_STR_VARIABLE);
-    str_send = addMainVariableString(str_send, "command", SPLITTER_STR_VARIABLE);
-	str_send = addSecondaryVariableString(str_send, "do", "connectToServer", SPLITTER_STR_VARIABLE);
-	str_send = addSecondaryVariableString(str_send, "id", s_NetInfoStruct->s_ServerList->getValue(iter->first, "id"), SPLITTER_STR_VARIABLE);
-	str_send += "\n";
-	s_Client->send(str_send);
+    sendCommandToServer(SERVER_COMMANDS_FROM_CLIENT::SCFC_connectToServer);
 	cout<<"Connecting to game server..."<<endl;
 	s_NetInfoStruct->s_SuperSleep_1 = true;
 	while(s_NetInfoStruct->s_SuperSleep_1 == true)
@@ -190,38 +177,38 @@ bool NetClient::choiceServer()
 
 void NetClient::getCreaturesList()
 {
-    string str_send = "";
-    str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
-    str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", "Command", SPLITTER_STR_VARIABLE);
-    str_send = addMainVariableString(str_send, "command", SPLITTER_STR_VARIABLE);
-	str_send = addSecondaryVariableString(str_send, "do", "getCreaturesList", SPLITTER_STR_VARIABLE);
-	str_send = addSecondaryVariableString(str_send, "id", WorkFunction::ConvertFunction::itos(s_NetInfoStruct->s_ServerIdNow), SPLITTER_STR_VARIABLE);
-	str_send += "\n";
-	s_Client->send(str_send);
+    sendCommandToServer(SERVER_COMMANDS_FROM_CLIENT::SCFC_getCreaturesList);
 	s_NetInfoStruct->s_WaitingGettingCreatureList = true;
 }
 
-void NetClient::sendKeysState()
+void NetClient::sendInfoFromClient()
 {
-    PostParsingStruct* pps = s_GameClass->s_GameInfo->s_MyDave->getKeys();
+    //PostParsingStruct* pps = s_GameClass->s_GameInfo->s_MyDave->getKeys("Keys");
+    //s_GameClass->s_GameInfo->s_MyDave->getListOfVariables("dave", pps);
+    PostParsingStruct* pps = s_GameClass->s_GameInfo->s_MyDave->getListOfVariables("dave");
     ParserInfoFile prs;
     string str_send = prs.convertPostParsingStructToString(pps, SPLITTER_STR_VARIABLE);
     str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
-    str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", "KeysState", SPLITTER_STR_VARIABLE);
+    str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_CLIENT_IDS_MESSAGES::FCIM_InfoFromClient, SPLITTER_STR_VARIABLE);
 	str_send += "\n";
 	s_Client->send(str_send);
-	s_NetInfoStruct->s_WaitingConfirmGettingKeysState = true;
+	s_NetInfoStruct->s_WaitingConfirmGettingInfoFromClient = true;
 }
 
 void NetClient::leaveServer()
 {
+    sendCommandToServer(SERVER_COMMANDS_FROM_CLIENT::SCFC_leaveServer);
+	s_NetInfoStruct->s_WaitingConfirmLeaveServer = true;
+}
+
+void NetClient::sendCommandToServer(string command)
+{
     string str_send = "";
     str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
-    str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", "Command", SPLITTER_STR_VARIABLE);
+    str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_CLIENT_IDS_MESSAGES::FCIM_Command, SPLITTER_STR_VARIABLE);
     str_send = addMainVariableString(str_send, "command", SPLITTER_STR_VARIABLE);
-	str_send = addSecondaryVariableString(str_send, "do", "leaveServer", SPLITTER_STR_VARIABLE);
+	str_send = addSecondaryVariableString(str_send, "do", command, SPLITTER_STR_VARIABLE);
 	str_send = addSecondaryVariableString(str_send, "id", WorkFunction::ConvertFunction::itos(s_NetInfoStruct->s_ServerIdNow), SPLITTER_STR_VARIABLE);
 	str_send += "\n";
 	s_Client->send(str_send);
-	s_NetInfoStruct->s_WaitingConfirmLeaveServer = true;
 }

@@ -11,5 +11,6 @@ class PostParsingStruct
         map<string, map<string, string> > s_Variables;
         string getValue(string A, string B);
         void setValue(string A, string B, string C);
+        void addPostParsingStruct(PostParsingStruct*);
 };
 #endif

@@ -3,8 +3,6 @@
 
 #include <string>
 
-using namespace std;
-
 #include "../shabbynet/shabbynet.hpp"
 
 #include "../IniParser/PostParsingStruct.h"
@@ -17,9 +15,9 @@ class Client: public Socket
         Client(NetClient*);
         ~Client();
         NetClient* s_NetClient;
-        string s_BalanceStr;
-        void workStr(string);
-        void doCommand(Client*,string,PostParsingStruct*);
+        std::string s_ReceiveBuffer;
+        void workStr(std::string);
+        void doCommand(Client*, std::string, PostParsingStruct*);
         void connect(const std::string&, int port);
 
     private:

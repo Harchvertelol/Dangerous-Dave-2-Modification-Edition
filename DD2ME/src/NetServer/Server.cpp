@@ -8,6 +8,8 @@
 #include "../MainServer.h"
 #include "../UserData.h"
 
+#include "../NetClient/NetInfoStruct.h"
+
 #include <iostream>
 using namespace std;
 using namespace WorkFunction;
@@ -38,7 +40,7 @@ void Server::accept(SClient* c)
 	str_send = addMainVariableString(str_send, "connection", SPLITTER_STR_VARIABLE);
 	str_send = addSecondaryVariableString(str_send, "confirm", "true", SPLITTER_STR_VARIABLE);
 	str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
-	str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", "ConfirmConnection", SPLITTER_STR_VARIABLE);
+	str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_ConfirmConnection, SPLITTER_STR_VARIABLE);
 	str_send += "\n";
 	c->send(str_send);
 	str_send = "";
@@ -61,11 +63,11 @@ void Server::on_command(SClient* cl, const std::string& cmd)
 {
 	ParserInfoFile prs;
 	PostParsingStruct* pps = prs.getParsedFromString(cmd, SPLITTER_STR_VARIABLE);
-	if(pps->getValue("SystemInfo", "ID_MESSAGE") == "PlayerAuth")
+	if(pps->getValue("SystemInfo", "ID_MESSAGE") == FROM_CLIENT_IDS_MESSAGES::FCIM_PlayerAuth)
     {
         string str_send;
         str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
-        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", "PlayerAuth", SPLITTER_STR_VARIABLE);
+        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_PlayerAuth, SPLITTER_STR_VARIABLE);
         bool confirm = false;
         string name = pps->getValue("login", "name");
         string pass = pps->getValue("login", "pass");
@@ -98,16 +100,19 @@ void Server::on_command(SClient* cl, const std::string& cmd)
         close(cl);
         return;
     }
-    if(pps->getValue("SystemInfo", "ID_MESSAGE") == "KeysState" && cl->s_UserData->s_IdServerConnected != STRING_CONSTANTS::MISSING_ID_SERVER)
+    if(pps->getValue("SystemInfo", "ID_MESSAGE") == FROM_CLIENT_IDS_MESSAGES::FCIM_InfoFromClient && cl->s_UserData->s_IdServerConnected != STRING_CONSTANTS::MISSING_ID_SERVER)
     {
-        s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->s_GameInfo->s_Daves[cl->s_ID]->setKeys(pps);
+        //s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->s_GameInfo->s_Daves[cl->s_ID]->setKeys(pps, "Keys");
+        string davenickname = s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->s_GameInfo->s_Daves[cl->s_ID]->s_NickName;
+        s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->s_GameInfo->s_Daves[cl->s_ID]->setListOfVariables(pps, "dave");
+        s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->s_GameInfo->s_Daves[cl->s_ID]->s_NickName = davenickname;
         string str_send = "";
         str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
-        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", "ConfirmKeysStateGetting", SPLITTER_STR_VARIABLE);
+        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_ConfirmGettingInfoFromClient, SPLITTER_STR_VARIABLE);
         str_send += "\n";
         cl->send(str_send);
     }
-    if(pps->getValue("SystemInfo", "ID_MESSAGE") == "Command")
+    if(pps->getValue("SystemInfo", "ID_MESSAGE") == FROM_CLIENT_IDS_MESSAGES::FCIM_Command)
     {
         doCommand(cl, pps->getValue("command", "do"), pps);
     }
@@ -117,11 +122,11 @@ void Server::on_command(SClient* cl, const std::string& cmd)
 void Server::doCommand(SClient* cl, string command, PostParsingStruct* pps)
 {
     string str_send;
-    if(command == "getServerList")
+    if(command == SERVER_COMMANDS_FROM_CLIENT::SCFC_getServerList)
     {
         str_send = "";
         str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
-        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", "ServerList", SPLITTER_STR_VARIABLE);
+        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_ServerList, SPLITTER_STR_VARIABLE);
         map<string, map<string, string > >::iterator iter;
         for(iter = s_MainServer->s_ServerList->s_Variables.begin(); iter != s_MainServer->s_ServerList->s_Variables.end(); iter++)
         {
@@ -135,7 +140,7 @@ void Server::doCommand(SClient* cl, string command, PostParsingStruct* pps)
         str_send += "\n";
         cl->send(str_send);
     }
-    else if(command == "connectToServer")
+    else if(command == SERVER_COMMANDS_FROM_CLIENT::SCFC_connectToServer)
     {
         string id = pps->getValue("command", "id");
         ParserInfoFile prs;
@@ -153,12 +158,12 @@ void Server::doCommand(SClient* cl, string command, PostParsingStruct* pps)
         }
         str_send = prs.convertPostParsingStructToString(s_MainServer->s_ListGameClass[id]->s_IniFile, SPLITTER_STR_VARIABLE);
         str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
-        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", "MainIniFile", SPLITTER_STR_VARIABLE);
+        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_MainIniFile, SPLITTER_STR_VARIABLE);
         str_send += "\n";
         cl->send(str_send);
         cl->s_UserData->s_IdServerConnected = id;
     }
-    else if(command == "getCreaturesList")
+    else if(command == SERVER_COMMANDS_FROM_CLIENT::SCFC_getCreaturesList)
     {
         if(cl->s_UserData->s_IdServerConnected == STRING_CONSTANTS::MISSING_ID_SERVER)
         {
@@ -169,18 +174,18 @@ void Server::doCommand(SClient* cl, string command, PostParsingStruct* pps)
         PostParsingStruct* cpps = s_MainServer->s_ListGameClass[id]->getObjects();
         str_send = prs.convertPostParsingStructToString(cpps, SPLITTER_STR_VARIABLE);
         str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
-        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", "ListCreatures", SPLITTER_STR_VARIABLE);
+        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_ListCreatures, SPLITTER_STR_VARIABLE);
         str_send = addSecondaryVariableString(str_send, "MyID", itos(cl->s_ID), SPLITTER_STR_VARIABLE);
         str_send += "\n";
         cl->send(str_send);
     }
-    else if(command == "leaveServer")
+    else if(command == SERVER_COMMANDS_FROM_CLIENT::SCFC_leaveServer)
     {
         if(cl->s_UserData->s_IdServerConnected != STRING_CONSTANTS::MISSING_ID_SERVER) s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->removeDave(cl->s_ID);
         cl->s_UserData->s_IdServerConnected = STRING_CONSTANTS::MISSING_ID_SERVER;
         str_send = "";
         str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
-        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", "ConfirmLeaveServer", SPLITTER_STR_VARIABLE);
+        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_ConfirmLeaveServer, SPLITTER_STR_VARIABLE);
         str_send += "\n";
         cl->send(str_send);
     }

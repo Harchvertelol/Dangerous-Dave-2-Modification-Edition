@@ -71,7 +71,7 @@ void Gui::drawGuiState2()
 void Gui::drawGuiState3()
 {
     int shiftX = 0;
-    map<int, Creature*>::iterator iter;
+    map<int, CreatureDave*>::iterator iter;
     for ( iter = s_GameClass->s_GameInfo->s_Daves.begin(); iter != s_GameClass->s_GameInfo->s_Daves.end(); iter++)
     {
         if(iter->second->s_NickName != "")

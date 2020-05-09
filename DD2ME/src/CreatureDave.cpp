@@ -1,4 +1,4 @@
-#include "Creature.h"
+#include "CreatureDave.h"
 
 #include "Game.h"
 
@@ -12,7 +12,7 @@ using namespace MathFunction;
 using namespace GameFunction;
 using namespace ConvertFunction;
 
-Creature::Creature(Game* gameclass):
+CreatureDave::CreatureDave(Game* gameclass):
     s_GameClass(gameclass),
     s_CurrentPoints(0),
     s_CurrentHealth(1),
@@ -50,14 +50,14 @@ Creature::Creature(Game* gameclass):
     s_KeysState->s_KeyJump = false;
 }
 
-Creature::~Creature()
+CreatureDave::~CreatureDave()
 {
     if(s_KeysState != 0) delete s_KeysState;
 }
 
-void Creature::live()
+void CreatureDave::live(bool doKey)
 {
-    calculateDoKey();
+    if(doKey) calculateDoKey();
     if(s_State.find("jump") != string::npos && s_ShootNow) s_ShootNow = 0;
     string direction, typeexit, statedave;
     int dir = 0, timeshoot = atoi( s_GameClass->s_IniFile->getValue("settings", "timeshoot").c_str() );
@@ -316,7 +316,7 @@ void Creature::live()
     s_GameClass->s_GameInfo->deathDave(DeathType);
 }
 
-void Creature::testSmallPassage(int y)
+void CreatureDave::testSmallPassage(int y)
 {
     int FreezeX = s_CoordX;
     int FreezeY = s_CoordY;
@@ -380,7 +380,7 @@ void Creature::testSmallPassage(int y)
     s_CoordY = FreezeY;
 }
 
-bool Creature::testOpenDoor()
+bool CreatureDave::testOpenDoor()
 {
     int TileCoordX[6];
     int TileCoordY[6];
@@ -501,7 +501,7 @@ bool Creature::testOpenDoor()
     return false;
 }
 
-bool Creature::testChangeLevel()
+bool CreatureDave::testChangeLevel()
 {
     int TileCoordX[6];
     int TileCoordY[6];
@@ -528,7 +528,7 @@ bool Creature::testChangeLevel()
     return false;
 }
 
-int Creature::testDeath()
+int CreatureDave::testDeath()
 {
     int TileCoordX[6];
     int TileCoordY[6];
@@ -556,7 +556,7 @@ int Creature::testDeath()
     return 0;
 }
 
-void Creature::testGetBonuses()
+void CreatureDave::testGetBonuses()
 {
     int TileCoordX[6];
     int TileCoordY[6];
@@ -609,7 +609,7 @@ void Creature::testGetBonuses()
     }
 }
 
-void Creature::step(string direction)
+void CreatureDave::step(string direction)
 {
     int wh = -1;
     if(s_State.find("run") == string::npos) s_NumberOfAction = 0;
@@ -620,7 +620,7 @@ void Creature::step(string direction)
     correctionPhys(s_CoordX - 4*wh, 0);
 }
 
-bool Creature::correctionPhys(int coord, int what)
+bool CreatureDave::correctionPhys(int coord, int what)
 {
     bool yes = false;
     if(s_GameClass->s_IniFile->getValue("settings", "correctionphysics") == "false") return false;
@@ -678,7 +678,7 @@ bool Creature::correctionPhys(int coord, int what)
     return yes;
 }
 
-bool Creature::testSetStates(string states)
+bool CreatureDave::testSetStates(string states)
 {
     std::istringstream ss(states);
     std::string st;
@@ -686,24 +686,24 @@ bool Creature::testSetStates(string states)
     return st == s_State;
 }
 
-int Creature::getFrame()
+int CreatureDave::getFrame()
 {
     return s_NumberOfAction%atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info", "numberofframes" + s_State).c_str() );
 }
 
-int Creature::getFrame(string anim)
+int CreatureDave::getFrame(string anim)
 {
     return s_NumberOfAction%atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info", "numberofframes" + anim).c_str() );
 }
 
-void Creature::draw()
+void CreatureDave::draw()
 {
     int ScrLX = s_GameClass->s_GameInfo->s_ScreenCoordX;
     int ScrLY = s_GameClass->s_GameInfo->s_ScreenCoordY;
     s_GameClass->s_Data->s_Dave->drawDave(s_State, getFrame(), s_CoordX - ScrLX, s_CoordY - ScrLY);
 }
 
-void Creature::testShoot()
+void CreatureDave::testShoot()
 {
     string statedave;
     string str = s_State.substr(0, s_State.find("shoot"));
@@ -779,7 +779,7 @@ void Creature::testShoot()
     }
 }
 
-void Creature::calculateDoKey()
+void CreatureDave::calculateDoKey()
 {
     if( !(s_KeysState->s_KeyShoot) )
     {
@@ -901,29 +901,29 @@ void Creature::calculateDoKey()
 
 //...
 
-PostParsingStruct* Creature::getKeys()
+PostParsingStruct* CreatureDave::getKeys(string mainvariablename, PostParsingStruct* cpps)
 {
-    PostParsingStruct* cpps = new PostParsingStruct;
-    cpps->setValue("Keys", "s_KeyLeft", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyLeft) );
-    cpps->setValue("Keys", "s_KeyRight", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyRight) );
-    cpps->setValue("Keys", "s_KeyUp", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyUp) );
-    cpps->setValue("Keys", "s_KeyDown", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyDown) );
-    cpps->setValue("Keys", "s_KeyShoot", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyShoot) );
-    cpps->setValue("Keys", "s_KeyJump", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyJump) );
+    if(!cpps) cpps = new PostParsingStruct;
+    cpps->setValue(mainvariablename, "s_KeyLeft", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyLeft) );
+    cpps->setValue(mainvariablename, "s_KeyRight", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyRight) );
+    cpps->setValue(mainvariablename, "s_KeyUp", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyUp) );
+    cpps->setValue(mainvariablename, "s_KeyDown", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyDown) );
+    cpps->setValue(mainvariablename, "s_KeyShoot", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyShoot) );
+    cpps->setValue(mainvariablename, "s_KeyJump", WorkFunction::ConvertFunction::itos( (int)s_KeysState->s_KeyJump) );
     return cpps;
 }
 
-void Creature::setKeys(PostParsingStruct* cpps)
+void CreatureDave::setKeys(PostParsingStruct* cpps, string mainvariablename)
 {
-    s_KeysState->s_KeyLeft = (bool)atoi( cpps->getValue("Keys", "s_KeyLeft").c_str() );
-    s_KeysState->s_KeyRight = (bool)atoi( cpps->getValue("Keys", "s_KeyRight").c_str() );
-    s_KeysState->s_KeyUp = (bool)atoi( cpps->getValue("Keys", "s_KeyUp").c_str() );
-    s_KeysState->s_KeyDown = (bool)atoi( cpps->getValue("Keys", "s_KeyDown").c_str() );
-    s_KeysState->s_KeyShoot = (bool)atoi( cpps->getValue("Keys", "s_KeyShoot").c_str() );
-    s_KeysState->s_KeyJump = (bool)atoi( cpps->getValue("Keys", "s_KeyJump").c_str() );
+    s_KeysState->s_KeyLeft = (bool)atoi( cpps->getValue(mainvariablename, "s_KeyLeft").c_str() );
+    s_KeysState->s_KeyRight = (bool)atoi( cpps->getValue(mainvariablename, "s_KeyRight").c_str() );
+    s_KeysState->s_KeyUp = (bool)atoi( cpps->getValue(mainvariablename, "s_KeyUp").c_str() );
+    s_KeysState->s_KeyDown = (bool)atoi( cpps->getValue(mainvariablename, "s_KeyDown").c_str() );
+    s_KeysState->s_KeyShoot = (bool)atoi( cpps->getValue(mainvariablename, "s_KeyShoot").c_str() );
+    s_KeysState->s_KeyJump = (bool)atoi( cpps->getValue(mainvariablename, "s_KeyJump").c_str() );
 }
 
-void Creature::mergeDave(Creature* cr)
+void CreatureDave::mergeDave(CreatureDave* cr)
 {
         s_CurrentPoints = cr->s_CurrentPoints;
         s_CurrentHealth = cr->s_CurrentHealth;
@@ -951,4 +951,92 @@ void Creature::mergeDave(Creature* cr)
         s_ScreenCoordX = cr->s_ScreenCoordX;
         s_ScreenCoordY = cr->s_ScreenCoordY;
         s_NickName = cr->s_NickName;
+}
+
+PostParsingStruct* CreatureDave::getListOfVariables(string mainvariablename, PostParsingStruct* dpps)
+{
+    if(!dpps) dpps = new PostParsingStruct;
+    dpps->setValue(mainvariablename, "coordX", WorkFunction::ConvertFunction::itos(s_CoordX) );
+    dpps->setValue(mainvariablename, "coordY", WorkFunction::ConvertFunction::itos(s_CoordY) );
+    dpps->setValue(mainvariablename, "currentHealth", WorkFunction::ConvertFunction::itos(s_CurrentHealth) );
+    dpps->setValue(mainvariablename, "state", s_State);
+    dpps->setValue(mainvariablename, "numberOfAction", WorkFunction::ConvertFunction::itos(s_NumberOfAction) );
+    dpps->setValue(mainvariablename, "dopNumberOfAction", WorkFunction::ConvertFunction::itos(s_AdditionalNumberOfAction) );
+    dpps->setValue(mainvariablename, "CurrentPoints", WorkFunction::ConvertFunction::itos(s_CurrentPoints) );
+    dpps->setValue(mainvariablename, "MaxHealth", WorkFunction::ConvertFunction::itos(s_MaxHealth) );
+    dpps->setValue(mainvariablename, "Cartridges", WorkFunction::ConvertFunction::itos(s_Cartridges) );
+    dpps->setValue(mainvariablename, "MaxCartridges", WorkFunction::ConvertFunction::itos(s_MaxCartridges) );
+    dpps->setValue(mainvariablename, "JumpStep", WorkFunction::ConvertFunction::itos(s_JumpStep) );
+    dpps->setValue(mainvariablename, "NumberOfTilesJump", WorkFunction::ConvertFunction::itos(s_NumberOfTilesJump) );
+    dpps->setValue(mainvariablename, "FreezeJump", WorkFunction::ConvertFunction::itos(s_FreezeJump) );
+    dpps->setValue(mainvariablename, "Acceleration", WorkFunction::ConvertFunction::itos(s_Acceleration) );
+    dpps->setValue(mainvariablename, "TimeDoorOpen", WorkFunction::ConvertFunction::itos(s_TimeDoorOpen) );
+    dpps->setValue(mainvariablename, "StateBeforeOpenDoor", s_StateBeforeOpenDoor);
+    dpps->setValue(mainvariablename, "HowDoorOpen", s_HowDoorOpen);
+    dpps->setValue(mainvariablename, "DopState", s_DopState);
+    dpps->setValue(mainvariablename, "OldAnSt", WorkFunction::ConvertFunction::itos(s_OldAnSt) );
+    dpps->setValue(mainvariablename, "OldNumberOfAction", WorkFunction::ConvertFunction::itos(s_OldNumberOfAction) );
+    dpps->setValue(mainvariablename, "ShootNow", WorkFunction::ConvertFunction::itos(s_ShootNow) );
+    dpps->setValue(mainvariablename, "ScreenCoordX", WorkFunction::ConvertFunction::itos(s_ScreenCoordX) );
+    dpps->setValue(mainvariablename, "ScreenCoordY", WorkFunction::ConvertFunction::itos(s_ScreenCoordY) );
+    dpps->setValue(mainvariablename, "ControlJumpPressed", WorkFunction::ConvertFunction::itos( (bool)s_ControlJumpPressed) );
+    dpps->setValue(mainvariablename, "ControlShootPressed", WorkFunction::ConvertFunction::itos( (bool)s_ControlShootPressed) );
+    dpps->setValue(mainvariablename, "NickName", s_NickName );
+    return dpps;
+}
+
+void CreatureDave::setListOfVariables(PostParsingStruct* dpps, string mainvariablename)
+{
+    int coordX = atoi( dpps->getValue(mainvariablename, "coordX").c_str() );
+    int coordY = atoi( dpps->getValue(mainvariablename, "coordY").c_str() );
+    int currentHealth = atoi( dpps->getValue(mainvariablename, "currentHealth").c_str() );
+    string state = dpps->getValue(mainvariablename, "state");
+    int numberOfAction = atoi( dpps->getValue(mainvariablename, "numberOfAction").c_str() );
+    int dopNumberOfAction = atoi( dpps->getValue(mainvariablename, "dopNumberOfAction").c_str() );
+    int CurrentPoints = atoi( dpps->getValue(mainvariablename, "CurrentPoints").c_str() );
+    int MaxHealth = atoi( dpps->getValue(mainvariablename, "MaxHealth").c_str() );
+    int Cartridges = atoi( dpps->getValue(mainvariablename, "Cartridges").c_str() );
+    int MaxCartridges = atoi( dpps->getValue(mainvariablename, "MaxCartridges").c_str() );
+    int JumpStep = atoi( dpps->getValue(mainvariablename, "JumpStep").c_str() );
+    int NumberOfTilesJump = atoi( dpps->getValue(mainvariablename, "NumberOfTilesJump").c_str() );
+    int FreezeJump = atoi( dpps->getValue(mainvariablename, "FreezeJump").c_str() );
+    int Acceleration = atoi( dpps->getValue(mainvariablename, "Acceleration").c_str() );
+    int TimeDoorOpen = atoi( dpps->getValue(mainvariablename, "TimeDoorOpen").c_str() );
+    string StateBeforeOpenDoor = dpps->getValue(mainvariablename, "StateBeforeOpenDoor");
+    string HowDoorOpen = dpps->getValue(mainvariablename, "HowDoorOpen");
+    string DopState = dpps->getValue(mainvariablename, "DopState");
+    int OldAnSt = atoi( dpps->getValue(mainvariablename, "OldAnSt").c_str() );
+    int OldNumberOfAction = atoi( dpps->getValue(mainvariablename, "OldNumberOfAction").c_str() );
+    int ShootNow = atoi( dpps->getValue(mainvariablename, "ShootNow").c_str() );
+    int ScreenCoordX = atoi( dpps->getValue(mainvariablename, "ScreenCoordX").c_str() );
+    int ScreenCoordY = atoi( dpps->getValue(mainvariablename, "ScreenCoordY").c_str() );
+    bool ControlShootPressed = (bool)atoi( dpps->getValue(mainvariablename, "ControlShootPressed").c_str() );
+    bool ControlJumpPressed = (bool)atoi( dpps->getValue(mainvariablename, "ControlJumpPressed").c_str() );
+    string NickName = dpps->getValue(mainvariablename, "NickName");
+    s_CoordX = coordX;
+    s_CoordY = coordY;
+    s_CurrentHealth = currentHealth;
+    s_State = state;
+    s_NumberOfAction = numberOfAction;
+    s_AdditionalNumberOfAction = dopNumberOfAction;
+    s_CurrentPoints = CurrentPoints;
+    s_MaxHealth = MaxHealth;
+    s_Cartridges = Cartridges;
+    s_MaxCartridges = MaxCartridges;
+    s_JumpStep = JumpStep;
+    s_NumberOfTilesJump = NumberOfTilesJump;
+    s_FreezeJump = FreezeJump;
+    s_Acceleration = Acceleration;
+    s_TimeDoorOpen = TimeDoorOpen;
+    s_StateBeforeOpenDoor = StateBeforeOpenDoor;
+    s_HowDoorOpen = HowDoorOpen;
+    s_DopState = DopState;
+    s_OldAnSt = OldAnSt;
+    s_OldNumberOfAction = OldNumberOfAction;
+    s_ShootNow = ShootNow;
+    s_ScreenCoordX = ScreenCoordX;
+    s_ScreenCoordY = ScreenCoordY;
+    s_ControlShootPressed = ControlShootPressed;
+    s_ControlJumpPressed = ControlJumpPressed;
+    s_NickName = NickName;
 }

@@ -8,7 +8,8 @@ using namespace std;
 
 SClient::SClient(Server* s):
     s_ID(0),
-    s_Server(s)
+    s_Server(s),
+    s_ReceiveBuffer("")
 {
     s_UserData = new UserData;
 }
@@ -26,15 +27,15 @@ void SClient::on_received(const char* buf, int len)
         read_some();
         return;
     }
-    string str, buffer;
-    buffer.append(buf, len);
+    string str;
+    s_ReceiveBuffer.append(buf, len);
     for(;;) // вдруг у нас несколько строк
     {
-        const size_t pos = buffer.find('\n');
+        const size_t pos = s_ReceiveBuffer.find('\n');
         if(pos != string::npos) // есть строка
         {
-            str = buffer.substr(0, pos);
-            buffer.erase(0, pos+1);
+            str = s_ReceiveBuffer.substr(0, pos);
+            s_ReceiveBuffer.erase(0, pos+1);
             s_Server->on_command(this, str);
         }
         else break;

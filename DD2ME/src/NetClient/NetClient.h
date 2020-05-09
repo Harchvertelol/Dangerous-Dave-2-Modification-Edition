@@ -24,8 +24,9 @@ class NetClient
         bool getServerList();
         void getCreaturesList();
         bool choiceServer();
-        void sendKeysState();
+        void sendInfoFromClient();
         void leaveServer();
+        void sendCommandToServer(std::string);
 
     private:
         void tick();

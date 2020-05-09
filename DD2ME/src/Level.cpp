@@ -67,7 +67,7 @@ bool Level::loadLevel(string file_name)
         for(int j = 0; j < size_x; j++)
             if(s_Fields["FieldMonsters"][i*size_x + j] != 0)
                 s_GameClass->s_GameInfo->s_FactoryMonsters->addMonster(s_Fields["FieldMonsters"][i*size_x + j], 16*j + atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Fields["FieldMonsters"][i*size_x + j] - 1]->getValue("other","outputshiftX").c_str() ), 16*i +  + atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Fields["FieldMonsters"][i*size_x + j] - 1]->getValue("other","outputshiftY").c_str() ));
-    Creature* s_Dave = s_GameClass->s_GameInfo->s_MyDave;
+    CreatureDave* s_Dave = s_GameClass->s_GameInfo->s_MyDave;
     s_Dave->s_CoordX = 16*atoi( s_Params->getValue("daves", "dave1X").c_str() );
     s_Dave->s_CoordY = 16*atoi( s_Params->getValue("daves", "dave1Y").c_str() );
     return true;
@@ -102,7 +102,7 @@ void Level::draw()
             s_GameClass->s_Data->s_Bonuses->drawBonus(s_Fields["FieldBonuses"][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
         }
     //...
-    map<int, Creature*>::iterator iter;
+    map<int, CreatureDave*>::iterator iter;
     for ( iter = s_GameClass->s_GameInfo->s_Daves.begin(); iter != s_GameClass->s_GameInfo->s_Daves.end(); iter++)
     {
         iter->second->draw();

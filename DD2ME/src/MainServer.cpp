@@ -25,9 +25,14 @@ bool MainServer::load()
         if(iter->first.find("Server") == 0)
         {
             id_srv++;
-            cout<<endl<<"Server (ID = "<<id_srv<<"):"<<endl;
+            cout << endl << "Server (ID = " << id_srv << "):" <<endl;
             Game* gm = new Game;
-            s_ListGameClass[s_ServerList->getValue(iter->first, "id")] = gm;
+            if(s_ListGameClass.find(s_ServerList->getValue(iter->first, "id")) == s_ListGameClass.end()) s_ListGameClass[s_ServerList->getValue(iter->first, "id")] = gm;
+            else
+            {
+                cout << "Error! Server with id = '" << s_ServerList->getValue(iter->first, "id") << "' already exists." << endl;
+                return false;
+            }
             if(!gm)
             {
                 cout<<"Error creating GameClass!"<<endl;
@@ -69,7 +74,7 @@ bool MainServer::load()
             //gm->s_Window = new Window("DD2 Remake: ME v0.2 pre-beta", gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, atoi( (gm->s_IniFile->getValue("video","scale") ).c_str() ));
             gm->s_Window = new Window(nostart);
             gm->s_Window->geometry(gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, atoi( (gm->s_IniFile->getValue("video","scale") ).c_str() ));
-            gm->s_Window->title("DD2 Remake: ME v0.2 pre-beta");
+            gm->s_Window->title("DD2 Remake: ME v0.5 pre-beta");
             //...
             string modpack = s_ServerList->getValue(iter->first, "modpack");
             string texturepack = s_ServerList->getValue(iter->first, "texturepack");
@@ -79,16 +84,25 @@ bool MainServer::load()
             string soundpack = s_ServerList->getValue(iter->first, "soundpack");
             string levelpack = s_ServerList->getValue(iter->first, "levelpack");
             string davepack = s_ServerList->getValue(iter->first, "davepack");
-            gm->s_IniFile->setValue("resources", "pooling", "true");
-            gm->s_IniFile->setValue("resources", "standard", "false");
-            if(modpack != "") gm->s_IniFile->setValue("resources", "modpack", modpack);
-            if(texturepack != "") gm->s_IniFile->setValue("resources", "texturepack", texturepack);
-            if(monsterpack != "") gm->s_IniFile->setValue("resources", "monsterpack", monsterpack);
-            if(bonuspack != "") gm->s_IniFile->setValue("resources", "bonuspack", bonuspack);
-            if(screenpack != "") gm->s_IniFile->setValue("resources", "screenpack", screenpack);
-            if(soundpack != "") gm->s_IniFile->setValue("resources", "soundpack", soundpack);
-            if(levelpack != "") gm->s_IniFile->setValue("resources", "levelpack", levelpack);
-            if(davepack != "") gm->s_IniFile->setValue("resources", "davepack", davepack);
+            bool changeAll = false;
+            if(modpack != "standard" || texturepack != "" || monsterpack != "" || bonuspack != "" || screenpack != "" || soundpack != "" || levelpack != "" || davepack != "")
+            {
+                if(gm->s_IniFile->getValue("resources", "pooling") == "false")
+                {
+                    gm->s_IniFile->setValue("resources", "pooling", "true");
+                    gm->s_IniFile->setValue("resources", "modpack", "");
+                    changeAll = true;
+                }
+            }
+            if(modpack != "standard") gm->s_IniFile->setValue("resources", "modpack", modpack);
+            else gm->s_IniFile->setValue("resources", "standard", "true");
+            if(changeAll || texturepack != "") gm->s_IniFile->setValue("resources", "texturepack", texturepack);
+            if(changeAll || monsterpack != "") gm->s_IniFile->setValue("resources", "monsterpack", monsterpack);
+            if(changeAll || bonuspack != "") gm->s_IniFile->setValue("resources", "bonuspack", bonuspack);
+            if(changeAll || screenpack != "") gm->s_IniFile->setValue("resources", "screenpack", screenpack);
+            if(changeAll || soundpack != "") gm->s_IniFile->setValue("resources", "soundpack", soundpack);
+            if(changeAll || levelpack != "") gm->s_IniFile->setValue("resources", "levelpack", levelpack);
+            if(changeAll || davepack != "") gm->s_IniFile->setValue("resources", "davepack", davepack);
             //...
             if(!gm->loadPack())
             {

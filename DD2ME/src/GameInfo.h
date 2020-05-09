@@ -2,9 +2,9 @@
 #define GAMEINFO_H
 #include <map>
 #include "canvas.hpp"
-#include "Creature.h"
+#include "CreatureDave.h"
 #include "FactoryMonsters.h"
-using namespace std;
+
 using namespace cnv;
 
 class Game;
@@ -18,7 +18,7 @@ class GameInfo
         int s_CurrentLevel;
         int s_GameState;
         int s_CurrentLives;
-        map<int, Creature*> s_Daves;
+        std::map<int, CreatureDave*> s_Daves;
         FactoryMonsters* s_FactoryMonsters;
         int s_ScreenCoordX;
         int s_ScreenCoordY;
@@ -34,13 +34,13 @@ class GameInfo
         int s_KeyShoot;
         int s_KeyJump;
         unsigned int s_OldAnSt;
-        Creature* s_MyDave;
+        CreatureDave* s_MyDave;
         bool s_CheatGod;
         bool s_IsAIOn;
         void live();
         void deathDave(int);
         void playDeath();
-        void drawDeathFrame(map<int, Bitmap* >*,map<int, Bitmap* >*,int);
-        void correctionScreen(Creature*);
+        void drawDeathFrame(std::map<int, Bitmap* >*, std::map<int, Bitmap* >*, int);
+        void correctionScreen(CreatureDave*);
 };
 #endif

@@ -152,7 +152,7 @@ bool Game::changeLevel(int number, bool switchstate)
     s_GameInfo->s_FactoryMonsters->clear();
     if(!s_Data->s_Level->loadLevel( s_Data->PathToLevelPack + WorkFunction::ConvertFunction::itos(number))) return false;
     //...
-    map<int, Creature*>::iterator iter;
+    map<int, CreatureDave*>::iterator iter;
     for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)
     {
         iter->second->s_State = "rightstand";
@@ -272,7 +272,7 @@ void Game::onTimer(unsigned int timer_id)
         if(s_IniFile->getValue("video", "animation") == "true")
         {
             //...
-            map<int, Creature*>::iterator iter;
+            map<int, CreatureDave*>::iterator iter;
             for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)
             {
                 iter->second->s_NumberOfAction++;
@@ -295,7 +295,7 @@ void Game::drawAll()
             s_GameInfo->s_ScreenCoordX = s_GameInfo->s_MyDave->s_ScreenCoordX;
             s_GameInfo->s_ScreenCoordY = s_GameInfo->s_MyDave->s_ScreenCoordY;
         }
-        map<int, Creature*>::iterator iter;
+        map<int, CreatureDave*>::iterator iter;
         for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)
         {
             s_GameInfo->correctionScreen(iter->second);
@@ -347,37 +347,15 @@ PostParsingStruct* Game::getObjects()
                 cpps->setValue("GlobalValues_monster_" + WorkFunction::ConvertFunction::itos(monsterid), iter1->first, iter1->second );
             }
         }
-    map<int, Creature*>::iterator iter1;
+    map<int, CreatureDave*>::iterator iter1;
     for( iter1 = s_GameInfo->s_Daves.begin(); iter1 != s_GameInfo->s_Daves.end(); iter1++)
     {
         //daveid++;
         daveid = iter1->first;
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "coordX", WorkFunction::ConvertFunction::itos(iter1->second->s_CoordX) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "coordY", WorkFunction::ConvertFunction::itos(iter1->second->s_CoordY) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "currentHealth", WorkFunction::ConvertFunction::itos(iter1->second->s_CurrentHealth) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "state", iter1->second->s_State);
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "numberOfAction", WorkFunction::ConvertFunction::itos(iter1->second->s_NumberOfAction) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "dopNumberOfAction", WorkFunction::ConvertFunction::itos(iter1->second->s_AdditionalNumberOfAction) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "CurrentPoints", WorkFunction::ConvertFunction::itos(iter1->second->s_CurrentPoints) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "MaxHealth", WorkFunction::ConvertFunction::itos(iter1->second->s_MaxHealth) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "Cartridges", WorkFunction::ConvertFunction::itos(iter1->second->s_Cartridges) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "MaxCartridges", WorkFunction::ConvertFunction::itos(iter1->second->s_MaxCartridges) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "JumpStep", WorkFunction::ConvertFunction::itos(iter1->second->s_JumpStep) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "NumberOfTilesJump", WorkFunction::ConvertFunction::itos(iter1->second->s_NumberOfTilesJump) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "FreezeJump", WorkFunction::ConvertFunction::itos(iter1->second->s_FreezeJump) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "Acceleration", WorkFunction::ConvertFunction::itos(iter1->second->s_Acceleration) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "TimeDoorOpen", WorkFunction::ConvertFunction::itos(iter1->second->s_TimeDoorOpen) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "StateBeforeOpenDoor", iter1->second->s_StateBeforeOpenDoor);
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "HowDoorOpen", iter1->second->s_HowDoorOpen);
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "DopState", iter1->second->s_DopState);
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "OldAnSt", WorkFunction::ConvertFunction::itos(iter1->second->s_OldAnSt) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "OldNumberOfAction", WorkFunction::ConvertFunction::itos(iter1->second->s_OldNumberOfAction) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "ShootNow", WorkFunction::ConvertFunction::itos(iter1->second->s_ShootNow) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "ScreenCoordX", WorkFunction::ConvertFunction::itos(iter1->second->s_ScreenCoordX) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "ScreenCoordY", WorkFunction::ConvertFunction::itos(iter1->second->s_ScreenCoordY) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "ControlJumpPressed", WorkFunction::ConvertFunction::itos( (bool)iter1->second->s_ControlJumpPressed) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "ControlShootPressed", WorkFunction::ConvertFunction::itos( (bool)iter1->second->s_ControlShootPressed) );
-        cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "NickName", iter1->second->s_NickName );
+        PostParsingStruct* gdpps = iter1->second->getListOfVariables("dave_" + WorkFunction::ConvertFunction::itos(daveid));
+        cpps->addPostParsingStruct(gdpps);
+        delete gdpps;
+
         cpps->setValue("dave_" + WorkFunction::ConvertFunction::itos(daveid), "id", WorkFunction::ConvertFunction::itos(daveid) );
         //...
         cpps->setValue("KeysState_dave_" + WorkFunction::ConvertFunction::itos(daveid), "keyLeft", WorkFunction::ConvertFunction::itos( (int)iter1->second->s_KeysState->s_KeyLeft) );
@@ -396,6 +374,21 @@ PostParsingStruct* Game::getObjects()
             cpps->setValue("bonuse_" + WorkFunction::ConvertFunction::itos(i), "i", WorkFunction::ConvertFunction::itos(s_Data->s_Level->s_Fields["FieldBonuses"][i]));
             cpps->setValue("bonuse_" + WorkFunction::ConvertFunction::itos(i), "id", WorkFunction::ConvertFunction::itos(i) );
         }
+        if(s_Data->s_Level->s_Fields["FieldBonusDoors"][i] != 0)
+        {
+            cpps->setValue("bonusdoor_" + WorkFunction::ConvertFunction::itos(i), "i", WorkFunction::ConvertFunction::itos(s_Data->s_Level->s_Fields["FieldBonusDoors"][i]));
+            cpps->setValue("bonusdoor_" + WorkFunction::ConvertFunction::itos(i), "id", WorkFunction::ConvertFunction::itos(i) );
+        }
+        if(s_Data->s_Level->s_Fields["FieldDoors"][i] != 0)
+        {
+            cpps->setValue("door_" + WorkFunction::ConvertFunction::itos(i), "i", WorkFunction::ConvertFunction::itos(s_Data->s_Level->s_Fields["FieldDoors"][i]));
+            cpps->setValue("door_" + WorkFunction::ConvertFunction::itos(i), "id", WorkFunction::ConvertFunction::itos(i) );
+        }
+        if(s_Data->s_Level->s_Fields["FieldExitLevelDoors"][i] != 0)
+        {
+            cpps->setValue("exitleveldoor_" + WorkFunction::ConvertFunction::itos(i), "i", WorkFunction::ConvertFunction::itos(s_Data->s_Level->s_Fields["FieldExitLevelDoors"][i]));
+            cpps->setValue("exitleveldoor_" + WorkFunction::ConvertFunction::itos(i), "id", WorkFunction::ConvertFunction::itos(i) );
+        }
     }
     return cpps;
 }
@@ -406,7 +399,7 @@ void Game::setObjects(PostParsingStruct* cpps)
     int coordX, coordY, currentLives, number, numberOfAction, dopNumberOfAction;
     string state;
     s_GameInfo->s_FactoryMonsters->clear();
-    map<int, Creature*>::iterator iter_, iter2_;
+    map<int, CreatureDave*>::iterator iter_, iter2_;
     for (iter_ = s_GameInfo->s_Daves.begin(), iter2_ = s_GameInfo->s_Daves.end(); iter_ != iter2_;)
     {
         if(iter_->second != 0)
@@ -421,6 +414,9 @@ void Game::setObjects(PostParsingStruct* cpps)
     for(int i = 0; i < size_x_level*size_y_level; i++)
     {
         s_Data->s_Level->s_Fields["FieldBonuses"][i] = 0;
+        s_Data->s_Level->s_Fields["FieldBonusDoors"][i] = 0;
+        s_Data->s_Level->s_Fields["FieldDoors"][i] = 0;
+        s_Data->s_Level->s_Fields["FieldExitLevelDoors"][i] = 0;
     }
     string monsterid = "";
     map<string, map<string, string> >::iterator iter;
@@ -451,60 +447,8 @@ void Game::setObjects(PostParsingStruct* cpps)
             //davekey++;
             string daveid = cpps->getValue(iter->first, "id");
             davekey = atoi( daveid.c_str() );
-            coordX = atoi( cpps->getValue("dave_" + daveid, "coordX").c_str() );
-            coordY = atoi( cpps->getValue("dave_" + daveid, "coordY").c_str() );
-            int currentHealth = atoi( cpps->getValue("dave_" + daveid, "currentHealth").c_str() );
-            state = cpps->getValue("dave_" + daveid, "state");
-            numberOfAction = atoi( cpps->getValue("dave_" + daveid, "numberOfAction").c_str() );
-            dopNumberOfAction = atoi( cpps->getValue("dave_" + daveid, "dopNumberOfAction").c_str() );
-            int CurrentPoints = atoi( cpps->getValue("dave_" + daveid, "CurrentPoints").c_str() );
-            int MaxHealth = atoi( cpps->getValue("dave_" + daveid, "MaxHealth").c_str() );
-            int Cartridges = atoi( cpps->getValue("dave_" + daveid, "Cartridges").c_str() );
-            int MaxCartridges = atoi( cpps->getValue("dave_" + daveid, "MaxCartridges").c_str() );
-            int JumpStep = atoi( cpps->getValue("dave_" + daveid, "JumpStep").c_str() );
-            int NumberOfTilesJump = atoi( cpps->getValue("dave_" + daveid, "NumberOfTilesJump").c_str() );
-            int FreezeJump = atoi( cpps->getValue("dave_" + daveid, "FreezeJump").c_str() );
-            int Acceleration = atoi( cpps->getValue("dave_" + daveid, "Acceleration").c_str() );
-            int TimeDoorOpen = atoi( cpps->getValue("dave_" + daveid, "TimeDoorOpen").c_str() );
-            string StateBeforeOpenDoor = cpps->getValue("dave_" + daveid, "StateBeforeOpenDoor");
-            string HowDoorOpen = cpps->getValue("dave_" + daveid, "HowDoorOpen");
-            string DopState = cpps->getValue("dave_" + daveid, "DopState");
-            int OldAnSt = atoi( cpps->getValue("dave_" + daveid, "OldAnSt").c_str() );
-            int OldNumberOfAction = atoi( cpps->getValue("dave_" + daveid, "OldNumberOfAction").c_str() );
-            int ShootNow = atoi( cpps->getValue("dave_" + daveid, "ShootNow").c_str() );
-            int ScreenCoordX = atoi( cpps->getValue("dave_" + daveid, "ScreenCoordX").c_str() );
-            int ScreenCoordY = atoi( cpps->getValue("dave_" + daveid, "ScreenCoordY").c_str() );
-            bool ControlShootPressed = (bool)atoi( cpps->getValue("dave_" + daveid, "ControlShootPressed").c_str() );
-            bool ControlJumpPressed = (bool)atoi( cpps->getValue("dave_" + daveid, "ControlJumpPressed").c_str() );
-            string NickName = cpps->getValue("dave_" + daveid, "NickName");
-            //...
-            s_GameInfo->s_Daves[davekey] = new Creature(this);
-            s_GameInfo->s_Daves[davekey]->s_CoordX = coordX;
-            s_GameInfo->s_Daves[davekey]->s_CoordY = coordY;
-            s_GameInfo->s_Daves[davekey]->s_CurrentHealth = currentHealth;
-            s_GameInfo->s_Daves[davekey]->s_State = state;
-            s_GameInfo->s_Daves[davekey]->s_NumberOfAction = numberOfAction;
-            s_GameInfo->s_Daves[davekey]->s_AdditionalNumberOfAction = dopNumberOfAction;
-            s_GameInfo->s_Daves[davekey]->s_CurrentPoints = CurrentPoints;
-            s_GameInfo->s_Daves[davekey]->s_MaxHealth = MaxHealth;
-            s_GameInfo->s_Daves[davekey]->s_Cartridges = Cartridges;
-            s_GameInfo->s_Daves[davekey]->s_MaxCartridges = MaxCartridges;
-            s_GameInfo->s_Daves[davekey]->s_JumpStep = JumpStep;
-            s_GameInfo->s_Daves[davekey]->s_NumberOfTilesJump = NumberOfTilesJump;
-            s_GameInfo->s_Daves[davekey]->s_FreezeJump = FreezeJump;
-            s_GameInfo->s_Daves[davekey]->s_Acceleration = Acceleration;
-            s_GameInfo->s_Daves[davekey]->s_TimeDoorOpen = TimeDoorOpen;
-            s_GameInfo->s_Daves[davekey]->s_StateBeforeOpenDoor = StateBeforeOpenDoor;
-            s_GameInfo->s_Daves[davekey]->s_HowDoorOpen = HowDoorOpen;
-            s_GameInfo->s_Daves[davekey]->s_DopState = DopState;
-            s_GameInfo->s_Daves[davekey]->s_OldAnSt = OldAnSt;
-            s_GameInfo->s_Daves[davekey]->s_OldNumberOfAction = OldNumberOfAction;
-            s_GameInfo->s_Daves[davekey]->s_ShootNow = ShootNow;
-            s_GameInfo->s_Daves[davekey]->s_ScreenCoordX = ScreenCoordX;
-            s_GameInfo->s_Daves[davekey]->s_ScreenCoordY = ScreenCoordY;
-            s_GameInfo->s_Daves[davekey]->s_ControlShootPressed = ControlShootPressed;
-            s_GameInfo->s_Daves[davekey]->s_ControlJumpPressed = ControlJumpPressed;
-            s_GameInfo->s_Daves[davekey]->s_NickName = NickName;
+            s_GameInfo->s_Daves[davekey] = new CreatureDave(this);
+            s_GameInfo->s_Daves[davekey]->setListOfVariables(cpps, "dave_" + daveid);
             //...
             s_GameInfo->s_Daves[davekey]->s_KeysState->s_KeyLeft = (bool)atoi( cpps->getValue("KeysState_dave_" + daveid, "keyLeft").c_str() );
             s_GameInfo->s_Daves[davekey]->s_KeysState->s_KeyRight = (bool)atoi( cpps->getValue("KeysState_dave_" + daveid, "keyRight").c_str() );
@@ -519,6 +463,24 @@ void Game::setObjects(PostParsingStruct* cpps)
             int key = atoi( bonuseid.c_str() );
             s_Data->s_Level->s_Fields["FieldBonuses"][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
         }
+        else if(iter->first.find("bonusdoor_") == 0)
+        {
+            string bonuseid = cpps->getValue(iter->first, "id");
+            int key = atoi( bonuseid.c_str() );
+            s_Data->s_Level->s_Fields["FieldBonusDoors"][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
+        }
+        else if(iter->first.find("door_") == 0)
+        {
+            string bonuseid = cpps->getValue(iter->first, "id");
+            int key = atoi( bonuseid.c_str() );
+            s_Data->s_Level->s_Fields["FieldDoors"][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
+        }
+        else if(iter->first.find("exitleveldoor_") == 0)
+        {
+            string bonuseid = cpps->getValue(iter->first, "id");
+            int key = atoi( bonuseid.c_str() );
+            s_Data->s_Level->s_Fields["FieldExitLevelDoors"][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
+        }
 }
 
 bool Game::insertDave(int id, int numberOfSpawn, string nickname)
@@ -528,8 +490,8 @@ bool Game::insertDave(int id, int numberOfSpawn, string nickname)
         cout<<"Error inserting Dave: this ID already used."<<endl;
         return false;
     }
-    s_GameInfo->s_Daves[id] = new Creature(this);
-    Creature* s_Dave = s_GameInfo->s_Daves[id];
+    s_GameInfo->s_Daves[id] = new CreatureDave(this);
+    CreatureDave* s_Dave = s_GameInfo->s_Daves[id];
     string str = s_Data->s_Level->s_Params->getValue("daves", "numberofdaves");
     if(numberOfSpawn > atoi(str.c_str()))
     {

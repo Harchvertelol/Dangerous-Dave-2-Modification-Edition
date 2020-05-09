@@ -24,7 +24,7 @@ GameInfo::GameInfo(Game* gameclass):
     s_CheatGod(false),
     s_IsAIOn(true)
 {
-    s_MyDave = new Creature(gameclass);
+    s_MyDave = new CreatureDave(gameclass);
     s_FactoryMonsters = new FactoryMonsters(gameclass);
 }
 
@@ -32,7 +32,7 @@ GameInfo::~GameInfo()
 {
     if(s_MyDave != 0) delete s_MyDave;
     if(s_FactoryMonsters != 0) delete s_FactoryMonsters;
-    map<int, Creature*>::iterator iter_, iter2_;
+    map<int, CreatureDave*>::iterator iter_, iter2_;
     for (iter_ = s_Daves.begin(), iter2_ = s_Daves.end(); iter_ != iter2_;)
     {
         if(iter_->second != 0) delete iter_->second;
@@ -44,10 +44,10 @@ void GameInfo::live()
 {
     s_GameClass->s_FactoryTmpImgs->live();
     s_FactoryMonsters->live();
-    map<int, Creature*>::iterator iter;
+    map<int, CreatureDave*>::iterator iter;
     for ( iter = s_Daves.begin(); iter != s_Daves.end(); iter++)
     {
-        iter->second->live();
+        iter->second->live(false);
     }
     //...
     s_MyDave->live();
@@ -132,7 +132,7 @@ void GameInfo::drawDeathFrame(map<int, Bitmap*>* bt, map<int, Bitmap*>* img, int
     else s_GameClass->s_Window->draw(Image((*(*img)[frame]), x, y));
 }
 
-void GameInfo::correctionScreen(Creature* dave)
+void GameInfo::correctionScreen(CreatureDave* dave)
 {
     dave->s_ScreenCoordX = dave->s_CoordX - s_GameClass->s_DisplayStruct->s_ResolutionX/2;
     dave->s_ScreenCoordY = dave->s_CoordY - s_GameClass->s_DisplayStruct->s_ResolutionY/2;

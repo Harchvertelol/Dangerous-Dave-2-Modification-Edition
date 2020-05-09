@@ -20,11 +20,13 @@ int main(int argc, char** argv)
         if(!ms->load())
         {
             cout<<"Error loading!"<<endl;
+            system("pause");
             return 0;
         }
         if(!ms->run())
         {
             cout<<"Error running!"<<endl;
+            system("pause");
             return 0;
         }
         delete ms;

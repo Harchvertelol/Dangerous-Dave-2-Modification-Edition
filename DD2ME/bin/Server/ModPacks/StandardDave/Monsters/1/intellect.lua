@@ -18,9 +18,12 @@ function mainFunc()
 	end
 	local oldstate = getState(-1)
 	local change = 1
+	if getGlobalValue(-1, "counterDaveReaction") == "" then
+		setGlobalValue(-1, "counterDaveReaction", "0")
+	end
 	if getGlobalValue(-1, "testdownrun") == "1" or getGlobalValue(-1, "testfirstdownrun") == "1" then
-        change = 0
-    end
+		change = 0
+	end
 	if testLookDaveX(-1) ~= 0 and getState(-1) == "downrun" then
 		if getDistanceToDaveYHead(-1, 1) > 10 then
 			change = 0
@@ -28,6 +31,11 @@ function mainFunc()
 	end
 	if string.find(getState(-1), "strike") ~= nil then
 		change = 0
+	end
+	local cdr = tonumber(getGlobalValue(-1, "counterDaveReaction"))
+	if cdr > 0 then
+		change = 0
+		setGlobalValue(-1, "counterDaveReaction", tostring(cdr - 1))
 	end
 	if change == 1 then
 		if testLookDaveX(-1) == 1 then
@@ -77,12 +85,12 @@ function mainFunc()
 					setGlobalValue(-1, "testfirstdownrun", "0")
 				else
 					if getGlobalValue(-1, "testdownrun") == "0" and getGlobalValue(-1, "testfirstdownrun") == "0" then
-                        if testLookDaveX(-1) == -1 then
-                            setState(-1, "leftrun")
-                        else
-                            setState(-1, "rightrun")
-                        end
-                    end
+						if testLookDaveX(-1) == -1 then
+							setState(-1, "leftrun")
+						else
+							setState(-1, "rightrun")
+						end
+					end
 				end
 			end
 		end
@@ -90,16 +98,18 @@ function mainFunc()
 	if testgo ~= 0 then
 		if getState(-1) == "rightrun" then
 			setState(-1, "leftrun")
+			setGlobalValue(-1, "counterDaveReaction", tostring(2*math.random(1, 4)))
 		else
 			if getState(-1) == "leftrun" then
 				setState(-1, "rightrun")
+				setGlobalValue(-1, "counterDaveReaction", tostring(2*math.random(1,4)))
 			else
 				if getState(-1) == "downrun" then
 					if testLookDaveX(-1) == -1 then
-                            setState(-1, "leftrun")
-                        else
-                            setState(-1, "rightrun")
-                        end
+						setState(-1, "leftrun")
+					else
+						setState(-1, "rightrun")
+					end
 				end
 			end
 		end

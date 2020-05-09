@@ -41,8 +41,8 @@
 		<Unit filename="AI.h" />
 		<Unit filename="Bonuses.cpp" />
 		<Unit filename="Bonuses.h" />
-		<Unit filename="Creature.cpp" />
-		<Unit filename="Creature.h" />
+		<Unit filename="CreatureDave.cpp" />
+		<Unit filename="CreatureDave.h" />
 		<Unit filename="CreatureMonster.cpp" />
 		<Unit filename="CreatureMonster.h" />
 		<Unit filename="Dave.cpp" />
@@ -83,9 +83,6 @@
 		<Unit filename="NetServer/SClient.h" />
 		<Unit filename="NetServer/Server.cpp" />
 		<Unit filename="NetServer/Server.h" />
-		<Unit filename="Net/Client.h" />
-		<Unit filename="Net/NetClient.h" />
-		<Unit filename="Net/NetInfoStruct.h" />
 		<Unit filename="Screens.cpp" />
 		<Unit filename="Screens.h" />
 		<Unit filename="Square.cpp" />
