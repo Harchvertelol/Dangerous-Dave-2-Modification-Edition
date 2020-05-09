@@ -5,7 +5,11 @@ This project has a repository on the sourceforge (I created it in 2013 year), bu
 **Attention**: this development is a software shell that loads external modules (modpacks). The program code does not contain anything copyrighted by the original dangerous dave.
 
 # Screenshots
-<img src="Screenshots/1.png" width=33% alt="screenshot"> <img src="Screenshots/2.png" width=33% alt="screenshot"> <img src="Screenshots/3.png" width=32% alt="screenshot">
+<img src="Screenshots/1.png" width=33% alt="screenshot"> <img src="Screenshots/2.png" width=33% alt="screenshot"> <img src="Screenshots/3.png" width=32% alt="screenshot"><br>
+
+And a little preparing network mode:
+
+<img src="Screenshots/4.jpg" width=32% alt="screenshot">
 
 # Download
 Last version (v0.4 pre-beta): <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/tag/v0.4pre-beta-win" target="_blank">open</a>, <a href=https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/download/v0.4pre-beta-win/DD2MEv0.4pb.win.rar>direct link</a><br>
