@@ -5,10 +5,10 @@ end
 function calculateKnife()
 	local testgo = -1
 	if getState(-1) == "leftknife" then
-		testgo = goLeft(-1, 6, 1, 0)
+		testgo = goLeft(-1, 5, 1, 0)
 	else
 		if getState(-1) == "rightknife" then
-			testgo = goRight(-1, 6, 1, 0)
+			testgo = goRight(-1, 5, 1, 0)
 		end
 	end
 	if testgo == 0 and testCollisionDave(-1) == 1 then
@@ -48,13 +48,15 @@ function mainFunc()
 			return
 		else
 			if getState(-1) == "rightstrike" then
-				addDuplicateMonster(-1, getCoordMonsterX(-1) + 34, getCoordMonsterY(-1), "rightknife", 0, 0, -2)
+				if math.random(5) ~= 1 then
+					addDuplicateMonster(-1, getCoordMonsterX(-1) + 34, getCoordMonsterY(-1), "rightknife", 0, 0, -2)
+				end
 				return
 			end
 		end
 	end
 	local oldstate = getState(-1)
-	if math.random(25) == 1 then
+	if math.random(50) == 1 then
 		if testLookDaveX(-1) == -1 and getDistanceToDaveXHead(-1) < -16*5 then
 			if string.find(getState(-1), "strike") == nil then
 				setNullNumberOfAction(-1)
