@@ -37,6 +37,15 @@ namespace IniParser
             /*! \param pps Откуда добавить все значения.
             */
             void addPostParsingStruct(PostParsingStruct* pps);
+            //! Проверяет существование блока.
+            /*! \param A Название блока.
+            */
+            bool isExists(std::string A);
+            //! Проверяет существование переменной.
+            /*! \param A Название блока.
+            \param B Название переменной.
+            */
+            bool isExists(std::string A, std::string B);
         private:
             std::map<std::string, std::map<std::string, std::string> > s_Variables;
     };

@@ -60,3 +60,19 @@ void IniParser::PostParsingStruct::addPostParsingStruct(PostParsingStruct* pps)
         }
     }
 }
+
+bool IniParser::PostParsingStruct::isExists(std::string A)
+{
+    map<string, map<string, string> >::iterator I = s_Variables.find(A);
+    if ( I == s_Variables.end() ) return false;
+    return true;
+}
+
+bool IniParser::PostParsingStruct::isExists(std::string A, std::string B)
+{
+    map<string, map<string, string> >::iterator I = s_Variables.find(A);
+    if ( I == s_Variables.end() ) return false;
+    map<string, string>::iterator II = s_Variables[A].find(B);
+    if ( II == s_Variables[A].end() ) return false;
+    return true;
+}

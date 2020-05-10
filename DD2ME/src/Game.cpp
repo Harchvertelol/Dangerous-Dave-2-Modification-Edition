@@ -406,8 +406,12 @@ void Game::setObjects(PostParsingStruct* cpps)
     {
         if(iter_->second != 0)
         {
-            delete iter_->second;
-            s_GameInfo->s_Daves.erase(iter_++);
+            if(!cpps->isExists("dave_" + WorkFunctions::ConvertFunctions::itos(iter_->first)))
+            {
+                delete iter_->second;
+                s_GameInfo->s_Daves.erase(iter_++);
+            }
+            else ++iter_;
         }
         else ++iter_;
     }
@@ -449,7 +453,7 @@ void Game::setObjects(PostParsingStruct* cpps)
             //davekey++;
             string daveid = cpps->getValue(iter->first, "id");
             davekey = atoi( daveid.c_str() );
-            s_GameInfo->s_Daves[davekey] = new CreatureDave(this);
+            if(!s_GameInfo->s_Daves[davekey]) s_GameInfo->s_Daves[davekey] = new CreatureDave(this);
             s_GameInfo->s_Daves[davekey]->setListOfVariables(cpps, "dave_" + daveid);
             //...
             s_GameInfo->s_Daves[davekey]->s_KeysState->s_KeyLeft = (bool)atoi( cpps->getValue("KeysState_dave_" + daveid, "keyLeft").c_str() );

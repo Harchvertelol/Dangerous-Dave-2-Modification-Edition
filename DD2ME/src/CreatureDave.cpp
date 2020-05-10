@@ -962,8 +962,8 @@ PostParsingStruct* CreatureDave::getListOfVariables(string mainvariablename, Pos
     dpps->setValue(mainvariablename, "coordY", WorkFunctions::ConvertFunctions::itos(s_CoordY) );
     dpps->setValue(mainvariablename, "currentHealth", WorkFunctions::ConvertFunctions::itos(s_CurrentHealth) );
     dpps->setValue(mainvariablename, "state", s_State);
-    dpps->setValue(mainvariablename, "numberOfAction", WorkFunctions::ConvertFunctions::itos(s_NumberOfAction) );
-    dpps->setValue(mainvariablename, "dopNumberOfAction", WorkFunctions::ConvertFunctions::itos(s_AdditionalNumberOfAction) );
+    //dpps->setValue(mainvariablename, "numberOfAction", WorkFunctions::ConvertFunctions::itos(s_NumberOfAction) );
+    //dpps->setValue(mainvariablename, "dopNumberOfAction", WorkFunctions::ConvertFunctions::itos(s_AdditionalNumberOfAction) );
     dpps->setValue(mainvariablename, "CurrentPoints", WorkFunctions::ConvertFunctions::itos(s_CurrentPoints) );
     dpps->setValue(mainvariablename, "MaxHealth", WorkFunctions::ConvertFunctions::itos(s_MaxHealth) );
     dpps->setValue(mainvariablename, "Cartridges", WorkFunctions::ConvertFunctions::itos(s_Cartridges) );
@@ -977,12 +977,12 @@ PostParsingStruct* CreatureDave::getListOfVariables(string mainvariablename, Pos
     dpps->setValue(mainvariablename, "HowDoorOpen", s_HowDoorOpen);
     dpps->setValue(mainvariablename, "DopState", s_DopState);
     dpps->setValue(mainvariablename, "OldAnSt", WorkFunctions::ConvertFunctions::itos(s_OldAnSt) );
-    dpps->setValue(mainvariablename, "OldNumberOfAction", WorkFunctions::ConvertFunctions::itos(s_OldNumberOfAction) );
+    //dpps->setValue(mainvariablename, "OldNumberOfAction", WorkFunctions::ConvertFunctions::itos(s_OldNumberOfAction) );
     dpps->setValue(mainvariablename, "ShootNow", WorkFunctions::ConvertFunctions::itos(s_ShootNow) );
     dpps->setValue(mainvariablename, "ScreenCoordX", WorkFunctions::ConvertFunctions::itos(s_ScreenCoordX) );
     dpps->setValue(mainvariablename, "ScreenCoordY", WorkFunctions::ConvertFunctions::itos(s_ScreenCoordY) );
-    dpps->setValue(mainvariablename, "ControlJumpPressed", WorkFunctions::ConvertFunctions::itos( (bool)s_ControlJumpPressed) );
-    dpps->setValue(mainvariablename, "ControlShootPressed", WorkFunctions::ConvertFunctions::itos( (bool)s_ControlShootPressed) );
+    //dpps->setValue(mainvariablename, "ControlJumpPressed", WorkFunctions::ConvertFunctions::itos( (bool)s_ControlJumpPressed) );
+    //dpps->setValue(mainvariablename, "ControlShootPressed", WorkFunctions::ConvertFunctions::itos( (bool)s_ControlShootPressed) );
     dpps->setValue(mainvariablename, "NickName", s_NickName );
     return dpps;
 }
@@ -993,8 +993,8 @@ void CreatureDave::setListOfVariables(PostParsingStruct* dpps, string mainvariab
     int coordY = atoi( dpps->getValue(mainvariablename, "coordY").c_str() );
     int currentHealth = atoi( dpps->getValue(mainvariablename, "currentHealth").c_str() );
     string state = dpps->getValue(mainvariablename, "state");
-    int numberOfAction = atoi( dpps->getValue(mainvariablename, "numberOfAction").c_str() );
-    int dopNumberOfAction = atoi( dpps->getValue(mainvariablename, "dopNumberOfAction").c_str() );
+    //int numberOfAction = atoi( dpps->getValue(mainvariablename, "numberOfAction").c_str() );
+    //int dopNumberOfAction = atoi( dpps->getValue(mainvariablename, "dopNumberOfAction").c_str() );
     int CurrentPoints = atoi( dpps->getValue(mainvariablename, "CurrentPoints").c_str() );
     int MaxHealth = atoi( dpps->getValue(mainvariablename, "MaxHealth").c_str() );
     int Cartridges = atoi( dpps->getValue(mainvariablename, "Cartridges").c_str() );
@@ -1008,19 +1008,19 @@ void CreatureDave::setListOfVariables(PostParsingStruct* dpps, string mainvariab
     string HowDoorOpen = dpps->getValue(mainvariablename, "HowDoorOpen");
     string DopState = dpps->getValue(mainvariablename, "DopState");
     int OldAnSt = atoi( dpps->getValue(mainvariablename, "OldAnSt").c_str() );
-    int OldNumberOfAction = atoi( dpps->getValue(mainvariablename, "OldNumberOfAction").c_str() );
+    //int OldNumberOfAction = atoi( dpps->getValue(mainvariablename, "OldNumberOfAction").c_str() );
     int ShootNow = atoi( dpps->getValue(mainvariablename, "ShootNow").c_str() );
     int ScreenCoordX = atoi( dpps->getValue(mainvariablename, "ScreenCoordX").c_str() );
     int ScreenCoordY = atoi( dpps->getValue(mainvariablename, "ScreenCoordY").c_str() );
-    bool ControlShootPressed = (bool)atoi( dpps->getValue(mainvariablename, "ControlShootPressed").c_str() );
-    bool ControlJumpPressed = (bool)atoi( dpps->getValue(mainvariablename, "ControlJumpPressed").c_str() );
+    //bool ControlShootPressed = (bool)atoi( dpps->getValue(mainvariablename, "ControlShootPressed").c_str() );
+    //bool ControlJumpPressed = (bool)atoi( dpps->getValue(mainvariablename, "ControlJumpPressed").c_str() );
     string NickName = dpps->getValue(mainvariablename, "NickName");
     s_CoordX = coordX;
     s_CoordY = coordY;
     s_CurrentHealth = currentHealth;
     s_State = state;
-    s_NumberOfAction = numberOfAction;
-    s_AdditionalNumberOfAction = dopNumberOfAction;
+    //s_NumberOfAction = numberOfAction;
+    //s_AdditionalNumberOfAction = dopNumberOfAction;
     s_CurrentPoints = CurrentPoints;
     s_MaxHealth = MaxHealth;
     s_Cartridges = Cartridges;
@@ -1034,11 +1034,11 @@ void CreatureDave::setListOfVariables(PostParsingStruct* dpps, string mainvariab
     s_HowDoorOpen = HowDoorOpen;
     s_DopState = DopState;
     s_OldAnSt = OldAnSt;
-    s_OldNumberOfAction = OldNumberOfAction;
+    //s_OldNumberOfAction = OldNumberOfAction;
     s_ShootNow = ShootNow;
     s_ScreenCoordX = ScreenCoordX;
     s_ScreenCoordY = ScreenCoordY;
-    s_ControlShootPressed = ControlShootPressed;
-    s_ControlJumpPressed = ControlJumpPressed;
+    //s_ControlShootPressed = ControlShootPressed;
+    //s_ControlJumpPressed = ControlJumpPressed;
     s_NickName = NickName;
 }

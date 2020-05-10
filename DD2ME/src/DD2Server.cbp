@@ -99,6 +99,7 @@
 		<Unit filename="Version.h" />
 		<Unit filename="WorkFunctions.cpp" />
 		<Unit filename="WorkFunctions.h" />
+		<Unit filename="canvas.hpp" />
 		<Unit filename="lua/lapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
