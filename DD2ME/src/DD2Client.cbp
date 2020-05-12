@@ -73,10 +73,10 @@
 		<Unit filename="LuaBindFunctions.h" />
 		<Unit filename="Monsters.cpp" />
 		<Unit filename="Monsters.h" />
-		<Unit filename="NetClient/Client.cpp" />
-		<Unit filename="NetClient/Client.h" />
 		<Unit filename="NetClient/NetClient.cpp" />
 		<Unit filename="NetClient/NetClient.h" />
+		<Unit filename="NetClient/NetClientCallback.cpp" />
+		<Unit filename="NetClient/NetClientCallback.h" />
 		<Unit filename="NetClient/NetInfoStruct.h" />
 		<Unit filename="Screens.cpp" />
 		<Unit filename="Screens.h" />

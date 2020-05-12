@@ -6,11 +6,11 @@
 class UserData;
 class Server;
 
-class SClient: public Socket
+class NetServerCallback: public Socket
 {
     public:
-        SClient(Server*);
-        ~SClient();
+        NetServerCallback(Server*);
+        ~NetServerCallback();
         int s_ID;
         Server* s_Server;
         UserData* s_UserData;

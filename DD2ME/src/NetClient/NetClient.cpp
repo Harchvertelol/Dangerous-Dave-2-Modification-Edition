@@ -22,7 +22,7 @@ NetClient::NetClient(Game* gameclass):
     s_GameClass(gameclass),
     s_NetInfo(0)
 {
-    s_Client = new Client(this);
+    s_Client = new NetClientCallback(this);
     s_NetInfoStruct = new NetInfoStruct;
     s_NetInfoStruct->s_Error = "";
     s_NetInfoStruct->s_ServerList = 0;

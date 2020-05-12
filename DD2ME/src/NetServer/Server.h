@@ -5,7 +5,7 @@
 #include <map>
 
 #include "../shabbynet/shabbynet.hpp"
-#include "SClient.h"
+#include "NetServerCallback.h"
 #include "../IniParser/PostParsingStruct.h"
 
 class MainServer;
@@ -16,16 +16,16 @@ class Server
         Server(MainServer*);
         ~Server();
         MainServer* s_MainServer;
-        void accept(SClient*);
+        void accept(NetServerCallback*);
         void run(int port);
-        void close(SClient*);
-        void on_command(SClient*, const std::string&);
-        void doCommand(SClient*, std::string, IniParser::PostParsingStruct*);
+        void close(NetServerCallback*);
+        void on_command(NetServerCallback*, const std::string&);
+        void doCommand(NetServerCallback*, std::string, IniParser::PostParsingStruct*);
 
     private:
         void tick();
         std::map<std::string, int> s_ClientsId;
-        std::map<int, SClient*> s_Clients;
+        std::map<int, NetServerCallback*> s_Clients;
         int s_MaxIdClient;
 };
 

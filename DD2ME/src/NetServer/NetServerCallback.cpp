@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "SClient.h"
+#include "NetServerCallback.h"
 #include "Server.h"
 #include "../UserData.h"
 
 using namespace std;
 
-SClient::SClient(Server* s):
+NetServerCallback::NetServerCallback(Server* s):
     s_ID(0),
     s_Server(s),
     s_ReceiveBuffer("")
@@ -14,12 +14,12 @@ SClient::SClient(Server* s):
     s_UserData = new UserData;
 }
 
-SClient::~SClient()
+NetServerCallback::~NetServerCallback()
 {
     if(s_UserData != 0) delete s_UserData;
 }
 
-void SClient::on_received(const char* buf, int len)
+void NetServerCallback::on_received(const char* buf, int len)
 {
     if(len < 0)
     {
@@ -43,13 +43,13 @@ void SClient::on_received(const char* buf, int len)
 	read_some();
 }
 
-void SClient::on_closed()
+void NetServerCallback::on_closed()
 {
 	std::cout << "Socket closed" << endl;
 	s_Server->close(this);
 }
 
-void SClient::on_connected()
+void NetServerCallback::on_connected()
 {
 	cout << "Accepted new connection!" << endl;
 	s_Server->accept(this);

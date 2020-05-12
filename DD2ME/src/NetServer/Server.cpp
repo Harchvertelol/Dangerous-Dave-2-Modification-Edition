@@ -31,13 +31,13 @@ Server::~Server()
     //...
 }
 
-void Server::accept(SClient* c)
+void Server::accept(NetServerCallback* c)
 {
 	cout << "New client accepted" << endl;
 	s_Clients[s_MaxIdClient] = c;
 	c->s_ID = s_MaxIdClient;
 	s_MaxIdClient++;
-	net::accept(new SClient(this));
+	net::accept(new NetServerCallback(this));
 	string str_send = "";
 	str_send = addMainVariableString(str_send, "connection", SPLITTER_STR_VARIABLE);
 	str_send = addSecondaryVariableString(str_send, "confirm", "true", SPLITTER_STR_VARIABLE);
@@ -61,7 +61,7 @@ void Server::tick()
     }
 }
 
-void Server::on_command(SClient* cl, const std::string& cmd)
+void Server::on_command(NetServerCallback* cl, const std::string& cmd)
 {
 	ParserInfoFile prs;
 	PostParsingStruct* pps = prs.getParsedFromString(cmd, SPLITTER_STR_VARIABLE);
@@ -121,7 +121,7 @@ void Server::on_command(SClient* cl, const std::string& cmd)
 	delete pps;
 }
 
-void Server::doCommand(SClient* cl, string command, PostParsingStruct* pps)
+void Server::doCommand(NetServerCallback* cl, string command, PostParsingStruct* pps)
 {
     string str_send;
     if(command == SERVER_COMMANDS_FROM_CLIENT::SCFC_getServerList)
@@ -193,7 +193,7 @@ void Server::doCommand(SClient* cl, string command, PostParsingStruct* pps)
     }
 }
 
-void Server::close(SClient* c)
+void Server::close(NetServerCallback* c)
 {
     if(c->s_UserData->s_IdServerConnected != STRING_CONSTANTS::MISSING_ID_SERVER) s_MainServer->s_ListGameClass[c->s_UserData->s_IdServerConnected]->removeDave(c->s_ID);
     c->s_UserData->s_IdServerConnected = STRING_CONSTANTS::MISSING_ID_SERVER;
@@ -207,7 +207,7 @@ void Server::run(int port)
 	std::cout << "Starting server" << std::endl;
 	net::listen(port);
 
-	net::accept(new SClient(this));
+	net::accept(new NetServerCallback(this));
 	for(;;)
 	{
 		net::run(5);

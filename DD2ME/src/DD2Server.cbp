@@ -75,13 +75,13 @@
 		<Unit filename="MainServer.h" />
 		<Unit filename="Monsters.cpp" />
 		<Unit filename="Monsters.h" />
-		<Unit filename="NetClient/Client.cpp" />
-		<Unit filename="NetClient/Client.h" />
 		<Unit filename="NetClient/NetClient.cpp" />
 		<Unit filename="NetClient/NetClient.h" />
+		<Unit filename="NetClient/NetClientCallback.cpp" />
+		<Unit filename="NetClient/NetClientCallback.h" />
 		<Unit filename="NetClient/NetInfoStruct.h" />
-		<Unit filename="NetServer/SClient.cpp" />
-		<Unit filename="NetServer/SClient.h" />
+		<Unit filename="NetServer/NetServerCallback.cpp" />
+		<Unit filename="NetServer/NetServerCallback.h" />
 		<Unit filename="NetServer/Server.cpp" />
 		<Unit filename="NetServer/Server.h" />
 		<Unit filename="Screens.cpp" />

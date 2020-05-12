@@ -9,15 +9,15 @@
 
 class NetClient;
 
-class Client: public Socket
+class NetClientCallback: public Socket
 {
     public:
-        Client(NetClient*);
-        ~Client();
+        NetClientCallback(NetClient*);
+        ~NetClientCallback();
         NetClient* s_NetClient;
         std::string s_ReceiveBuffer;
         void workStr(std::string);
-        void doCommand(Client*, std::string, IniParser::PostParsingStruct*);
+        void doCommand(NetClientCallback*, std::string, IniParser::PostParsingStruct*);
         void connect(const std::string&, int port);
 
     private:

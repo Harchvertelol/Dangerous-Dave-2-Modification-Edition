@@ -1,4 +1,4 @@
-#include "Client.h"
+#include "NetClientCallback.h"
 #include <iostream>
 #include <string>
 
@@ -19,25 +19,25 @@ using namespace STRING_CONSTANTS;
 
 using namespace IniParser;
 
-Client::Client(NetClient* g):
+NetClientCallback::NetClientCallback(NetClient* g):
     s_NetClient(g),
     s_ReceiveBuffer("")
 {
     //...
 }
 
-Client::~Client()
+NetClientCallback::~NetClientCallback()
 {
     //...
 }
 
-void Client::connect(const std::string& host, int port)
+void NetClientCallback::connect(const std::string& host, int port)
 {
 	Socket::connect(host, port);
 	read_some();
 }
 
-void Client::on_received(const char* buf, int len)
+void NetClientCallback::on_received(const char* buf, int len)
 {
 	if(len < 0)
     {
@@ -63,7 +63,7 @@ void Client::on_received(const char* buf, int len)
 	read_some();
 }
 
-void Client::workStr(string s)
+void NetClientCallback::workStr(string s)
 {
     ParserInfoFile prs;
     PostParsingStruct* pps = prs.getParsedFromString(s, SPLITTER_STR_VARIABLE);
@@ -125,7 +125,7 @@ void Client::workStr(string s)
     delete pps;
 }
 
-void Client::doCommand(Client* cl, string command, PostParsingStruct* pps)
+void NetClientCallback::doCommand(NetClientCallback* cl, string command, PostParsingStruct* pps)
 {
     //...
 }

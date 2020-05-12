@@ -4,7 +4,7 @@
 #include <string>
 
 #include "../shabbynet/shabbynet.hpp"
-#include "Client.h"
+#include "NetClientCallback.h"
 #include "NetInfoStruct.h"
 #include "../IniParser/PostParsingStruct.h"
 
@@ -15,7 +15,7 @@ class NetClient
     public:
         NetClient(Game*);
         ~NetClient();
-        Client* s_Client;
+        NetClientCallback* s_Client;
         NetInfoStruct* s_NetInfoStruct;
         Game* s_GameClass;
         IniParser::PostParsingStruct* s_NetInfo;
