@@ -16,6 +16,8 @@ class Level
         std::map<std::string, std::map<int,int> > s_Fields;
         bool loadLevel(std::string);
         void draw();
-        int getTileType(int,int);
+        int getTileType(int, int);
+        int getTileID(int, int);
+        bool setTileID(int, int, int);
 };
 #endif

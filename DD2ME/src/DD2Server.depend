@@ -1,0 +1,840 @@
+# depslib dependency file v1.0
+1589021225 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\ai.cpp
+	"AI.h"
+	"Game.h"
+	"WorkFunctions.h"
+	"Defines.h"
+
+1588897881 e:\github\dangerous-dave-2-modification-edition\dd2me\src\ai.h
+	"CreatureMonster.h"
+	"LuaBindFunctions.h"
+
+1588892441 e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturemonster.h
+	<iostream>
+	<map>
+	"lua/lua.hpp"
+
+1103763184 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lua.hpp
+	"lua.h"
+	"lualib.h"
+	"lauxlib.h"
+
+1334927906 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lua.h
+	<stdarg.h>
+	<stddef.h>
+	"luaconf.h"
+
+1336745682 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\luaconf.h
+	<limits.h>
+	<stddef.h>
+	<stdio.h>
+	<math.h>
+
+1323346297 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lualib.h
+	"lua.h"
+
+1322582108 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lauxlib.h
+	<stddef.h>
+	<stdio.h>
+	"lua.h"
+
+1588892464 e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.h
+	"lua/lua.hpp"
+	<math.h>
+	"CreatureMonster.h"
+
+1589019965 e:\github\dangerous-dave-2-modification-edition\dd2me\src\game.h
+	"DisplayStruct.h"
+	"IniParser/PostParsingStruct.h"
+	"GameData.h"
+	"GameInfo.h"
+	"StateManager.h"
+	"FactoryTemporaryImages.h"
+	"NetClient/NetClient.h"
+	"AI.h"
+	"Gui.h"
+	"KeysState.h"
+	"canvas.hpp"
+
+1341671042 e:\github\dangerous-dave-2-modification-edition\dd2me\src\displaystruct.h
+
+1589052444 e:\github\dangerous-dave-2-modification-edition\dd2me\src\iniparser\postparsingstruct.h
+	<map>
+	<string>
+
+1589019898 e:\github\dangerous-dave-2-modification-edition\dd2me\src\gamedata.h
+	"Level.h"
+	"Textures.h"
+	"Bonuses.h"
+	"Screens.h"
+	"Dave.h"
+	"Monsters.h"
+
+1589320124 e:\github\dangerous-dave-2-modification-edition\dd2me\src\level.h
+	<map>
+	<cstring>
+	"IniParser/PostParsingStruct.h"
+
+1589019720 e:\github\dangerous-dave-2-modification-edition\dd2me\src\textures.h
+	"IniParser/PostParsingStruct.h"
+	"canvas.hpp"
+
+1381605796 e:\github\dangerous-dave-2-modification-edition\dd2me\src\canvas.hpp
+	<sstream>
+	<string>
+	<windows.h>
+	<vector>
+	<cassert>
+	<stdexcept>
+	<map>
+	<cstdlib>
+	<Windowsx.h>
+	<iostream>
+	<iostream>
+
+1589019769 e:\github\dangerous-dave-2-modification-edition\dd2me\src\bonuses.h
+	<map>
+	"canvas.hpp"
+	"IniParser/PostParsingStruct.h"
+	"Square.h"
+
+1363272848 e:\github\dangerous-dave-2-modification-edition\dd2me\src\square.h
+
+1589019783 e:\github\dangerous-dave-2-modification-edition\dd2me\src\screens.h
+	<map>
+	"canvas.hpp"
+	"IniParser/PostParsingStruct.h"
+
+1589020001 e:\github\dangerous-dave-2-modification-edition\dd2me\src\dave.h
+	<map>
+	"canvas.hpp"
+	"Square.h"
+	"IniParser/PostParsingStruct.h"
+
+1589019870 e:\github\dangerous-dave-2-modification-edition\dd2me\src\monsters.h
+	<map>
+	"canvas.hpp"
+	"Square.h"
+	"IniParser/PostParsingStruct.h"
+
+1588969261 e:\github\dangerous-dave-2-modification-edition\dd2me\src\gameinfo.h
+	<map>
+	"canvas.hpp"
+	"CreatureDave.h"
+	"FactoryMonsters.h"
+
+1589019677 e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturedave.h
+	<iostream>
+	"IniParser/PostParsingStruct.h"
+
+1588896431 e:\github\dangerous-dave-2-modification-edition\dd2me\src\factorymonsters.h
+	<iostream>
+	<map>
+	"CreatureMonster.h"
+
+1363273576 e:\github\dangerous-dave-2-modification-edition\dd2me\src\statemanager.h
+	"windows.h"
+	<iostream>
+
+1371488517 e:\github\dangerous-dave-2-modification-edition\dd2me\src\factorytemporaryimages.h
+	<map>
+	"TemporaryImageInfo.h"
+	"canvas.hpp"
+
+1386919477 e:\github\dangerous-dave-2-modification-edition\dd2me\src\temporaryimageinfo.h
+	<iostream>
+	"canvas.hpp"
+
+1589242915 e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\netclient.h
+	<string>
+	"../shabbynet/shabbynet.hpp"
+	"NetClientCallback.h"
+	"NetInfoStruct.h"
+	"../IniParser/PostParsingStruct.h"
+
+1362927514 e:\github\dangerous-dave-2-modification-edition\dd2me\src\shabbynet\shabbynet.hpp
+	<stdexcept>
+	<vector>
+	<queue>
+	<set>
+
+1589242922 e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\netclientcallback.h
+	<string>
+	"../shabbynet/shabbynet.hpp"
+	"../IniParser/PostParsingStruct.h"
+
+1589020356 e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\netinfostruct.h
+	<iostream>
+	"../IniParser/PostParsingStruct.h"
+
+1381696105 e:\github\dangerous-dave-2-modification-edition\dd2me\src\gui.h
+
+1363267640 e:\github\dangerous-dave-2-modification-edition\dd2me\src\keysstate.h
+
+1589022356 e:\github\dangerous-dave-2-modification-edition\dd2me\src\workfunctions.h
+	<iostream>
+	<sstream>
+	<map>
+	"Defines.h"
+	"Square.h"
+
+1589022338 e:\github\dangerous-dave-2-modification-edition\dd2me\src\defines.h
+	<string>
+
+1589021124 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\bonuses.cpp
+	"Bonuses.h"
+	"IniParser/ParserInfoFile.h"
+	"WorkFunctions.h"
+	"Game.h"
+
+1419363618 e:\github\dangerous-dave-2-modification-edition\dd2me\src\iniparser\parserinfofile.h
+	<string>
+	"PostParsingStruct.h"
+
+1589138830 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturedave.cpp
+	"CreatureDave.h"
+	"Game.h"
+	"WorkFunctions.h"
+	"Defines.h"
+	"KeysState.h"
+
+1589021289 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturemonster.cpp
+	"CreatureMonster.h"
+	"Game.h"
+	"WorkFunctions.h"
+	"Defines.h"
+
+1589021267 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\dave.cpp
+	"Dave.h"
+	"Game.h"
+	"IniParser/ParserInfoFile.h"
+	"WorkFunctions.h"
+
+1589021289 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\factorymonsters.cpp
+	"FactoryMonsters.h"
+	"Game.h"
+	"WorkFunctions.h"
+	"Defines.h"
+	"Thread/Thread.h"
+
+1364388105 e:\github\dangerous-dave-2-modification-edition\dd2me\src\thread\thread.h
+	"../CreatureMonster.h"
+	<windows.h>
+	<pthread.h>
+	<signal.h>
+
+1371488885 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\factorytemporaryimages.cpp
+	"FactoryTemporaryImages.h"
+	"Game.h"
+
+1589319844 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\game.cpp
+	"Game.h"
+	"WorkFunctions.h"
+	"Defines.h"
+	<ctime>
+
+1589021148 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gamedata.cpp
+	"GameData.h"
+	"Game.h"
+	"IniParser/ParserInfoFile.h"
+	"WorkFunctions.h"
+	"Defines.h"
+
+1588987956 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gameinfo.cpp
+	"GameInfo.h"
+	"Game.h"
+
+1588988731 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gui.cpp
+	"Gui.h"
+	"Game.h"
+
+1589021197 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\iniparser\parserinfofile.cpp
+	<fstream>
+	<iostream>
+	"ParserInfoFile.h"
+	"PostParsingStruct.h"
+	"../WorkFunctions.h"
+	"../Defines.h"
+
+1589052550 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\iniparser\postparsingstruct.cpp
+	"PostParsingStruct.h"
+	<iostream>
+
+1589320273 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\level.cpp
+	"Level.h"
+	"IniParser/ParserInfoFile.h"
+	"WorkFunctions.h"
+	"Defines.h"
+	"Game.h"
+	<fstream>
+	<iostream>
+	<stdlib.h>
+
+1339168444 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lapi.c
+	<stdarg.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lundump.h"
+	"lvm.h"
+
+1259336279 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lapi.h
+	"llimits.h"
+	"lstate.h"
+
+1338237148 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\llimits.h
+	<limits.h>
+	<stddef.h>
+	"lua.h"
+	<assert.h>
+	<math.h>
+	<float.h>
+	<math.h>
+
+1339168444 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lstate.h
+	"lua.h"
+	"lobject.h"
+	"ltm.h"
+	"lzio.h"
+
+1336745450 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lobject.h
+	<stdarg.h>
+	"llimits.h"
+	"lua.h"
+
+1298914330 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\ltm.h
+	"lobject.h"
+
+1310734083 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lzio.h
+	"lua.h"
+	"lmem.h"
+
+1322832414 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lmem.h
+	<stddef.h>
+	"llimits.h"
+	"lua.h"
+
+1318020319 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\ldebug.h
+	"lstate.h"
+
+1322582108 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\ldo.h
+	"lobject.h"
+	"lstate.h"
+	"lzio.h"
+
+1336485213 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lfunc.h
+	"lobject.h"
+
+1337787794 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lgc.h
+	"lobject.h"
+	"lstate.h"
+
+1328133435 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lstring.h
+	"lgc.h"
+	"lobject.h"
+	"lstate.h"
+
+1313612807 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\ltable.h
+	"lobject.h"
+
+1336485213 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lundump.h
+	"lobject.h"
+	"lzio.h"
+
+1306866476 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lvm.h
+	"ldo.h"
+	"lobject.h"
+	"ltm.h"
+
+1338496125 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lauxlib.c
+	<errno.h>
+	<stdarg.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	<sys/wait.h>
+
+1335535999 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lbaselib.c
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1308587723 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lbitlib.c
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1314721601 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lcode.c
+	<stdlib.h>
+	"lua.h"
+	"lcode.h"
+	"ldebug.h"
+	"ldo.h"
+	"lgc.h"
+	"llex.h"
+	"lmem.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+	"lstring.h"
+	"ltable.h"
+	"lvm.h"
+
+1314721601 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lcode.h
+	"llex.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+
+1322657031 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\llex.h
+	"lobject.h"
+	"lzio.h"
+
+1310734229 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lopcodes.h
+	"llimits.h"
+
+1336485213 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lparser.h
+	"llimits.h"
+	"lobject.h"
+	"lzio.h"
+
+1335553144 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lcorolib.c
+	<stdlib.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1317658763 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lctype.c
+	"lctype.h"
+	<limits.h>
+
+1310734229 e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lctype.h
+	"lua.h"
+	<limits.h>
+	"llimits.h"
+	<ctype.h>
+
+1327004084 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\ldblib.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1327097150 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\ldebug.c
+	<stdarg.h>
+	<stddef.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"lcode.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lvm.h"
+
+1339168444 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\ldo.c
+	<setjmp.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lundump.h"
+	"lvm.h"
+	"lzio.h"
+
+1327359730 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\ldump.c
+	<stddef.h>
+	"lua.h"
+	"lobject.h"
+	"lstate.h"
+	"lundump.h"
+
+1336485213 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lfunc.c
+	<stddef.h>
+	"lua.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+
+1338499739 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lgc.c
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+
+1302290256 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\linit.c
+	"lua.h"
+	"lualib.h"
+	"lauxlib.h"
+
+1322225403 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\liolib.c
+	<errno.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1327359951 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\llex.c
+	<locale.h>
+	<string.h>
+	"lua.h"
+	"lctype.h"
+	"ldo.h"
+	"llex.h"
+	"lobject.h"
+	"lparser.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"lzio.h"
+
+1337363273 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lmathlib.c
+	<stdlib.h>
+	<math.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1337787713 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lmem.c
+	<stddef.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+
+1338381224 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\loadlib.c
+	<windows.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+	<dlfcn.h>
+
+1322681416 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lobject.c
+	<stdarg.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lctype.h"
+	"ldebug.h"
+	"ldo.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"lvm.h"
+	<math.h>
+
+1337002458 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lopcodes.c
+	"lopcodes.h"
+
+1337787429 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\loslib.c
+	<errno.h>
+	<locale.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+	<unistd.h>
+
+1337525483 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lparser.c
+	<string.h>
+	"lua.h"
+	"lcode.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"llex.h"
+	"lmem.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+
+1338381224 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lstate.c
+	<stddef.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"llex.h"
+	"lmem.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	<time.h>
+
+1336745682 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lstring.c
+	<string.h>
+	"lua.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+
+1337787429 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lstrlib.c
+	<ctype.h>
+	<stddef.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1337787429 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\ltable.c
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"lvm.h"
+
+1322501190 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\ltablib.c
+	<stddef.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1307043100 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\ltm.c
+	<string.h>
+	"lua.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+
+1336485213 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lundump.c
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstring.h"
+	"lundump.h"
+	"lzio.h"
+
+1339168444 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lvm.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lvm.h"
+
+1337002458 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\lua\lzio.c
+	<string.h>
+	"lua.h"
+	"llimits.h"
+	"lmem.h"
+	"lstate.h"
+	"lzio.h"
+
+1589312122 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.cpp
+	"LuaBindFunctions.h"
+	"Game.h"
+	"WorkFunctions.h"
+	"Defines.h"
+
+1589021161 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\main_server.cpp
+	<ctime>
+	"canvas.hpp"
+	"MainServer.h"
+	"IniParser/ParserInfoFile.h"
+	"IniParser/PostParsingStruct.h"
+	"WorkFunctions.h"
+
+1589020309 e:\github\dangerous-dave-2-modification-edition\dd2me\src\mainserver.h
+	"Game.h"
+	"NetServer/Server.h"
+
+1589243036 e:\github\dangerous-dave-2-modification-edition\dd2me\src\netserver\server.h
+	<set>
+	<map>
+	"../shabbynet/shabbynet.hpp"
+	"NetServerCallback.h"
+	"../IniParser/PostParsingStruct.h"
+
+1589243011 e:\github\dangerous-dave-2-modification-edition\dd2me\src\netserver\netservercallback.h
+	"../shabbynet/shabbynet.hpp"
+
+1589020434 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\mainserver.cpp
+	"MainServer.h"
+	"IniParser/ParserInfoFile.h"
+	"IniParser/PostParsingStruct.h"
+
+1589021289 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\monsters.cpp
+	"Monsters.h"
+	"Game.h"
+	"IniParser/ParserInfoFile.h"
+	"WorkFunctions.h"
+	"Defines.h"
+
+1589242928 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\netclient.cpp
+	"NetClient.h"
+	<iostream>
+	<sstream>
+	<cstdlib>
+	"../Game.h"
+	"../WorkFunctions.h"
+	"../IniParser/ParserInfoFile.h"
+	"../IniParser/PostParsingStruct.h"
+	"../Defines.h"
+
+1589242906 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\netclient\netclientcallback.cpp
+	"NetClientCallback.h"
+	<iostream>
+	<string>
+	"../WorkFunctions.h"
+	"../IniParser/ParserInfoFile.h"
+	"../IniParser/PostParsingStruct.h"
+	"NetClient.h"
+	"../Defines.h"
+	"../Game.h"
+
+1589243024 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\netserver\netservercallback.cpp
+	<iostream>
+	"NetServerCallback.h"
+	"Server.h"
+	"../UserData.h"
+
+1589020032 e:\github\dangerous-dave-2-modification-edition\dd2me\src\userdata.h
+	"IniParser/PostParsingStruct.h"
+
+1589243121 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\netserver\server.cpp
+	"Server.h"
+	"../WorkFunctions.h"
+	"../Defines.h"
+	"../IniParser/ParserInfoFile.h"
+	"../IniParser/PostParsingStruct.h"
+	"../MainServer.h"
+	"../UserData.h"
+	"../NetClient/NetInfoStruct.h"
+	<iostream>
+
+1589021213 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\screens.cpp
+	"Screens.h"
+	"IniParser/ParserInfoFile.h"
+	"WorkFunctions.h"
+	"Game.h"
+
+1363374469 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\shabbynet\shabbynet.cpp
+	<iostream>
+	<string>
+	<cassert>
+	<ctime>
+	<stdexcept>
+	<windows.h>
+	<winsock2.h>
+	"shabbynet.hpp"
+
+1363272861 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\square.cpp
+	"Square.h"
+
+1588898503 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\statemanager.cpp
+	"StateManager.h"
+	"Game.h"
+
+1387566440 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\temporaryimageinfo.cpp
+	"TemporaryImageInfo.h"
+	"Game.h"
+
+1589021216 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\textures.cpp
+	<fstream>
+	"Textures.h"
+	"IniParser/ParserInfoFile.h"
+	"WorkFunctions.h"
+	"Game.h"
+	"Defines.h"
+
+1369678512 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\userdata.cpp
+	"UserData.h"
+	"Defines.h"
+
+1589022484 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\workfunctions.cpp
+	"WorkFunctions.h"
+	<cstdlib>
+	<sys/io.h>
+	<unistd.h>
+	<sys/stat.h>
+	<io.h>
+	<direct.h>
+

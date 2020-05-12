@@ -313,6 +313,12 @@ void Game::drawAll()
         s_Data->s_Level->draw();
         s_FactoryTmpImgs->drawAll();
         s_GameInfo->s_FactoryMonsters->drawAll();
+        map<int, CreatureDave*>::iterator iter;
+        for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)
+        {
+            iter->second->draw();
+        }
+        s_GameInfo->s_MyDave->draw();
         s_Data->drawScreenState3();
         if(s_GameInfo->s_Stop == true && s_GameInfo->s_DeathType != 0) s_GameInfo->playDeath();
     }

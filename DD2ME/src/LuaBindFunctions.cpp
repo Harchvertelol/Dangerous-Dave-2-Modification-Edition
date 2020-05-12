@@ -98,7 +98,12 @@ int LuaBindFunctions::goLeft(lua_State* s_Lua)
     if(n >= 5) onCeil = (bool)lua_tonumber(s_Lua, 5);
     bool isCorrect = false;
     mnst->s_CoordX -= v;
-    if(correct == true) isCorrect = mnst->correctionPhys(mnst->s_CoordX + v, 0);
+    int typeCorrect = 0;
+    if(correct == true)
+    {
+        isCorrect = mnst->correctionPhys(mnst->s_CoordX + v, 0);
+        typeCorrect = 1;
+    }
     if(correctStand == true)
     {
         int frame = mnst->getFrame();
@@ -136,11 +141,13 @@ int LuaBindFunctions::goLeft(lua_State* s_Lua)
                 {
                     mnst->s_CoordX += v;
                     isCorrect = true;
+                    typeCorrect = 2;
                 }
                 else if(onCeil == true && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == LADDER)
                 {
                     mnst->s_CoordX += v;
                     isCorrect = true;
+                    typeCorrect = 2;
                 }
             }
         for(int i = 0; i < SizeXMonster; i++)
@@ -152,7 +159,8 @@ int LuaBindFunctions::goLeft(lua_State* s_Lua)
         delete TileCoordY;
     }
     lua_pushnumber(s_Lua, isCorrect);
-    return 1;
+    lua_pushnumber(s_Lua, typeCorrect);
+    return 2;
 }
 
 static int __goRight(lua_State* s_Lua)
@@ -185,7 +193,12 @@ int LuaBindFunctions::goRight(lua_State* s_Lua)
     if(n >= 5) onCeil = (bool)lua_tonumber(s_Lua, 5);
     bool isCorrect = false;
     mnst->s_CoordX += v;
-    if(correct == true) isCorrect = mnst->correctionPhys(mnst->s_CoordX - v, 0);
+    int typeCorrect = 0;
+    if(correct == true)
+    {
+        isCorrect = mnst->correctionPhys(mnst->s_CoordX - v, 0);
+        typeCorrect = 1;
+    }
     if(correctStand == true)
     {
         int frame = mnst->getFrame();
@@ -223,11 +236,13 @@ int LuaBindFunctions::goRight(lua_State* s_Lua)
                 {
                     mnst->s_CoordX -= v;
                     isCorrect = true;
+                    typeCorrect = 2;
                 }
                 else if(onCeil == true && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == LADDER)
                 {
                     mnst->s_CoordX -= v;
                     isCorrect = true;
+                    typeCorrect = 2;
                 }
             }
         for(int i = 0; i < SizeXMonster; i++)
@@ -239,7 +254,8 @@ int LuaBindFunctions::goRight(lua_State* s_Lua)
         delete TileCoordY;
     }
     lua_pushnumber(s_Lua, isCorrect);
-    return 1;
+    lua_pushnumber(s_Lua, typeCorrect);
+    return 2;
 }
 
 static int __goUp(lua_State* s_Lua)
@@ -271,7 +287,12 @@ int LuaBindFunctions::goUp(lua_State* s_Lua)
     else correctStand = false;*/
     bool isCorrect = false;
     mnst->s_CoordY -= v;
-    if(correct == true) isCorrect = mnst->correctionPhys(mnst->s_CoordY + v, 1);
+    int typeCorrect = 0;
+    if(correct == true)
+    {
+        isCorrect = mnst->correctionPhys(mnst->s_CoordY + v, 1);
+        typeCorrect = 1;
+    }
     /*if(correctStand == true)
     {
         int frame = mnst->getFrame();
@@ -295,6 +316,7 @@ int LuaBindFunctions::goUp(lua_State* s_Lua)
             {
                 mnst->s_CoordY += v;
                 isCorrect = true;
+                typeCorrect = 2;
             }
         for(int i = 0; i < SizeXMonster; i++)
         {
@@ -305,7 +327,8 @@ int LuaBindFunctions::goUp(lua_State* s_Lua)
         delete TileCoordY;
     }*/
     lua_pushnumber(s_Lua, isCorrect);
-    return 1;
+    lua_pushnumber(s_Lua, typeCorrect);
+    return 2;
 }
 
 static int __goDown(lua_State* s_Lua)
@@ -340,7 +363,12 @@ int LuaBindFunctions::goDown(lua_State* s_Lua)
     else ladder = false;
     bool isCorrect = false;
     mnst->s_CoordY += v;
-    if(correct == true) isCorrect = mnst->correctionPhys(mnst->s_CoordY - v, 1, ladder);
+    int typeCorrect = 0;
+    if(correct == true)
+    {
+        isCorrect = mnst->correctionPhys(mnst->s_CoordY - v, 1, ladder);
+        typeCorrect = 1;
+    }
     /*if(correctStand == true)
     {
         int frame = mnst->getFrame();
@@ -364,6 +392,7 @@ int LuaBindFunctions::goDown(lua_State* s_Lua)
             {
                 mnst->s_CoordY -= v;
                 isCorrect = true;
+                typeCorrect = 2;
             }
         for(int i = 0; i < SizeXMonster; i++)
         {
@@ -374,7 +403,8 @@ int LuaBindFunctions::goDown(lua_State* s_Lua)
         delete TileCoordY;
     }*/
     lua_pushnumber(s_Lua, isCorrect);
-    return 1;
+    lua_pushnumber(s_Lua, typeCorrect);
+    return 2;
 }
 
 static int __setNumberOfAction(lua_State* s_Lua)
@@ -859,10 +889,17 @@ int LuaBindFunctions::testTileTypeDown(lua_State* s_Lua)
     if(tstTileType == "DEATH") testTileType = DEATH;
     if(tstTileType == "EXITLEVEL") testTileType = EXITLEVEL;
     int frame = mnst->getFrame();
+
     int SizeXMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL, 16, -1);
     int SizeYMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL, 16, -1);
     int SizeXMonster = SizeXMonsterPix/16 + 1;
     int SizeYMonster = SizeYMonsterPix/16 + 1;
+
+    /*int SizeXMonsterPix = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
+    int SizeYMonsterPix = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
+    int SizeXMonster = (WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX + SizeXMonsterPix, 16, 1) - WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX, 16, -1)) / 16;
+    int SizeYMonster = (WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordY + SizeYMonsterPix, 16, 1) - WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordY, 16, -1)) / 16;*/
+
     int** TileCoordX = new int* [SizeXMonster];
     int** TileCoordY = new int* [SizeXMonster];
     for(int i = 0; i < SizeXMonster; i++) TileCoordX[i] = new int[SizeYMonster];
@@ -880,6 +917,7 @@ int LuaBindFunctions::testTileTypeDown(lua_State* s_Lua)
             if(typeTest == 0 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][SizeYMonster - 1]/16, TileCoordY[i][SizeYMonster - 1]/16 + numberOfLabel) != testTileType) testTrue = false;
             else if(typeTest == 1 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][SizeYMonster - 1]/16, TileCoordY[i][SizeYMonster - 1]/16 + numberOfLabel) == testTileType) testTrue = true;
         }
+        //s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(TileCoordY[i][SizeYMonster - 1]/16 + numberOfLabel)*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) + TileCoordX[i][SizeYMonster - 1]/16] = 0;
     }
     for(int i = 0; i < SizeXMonster; i++)
     {
@@ -1157,10 +1195,17 @@ int LuaBindFunctions::testTileTypeRight(lua_State* s_Lua)
     if(tstTileType == "DEATH") testTileType = DEATH;
     if(tstTileType == "EXITLEVEL") testTileType = EXITLEVEL;
     int frame = mnst->getFrame();
+
     int SizeXMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL, 16, -1);
     int SizeYMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL, 16, -1);
     int SizeXMonster = SizeXMonsterPix/16 + 1;
     int SizeYMonster = SizeYMonsterPix/16 + 1;
+
+    /*int SizeXMonsterPix = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
+    int SizeYMonsterPix = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
+    int SizeXMonster = (WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX + SizeXMonsterPix, 16, 1) - WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX, 16, -1)) / 16;
+    int SizeYMonster = (WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordY + SizeYMonsterPix, 16, 1) - WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordY, 16, -1)) / 16;*/
+
     int** TileCoordX = new int* [SizeXMonster];
     int** TileCoordY = new int* [SizeXMonster];
     for(int i = 0; i < SizeXMonster; i++) TileCoordX[i] = new int[SizeYMonster];
@@ -1172,8 +1217,14 @@ int LuaBindFunctions::testTileTypeRight(lua_State* s_Lua)
             TileCoordY[i][j] = WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordY,16,-1) + j*16;
         }
     for(int i = 0; i < SizeYMonster; i++)
-        if(typeTest == 0 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[SizeXMonster - 1][i]/16 + numberOfLabel, TileCoordY[SizeXMonster - 1][i]/16) != testTileType) testTrue = false;
-        else if(typeTest == 1 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[SizeXMonster - 1][i]/16 + numberOfLabel, TileCoordY[SizeXMonster - 1][i]/16) == testTileType) testTrue = true;
+    {
+        if(WorkFunctions::GameFunctions::testCollision(mnst->s_CoordX, mnst->s_CoordY, TileCoordX[i][SizeYMonster - 1], TileCoordY[i][SizeYMonster - 1], s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number - 1][mnst->s_State][mnst->getFrame()], Square(0,0,15,15), true, "left"))
+        {
+            if(typeTest == 0 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[SizeXMonster - 1][i]/16 + numberOfLabel, TileCoordY[SizeXMonster - 1][i]/16) != testTileType) testTrue = false;
+            else if(typeTest == 1 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[SizeXMonster - 1][i]/16 + numberOfLabel, TileCoordY[SizeXMonster - 1][i]/16) == testTileType) testTrue = true;
+        }
+        //s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(TileCoordY[SizeXMonster - 1][i]/16)*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) + TileCoordX[SizeXMonster - 1][i]/16 + numberOfLabel] = 0;
+    }
     for(int i = 0; i < SizeXMonster; i++)
     {
         delete[] TileCoordX[i];
@@ -1210,10 +1261,17 @@ int LuaBindFunctions::testTileTypeLeft(lua_State* s_Lua)
     if(tstTileType == "DEATH") testTileType = DEATH;
     if(tstTileType == "EXITLEVEL") testTileType = EXITLEVEL;
     int frame = mnst->getFrame();
+
     int SizeXMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL, 16, -1);
     int SizeYMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL, 16, -1);
     int SizeXMonster = SizeXMonsterPix/16 + 1;
     int SizeYMonster = SizeYMonsterPix/16 + 1;
+
+    /*int SizeXMonsterPix = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
+    int SizeYMonsterPix = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
+    int SizeXMonster = (WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX + SizeXMonsterPix, 16, 1) - WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX, 16, -1)) / 16;
+    int SizeYMonster = (WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordY + SizeYMonsterPix, 16, 1) - WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordY, 16, -1)) / 16;*/
+
     int** TileCoordX = new int* [SizeXMonster];
     int** TileCoordY = new int* [SizeXMonster];
     for(int i = 0; i < SizeXMonster; i++) TileCoordX[i] = new int[SizeYMonster];
@@ -1263,10 +1321,17 @@ int LuaBindFunctions::testTileTypeUp(lua_State* s_Lua)
     if(tstTileType == "DEATH") testTileType = DEATH;
     if(tstTileType == "EXITLEVEL") testTileType = EXITLEVEL;
     int frame = mnst->getFrame();
+
     int SizeXMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL, 16, -1);
     int SizeYMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL, 16, -1);
     int SizeXMonster = SizeXMonsterPix/16 + 1;
     int SizeYMonster = SizeYMonsterPix/16 + 1;
+
+    /*int SizeXMonsterPix = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
+    int SizeYMonsterPix = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
+    int SizeXMonster = (WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX + SizeXMonsterPix, 16, 1) - WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX, 16, -1)) / 16;
+    int SizeYMonster = (WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordY + SizeYMonsterPix, 16, 1) - WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordY, 16, -1)) / 16;*/
+
     int** TileCoordX = new int* [SizeXMonster];
     int** TileCoordY = new int* [SizeXMonster];
     for(int i = 0; i < SizeXMonster; i++) TileCoordX[i] = new int[SizeYMonster];

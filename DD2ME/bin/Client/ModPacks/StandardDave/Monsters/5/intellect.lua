@@ -1,225 +1,138 @@
 function setFirstState()
-	setGlobalValue(-1, "vSpeed", 0)
-	setGlobalValue(-1, "actDelay", 0)
-	setGlobalValue(-1, "behDelay", 0)
 	return "rightrun"	
 end
 
-function behRun()
-	
-  distY = getDistanceToDaveY(-1)
-
-  if getCoordMonsterX(-1)<=getCoordDaveX()
-  then
-    distX = getDistanceToDaveX(-1,1)
-    dir = "right"
-  else 
-    distX = getDistanceToDaveX(-1,1)
-    dir = "left"
-  end
-
-  if (distY < 3*16) then 				
-  newDir = dir
-		if newDir=="left" then
-			setState(-1,"leftrun")		
-		else
-			setState(-1,"rightrun")	
-		end
-		
-		if (distX < 6*16) then 			
-			if newDir=="left" then
-				setState(-1,"leftprejump")
-				setGlobalValue(-1, "actDelay", getMonsterValue(-1,"options", "prejump1delay"))			
-			else
-				setState(-1,"rightprejump")
-				setGlobalValue(-1, "actDelay", getMonsterValue(-1,"options", "prejump1delay"))
-			end	
-		end
-  end
-
-end
-
-function behPreJump()
-
-	actDelay = tonumber(getGlobalValue(-1, "actDelay"))
-	if actDelay == 0 and (testTileTypeDown(-1,"IMPASSABLE", 1)==1 or testTileTypeDown(-1,"LADDER", 1)==1) then
-		if getState(-1)=="leftprejump"  then
-			setState(-1,"leftjump")
-			--setGlobalValue(-1, "actDelay", getMonsterValue(-1,"options", "jump1delay"))
-		else
-			setState(-1,"rightjump")
-			--setGlobalValue(-1, "actDelay", getMonsterValue(-1,"options", "jump1delay"))
-		end
-		setGlobalValue(-1, "vSpeed", -12) -- -65
-	end
-end
-
-function behJump()
-	
-	vSpeed = tonumber(getGlobalValue(-1,"vSpeed"))
-	vSpeed = vSpeed + 1.4 -- +3
-	if vSpeed > 5 then
-		vSpeed = 5
-	end
-	setGlobalValue(-1, "vSpeed", vSpeed)
-	goDown(-1, vSpeed, 1)
-	
-end
-
-function tileColRun()
-
-	isreturn = (testTileTypeLeft (-1,"IMPASSABLE", 1)==1 and getState(-1)=="leftrun") or
-			   (testTileTypeRight(-1,"IMPASSABLE", 1)==1 and getState(-1)=="rightrun")
-	
-	if isreturn then
-		if getState(-1)=="leftrun" then
-			setState(-1,"rightrun")
-			setGlobalValue(-1, "actDelay", getMonsterValue(-1,"options", "run1delay"))
-		else
-			setState(-1,"leftrun")
-			setGlobalValue(-1, "actDelay", getMonsterValue(-1,"options", "run1delay"))
-		end
-	else
-		
-		if (getState(-1)=="leftrun" and goLeft(-1,1,1,1)==1) then
-			setState(-1,"leftprejump")
-			setGlobalValue(-1, "actDelay", getMonsterValue(-1,"options", "prejump1delay"))
-		end		
-		if (getState(-1)=="rightrun" and goRight(-1,1,1,1)==1) then	
-			setState(-1,"rightprejump")
-			setGlobalValue(-1, "actDelay", getMonsterValue(-1,"options", "prejump1delay"))
-		end
-		
-	end
-end
-
-function tileColJump()
-		
-	isNegDirOnLand=0
-	
-	if getState(-1)=="leftjump" then
-		testGo = testTileTypeLeft(-1,"IMPASSABLE", 0) 
-	else
-		testGo = testTileTypeRight(-1,"IMPASSABLE", 0) 
-	end
-	
-	if testGo==1 then
-		isNegDirOnLand=1
-		setGlobalValue(-1, "behDelay", 0)
-	end
-	
-	if testTileTypeDown(-1,"IMPASSABLE", 1)==1 or testTileTypeDown(-1,"LADDER", 1)==1 then
-		
-		setGlobalValue(-1, "behDelay", getMonsterValue(-1,"options", "behDelay"))
-	
-		if isNegDirOnLand==1 then
-			 if getState(-1)=="rightjump" then
-				 setState(-1,"leftrun")
-				 setGlobalValue(-1, "behDelay", 0)
-				 --setGlobalValue(-1, "actDelay", getMonsterValue(-1,"options", "run1delay"))
-				 goLeft(-1, 0, 0, 1)
-				 goUp(-1,8,1)
-			 else
-				 setState(-1,"rightrun")
-				 setGlobalValue(-1, "behDelay", 0)
-				 --setGlobalValue(-1, "actDelay", getMonsterValue(-1,"options", "run1delay"))
-				 goRight(-1, 0, 0, 1)
-				 goUp(-1,8,1)
-			 end	 
-		else
-			if getState(-1)=="rightjump" then
-				setState(-1,"rightrun")
-				--setGlobalValue(-1, "actDelay", getMonsterValue(-1,"options", "run1delay"))
-				goRight(-1, 0, 0, 1)
-				goUp(-1,8,1)
-			else
-				setState(-1,"leftrun")
-				--setGlobalValue(-1, "actDelay", getMonsterValue(-1,"options", "run1delay"))
-				goLeft(-1, 0, 0, 1)
-				goUp(-1,8,1)
-			end
-		end
-	end
-		
-end
-
 function mainFunc()
-	
 	if testCollisionDave(-1) == 1 then
 		killDave(-1)
-		return
 	end
-	
-	actDelay = tonumber(getGlobalValue(-1, "actDelay"))
-	actDelay = actDelay - 1
-	if actDelay < 0 then 
-		actDelay = 0
-	end
-	setGlobalValue(-1, "actDelay", actDelay)
-	
-	behDelay = tonumber(getGlobalValue(-1, "behDelay"))
-	behDelay = behDelay - 1
-	if behDelay < 0 then 
-		behDelay = 0
-	end
-	setGlobalValue(-1, "behDelay", behDelay)
-
-	if getState(-1)=="leftrun" then 
-		goLeft(-1, 6, 1, 1)
-	end
-	
-	if getState(-1)=="rightrun" then
-		goRight(-1, 6, 1, 1)
-	end
-	
-	if getState(-1)=="leftjump" then
-		goLeft(-1, 8, 1, 0)
-	end
-	
-	if getState(-1)=="rightjump" then
-		goRight(-1, 8, 1, 0)
-	end
-	
-	if getState(-1)=="leftrun" or getState(-1)=="rightrun" then	
-	
-		actDelay = tonumber(getGlobalValue(-1, "actDelay"))
-		if actDelay == 0 then
-			nextNumberOfAction(-1)
-			setGlobalValue(-1, "actDelay", getMonsterValue(-1,"options", "run1delay"))
-		end
-	
-		tileColRun()
-		
-		behDelay = tonumber(getGlobalValue(-1, "behDelay"))
-		if behDelay == 0 and (getState(-1)=="leftrun" or getState(-1)=="rightrun") then 
-			behRun()
-		end
-		
-		return
-	end
-	
-	if getState(-1)=="leftprejump" or getState(-1)=="rightprejump" then	
-	
-		behDelay = tonumber(getGlobalValue(-1, "behDelay"))
-		if behDelay == 0 then 
-			behPreJump()
-		end				
-		return
-	end
-	
-	if getState(-1)=="leftjump" or getState(-1)=="rightjump" then
-		
-		tileColJump()
-		
-		if getState(-1)=="leftjump" or getState(-1)=="rightjump" then
-				
-			behDelay = tonumber(getGlobalValue(-1, "behDelay"))
-			if behDelay == 0 then 
-				behJump()
+	if string.find(getState(-1), "prejump") ~= nil then
+		local fbj = tonumber(getGlobalValue(-1, "freezeBeforeJump"))
+		if fbj > 0 then
+			setGlobalValue(-1, "freezeBeforeJump", tostring(fbj - 1))
+		else
+			if string.find(getState(-1), "left") then
+				setState(-1, "leftjump")
+			else
+				setState(-1, "rightjump")
 			end
-		
+			goUp(-1, 4, 1)
+			setGlobalValue(-1, "jumpNow", "4")
 		end
+	else
+		if string.find(getState(-1), "jump") ~= nil then
+			local stopjumpstate = ""
+			local shiftU = 5
+			local shiftLR = 7
+			if getState(-1) == "leftjump" then
+				goLeft(-1, shiftLR, 1)
+				stopjumpstate = "leftrun"
+			else
+				goRight(-1, shiftLR, 1)
+				stopjumpstate = "rightrun"
+			end
+			local jn = tonumber(getGlobalValue(-1, "jumpNow"))
+			if jn ~= 0 then
+				if jn < 16 * 3 - 6 then
+					jn = jn + shiftU
+					local tstgoup = goUp(-1, shiftU, 1)
+					if tstgoup ~= 0 then
+						setGlobalValue(-1, "jumpNow", "0")
+						setGlobalValue(-1, "freezeUpJump", "0")
+					else
+						setGlobalValue(-1, "jumpNow", tostring(jn))
+					end
+				else
+					setGlobalValue(-1, "jumpNow", "0")
+					setGlobalValue(-1, "freezeUpJump", "5")
+				end
+			else
+				local fuj = tonumber(getGlobalValue(-1, "freezeUpJump"))
+				if fuj > 0 then
+					setGlobalValue(-1, "freezeUpJump", tostring(fuj - 1))
+				else
+					local tstgodown = goDown(-1, shiftU, 1, 0)
+					if tstgodown ~= 0 then
+						setState(-1, stopjumpstate)
+						goUp(-1, 8, 0)
+						setGlobalValue(-1, "counterDaveReaction", tostring(6))
+					end
+				end
+			end
+			return
+		end
+	end
+	nextAdditionalNumberOfAction(-1)
+	if getAdditionalNumberOfAction(-1) % getMonsterValue(-1, "other", "animationstep") == 0 then
+		nextNumberOfAction(-1)
+	else
 		return
-	end	
-
+	end
+	local change = 0
+	if getGlobalValue(-1, "counterDaveReaction") == "" then
+		setGlobalValue(-1, "counterDaveReaction", "0")
+	end
+	if testLookDaveX(-1) ~= 0 and string.find(getState(-1), "run") ~= nil then
+		change = 1
+	end
+	local cdr = tonumber(getGlobalValue(-1, "counterDaveReaction"))
+	if cdr > 0 then
+		local oldstate = getState(-1)
+		if getDistanceToDaveXHead(-1) <= 0 and oldstate ~= "leftrun" or getDistanceToDaveXHead(-1) > 0 and oldstate ~= "rightrun" then
+			change = 0
+			setGlobalValue(-1, "counterDaveReaction", tostring(cdr - 1))
+		end
+	end
+	if change == 1 then
+		if testLookDaveX(-1) == 1 then
+			setState(-1, "rightrun")
+			if getDistanceToDaveXHead(-1) <= 7 * 16 then
+				setState(-1, "rightprejump")
+				local fbj = getMonsterValue(-1, "options", "freezeBeforeJump")
+				setGlobalValue(-1, "freezeBeforeJump", fbj)
+			end
+		else
+			if testLookDaveX(-1) == -1 then
+				setState(-1, "leftrun")
+				if getDistanceToDaveXHead(-1) <= 7 * 16 then
+					setState(-1, "leftprejump")
+					local fbj = getMonsterValue(-1, "options", "freezeBeforeJump")
+					setGlobalValue(-1, "freezeBeforeJump", fbj)
+				end
+			end
+		end
+	end
+	local speed = getMonsterValue(-1, "options", string.format("speed%d", getMonsterFrame(-1) + 1))
+	local testgo = 0
+	local typecorrect = 0
+	if getState(-1) == "rightrun" then
+		testgo, typecorrect = goRight(-1, speed, 1, 1)
+	else
+		if getState(-1) == "leftrun" then
+			testgo, typecorrect = goLeft(-1, speed, 1, 1)
+		end
+	end
+	if testgo ~= 0 then
+		if getState(-1) == "rightrun" then
+			if typecorrect == 2 then
+				setState(-1, "rightprejump")
+				goRight(-1, 16, 0)
+				local fbj = getMonsterValue(-1, "options", "freezeBeforeJump")
+				setGlobalValue(-1, "freezeBeforeJump", fbj)
+			else
+				setState(-1, "leftrun")
+			end
+		else
+			if getState(-1) == "leftrun" then
+				if typecorrect == 2 then
+					setState(-1, "leftprejump")
+					goLeft(-1, 16, 0)
+					local fbj = getMonsterValue(-1, "options", "freezeBeforeJump")
+					setGlobalValue(-1, "freezeBeforeJump", fbj)
+				else
+					setState(-1, "rightrun")
+				end
+			end
+		end
+	end
 end

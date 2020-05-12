@@ -103,19 +103,42 @@ void Level::draw()
             s_GameClass->s_Data->s_Textures->drawTile(s_Fields["FieldTiles"][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
             s_GameClass->s_Data->s_Bonuses->drawBonus(s_Fields["FieldBonuses"][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
         }
-    //...
-    map<int, CreatureDave*>::iterator iter;
-    for ( iter = s_GameClass->s_GameInfo->s_Daves.begin(); iter != s_GameClass->s_GameInfo->s_Daves.end(); iter++)
-    {
-        iter->second->draw();
-    }
-    //...
-    s_GameClass->s_GameInfo->s_MyDave->draw();
 }
 
 int Level::getTileType(int x, int y)
 {
     int frame = s_GameClass->s_Data->s_Textures->getFrame();
     int SizeXLev = atoi( ( s_Params->getValue("info", "sizeX") ).c_str() );
+    int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
+    if(y >= SizeYLev || x >= SizeXLev)
+    {
+        cout << "Error set tile ID! X or Y higher level." << endl;
+        return false;
+    }
     return s_GameClass->s_Data->s_Textures->s_MaskTiles[frame][s_Fields["FieldTiles"][y*SizeXLev + x]];
+}
+
+int Level::getTileID(int x, int y)
+{
+    int SizeXLev = atoi( ( s_Params->getValue("info", "sizeX") ).c_str() );
+    int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
+    if(y >= SizeYLev || x >= SizeXLev)
+    {
+        cout << "Error set tile ID! X or Y higher level." << endl;
+        return false;
+    }
+    return s_Fields["FieldTiles"][y*SizeXLev + x];
+}
+
+bool Level::setTileID(int x, int y, int tileid)
+{
+    int SizeXLev = atoi( ( s_Params->getValue("info", "sizeX") ).c_str() );
+    int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
+    if(y >= SizeYLev || x >= SizeXLev)
+    {
+        cout << "Error set tile ID! X or Y higher level." << endl;
+        return false;
+    }
+    s_Fields["FieldTiles"][y*SizeXLev + x] = tileid;
+    return true;
 }
