@@ -12,11 +12,12 @@ using namespace MathFunctions;
 using namespace GameFunctions;
 using namespace ConvertFunctions;
 
-CreatureMonster::CreatureMonster(Game* gameclass, int number, bool getstate):
+CreatureMonster::CreatureMonster(Game* gameclass, int number, int id, bool getstate):
     s_GameClass(gameclass),
     s_CoordX(0),
     s_CoordY(0),
     s_CurrentLives(0),
+    s_ID(id),
     s_DeleteNow(false),
     s_State(""),
     s_Number(number),

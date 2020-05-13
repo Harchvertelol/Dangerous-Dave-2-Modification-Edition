@@ -30,13 +30,34 @@ void FactoryMonsters::removeMonster(int key)
     s_Monsters.erase(key);
 }
 
-int FactoryMonsters::addMonster(int number, int x, int y, bool getstate)
+int FactoryMonsters::addMonsterImmediately(int number, int x, int y, bool getstate)
 {
-    s_Monsters[s_MaxIndex] = new CreatureMonster(s_GameClass, number, getstate);
+    s_Monsters[s_MaxIndex] = new CreatureMonster(s_GameClass, number, s_MaxIndex, getstate);
     s_Monsters[s_MaxIndex]->s_CoordX = x;
     s_Monsters[s_MaxIndex]->s_CoordY = y;
     s_MaxIndex++;
     return s_MaxIndex - 1;
+}
+
+CreatureMonster* FactoryMonsters::addMonster(int number, int x, int y, bool getstate)
+{
+    CreatureMonster* newMonster = new CreatureMonster(s_GameClass, number, 0, getstate);
+    newMonster->s_CoordX = x;
+    newMonster->s_CoordY = y;
+    s_QueueForAddingMonsters.push_back(newMonster);
+    return newMonster;
+}
+
+void FactoryMonsters::addMonstersFromQueue()
+{
+    if(s_QueueForAddingMonsters.empty()) return;
+    for(int i = 0; i < s_QueueForAddingMonsters.size(); i++)
+    {
+        s_Monsters[s_MaxIndex] = s_QueueForAddingMonsters[i];
+        s_Monsters[s_MaxIndex]->s_ID = s_MaxIndex;
+        s_MaxIndex++;
+    }
+    s_QueueForAddingMonsters.clear();
 }
 
 void FactoryMonsters::live()
@@ -82,6 +103,7 @@ void FactoryMonsters::live()
            ++iter;
        }
     }
+    addMonstersFromQueue();
     if(testNoChangeLevel == true) testChangeLevel = false;
     if(testChangeLevel == true) s_GameClass->changeNextLevel();
 }
@@ -94,6 +116,7 @@ void FactoryMonsters::clear()
        delete iter->second;
        s_Monsters.erase(iter++);
     }
+    s_AIMonstersValues.clear();
 }
 
 void FactoryMonsters::reloadAIAll()

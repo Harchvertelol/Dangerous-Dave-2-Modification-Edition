@@ -16,15 +16,15 @@ function mainFunc()
 	if testCollisionDave(-1) == 1 then
 		killDave(-1)
 	end
-	local speedattack = getMonsterValue(-1, "options", "speedattack")
+	local speedattack = getMonsterOption(-1, "options", "speedattack")
 	local noa = -1
 	local when = -1
 	if getState(-1) == "attack" then
-		noa = getGlobalValue(-1, "numberofattack")
-		when = getGlobalValue(-1, "when")
-		local ma = tonumber(getGlobalValue(-1, "maxattack"))
+		noa = getMonsterValue(-1, "numberofattack")
+		when = getMonsterValue(-1, "when")
+		local ma = tonumber(getMonsterValue(-1, "maxattack"))
 		if when == "1" and noa*speedattack > (ma + 2) * 16 then
-			setGlobalValue(-1, "when", "-1")
+			setMonsterValue(-1, "when", "-1")
 			when = -1
 			return
 		end
@@ -35,9 +35,9 @@ function mainFunc()
 		end
 		if noa == 0 then
 			setState(-1, "leftrun")
-			setGlobalValue(-1, "noattack", "10")
+			setMonsterValue(-1, "noattack", "10")
 		end
-		setGlobalValue(-1, "numberofattack", noa)
+		setMonsterValue(-1, "numberofattack", noa)
 		if when == "1" then
 			addImageToFactoryTemporaryImage("monsters", 4, "web", 1, getCoordMonsterX(-1) + 4, getCoordMonsterY(-1) + 0, 2*((ma + 2) * 16 / speedattack - noa) + 4, 0, 0, "web")
 			goDown(-1, speedattack, 0)
@@ -45,25 +45,25 @@ function mainFunc()
 			goUp(-1, speedattack, 0)
 		end
 	end
-	local noattack = getGlobalValue(-1, "noattack")
+	local noattack = getMonsterValue(-1, "noattack")
 	if noattack == "" then
 		noattack = 0
-		setGlobalValue(-1, "noattack", noattack)
+		setMonsterValue(-1, "noattack", noattack)
 	end
 	noattack = noattack + 1
 	noattack = noattack - 1
 	if noattack ~= 0 then
 		noattack = noattack - 1
-		setGlobalValue(-1, "noattack", noattack)
+		setMonsterValue(-1, "noattack", noattack)
 	end
 	if (getState(-1) == "leftrun" or getState(-1) == "rightrun") and noattack == 0 and testLookDaveY(-1) == 1 and getDistanceToDaveXHead(-1, 1) <= 8 and getDistanceToDaveY(-1, 1) > 4 and getDistanceToDaveY(-1, 1) < 16*6 then
 		setState(-1, "attack")
-		setGlobalValue(-1, "numberofattack", "0")
-		setGlobalValue(-1, "when", "1")
-		setGlobalValue(-1, "maxattack", tostring(getDistanceToDaveY(-1) / 16))
+		setMonsterValue(-1, "numberofattack", "0")
+		setMonsterValue(-1, "when", "1")
+		setMonsterValue(-1, "maxattack", tostring(getDistanceToDaveY(-1) / 16))
 	end
 	nextAdditionalNumberOfAction(-1)
-	if getAdditionalNumberOfAction(-1) % getMonsterValue(-1, "other", "animationstep") == 0 then
+	if getAdditionalNumberOfAction(-1) % getMonsterOption(-1, "other", "animationstep") == 0 then
 		nextNumberOfAction(-1)
 	else
 		return
@@ -85,7 +85,7 @@ function mainFunc()
 	if oldstate ~= getState(-1) then
 		return
 	end
-	local speed = getMonsterValue(-1, "options", string.format("speed%d", getMonsterFrame(-1) + 1))
+	local speed = getMonsterOption(-1, "options", string.format("speed%d", getMonsterFrame(-1) + 1))
 	if getState(-1) == "leftrun" then
 		goLeft(-1, speed, 1, 1, 1)
 	else

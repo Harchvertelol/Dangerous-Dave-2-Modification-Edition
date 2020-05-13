@@ -9,7 +9,7 @@
 	"CreatureMonster.h"
 	"LuaBindFunctions.h"
 
-1588892441 e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturemonster.h
+1589334512 e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturemonster.h
 	<iostream>
 	<map>
 	"lua/lua.hpp"
@@ -38,7 +38,7 @@
 	<stdio.h>
 	"lua.h"
 
-1588892464 e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.h
+1589323185 e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.h
 	"lua/lua.hpp"
 	<math.h>
 	"CreatureMonster.h"
@@ -127,9 +127,10 @@
 	<iostream>
 	"IniParser/PostParsingStruct.h"
 
-1588896431 e:\github\dangerous-dave-2-modification-edition\dd2me\src\factorymonsters.h
+1589334779 e:\github\dangerous-dave-2-modification-edition\dd2me\src\factorymonsters.h
 	<iostream>
 	<map>
+	<vector>
 	"CreatureMonster.h"
 
 1363273576 e:\github\dangerous-dave-2-modification-edition\dd2me\src\statemanager.h
@@ -198,7 +199,7 @@
 	"Defines.h"
 	"KeysState.h"
 
-1589021289 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturemonster.cpp
+1589334496 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturemonster.cpp
 	"CreatureMonster.h"
 	"Game.h"
 	"WorkFunctions.h"
@@ -210,7 +211,7 @@
 	"IniParser/ParserInfoFile.h"
 	"WorkFunctions.h"
 
-1589021289 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\factorymonsters.cpp
+1589335410 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\factorymonsters.cpp
 	"FactoryMonsters.h"
 	"Game.h"
 	"WorkFunctions.h"
@@ -227,7 +228,7 @@
 	"FactoryTemporaryImages.h"
 	"Game.h"
 
-1589319844 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\game.cpp
+1589334851 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\game.cpp
 	"Game.h"
 	"WorkFunctions.h"
 	"Defines.h"
@@ -240,7 +241,7 @@
 	"WorkFunctions.h"
 	"Defines.h"
 
-1588987956 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gameinfo.cpp
+1589321649 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gameinfo.cpp
 	"GameInfo.h"
 	"Game.h"
 
@@ -708,11 +709,12 @@
 	"lstate.h"
 	"lzio.h"
 
-1589312122 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.cpp
+1589340698 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.cpp
 	"LuaBindFunctions.h"
 	"Game.h"
 	"WorkFunctions.h"
 	"Defines.h"
+	"IniParser/ParserInfoFile.h"
 
 1589021161 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\main_server.cpp
 	<ctime>

@@ -39,7 +39,7 @@ class LuaBindFunctions
         int getAdditionalNumberOfAction(lua_State* s_Lua);
         int nextAdditionalNumberOfAction(lua_State* s_Lua);
         int setNullAdditionalNumberOfAction(lua_State* s_Lua);
-        int getMonsterValue(lua_State* s_Lua);
+        int getMonsterOption(lua_State* s_Lua);
         int testLookDaveX(lua_State* s_Lua);
         int testLookDaveY(lua_State* s_Lua);
         int getMonsterFrame(lua_State* s_Lua);
@@ -54,8 +54,12 @@ class LuaBindFunctions
         int killDave(lua_State* s_Lua);
         int killMonster(lua_State* s_Lua);
         int addDuplicateMonster(lua_State* s_Lua);
+        int setMonsterValue(lua_State* s_Lua);
+        int getMonsterValue(lua_State* s_Lua);
+
         int setGlobalValue(lua_State* s_Lua);
         int getGlobalValue(lua_State* s_Lua);
+
         int testTileTypeRight(lua_State* s_Lua);
         int testTileTypeLeft(lua_State* s_Lua);
         int testTileTypeUp(lua_State* s_Lua);

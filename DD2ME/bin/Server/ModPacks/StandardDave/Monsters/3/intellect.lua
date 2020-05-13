@@ -32,13 +32,13 @@ function mainFunc()
 		killDave(-1)
 	end
 	nextAdditionalNumberOfAction(-1)
-	if getAdditionalNumberOfAction(-1) % getMonsterValue(-1, "other", "animationstep") == 0 then
+	if getAdditionalNumberOfAction(-1) % getMonsterOption(-1, "other", "animationstep") == 0 then
 		nextNumberOfAction(-1)
 	else
 		return
 	end
 	local NewState = ""
-	if string.find(getState(-1), "attack") ~= nil and getAdditionalNumberOfAction(-1) > 4*getMonsterValue(-1, "other", "animationstep") then
+	if string.find(getState(-1), "attack") ~= nil and getAdditionalNumberOfAction(-1) > 4*getMonsterOption(-1, "other", "animationstep") then
 		NewState = string.gsub(getState(-1), "attack", "run")
 		setState(-1, NewState)
 	end
@@ -89,7 +89,7 @@ function mainFunc()
 	if oldstate ~= getState(-1) then
 		return
 	end
-	local speed = getMonsterValue(-1, "options", string.format("speed%d", getMonsterFrame(-1) + 1))
+	local speed = getMonsterOption(-1, "options", string.format("speed%d", getMonsterFrame(-1) + 1))
 	local testgo = 0
 	if string.find(getState(-1), "rightrun") ~= nil then
 		if string.find(getState(-1), "ceiling") ~= nil then
@@ -106,8 +106,8 @@ function mainFunc()
 			end
 		end
 	end
-	local speedX = getMonsterValue(-1, "options", "speedflyX")
-	local speedY = getMonsterValue(-1, "options", "speedflyY")
+	local speedX = getMonsterOption(-1, "options", "speedflyX")
+	local speedY = getMonsterOption(-1, "options", "speedflyY")
 	if string.find(getState(-1), "downrun") ~= nil or string.find(getState(-1), "uprun") ~= nil then
 		if string.find(getState(-1), "left") ~= nil then
 			goLeft(-1, speedX, 1, 0)

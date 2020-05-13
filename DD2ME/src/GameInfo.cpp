@@ -58,6 +58,7 @@ void GameInfo::deathDave(int type)
     if(type == 0) return;
     if(s_CheatGod == true) return;
     if(s_MyDave->s_State == "doorexit") return;
+    if(s_Stop) return;
     s_Stop = true;
     s_DeathType = type;
     s_OldAnSt = s_GameClass->s_AnimationStep;

@@ -34,7 +34,7 @@ function mainFunc()
 		oldFrame = getMonsterFrame(-1)
 	end
 	nextAdditionalNumberOfAction(-1)
-	if getAdditionalNumberOfAction(-1) % getMonsterValue(-1, "other", "animationstep") == 0 then
+	if getAdditionalNumberOfAction(-1) % getMonsterOption(-1, "other", "animationstep") == 0 then
 		nextNumberOfAction(-1)
 	else
 		return
@@ -74,7 +74,7 @@ function mainFunc()
 	if oldstate ~= getState(-1) then
 		return
 	end
-	local speed = getMonsterValue(-1, "options", string.format("speed%d", getMonsterFrame(-1) + 1))
+	local speed = getMonsterOption(-1, "options", string.format("speed%d", getMonsterFrame(-1) + 1))
 	local testgo = 0
 	if getState(-1) == "rightrun" then
 		testgo = goRight(-1, speed, 1, 1)

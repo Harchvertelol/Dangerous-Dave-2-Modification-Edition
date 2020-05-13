@@ -10,21 +10,13 @@ numberofframesrightjump=1
 numberofframesdeathtiles=5
 outputshiftX=0
 outputshiftY=0
-animationstep=1
+animationstep=2
  
 [options]
 lives=3
-behDelay=6
-run1delay=2
-run1hspeed=4
-run2delay=4
-run2hspeed=4
-run3delay=4
-run3hspeed=3
-run4delay=4
-run4hspeed=4
-prejump1delay=5   
-prejump1hspeed=0
-jump1delay=5
-jump1hspeed=6
+speed1=14
+speed2=16
+speed3=8
+speed4=16
+freezeBeforeJump=2
 type=standard

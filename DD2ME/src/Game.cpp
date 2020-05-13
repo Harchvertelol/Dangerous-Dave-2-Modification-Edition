@@ -350,11 +350,16 @@ PostParsingStruct* Game::getObjects()
             cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "dopNumberOfAction", WorkFunctions::ConvertFunctions::itos(iter->second->s_AdditionalNumberOfAction) );
             cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "id", WorkFunctions::ConvertFunctions::itos(monsterid) );
             map<string, string>::iterator iter1;
-            for( iter1 = iter->second->s_GlobalValues.begin(); iter1 != iter->second->s_GlobalValues.end(); iter1++)
+            for( iter1 = iter->second->s_AIMonsterValues.begin(); iter1 != iter->second->s_AIMonsterValues.end(); iter1++)
             {
-                cpps->setValue("GlobalValues_monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), iter1->first, iter1->second );
+                cpps->setValue("AIMonsterValues_monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), iter1->first, iter1->second );
             }
         }
+    map<string, string>::iterator iter1m;
+    for( iter1m = s_GameInfo->s_FactoryMonsters->s_AIMonstersValues.begin(); iter1m != s_GameInfo->s_FactoryMonsters->s_AIMonstersValues.end(); iter1m++)
+    {
+        cpps->setValue("AIMonstersValues", iter1m->first, iter1m->second );
+    }
     map<int, CreatureDave*>::iterator iter1;
     for( iter1 = s_GameInfo->s_Daves.begin(); iter1 != s_GameInfo->s_Daves.end(); iter1++)
     {
@@ -443,15 +448,23 @@ void Game::setObjects(PostParsingStruct* cpps)
             state = cpps->getValue("monster_" + monsterid, "state");
             numberOfAction = atoi( cpps->getValue("monster_" + monsterid, "numberOfAction").c_str() );
             dopNumberOfAction = atoi( cpps->getValue("monster_" + monsterid, "dopNumberOfAction").c_str() );
-            keymonster = s_GameInfo->s_FactoryMonsters->addMonster(number, coordX, coordY, false);
+            keymonster = s_GameInfo->s_FactoryMonsters->addMonsterImmediately(number, coordX, coordY, false);
             s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_CurrentLives = currentLives;
             s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_State = state;
             s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_NumberOfAction = numberOfAction;
             s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_AdditionalNumberOfAction = dopNumberOfAction;
             map<string, string>::iterator iter1;
-            for( iter1 = cpps->getMapVariables()["GlobalValues_monster_" + monsterid].begin(); iter1 != cpps->getMapVariables()["GlobalValues_monster_" + monsterid].end(); iter1++)
+            for( iter1 = cpps->getMapVariables()["AIMonsterValues_monster_" + monsterid].begin(); iter1 != cpps->getMapVariables()["AIMonsterValues_monster_" + monsterid].end(); iter1++)
             {
-                s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_GlobalValues[iter1->first] = iter1->second;
+                s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_AIMonsterValues[iter1->first] = iter1->second;
+            }
+        }
+        else if(iter->first.find("AIMonstersValues") == 0)
+        {
+            map<string, string>::iterator iter1;
+            for( iter1 = cpps->getMapVariables()["AIMonstersValues"].begin(); iter1 != cpps->getMapVariables()["AIMonstersValues"].end(); iter1++)
+            {
+                s_GameInfo->s_FactoryMonsters->s_AIMonstersValues[iter1->first] = iter1->second;
             }
         }
         else if(iter->first.find("dave_") == 0)
