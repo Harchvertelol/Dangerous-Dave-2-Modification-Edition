@@ -1,3 +1,51 @@
+-------------------------------------------------- -----------------------------------
+Changes in version 0.5 pre-beta: (May 14, 2020)
+
+- This is the pre-beta version of the game Dangerous Dave 2: Modification Edition.
+  While there is an active search for bugs and their correction.
+  
+- Changes:
+  
+  1) The lua states for different monsters are divided.
+  2) Changed the processing distance of monsters according to the original (as a result, it is still not clear how this works in the original).
+  3) Code refactoring.
+  4) Multiple changes in the network part.
+  5) The probability of throwing the knife and the speed of the knife.
+  6) Monster number 5 appeared: the ghoul.
+  7) Changed API. There are functions to set and receive global variables (for all monsters). Old versions of modpacks are not compatible with the current one.
+  8) Added parameter for data transfer in addDuplicateMonster function. More information in the API file.
+  9) The API function for obtaining a monster ID has appeared.
+  10) Monster number 6 appeared: the boss.
+  11) 2 more levels are available for full passage: 3 and 4. In total, now you can complete half of the game (levels 1-4).
+
+- Bugs fixed:
+  
+  1) The zombie rests against the wall when he sees Dave, in the original he goes a little back and forth.
+  2) The lowering height of the spider is incorrect.
+  3) Upon death, the monster was taken away the number of lives equal to the number of monsters killing Dave at the moment.
+    
+- Detected bugs:
+
+  1) Go close to the wall to the left. Lower the gun down. Turn right. Click jump. Take off on the wall.
+  2) Will not fall from hard tiles from recoil when shooting to the left. If you shoot up or down - it does not fall from hard tiles (it was found that in the original
+     Dave also decided not to fix it yet).
+  3) When caching is off, the transparency mask does not work. The reason is known until corrected.
+  4) The screen follows the player too clearly. Not so in the original.
+  5) There is no illumination of a monster when hit.
+  6) Dave's quick switch to reload (planned to be fixed when transferring Dave's mechanics to lua).
+  7) Dave does not go down the stairs as quickly as in the original (it is planned to fix it when translating Dave's mechanics into a lua).
+  8) No animation in flight. Incorrect animation of the jump (must be fingered). Must hang longer at the top (planned to be fixed when transferring Dave's mechanics to lua).
+  9) Running animation when abutting against the wall should stop (it is planned to fix it when transferring Dave's mechanics to lua).
+  10) Fix the API. Functions goUp / goDown (add walking on the wall) and testTileDown (and the rest of them, to figure out how they should work).
+  11) The animation counter is not reset when the state of the monster changes. Thought: add a global parameter for each monster, giving you the opportunity to either manually manage it yourself, or let the program automatically reset.
+  12) Bonuses in the original blink randomly, but not harmoniously with each other.
+
+- Minuses:
+
+  1) Bugs, bugs, bugs (already less than before, but still).
+  2) ALL settings are in the .ini file.
+  3) The initial screen saver is not the same as in the original Dave.
+
 -------------------------------------------------------------------------------------
 Changes in version 0.4 pre-beta: (May 08, 2020)
 

@@ -1,2 +1,2 @@
-DD2
+DD2 > log.txt
 pause

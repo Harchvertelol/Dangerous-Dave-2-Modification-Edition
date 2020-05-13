@@ -1,2 +1,2 @@
-DD2Debug
+DD2Debug > log.txt
 pause

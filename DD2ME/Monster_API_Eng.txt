@@ -1,4 +1,4 @@
-1. A little about monsters
+1. A little bit about monsters
 Monsters are contained either in the modpack in the Monsters folder, or in a separate pack of monsters.
 The modpack contains all packs, separate packs can be connected, replacing only some
 specific details in modpacks. For example, connect other monsters, bonuses, levels.
@@ -12,9 +12,9 @@ So, the Monsters.dat file is stored in the Monsters folder, its structure:
 numberofmonsters = 11		// The number of monsters in the modpack
 
 [draw]
-transparentmaskR = 204		// RED mask of transparency
+transparentmaskR = 204		// Transparency mask RED
 transparentmaskG = 255		// GREEN transparency mask
-transparentmaskB = 204		// Mask of transparency BLUE
+transparentmaskB = 204		// transparency mask BLUE
 ---
 
 Monsters are numbered from 1 to numberofmonsters inclusive. Mask of transparency - that color
@@ -22,9 +22,9 @@ in textures, which is considered transparent and is cut out when rendering. Ever
 stored in a folder with its number. Consider the structure of this folder in sequence.
 We will consider the example of the first monster (zombie) from the StandardDave modpack. room
 monster - 1, its folder, respectively, "Monsters / 1".
-In the folder there is a monster.info file, its structure:
+In the folder there is a file monster.info, its structure:
 ---
-/ * The [info] block describes all the "states" of the monster. State is a string.
+/ * In the [info] block, all the "states" of the monster are described. State is a string.
 Each state has its own monster texture. Each state also has frames.
 animations. The state is entered by introducing the variable "numberofframes [NAMEOFSTATE] = [NUMBEROFFRAMEOFTHISSTATE]"
 For example: "numberofframesdownrun = 2" means that we have a state of "downrun" that has
@@ -35,8 +35,8 @@ an error that will lead to the closure of the game. Also currently in the folder
 main.bmp - why is it, I don’t know, it arose when extracting resources from the original game, therefore
 I left him for now. The texture structure is currently taken, again, from resource extraction
 from the game, and it is as follows: the texture is a rectangle divided exactly in half,
-on the left side there is a monster, and on the right side of it is a collision rectangle, the color of which is only such,
-which monsters have in the StandardDave modpack, it’s unprofitable in size, which will be
+on the left side there is a monster, and on the right side it is a collision rectangle, the color of which is only such,
+which monsters have in the StandardDave modpack is unprofitable in size, which will
 occupy modpacks, but, again, taken from extracting textures from the original game. In the future, just
 will be changed to the coordinates of the collision rectangle in monster.info. * /
 [info]
@@ -52,14 +52,14 @@ numberofframesdeathtiles = 5		// The number of frames of the losing tiles. They 
 					// units up to this value inclusive.
 outputshiftX = 0		// How much to move the monster along the X axis when placing it in the level. The fact,
 			// that the zombie is too high, on the levels it is located on the second tile from the floor,
-			// and if this is left so, without shifts, then the legs will be in the floor. Therefore we him
+			// and if you leave it like that, without shifts, then the legs will be in the floor. Therefore we him
 			// when outputting, we shift so that it lands exactly on the floor (along the Y axis).
 outputshiftY = -8		// Here we move the monster along the Y axis.
 animationstep = 6		// This variable is used for animation speed in intelligence
 
 [options]
 lives = 2		// The number of monster lives. If -1, then he has infinite lives, hits in him are taken into account (bullet stop).
-		// If -2, then he has infinite lives, and hits in him are not taken into account (a bullet flies through him).
+		// If -2, then he has infinitely lives, and hits in him are not taken into account (a bullet flies through him).
 speed1 = 11		// Variable to be used in intelligence
 speed2 = 6		// Variable to be used in intelligence
 speed3 = 8		// Variable to be used in intelligence
@@ -77,7 +77,7 @@ The following functions must be described:
 function setFirstState ()
 	return "rightrun"
 end
-2) mainFunc (), returns nothing, is the main function of intelligence, each render cycle is called if
+2) mainFunc (), returns nothing, is the main intelligence function, each rendering cycle is called if
 if you don’t describe it, then it will be generated automatically, but empty. The render loop is called once every milliseconds,
 specified in DD2.ini in the [video] block in the drawstep variable.
 The following functions can be described, but not necessarily:
@@ -92,7 +92,7 @@ additional counter. This is how zombie animation is implemented:
 nextAdditionalNumberOfAction (-1)	- Increased the additional counter. Generally speaking, this could be realized through
 					are global variables, but I made it simpler, since this construction is necessary
 					- for almost every monster
-if getAdditionalNumberOfAction (-1)% getMonsterValue (-1, "other", "animationstep") == 0 then - checked that it was time to switch the animation
+if getAdditionalNumberOfAction (-1)% getMonsterOption (-1, "other", "animationstep") == 0 then - checked that it was time to switch the animation
 	nextNumberOfAction (-1) - switched
 else
 	return - if there is no need to switch, then the zombie does nothing
@@ -117,11 +117,11 @@ goLeft (id, move, isCorrect, isCorrectStand = 0, isOnCeil = 0) - Move the monste
 	isCorrectStand - Whether to correct the monster as "standing" on its feet. Those. if in that direction the end of the "floor"
 			then the monster will not go through the void. The default is false (i.e. 0 by lua).
 	isOnCeil - Whether we are on the ceiling (inverting the definition of "gender") only works with isCorrectTrue == 1. The default is 0.
-	It returns 0 if physics correction has not been performed, and 1 if it has been performed.
+	Returns 0 if physics correction has not been performed, and 1 if it has been performed.
 	Examples: goLeft (-1, 2) - shifted to the left by 2 pixels, not paying attention to anything.
 		goLeft (-1, 2, 1) - shifted to the left by 2 pixels, not allowing to pass through solid tiles.
 		goLeft (-1, 3, 1, 1) - shifted to the left by 3 pixels, not allowing to pass through solid tiles, as well as move around the void.
-		goLeft (-1, 4, 1, 1, 1) - shifted to the left by 4 pixels, not allowing to pass through solid tiles, move around a void, considering
+		goLeft (-1, 4, 1, 1, 1) - shifted to the left by 4 pixels, not allowing them to pass through solid tiles, move around emptiness, considering
 					that we walk on the ceiling (for example, relevant for the slug and spider from the second level of the original Dave).
 
 goRight (id, move, isCorrect, isCorrectStand = 0, isOnCeil = 0) - Move the monster to the right (increase X)
@@ -131,7 +131,7 @@ goRight (id, move, isCorrect, isCorrectStand = 0, isOnCeil = 0) - Move the monst
 	isCorrectStand - Whether to correct the monster as "standing" on its feet. Those. if in that direction the end of the "floor"
 			then the monster will not go through the void. The default is false (i.e. 0 by lua).
 	isOnCeil - Whether we are on the ceiling (inverting the definition of "gender") only works with isCorrectTrue == 1. The default is 0.
-	It returns 0 if physics correction has not been performed, and 1 if it has been performed.
+	Returns 0 if physics correction has not been performed, and 1 if it has been performed.
 	Examples: goRight (-1, 2) - shifted to the right by 2 pixels, not paying attention to anything.
 		goRight (-1, 2, 1) - shifted to the right by 2 pixels, not allowing to pass through solid tiles.
 		goRight (-1, 3, 1, 1) - shifted to the right by 3 pixels, not allowing to pass through solid tiles, as well as move around the void.
@@ -142,25 +142,25 @@ goUp (id, move, isCorrect) - Move the monster up (decrease Y)
 	id - monster id, if -1, then the current monster
 	move - the number of pixels the monster moves
 	isCorrect - Do physics corrections (collisions with solid tiles)
-	It returns 0 if physics correction has not been performed, and 1 if it has been performed.
-	Examples: goUp (-1, 2) - shifted up 2 pixels, not paying attention to anything.
-		goUp (-1, 2, 1) - moved up 2 pixels, not allowing to pass through solid tiles.
+	Returns 0 if physics correction has not been performed, and 1 if it has been performed.
+	Examples: goUp (-1, 2) - moved up 2 pixels, not paying attention to anything.
+		goUp (-1, 2, 1) - shifted up 2 pixels, not allowing to pass through solid tiles.
 
 goDown (id, move, isCorrect, ladder = 0) - Move the monster down (increase Y)
 	id - monster id, if -1, then the current monster
 	move - the number of pixels the monster moves
 	isCorrect - Do physics corrections (collisions with solid tiles)
 	ladder - Are "ladders" (well, and "shelves", etc.) considered to be a solid object.
-	It returns 0 if physics correction has not been performed, and 1 if it has been performed.
-	Examples: goDown (-1, 2) - moved down 2 pixels, not paying attention to anything.
-		goDown (-1, 2, 1) - moved down 2 pixels, not allowing to pass through solid tiles.
+	Returns 0 if physics correction has not been performed, and 1 if it has been performed.
+	Examples: goDown (-1, 2) - shifted down 2 pixels, not paying attention to anything.
+		goDown (-1, 2, 1) - moved down by 2 pixels, not allowing to pass through solid tiles.
 
 Animation counter toggles the animation of the monster.
 
 setNumberOfAction (id, numbofact) - set the animation counter. Only works with the value from DD2.ini [video]: animationstep == true
 	id - monster id, if -1, then the current monster
 	numbofact - settable counter number
-	Example: setNumberOfAction (12) - set counter == 12.
+	Example: setNumberOfAction (12) - set the counter == 12.
 
 nextNumberOfAction (id) - switches the animation to the next frame. Only works with the value from DD2.ini [video]: animationstep == true
 	id - monster id, if -1, then the current monster
@@ -195,20 +195,20 @@ getAdditionalNumberOfAction (id) - Get an additional animation counter.
 	Returns the current additional animation counter.
 	Example: getAdditionalNumberOfAction (-1) - received.
 
-getMonsterValue (id, block, variable) - get the value from monster.info.
+getMonsterOption (id, block, variable) - get the value from monster.info.
 	id - monster id, if -1, then the current monster
-	block - name of the block, where we get the value
+	block - the name of the block, from where we get the value
 	variable - the name of the variable whose value we want to know
 	Returns the value of the variable [block]: variable from monster.info
-	Example: getMonsterValue (-1, "other", "animationstep") - got a variable called "animationstep" from the "other" block.
+	Example: getMonsterOption (-1, "other", "animationstep") - got a variable called "animationstep" from the "other" block.
 
 getMainValue (block, variable) - get the value from DD2.ini.
-	block - name of the block, where we get the value
+	block - the name of the block, from where we get the value
 	variable - the name of the variable whose value we want to know
 	Returns the value of the variable [block]: variable from DD2.ini
 	Example: getMainValue ("video", "drawstep") - got a variable called "drawstep" from the "video" block.
 
-testLookDaveX (id) - checks if the monster sees a deiva on the X axis (some part of the collision rectangle)
+testLookDaveX (id) - checks if a monster sees a deiva on the X axis (some part of the collision rectangle)
 	id - monster id, if -1, then the current monster
 	It returns 0 if it does not see, and 1 if it sees
 	Example: testlook = testLookDaveX (-1) - checked
@@ -240,7 +240,9 @@ getDistanceToDave (id) - get the distance to Dave. Returns the shortest distance
 	Returns the distance to Dave along the y axis.
 	Example: getDistanceToDave (-1) - received
 
-testTileTypeDown (id, tiletype, typetest, numberoflabel = 0) - check tiles that are in some layer on the monster.
+ATTENTION! ALL FUNCTIONS ON THE TILE TEST IS RAW AND WORK UNSTABLE, THEY WILL BE RENEWED!
+
+testTileTypeDown (id, tiletype, typetest, numberoflabel = 0) - check tiles located in a certain layer on the monster.
 	id - monster id, if -1, then the current monster
 	tiletype - type of tile to check, existing types:
 		EMPTY - empty tile (transparent),
@@ -250,10 +252,10 @@ testTileTypeDown (id, tiletype, typetest, numberoflabel = 0) - check tiles that 
 		EXITLEVEL - exit from the level.
 	typetest - type of test. 0 - whether all tiles are of type tiletype in this layer. 1 - is there at least one tiletype tile in this layer.
 	numberoflabel - layer number on the monster. The default value is 0. This is the layer with which the monster intersects at the very bottom, or if it is "standing", then "under the legs" of the monster.
-			If "+1", this is a layer shift "down" (Y + 1), if "-1", then this is a layer shift "up". The layers are horizontal.
+			If "+1", this is the layer shift "down" (Y + 1), if "-1", then this is the layer shift "up". The layers are horizontal.
 	Example: testTileTypeDown (-1, "EMPTY", 0) - checked
 
-testTileTypeRight (id, tiletype, typetest, numberoflabel = 0) - check the tiles that are in some layer on the monster.
+testTileTypeRight (id, tiletype, typetest, numberoflabel = 0) - check tiles that are in some layer on the monster.
 	id - monster id, if -1, then the current monster
 	tiletype - type of tile to check, existing types:
 		EMPTY - empty tile (transparent),
@@ -262,11 +264,11 @@ testTileTypeRight (id, tiletype, typetest, numberoflabel = 0) - check the tiles 
 		DEATH - killing tile,
 		EXITLEVEL - exit from the level.
 	typetest - type of test. 0 - whether all tiles are of type tiletype in this layer. 1 - is there at least one tiletype tile in this layer.
-	numberoflabel - layer number on the monster. The default value is 0. This is the layer with which the monster intersects on the right (the farthest), or if it "stands sideways on the wall",
-			then "this side layer" of the monster. If "+1", this is the layer shift to the "right" (X + 1), if "-1", then this is the layer shift to the "left". Layers are vertical.
+	numberoflabel - layer number on the monster. The default is 0. This is the layer with which the monster intersects on the right (the farthest), or if it "stands sideways on the wall",
+			then the "this side layer" of the monster. If "+1", this is the layer shift to the "right" (X + 1), if "-1", then this is the layer shift to the "left". Layers are vertical.
 	Example: testTileTypeRight (-1, "EMPTY", 0) - checked
 
-testTileTypeLeft (id, tiletype, typetest, numberoflabel = 0) - check tiles that are in some layer on the monster.
+testTileTypeLeft (id, tiletype, typetest, numberoflabel = 0) - check the tiles that are in some layer on the monster.
 	id - monster id, if -1, then the current monster
 	tiletype - type of tile to check, existing types:
 		EMPTY - empty tile (transparent),
@@ -275,11 +277,11 @@ testTileTypeLeft (id, tiletype, typetest, numberoflabel = 0) - check tiles that 
 		DEATH - killing tile,
 		EXITLEVEL - exit from the level.
 	typetest - type of test. 0 - whether all tiles are of type tiletype in this layer. 1 - is there at least one tiletype tile in this layer.
-	numberoflabel - layer number on the monster. The default value is 0. This is the layer with which the monster intersects on the left (the closest one), or if it "stands sideways on the wall",
-			then "this side layer" of the monster. If "+1", this is the layer shift to the "right" (X + 1), if "-1", then this is the layer shift to the "left". Layers are vertical.
+	numberoflabel - layer number on the monster. The default value is 0. This is the layer with which the monster intersects on the left (the closest), or if it "stands sideways on the wall",
+			then the "this side layer" of the monster. If "+1", this is the layer shift to the "right" (X + 1), if "-1", then this is the layer shift to the "left". Layers are vertical.
 	Example: testTileTypeLeft (-1, "EMPTY", 0) - checked
 
-testTileTypeUp (id, tiletype, typetest, numberoflabel = 0) - check tiles located in a certain layer on the monster.
+testTileTypeUp (id, tiletype, typetest, numberoflabel = 0) - check tiles that are in some layer on the monster.
 	id - monster id, if -1, then the current monster
 	tiletype - type of tile to check, existing types:
 		EMPTY - empty tile (transparent),
@@ -289,14 +291,14 @@ testTileTypeUp (id, tiletype, typetest, numberoflabel = 0) - check tiles located
 		EXITLEVEL - exit from the level.
 	typetest - type of test. 0 - whether all tiles are of type tiletype in this layer. 1 - is there at least one tiletype tile in this layer.
 	numberoflabel - layer number on the monster. The default value is 0. This is the layer with which the monster intersects at the very top, or if it "stands with its head", then
-			"over the head" monster. If "+1", this is a layer shift "down" (Y + 1), if "-1", then this is a layer shift "up". The layers are horizontal.
+			"over the head" monster. If "+1", this is the layer shift "down" (Y + 1), if "-1", then this is the layer shift "up". The layers are horizontal.
 	Example: testTileTypeUp (-1, "EMPTY", 0) - checked
 
 getDistanceToDaveXHead (id, isWithSign = 0) - get the distance to Dave on the X axis. Returns the distance between the upper left corners of the collision rectangles on the X axis.
 	id - monster id, if -1, then the current monster
 	isWithSign - whether to return with a sign. The default is 0.
 	Returns the distance between the upper left corners of the collision rectangles along the X axis.
-	Example: dist = getDistanceToDaveXHead (-1, 1) - got the distance to Dave’s head with a sign on the X axis.
+	Example: dist = getDistanceToDaveXHead (-1, 1) - got the distance to Dave’s head with a sign along the X axis.
 
 getDistanceToDaveYHead (id, isWithSign = 0) - get the distance to Dave along the Y axis. Returns the distance between the upper left corners of the collision rectangles along the Y axis.
 	id - monster id, if -1, then the current monster
@@ -318,12 +320,12 @@ killDave (id) - kill Dave with a monster.
 	id - monster id, if -1, then the current monster
 	Example: killDave (-1) - killed.
 
-killMonster (id, type) - kill a monster
+killMonster (id, type) - kill a monster.
 	id - monster id, if -1, then the current monster
 	type - type of monster kill
 	Example: killMonster (-1, 0) - killed.
 
-addDuplicateMonster (id, coordX, coordY, state, numberofaction, additionalnumberofaction, lives = -1) - create a duplicate of the monster (copy)
+addDuplicateMonster (id, coordX, coordY, state, numberofaction, additionalnumberofaction, lives = -1, params = "") - create a duplicate of the monster (copy).
 	id - monster id, if -1, then the current monster
 	coordX - the coordinates of the new monster in X
 	coordY - the coordinates of the new monster in Y
@@ -331,18 +333,34 @@ addDuplicateMonster (id, coordX, coordY, state, numberofaction, additionalnumber
 	numberofaction - animation counter of the new monster
 	additionalnumberofaction - additional animation counter of the new monster
 	lives - the number of lives, an optional parameter, by default it is infinite, taking into account collisions (-1)
+	params - parameters that you set to the created monster (analogue of setMonsterValue), format: "test1 = 34; name = DaveKiller; gun = super;". It is very important to put a semicolon
+	at the end, otherwise the last parameter will not be processed.
 	Returns the identifier of the created monster.
-	Examples: addDuplicateMonster (-1, 0, 0, "leftstrike", 0, 0, -2) - created a copy of the zombie in a "hit", transparent and with endless lives.
+	Examples: addDuplicateMonster (-1, 0, 0, "leftstrike", 0, 0, -2, "direction = left; timelife = 10;") - created a copy of the zombie in a "hit", transparent and with infinite lives and with parameters ,
+	which can be obtained through getMonsterValue ().
 
-setGlobalValue (id, nameofvalue, valueofvalue) - set the current monster to a value that will not be erased after the end of the script loop. All values are of type string
+setMonsterValue (id, nameofvalue, valueofvalue) - set the current monster to a value that will not be erased after the end of the script loop. All values are of type string.
+						If you need numbers, then you need to convert back and forth.
+	id - monster id, if -1, then the current monster
+	nameofvalue - value name
+	valueofvalue - value value
+	Examples: setMonsterValue (-1, "test", "value") - set the variable test == "value".
+
+getMonsterValue (id, nameofvalue) - get the value from the current monster that will not be erased after the end of the script loop. All values are of type string.
+					If you need numbers, then you need to convert back and forth.
+	id - monster id, if -1, then the current monster
+	nameofvalue - value name
+	Returns the "value" of the requested value.
+	Examples: myvaluetest = getMonsterValue (-1, "test") - received a variable.
+setGlobalValue (id, nameofvalue, valueofvalue) - set the global value that is available to all monsters. All values are of type string.
 						If you need numbers, then you need to convert back and forth.
 	id - monster id, if -1, then the current monster
 	nameofvalue - value name
 	valueofvalue - value value
 	Examples: setGlobalValue (-1, "test", "value") - set the variable test == "value".
 
-getGlobalValue (id, nameofvalue) - get the value from the current monster that will not be erased after the end of the script loop. All values are of type string
-					If you need numbers, then you need to convert back and forth.
+getGlobalValue (id, nameofvalue) - get a global value that is available to all monsters. All values are of type string.
+						If you need numbers, then you need to convert back and forth.
 	id - monster id, if -1, then the current monster
 	nameofvalue - value name
 	Returns the "value" of the requested value.
@@ -371,11 +389,14 @@ getNumberOfLives (id) - get the number of lives from the monster.
 	Returns the number of lives of a monster
 	Example: lives = getNumberOfLives (-1) - received.
 
-setNumberOfLives (id, lives) - set the number of lives of the monster.
+setNumberOfLives (id, lives) - set the number of lives of the monster. If set to 0, then the monster will NOT DIE. -1 - infinitely lives, but not transparent. -2 - infinitely lives and transparent.
 	id - monster id, if -1, then the current monster
 	lives - the set number of lives.
 	Examples: setNumberOfLives (-1, 100) - set the monster to 100 lives.
 		setNumberOfLives (-1, -2) - made the monster transparent to bullets and with an infinite number of lives.
+
+getMonsterID () - get the monster ID at the level (not type! even the same monsters have a unique ID at each level).
+	Examples: getMonsterID () - got the ID.
 
 addImageToFactoryTemporaryImage (pack, number, state, numberofframe, coordX, coordY, timeLive, changeX, changeY, type) - add an image to the temporary image factory.
 	pack - the name of the image pack, only "monsters" is supported
@@ -388,9 +409,9 @@ addImageToFactoryTemporaryImage (pack, number, state, numberofframe, coordX, coo
 	changeX - rate of change of the X coordinate of the image in pixels in the rendering cycle
 	changeY - rate of change of the Y coordinate of the image in pixels in the rendering cycle
 	type - image type, so far does not affect anything.
-	Example: addImageToFactoryTemporaryImage ("monsters", 4, "web", 1, getCoordMonsterX (-1) + 4, getCoordMonsterY (-1) + 0, 2 * (16 * 6 / speedattack - noa) + 4, 0, 0, " web ")
+	Example: addImageToFactoryTemporaryImage ("monsters", 4, "web", 1, getCoordMonsterX (-1) + 4, getCoordMonsterY (-1) + 0, 2 * (16 * 6 / speedattack - noa) + 4, 0, 0, "web")
 
-addPackImagesToFactoryTemporaryImage (pack, number, state, coordX, coordY, timeLive, changeX, changeY, numberofframes, type, isAnimated) - add an image package to the temporary image factory.
+addPackImagesToFactoryTemporaryImage (pack, number, state, coordX, coordY, timeLive, changeX, changeY, numberofframes, type, isAnimated) - add a package of images to the temporary image factory.
 	pack - the name of the image pack, only "monsters" is supported
 	number - monster number
 	state - monster state
