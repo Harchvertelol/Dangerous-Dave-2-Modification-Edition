@@ -12,7 +12,7 @@ And a little preparing network mode:
 <img src="Screenshots/4.jpg" width=32% alt="screenshot">
 
 # Download
-Last version (v0.4 pre-beta): <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/tag/v0.4pre-beta-win" target="_blank">open</a>, <a href=https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/download/v0.4pre-beta-win/DD2MEv0.4pb.win.rar>direct link</a><br>
+Last version (v0.5 pre-beta): <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/tag/v0.5pre-beta-win" target="_blank">open</a>, <a href=https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/download/v0.5pre-beta-win/DD2MEv0.5pb.win.rar>direct link</a><br>
 All versions: <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases" target="_blank">open</a>
 
 # Control
