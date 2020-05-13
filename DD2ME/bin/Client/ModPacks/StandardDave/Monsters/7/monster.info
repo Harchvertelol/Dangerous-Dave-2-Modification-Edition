@@ -11,7 +11,7 @@ outputshiftY=0
 animationstep=3
 
 [options]
-lives=1
+lives=-2
 speed1=8
 speed2=8
 speed3=5
