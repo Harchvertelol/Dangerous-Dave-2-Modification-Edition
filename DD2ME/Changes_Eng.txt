@@ -17,6 +17,7 @@ Changes in version 0.5 pre-beta: (May 14, 2020)
   9) The API function for obtaining a monster ID has appeared.
   10) Monster number 6 appeared: the boss.
   11) 2 more levels are available for full passage: 3 and 4. In total, now you can complete half of the game (levels 1-4).
+  12) Changed the behavior of Dave in jumping closer to the original.
 
 - Bugs fixed:
   
