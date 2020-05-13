@@ -964,7 +964,7 @@ int LuaBindFunctions::getDistanceToDaveXHead(lua_State* s_Lua)
     int frame = mnst->getFrame();
     int frameDave = s_GameClass->s_GameInfo->s_MyDave->getFrame();
     int dist = (-1)*(mnst->s_CoordX + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL - s_GameClass->s_GameInfo->s_MyDave->s_CoordX - s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frameDave].s_XL);
-    if(sign = false) dist = abs(dist);
+    if(sign == false) dist = abs(dist);
     lua_pushnumber(s_Lua, dist);
     return 1;
 }
@@ -1120,6 +1120,7 @@ int LuaBindFunctions::addDuplicateMonster(lua_State* s_Lua)
         {
             newMonster->s_AIMonsterValues[iter1->first] = iter1->second;
         }
+        delete pps;
     }
     lua_pushnumber(s_Lua, newMonster->s_ID);
     s_CurrentMonster = curmonst;
@@ -1540,6 +1541,23 @@ int LuaBindFunctions::getGlobalValue(lua_State* s_Lua)
     return 1;
 }
 
+static int __getMonsterID(lua_State* s_Lua)
+{
+    return s_LBF->getMonsterID(s_Lua);
+}
+
+int LuaBindFunctions::getMonsterID(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n > 0)
+    {
+        cout<<"Error! Number of arguments of function \"getMonsterID\" is incorrect!"<<endl;
+        return 0;
+    }
+    lua_pushnumber(s_Lua, s_CurrentMonster->s_ID);
+    return 1;
+}
+
 void LuaBindFunctions::prepareAIRun()
 {
     s_LBF = this;
@@ -1585,6 +1603,9 @@ void LuaBindFunctions::registerFunctionsMonster(lua_State* s_Lua)
     lua_register(s_Lua,"addDuplicateMonster", &__addDuplicateMonster);
     lua_register(s_Lua,"setMonsterValue", &__setMonsterValue);
     lua_register(s_Lua,"getMonsterValue", &__getMonsterValue);
+    lua_register(s_Lua,"setGlobalValue", &__setGlobalValue);
+    lua_register(s_Lua,"getGlobalValue", &__getGlobalValue);
+    lua_register(s_Lua,"getMonsterID", &__getMonsterID);
     lua_register(s_Lua,"testTileTypeRight", &__testTileTypeRight);
     lua_register(s_Lua,"testTileTypeLeft", &__testTileTypeLeft);
     lua_register(s_Lua,"testTileTypeUp", &__testTileTypeUp);

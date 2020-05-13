@@ -8,12 +8,17 @@ numberofframesstarclump=1
 numberofframesdeathtiles=5
 outputshiftX=0
 outputshiftY=0
-animationstep=3
+animationstep=8
+animationstepstar=3
 
 [options]
 lives=16
-speed1=8
-speed2=8
-speed3=5
-speed4=8
+speed4right=33
+speed1right=2
+speed2right=32
+speed3right=0
+speed4left=8
+speed1left=24
+speed2left=8
+speed3left=26
 type=boss

@@ -77,17 +77,20 @@ bool CreatureMonster::correctionPhys(int coord, int what, bool ladder)
             {
                 TileType = s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i]/16, TileCoordY[j]/16);
                 if( TileType == IMPASSABLE && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[j], s_GameClass->s_Data->s_Monsters->s_Collisions[s_Number - 1][s_State][frame], Square(0,0,15,15)) ) col = true;
-                if( TileType == LADDER && ladder == true && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[j], s_GameClass->s_Data->s_Monsters->s_Collisions[s_Number - 1][s_State][frame], Square(0,0,15,15)) ) col = true;
-                if( what == 1 && sign == 1 && TileType == LADDER &&
-                   testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[j],
-                                 s_GameClass->s_Data->s_Monsters->s_Collisions[s_Number - 1][s_State][frame],
-                                 Square(0,0,15,15)) &&
-                   !testCollision(s_CoordX, coord, TileCoordX[i], TileCoordY[j],
-                                  s_GameClass->s_Data->s_Monsters->s_Collisions[s_Number - 1][s_State][frame],
-                                  Square(0,0,15,15), true) &&
-                   !testCollision(s_CoordX, coord, TileCoordX[i], TileCoordY[j],
-                                  s_GameClass->s_Data->s_Monsters->s_Collisions[s_Number - 1][s_State][frame],
-                                  Square(0,0,15,15)) ) col = true;
+                if(true)
+                {
+                    if( TileType == LADDER && ladder == true && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[j], s_GameClass->s_Data->s_Monsters->s_Collisions[s_Number - 1][s_State][frame], Square(0,0,15,15)) ) col = true;
+                    if( what == 1 && sign == 1 && TileType == LADDER &&
+                       testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[j],
+                                     s_GameClass->s_Data->s_Monsters->s_Collisions[s_Number - 1][s_State][frame],
+                                     Square(0,0,15,15)) &&
+                       /* !testCollision(s_CoordX, coord, TileCoordX[i], TileCoordY[j],
+                                      s_GameClass->s_Data->s_Monsters->s_Collisions[s_Number - 1][s_State][frame],
+                                      Square(0,0,15,15), true) &&*/
+                       !testCollision(s_CoordX, coord, TileCoordX[i], TileCoordY[j],
+                                      s_GameClass->s_Data->s_Monsters->s_Collisions[s_Number - 1][s_State][frame],
+                                      Square(0,0,15,15)) ) col = true;
+                }
             }
         if(what == 0) s_CoordX -= sign;
         if(what == 1) s_CoordY -= sign;

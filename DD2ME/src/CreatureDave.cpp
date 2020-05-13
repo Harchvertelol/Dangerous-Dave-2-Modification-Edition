@@ -769,6 +769,7 @@ void CreatureDave::testShoot()
                                     info_for_spec_func infofsf;
                                     infofsf.damage = 1;
                                     s_GameClass->s_AI->runSpecialFunction(iter->second, TSF_ON_DAMAGE, infofsf);
+                                    if(iter->second->s_CurrentLives < 0) iter->second->s_CurrentLives = 0;
                                 }
                                 if(iter->second->s_CurrentLives == 0) iter->second->kill(0);
                                 statedave = "traceshoot";

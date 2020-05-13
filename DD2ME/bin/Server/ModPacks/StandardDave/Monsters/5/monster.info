@@ -14,9 +14,9 @@ animationstep=2
  
 [options]
 lives=3
-speed1=14
-speed2=16
-speed3=8
-speed4=16
-freezeBeforeJump=2
+speed2=14
+speed3=16
+speed4=8
+speed1=16
+freezeBeforeJump=3
 type=standard

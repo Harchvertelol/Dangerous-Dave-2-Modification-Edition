@@ -80,7 +80,7 @@ function mainFunc()
 		else
 			if getState(-1) == "downrun" then
 				if (getDistanceToDave(-1) <= 16*6 and getDistanceToDaveYHead(-1, 1) >= 16) or getMonsterValue(-1, "testdownrun") == "1" or getMonsterValue(-1, "testfirstdownrun") == "1" then
-					testgo = goDown(-1, 8, 1)
+					testgo = goDown(-1, 8, tonumber(getMonsterValue(-1, "testdownrun")))
 					setMonsterValue(-1, "testdownrun", tostring((tonumber(getMonsterValue(-1, "testdownrun")) + 1) % 2))
 					setMonsterValue(-1, "testfirstdownrun", "0")
 				else

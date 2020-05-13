@@ -28,7 +28,7 @@ class StateManager
         void s1I();
         void s2I();
         void s3I();
-        bool switchState(int);
+        bool switchState(int, bool callstartstate = true);
         void startState(int);
         void doState(int);
         Game* s_GameClass;

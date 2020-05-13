@@ -57,13 +57,13 @@ function mainFunc()
 	end
 	local oldstate = getState(-1)
 	if math.random(50) == 1 then
-		if testLookDaveX(-1) == -1 and getDistanceToDaveXHead(-1) < -16*5 then
+		if testLookDaveX(-1) == -1 and getDistanceToDaveXHead(-1, 1) < -16*5 then
 			if string.find(getState(-1), "strike") == nil then
 				setNullNumberOfAction(-1)
 			end
 			setState(-1, "leftstrike")
 		else
-			if testLookDaveX(-1) == 1 and getDistanceToDaveXHead(-1) > 16*5 then
+			if testLookDaveX(-1) == 1 and getDistanceToDaveXHead(-1, 1) > 16*5 then
 				if string.find(getState(-1), "strike") == nil then
 					setNullNumberOfAction(-1)
 				end

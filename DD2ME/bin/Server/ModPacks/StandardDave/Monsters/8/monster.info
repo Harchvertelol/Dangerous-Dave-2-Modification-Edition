@@ -2,6 +2,7 @@
 numberofframesleftrun=1
 numberofframesrightrun=1
 numberofframesinvisoff=5
+numberofframesinvis=1
 
 [other]
 numberofframesdeathtiles=5

@@ -158,11 +158,11 @@ void StateManager::s3I()
     if((GetKeyState(s_GameClass->s_GameInfo->s_KeyShoot) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyShoot = true;
 }
 
-bool StateManager::switchState(int state)
+bool StateManager::switchState(int state, bool callstartstate)
 {
     if(state > s_MaxState) return false;
     s_GameClass->s_GameInfo->s_GameState = state;
-    startState(state);
+    if(callstartstate) startState(state);
     return true;
 }
 

@@ -56,10 +56,9 @@ class LuaBindFunctions
         int addDuplicateMonster(lua_State* s_Lua);
         int setMonsterValue(lua_State* s_Lua);
         int getMonsterValue(lua_State* s_Lua);
-
         int setGlobalValue(lua_State* s_Lua);
         int getGlobalValue(lua_State* s_Lua);
-
+        int getMonsterID(lua_State* s_Lua);
         int testTileTypeRight(lua_State* s_Lua);
         int testTileTypeLeft(lua_State* s_Lua);
         int testTileTypeUp(lua_State* s_Lua);

@@ -41,7 +41,7 @@ int FactoryMonsters::addMonsterImmediately(int number, int x, int y, bool getsta
 
 CreatureMonster* FactoryMonsters::addMonster(int number, int x, int y, bool getstate)
 {
-    CreatureMonster* newMonster = new CreatureMonster(s_GameClass, number, 0, getstate);
+    CreatureMonster* newMonster = new CreatureMonster(s_GameClass, number, s_MaxIndex + s_QueueForAddingMonsters.size(), getstate);
     newMonster->s_CoordX = x;
     newMonster->s_CoordY = y;
     s_QueueForAddingMonsters.push_back(newMonster);
@@ -54,7 +54,8 @@ void FactoryMonsters::addMonstersFromQueue()
     for(int i = 0; i < s_QueueForAddingMonsters.size(); i++)
     {
         s_Monsters[s_MaxIndex] = s_QueueForAddingMonsters[i];
-        s_Monsters[s_MaxIndex]->s_ID = s_MaxIndex;
+        //s_Monsters[s_MaxIndex]->s_ID = s_MaxIndex;
+        if(s_MaxIndex != s_QueueForAddingMonsters[i]->s_ID) cout << "Error with monster ID!" << endl;
         s_MaxIndex++;
     }
     s_QueueForAddingMonsters.clear();
@@ -117,6 +118,8 @@ void FactoryMonsters::clear()
        s_Monsters.erase(iter++);
     }
     s_AIMonstersValues.clear();
+    s_QueueForAddingMonsters.clear();
+    s_MaxIndex = 0;
 }
 
 void FactoryMonsters::reloadAIAll()

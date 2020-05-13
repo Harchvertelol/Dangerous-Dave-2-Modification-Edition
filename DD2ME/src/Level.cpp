@@ -68,7 +68,7 @@ bool Level::loadLevel(string file_name)
     for(int i = 0; i < size_y; i++)
         for(int j = 0; j < size_x; j++)
             if(s_Fields["FieldMonsters"][i*size_x + j] != 0)
-                s_GameClass->s_GameInfo->s_FactoryMonsters->addMonster(s_Fields["FieldMonsters"][i*size_x + j], 16*j + atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Fields["FieldMonsters"][i*size_x + j] - 1]->getValue("other","outputshiftX").c_str() ), 16*i +  + atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Fields["FieldMonsters"][i*size_x + j] - 1]->getValue("other","outputshiftY").c_str() ));
+                s_GameClass->s_GameInfo->s_FactoryMonsters->addMonsterImmediately(s_Fields["FieldMonsters"][i*size_x + j], 16*j + atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Fields["FieldMonsters"][i*size_x + j] - 1]->getValue("other","outputshiftX").c_str() ), 16*i +  + atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Fields["FieldMonsters"][i*size_x + j] - 1]->getValue("other","outputshiftY").c_str() ));
     CreatureDave* s_Dave = s_GameClass->s_GameInfo->s_MyDave;
     s_Dave->s_CoordX = 16*atoi( s_Params->getValue("daves", "dave1X").c_str() );
     s_Dave->s_CoordY = 16*atoi( s_Params->getValue("daves", "dave1Y").c_str() );

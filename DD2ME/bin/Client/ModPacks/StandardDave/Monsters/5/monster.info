@@ -18,5 +18,5 @@ speed2=14
 speed3=16
 speed4=8
 speed1=16
-freezeBeforeJump=2
+freezeBeforeJump=3
 type=standard

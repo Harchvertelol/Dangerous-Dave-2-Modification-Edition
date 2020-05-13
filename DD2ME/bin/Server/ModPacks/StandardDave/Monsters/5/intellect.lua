@@ -1,4 +1,5 @@
 function setFirstState()
+	setMonsterValue(-1, "timerDenyJump", "0")
 	return "rightrun"	
 end
 
@@ -15,7 +16,11 @@ function mainFunc()
 				setState(-1, "leftjump")
 			else
 				setState(-1, "rightjump")
+				goLeft(-1, 8, 0)
+				goRight(-1, 8, 1)
 			end
+			setMonsterValue(-1, "coordXJ", tostring(getCoordMonsterX(-1)))
+			setMonsterValue(-1, "coordYJ", tostring(getCoordMonsterY(-1)))
 			goUp(-1, 4, 1)
 			setMonsterValue(-1, "jumpNow", "4")
 		end
@@ -31,9 +36,11 @@ function mainFunc()
 				goRight(-1, shiftLR, 1)
 				stopjumpstate = "rightrun"
 			end
+			local jumax = 16 * 3 - 6
 			local jn = tonumber(getMonsterValue(-1, "jumpNow"))
 			if jn ~= 0 then
-				if jn < 16 * 3 - 6 then
+				if jn < jumax then
+					shiftU = shiftU + math.floor((jumax - jn) / 16)
 					jn = jn + shiftU
 					local tstgoup = goUp(-1, shiftU, 1)
 					if tstgoup ~= 0 then
@@ -51,11 +58,21 @@ function mainFunc()
 				if fuj > 0 then
 					setMonsterValue(-1, "freezeUpJump", tostring(fuj - 1))
 				else
-					local tstgodown = goDown(-1, shiftU, 1, 0)
+					local tstgodown = goDown(-1, shiftU, 1)
 					if tstgodown ~= 0 then
 						setState(-1, stopjumpstate)
-						goUp(-1, 8, 0)
-						setMonsterValue(-1, "counterDaveReaction", tostring(6))
+						goUp(-1, 8, 1)
+						if string.find(stopjumpstate, "right") ~= nil then
+							goRight(-1, 8, 1)
+						end
+						setMonsterValue(-1, "counterDaveReaction", tostring(5))
+						local xold = tonumber(getMonsterValue(-1, "coordXJ"))
+						local yold = tonumber(getMonsterValue(-1, "coordYJ"))
+						local xnow = getCoordMonsterX(-1)
+						local ynow = getCoordMonsterY(-1)
+						if (xold - xnow)^2 + (yold - ynow)^2 < (16 * 2)^2 then
+							setMonsterValue(-1, "timerDenyJump", "2")
+						end
 					end
 				end
 			end
@@ -75,12 +92,19 @@ function mainFunc()
 	if testLookDaveX(-1) ~= 0 and string.find(getState(-1), "run") ~= nil then
 		change = 1
 	end
+	local timerdenyjump = tonumber(getMonsterValue(-1, "timerDenyJump"))
+	if timerdenyjump > 0 then
+		timerdenyjump = timerdenyjump - 1
+		setMonsterValue(-1, "timerDenyJump", tostring(timerdenyjump))
+	end
 	local cdr = tonumber(getMonsterValue(-1, "counterDaveReaction"))
 	if cdr > 0 then
 		local oldstate = getState(-1)
-		if getDistanceToDaveXHead(-1) <= 0 and oldstate ~= "leftrun" or getDistanceToDaveXHead(-1) > 0 and oldstate ~= "rightrun" then
+		if getDistanceToDaveXHead(-1, 1) <= 0 and oldstate ~= "leftrun" or getDistanceToDaveXHead(-1, 1) > 0 and oldstate ~= "rightrun" then
 			change = 0
 			setMonsterValue(-1, "counterDaveReaction", tostring(cdr - 1))
+		else
+			setMonsterValue(-1, "counterDaveReaction", "0")
 		end
 	end
 	if change == 1 then
@@ -94,7 +118,7 @@ function mainFunc()
 		else
 			if testLookDaveX(-1) == -1 then
 				setState(-1, "leftrun")
-				if getDistanceToDaveXHead(-1) <= 7 * 16 then
+				if getDistanceToDaveXHead(-1) <= 6 * 16 then
 					setState(-1, "leftprejump")
 					local fbj = getMonsterOption(-1, "options", "freezeBeforeJump")
 					setMonsterValue(-1, "freezeBeforeJump", fbj)
@@ -114,9 +138,9 @@ function mainFunc()
 	end
 	if testgo ~= 0 then
 		if getState(-1) == "rightrun" then
-			if typecorrect == 2 then
+			if typecorrect == 2 and timerdenyjump == 0 then
 				setState(-1, "rightprejump")
-				goRight(-1, 16, 0)
+				goRight(-1, 16, 1)
 				local fbj = getMonsterOption(-1, "options", "freezeBeforeJump")
 				setMonsterValue(-1, "freezeBeforeJump", fbj)
 			else
@@ -124,9 +148,9 @@ function mainFunc()
 			end
 		else
 			if getState(-1) == "leftrun" then
-				if typecorrect == 2 then
+				if typecorrect == 2 and timerdenyjump == 0 then
 					setState(-1, "leftprejump")
-					goLeft(-1, 16, 0)
+					goLeft(-1, 16, 1)
 					local fbj = getMonsterOption(-1, "options", "freezeBeforeJump")
 					setMonsterValue(-1, "freezeBeforeJump", fbj)
 				else

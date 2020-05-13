@@ -115,7 +115,7 @@ function mainFunc()
 			goRight(-1, speedX, 1, 0)
 		end
 		if string.find(getState(-1), "downrun") ~= nil then
-			testgo = goDown(-1, speedY, 1, 1)
+			testgo = goDown(-1, speedY, 1)
 		else
 			testgo = goUp(-1, speedY, 1)
 		end

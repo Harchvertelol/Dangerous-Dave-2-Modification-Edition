@@ -167,7 +167,7 @@ bool Game::changeLevel(int number, bool switchstate)
     s_GameInfo->s_MyDave->s_ShootNow = 0;
     s_GameInfo->s_Stop = false;
     s_GameInfo->s_MyDave->s_Cartridges = s_GameInfo->s_MyDave->s_MaxCartridges;
-    if(switchstate == true) s_StateManager->switchState(2);
+    if(switchstate == true) s_StateManager->switchState(2, false);
     return true;
 }
 
