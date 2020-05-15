@@ -3,6 +3,8 @@
 #include "IniParser/ParserInfoFile.h"
 #include "IniParser/PostParsingStruct.h"
 
+#include "Defines.h"
+
 using namespace IniParser;
 
 MainServer::MainServer()
@@ -76,7 +78,7 @@ bool MainServer::load()
             //gm->s_Window = new Window("DD2 Remake: ME v0.2 pre-beta", gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, atoi( (gm->s_IniFile->getValue("video","scale") ).c_str() ));
             gm->s_Window = new Window(nostart);
             gm->s_Window->geometry(gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, atoi( (gm->s_IniFile->getValue("video","scale") ).c_str() ));
-            gm->s_Window->title("DD2 Remake: ME v0.5 pre-beta");
+            gm->s_Window->title(STRING_CONSTANTS::SC_TITLE_WINDOW);
             //...
             string modpack = s_ServerList->getValue(iter->first, "modpack");
             string texturepack = s_ServerList->getValue(iter->first, "texturepack");

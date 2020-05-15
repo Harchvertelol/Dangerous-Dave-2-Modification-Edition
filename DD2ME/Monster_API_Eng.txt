@@ -209,14 +209,16 @@ getMainValue (block, variable) - get the value from DD2.ini.
 	Example: getMainValue ("video", "drawstep") - got a variable called "drawstep" from the "video" block.
 
 testLookDaveX (id) - checks if a monster sees a deiva on the X axis (some part of the collision rectangle)
-	id - monster id, if -1, then the current monster
-	It returns 0 if it does not see, and 1 if it sees
-	Example: testlook = testLookDaveX (-1) - checked
+        id - monster id, if -1, then the current monster
+        Returns 0 if it does not see, -1 if it sees to the left, 1 if it is to the right.
+        Example: testlook = testLookDaveX (-1) - checked.
+		 testlook = math.abs (testLookDaveX (-1)) - checked without regard to the sign.
 
 testLookDaveY (id) - checks if the monster sees a deiva along the Y axis (some part of the collision rectangle)
-	id - monster id, if -1, then the current monster
-	It returns 0 if it does not see, and 1 if it sees
-	Example: testlook = testLookDaveY (-1) - checked
+        id - monster id, if -1, then the current monster
+        Returns 0 if it does not see, -1 if it sees above, 1 if it is lower.
+        Example: testlook = testLookDaveY (-1) - checked.
+		 testlook = math.abs (testLookDaveY (-1)) - checked without regard to the sign.
 
 getMonsterFrame (id) - get the current frame of the monster animation.
 	id - monster id, if -1, then the current monster

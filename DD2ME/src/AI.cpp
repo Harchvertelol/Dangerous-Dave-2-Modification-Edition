@@ -28,6 +28,7 @@ void AI::createOptions(CreatureMonster* monster, int number, bool getstate)
         cout << "Error! Lua state of monster not created!" << endl;
         return;
     }
+    s_LuaBindFunctions->prepareAIRun();
     lua_settop(monster->s_AILuaState, 0);
     monster->s_CurrentLives = atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[number - 1]->getValue("options","lives").c_str() );
     if(!preLuaRun(monster, false)) return;
