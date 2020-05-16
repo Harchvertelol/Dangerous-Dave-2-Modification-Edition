@@ -60,4 +60,4 @@ While packs are supported:
 6. Make a compatibility check of any packs with the mod.
 7. Make a port on android (this is in the distant plans).
 8. Add save points directly on the map.
-9. There will be no bugs of the old deiva, like shooting through a wall, going through a wall and so on.
+9. There will be no bugs of the old Dangerous Dave 2, like shooting through a wall, going through a wall and so on.
