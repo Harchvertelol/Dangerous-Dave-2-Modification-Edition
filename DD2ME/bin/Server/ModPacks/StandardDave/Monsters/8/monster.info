@@ -8,12 +8,9 @@ numberofframesinvis=1
 numberofframesdeathtiles=5
 outputshiftX=0
 outputshiftY=0
-animationstep=3
+animationstepghost=1
+animationstepinvisoff=14
 
 [options]
-lives=1
-speed1=8
-speed2=8
-speed3=5
-speed4=8
+lives=-2
 type=standard

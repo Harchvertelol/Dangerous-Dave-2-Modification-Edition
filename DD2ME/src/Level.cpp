@@ -112,7 +112,7 @@ int Level::getTileType(int x, int y)
     int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
     if(y >= SizeYLev || x >= SizeXLev)
     {
-        cout << "Error set tile ID! X or Y higher level." << endl;
+        cout << "Error get tile ID! X or Y higher level." << endl;
         return false;
     }
     return s_GameClass->s_Data->s_Textures->s_MaskTiles[frame][s_Fields["FieldTiles"][y*SizeXLev + x]];

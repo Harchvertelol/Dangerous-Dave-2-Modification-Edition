@@ -114,9 +114,6 @@ function mainFunc()
 		calculateStar()
 		return
 	end
-	--if getMonsterValue(-1, "settd") == "" then
-		--setMonsterValue(-1, "settd", "1")
-	--end
 	nextAdditionalNumberOfAction(-1)
 	if getAdditionalNumberOfAction(-1) % getMonsterOption(-1, "other", "animationstep") == 0 then
 		nextNumberOfAction(-1)
@@ -139,12 +136,24 @@ function mainFunc()
 	end
 	local testgo = 0
 	if getState(-1) == "rightrun" then
-		local speed = getMonsterOption(-1, "options", string.format("speed%dright", getMonsterFrame(-1) + 1))
-		testgo = goRight(-1, speed, 1, 1)
+		local speed = tonumber(getMonsterOption(-1, "options", string.format("speed%dright", getMonsterFrame(-1) + 1)))
+		local correctionspeed = tonumber(getMonsterOption(-1, "options", string.format("speed%drightcorrection", getMonsterFrame(-1) + 1)))
+		if correctionspeed > 0 then
+			goLeft(-1, correctionspeed, 0)
+		else
+			goRight(-1, -correctionspeed, 0)
+		end
+		testgo = goRight(-1, speed + correctionspeed, 1, 1)
 	else
 		if getState(-1) == "leftrun" then
-			local speed = getMonsterOption(-1, "options", string.format("speed%dleft", getMonsterFrame(-1) + 1))
-			testgo = goLeft(-1, speed, 1, 1)
+			local speed = tonumber(getMonsterOption(-1, "options", string.format("speed%dleft", getMonsterFrame(-1) + 1)))
+			local correctionspeed = tonumber(getMonsterOption(-1, "options", string.format("speed%dleftcorrection", getMonsterFrame(-1) + 1)))
+			if correctionspeed > 0 then
+				goRight(-1, correctionspeed, 0)
+			else
+				goLeft(-1, -correctionspeed, 0)
+			end
+			testgo = goLeft(-1, speed + correctionspeed, 1, 1)
 		end
 	end
 	if testgo ~= 0 then

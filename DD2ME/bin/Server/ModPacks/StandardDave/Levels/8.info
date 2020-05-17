@@ -13,3 +13,6 @@ type=single
 numberofdaves=1
 dave1X=2
 dave1Y=3
+
+[options]
+distancelivemonstersY=32
