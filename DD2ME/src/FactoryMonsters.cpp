@@ -66,10 +66,10 @@ void FactoryMonsters::live()
     bool testChangeLevel = false, testNoChangeLevel = false;
     map<int, CreatureMonster*>::iterator iter, iter2;
     for ( iter = s_Monsters.begin(); iter != s_Monsters.end(); iter++)
-        if(iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_ResolutionX + s_GameClass->s_GameInfo->s_ScreenCoordX + 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersX").c_str() ) &&
-            iter->second->s_CoordX >= s_GameClass->s_GameInfo->s_ScreenCoordX - 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersX").c_str() ) &&
-            iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_ResolutionY + s_GameClass->s_GameInfo->s_ScreenCoordY + 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersY").c_str() ) &&
-            iter->second->s_CoordY >= s_GameClass->s_GameInfo->s_ScreenCoordY - 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersY").c_str() ))
+        if(iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_ResolutionX + s_GameClass->s_GameInfo->s_ScreenCoordX + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
+            iter->second->s_CoordX >= s_GameClass->s_GameInfo->s_ScreenCoordX - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
+            iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_ResolutionY + s_GameClass->s_GameInfo->s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY &&
+            iter->second->s_CoordY >= s_GameClass->s_GameInfo->s_ScreenCoordY - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY)
                     if(iter->second->s_DeleteNow == false && iter->second->s_IsAlwaysLiveInStep == false)
                     {
                         iter->second->live();
@@ -79,10 +79,10 @@ void FactoryMonsters::live()
     for(iter1 = s_GameClass->s_GameInfo->s_Daves.begin(); iter1 != s_GameClass->s_GameInfo->s_Daves.end(); iter1++)
     {
         for ( iter = s_Monsters.begin(); iter != s_Monsters.end(); iter++)
-            if(iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_ResolutionX + iter1->second->s_ScreenCoordX + 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersX").c_str() ) &&
-                iter->second->s_CoordX >= iter1->second->s_ScreenCoordX - 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersX").c_str() ) &&
-                iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_ResolutionY + iter1->second->s_ScreenCoordY + 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersY").c_str() ) &&
-                iter->second->s_CoordY >= iter1->second->s_ScreenCoordY - 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersY").c_str() ))
+            if(iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_ResolutionX + iter1->second->s_ScreenCoordX + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
+                iter->second->s_CoordX >= iter1->second->s_ScreenCoordX - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
+                iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_ResolutionY + iter1->second->s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY &&
+                iter->second->s_CoordY >= iter1->second->s_ScreenCoordY - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY)
                         if(iter->second->s_DeleteNow == false && iter->second->s_IsAlwaysLiveInStep == false)
                         {
                             iter->second->live();
@@ -106,7 +106,7 @@ void FactoryMonsters::live()
     }
     addMonstersFromQueue();
     if(testNoChangeLevel == true) testChangeLevel = false;
-    if(testChangeLevel == true) s_GameClass->changeNextLevel();
+    if(testChangeLevel == true || s_GameClass->s_GameInfo->s_ForcedChangeLevel == true) s_GameClass->changeNextLevel();
 }
 
 void FactoryMonsters::clear()

@@ -17,7 +17,7 @@ function mainFunc()
 	local distanceFromFloor = tonumber(getMonsterOption(-1, "options", "distanceFromFloor"))
 	if getDistanceToDaveYHead(-1, 1) > distanceFromFloor then
 		local speedDown = getMonsterOption(-1, "options", "speedDown")
-		goDown(-1, speedDown, 1, 1)
+		goDown(-1, speedDown, 1)
 	else
 		local speedUp = getMonsterOption(-1, "options", "speedUp")
 		goUp(-1, speedUp, 1)

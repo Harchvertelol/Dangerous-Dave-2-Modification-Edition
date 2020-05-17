@@ -380,11 +380,15 @@ getCoordMonsterY (id) - get the coordinates of the monster in Y.
 
 getCoordDaveX () - getting Dave's X coordinate.
 	Returns Dave's X coordinate.
-	Example: getCoordDaveX () - received
+	Example: getCoordDaveX () - received.
 
 getCoordDaveY () - getting Dave's Y coordinate.
 	Returns Dave's Y coordinate.
-	Example: getCoordDaveY () - received
+	Example: getCoordDaveY () - received.
+
+getStateDave () - getting the state of Dave.
+        Returns the state of Dave.
+        Example: getStateDave () - received.
 
 getNumberOfLives (id) - get the number of lives from the monster.
 	id - monster id, if -1, then the current monster
@@ -425,3 +429,5 @@ addPackImagesToFactoryTemporaryImage (pack, number, state, coordX, coordY, timeL
 	numberofframes - number of frames for animation
 	type - image type, so far does not affect anything.
 	isAnimated - whether to animate the created image
+
+changeNextLevel () - change the level to the next.

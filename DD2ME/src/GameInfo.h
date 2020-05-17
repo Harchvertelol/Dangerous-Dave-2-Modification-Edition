@@ -35,6 +35,9 @@ class GameInfo
         int s_KeyJump;
         unsigned int s_OldAnSt;
         CreatureDave* s_MyDave;
+        int s_CurrentDistanceLiveMonstersX;
+        int s_CurrentDistanceLiveMonstersY;
+        bool s_ForcedChangeLevel;
         bool s_CheatGod;
         bool s_IsAIOn;
         void live();

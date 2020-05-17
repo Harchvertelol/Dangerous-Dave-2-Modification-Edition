@@ -153,6 +153,10 @@ bool Game::changeLevel(int number, bool switchstate)
     s_GameInfo->s_CurrentLevel = number;
     s_GameInfo->s_FactoryMonsters->clear();
     if(!s_Data->s_Level->loadLevel( s_Data->PathToLevelPack + WorkFunctions::ConvertFunctions::itos(number))) return false;
+    if(s_Data->s_Level->s_Params->isExists("options", "distancelivemonstersX")) s_GameInfo->s_CurrentDistanceLiveMonstersX = atoi(s_Data->s_Level->s_Params->getValue("options", "distancelivemonstersX").c_str());
+    else s_GameInfo->s_CurrentDistanceLiveMonstersX = atoi( s_IniFile->getValue("settings", "distancelivemonstersX").c_str() );
+    if(s_Data->s_Level->s_Params->isExists("options", "distancelivemonstersY")) s_GameInfo->s_CurrentDistanceLiveMonstersY = atoi(s_Data->s_Level->s_Params->getValue("options", "distancelivemonstersY").c_str());
+    else s_GameInfo->s_CurrentDistanceLiveMonstersY = atoi( s_IniFile->getValue("settings", "distancelivemonstersY").c_str() );
     //...
     map<int, CreatureDave*>::iterator iter;
     for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)
@@ -165,6 +169,7 @@ bool Game::changeLevel(int number, bool switchstate)
     s_GameInfo->s_MyDave->s_State = "rightstand";
     s_FactoryTmpImgs->clear();
     s_GameInfo->s_MyDave->s_ShootNow = 0;
+    s_GameInfo->s_ForcedChangeLevel = false;
     s_GameInfo->s_Stop = false;
     s_GameInfo->s_MyDave->s_Cartridges = s_GameInfo->s_MyDave->s_MaxCartridges;
     if(switchstate == true) s_StateManager->switchState(2, false);

@@ -24,6 +24,7 @@ class LuaBindFunctions
         int addPackImagesToFactoryTemporaryImage(lua_State* s_Lua);
         int addImageToFactoryTemporaryImage(lua_State* s_Lua);
         int getMainValue(lua_State* s_Lua);
+        int changeNextLevel(lua_State* s_Lua);
         //Lua Functions Monsters
         int setState(lua_State* s_Lua);
         int getState(lua_State* s_Lua);
@@ -66,6 +67,7 @@ class LuaBindFunctions
         int getCoordMonsterY(lua_State* s_Lua);
         int getCoordDaveX(lua_State* s_Lua);
         int getCoordDaveY(lua_State* s_Lua);
+        int getStateDave(lua_State* s_Lua);
         int getNumberOfLives(lua_State* s_Lua);
         int setNumberOfLives(lua_State* s_Lua);
         //...

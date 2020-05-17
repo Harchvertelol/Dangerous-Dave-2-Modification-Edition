@@ -10,3 +10,11 @@ timeflypoint=12
 transparentmaskR=204
 transparentmaskG=255
 transparentmaskB=204
+
+[points]
+100=1_p
+200=2_p
+400=3_p
+800=4_p
+1600=5_p
+up=6_p

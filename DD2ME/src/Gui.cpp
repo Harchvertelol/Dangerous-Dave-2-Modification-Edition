@@ -2,6 +2,8 @@
 
 #include "Game.h"
 
+#include "WorkFunctions.h"
+
 Gui::Gui(Game* gameclass):
     s_GameClass(gameclass)
 {
@@ -63,9 +65,30 @@ void Gui::drawFPS()
     }
 }
 
-void Gui::drawGuiState2()
+void Gui::drawGuiState2(int screennumber)
 {
-    //...
+    string screenname = "screen_" + WorkFunctions::ConvertFunctions::itos(screennumber + 1);
+    int levelnamecoordX = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "levelnamecoordX").c_str());
+    int levelnamecoordY = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "levelnamecoordY").c_str());
+    int levelnamesize = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "levelnamesize").c_str());
+    int scorecoordX = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "scorecoordX").c_str());
+    int scorecoordY = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "scorecoordY").c_str());
+    int scoresize = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "scoresize").c_str());
+    int highscorecoordX = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "highscorecoordX").c_str());
+    int highscorecoordY = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "highscorecoordY").c_str());
+    int highscoresize = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "highscoresize").c_str());
+    int livescoordX = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "livescoordX").c_str());
+    int livescoordY = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "livescoordY").c_str());
+    int livesmaxobject = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "livesmaxobject").c_str());
+    string livesnamedavestate = s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "livesnamedavestate");
+    int livesframedavestate = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "livesframedavestate").c_str());
+    s_GameClass->s_Window->draw(Label("Level " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel), levelnamecoordX, levelnamecoordY, levelnamesize), Pen(0, 0, 0));
+    s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints), scorecoordX, scorecoordY, scoresize), Pen(0, 0, 0));
+    s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(0), highscorecoordX, highscorecoordY, highscoresize), Pen(0, 0, 0));
+    for(int i = 0; i < s_GameClass->s_GameInfo->s_CurrentLives - 1 && i < livesmaxobject; i++)
+    {
+        s_GameClass->s_Data->s_Dave->drawDave(livesnamedavestate, livesframedavestate, livescoordX + i * 16, livescoordY);
+    }
 }
 
 void Gui::drawGuiState3()

@@ -14,7 +14,7 @@ FactoryTemporaryImages::~FactoryTemporaryImages()
     //...
 }
 
-void FactoryTemporaryImages::addImage(map<int, Bitmap*>* bmp, map<int, Bitmap*>* img, int coordX, int coordY, int timeLive,int changeX, int changeY,int numberofframes,string type,bool animated)
+void FactoryTemporaryImages::addImage(map<int, Bitmap*>* bmp, map<int, Bitmap*>* img, int coordX, int coordY, int timeLive, int changeX, int changeY, int numberofframes, string type, bool animated)
 {
     s_Info[s_MaxIndex].s_GameClass = s_GameClass;
     s_Info[s_MaxIndex].s_ManyFrames = true;
@@ -32,7 +32,7 @@ void FactoryTemporaryImages::addImage(map<int, Bitmap*>* bmp, map<int, Bitmap*>*
     s_MaxIndex++;
 }
 
-void FactoryTemporaryImages::addImage(Bitmap* bmp,Bitmap* img,int coordX,int coordY,int timeLive,int changeX,int changeY,string type)
+void FactoryTemporaryImages::addImage(Bitmap* bmp, Bitmap* img, int coordX, int coordY, int timeLive, int changeX, int changeY, string type)
 {
     s_Info[s_MaxIndex].s_GameClass = s_GameClass;
     s_Info[s_MaxIndex].s_ManyFrames = false;

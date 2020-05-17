@@ -11,7 +11,7 @@ class Gui
         Game* s_GameClass;
         void drawFPS();
         //...
-        void drawGuiState2();
+        void drawGuiState2(int);
         void drawGuiState3();
 };
 #endif

@@ -1423,6 +1423,11 @@ static int __getCoordDaveX(lua_State* s_Lua)
     return s_LBF->getCoordDaveX(s_Lua);
 }
 
+static int __getStateDave(lua_State* s_Lua)
+{
+    return s_LBF->getStateDave(s_Lua);
+}
+
 static int __getCoordDaveY(lua_State* s_Lua)
 {
     return s_LBF->getCoordDaveY(s_Lua);
@@ -1449,6 +1454,18 @@ int LuaBindFunctions::getCoordDaveY(lua_State* s_Lua)
         return 0;
     }
     lua_pushnumber(s_Lua, s_GameClass->s_GameInfo->s_MyDave->s_CoordY);
+    return 1;
+}
+
+int LuaBindFunctions::getStateDave(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n != 0)
+    {
+        cout<<"Error! Number of arguments of function \"getCoordDaveY\" is incorrect!"<<endl;
+        return 0;
+    }
+    lua_pushstring(s_Lua, s_GameClass->s_GameInfo->s_MyDave->s_State.c_str());
     return 1;
 }
 
@@ -1586,7 +1603,6 @@ void LuaBindFunctions::registerFunctionsMonster(lua_State* s_Lua)
     lua_register(s_Lua,"nextAdditionalNumberOfAction", &__nextAdditionalNumberOfAction);
     lua_register(s_Lua,"setNullAdditionalNumberOfAction", &__setNullAdditionalNumberOfAction);
     lua_register(s_Lua,"getMonsterOption", &__getMonsterOption);
-    lua_register(s_Lua,"getMainValue", &__getMainValue);
     lua_register(s_Lua,"testLookDaveX", &__testLookDaveX);
     lua_register(s_Lua,"testLookDaveY", &__testLookDaveY);
     lua_register(s_Lua,"getMonsterFrame", &__getMonsterFrame);
@@ -1613,6 +1629,7 @@ void LuaBindFunctions::registerFunctionsMonster(lua_State* s_Lua)
     lua_register(s_Lua,"getCoordMonsterY", &__getCoordMonsterY);
     lua_register(s_Lua,"getCoordDaveX", &__getCoordDaveX);
     lua_register(s_Lua,"getCoordDaveY", &__getCoordDaveY);
+    lua_register(s_Lua,"getStateDave", &__getStateDave);
     lua_register(s_Lua,"getNumberOfLives", &__getNumberOfLives);
     lua_register(s_Lua,"setNumberOfLives", &__setNumberOfLives);
 }
@@ -1686,8 +1703,27 @@ int LuaBindFunctions::addImageToFactoryTemporaryImage(lua_State* s_Lua)
     return 0;
 }
 
+static int __changeNextLevel(lua_State* s_Lua)
+{
+    return s_LBF->changeNextLevel(s_Lua);
+}
+
+int LuaBindFunctions::changeNextLevel(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n > 0)
+    {
+        cout<<"Error! Number of arguments of function \"changeNextLevel\" is incorrect!"<<endl;
+        return 0;
+    }
+    s_GameClass->s_GameInfo->s_ForcedChangeLevel = true;
+    return 0;
+}
+
 void LuaBindFunctions::registerFunctionsAll(lua_State* s_Lua)
 {
+    lua_register(s_Lua,"getMainValue", &__getMainValue);
     lua_register(s_Lua,"addPackImagesToFactoryTemporaryImage", &__addPackImagesToFactoryTemporaryImage);
     lua_register(s_Lua,"addImageToFactoryTemporaryImage", &__addImageToFactoryTemporaryImage);
+    lua_register(s_Lua,"changeNextLevel", &__changeNextLevel);
 }

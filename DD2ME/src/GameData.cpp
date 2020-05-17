@@ -167,7 +167,7 @@ bool GameData::drawScreenState2()
     int coordX = atoi( s_Screens->s_ChangeLevelInfo->getValue("screen_" + WorkFunctions::ConvertFunctions::itos(scr + 1), "x" + WorkFunctions::ConvertFunctions::itos(hlvl)).c_str() );
     int coordY = atoi( s_Screens->s_ChangeLevelInfo->getValue("screen_" + WorkFunctions::ConvertFunctions::itos(scr + 1), "y" + WorkFunctions::ConvertFunctions::itos(hlvl)).c_str() );
     s_Bonuses->drawBonus(drawingBonus, coordX, coordY, false);
-    s_GameClass->s_Gui->drawGuiState2();
+    s_GameClass->s_Gui->drawGuiState2(scr);
     return true;
 }
 

@@ -6,7 +6,7 @@ GameInfo::GameInfo(Game* gameclass):
     s_GameClass(gameclass),
     s_CurrentLevel(1),
     s_GameState(0),
-    s_CurrentLives(3),
+    s_CurrentLives(4),
     s_ScreenCoordX(0),
     s_ScreenCoordY(0),
     s_DopScreenCoordX(0),
@@ -21,6 +21,9 @@ GameInfo::GameInfo(Game* gameclass):
     s_KeyShoot(0),
     s_KeyJump(0),
     s_OldAnSt(0),
+    s_CurrentDistanceLiveMonstersX(0),
+    s_CurrentDistanceLiveMonstersY(0),
+    s_ForcedChangeLevel(false),
     s_CheatGod(false),
     s_IsAIOn(true)
 {
@@ -86,7 +89,7 @@ void GameInfo::playDeath()
             s_OldAnSt = s_GameClass->s_AnimationStep;
             if(s_CurrentLives == 0)
             {
-                s_CurrentLives = 3;
+                s_CurrentLives = 4;
                 if(s_CurrentLevel > 1) s_CurrentLevel--;
             }
             s_GameClass->changeLevel(s_CurrentLevel);
@@ -107,7 +110,7 @@ void GameInfo::playDeath()
             s_OldAnSt = s_GameClass->s_AnimationStep;
             if(s_CurrentLives == 0)
             {
-                s_CurrentLives = 3;
+                s_CurrentLives = 4;
                 if(s_CurrentLevel > 1) s_CurrentLevel--;
             }
             s_GameClass->changeLevel(s_CurrentLevel);

@@ -718,10 +718,10 @@ void CreatureDave::testShoot()
     double yc = double(coordfireY);
     int xcc = xc, ycc = yc;
     int stepcalculateshoot = atoi( s_GameClass->s_IniFile->getValue("settings", "stepcalculateshoot").c_str() );
-    for(double t = 0; xcc <= s_GameClass->s_DisplayStruct->s_ResolutionX + s_ScreenCoordX + 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersX").c_str() ) &&
-            xcc >= s_ScreenCoordX - 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersX").c_str() ) &&
-            ycc <= s_GameClass->s_DisplayStruct->s_ResolutionY + s_ScreenCoordY + 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersY").c_str() ) &&
-            ycc >= s_ScreenCoordY - 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersY").c_str() ); t += stepcalculateshoot)
+    for(double t = 0; xcc <= s_GameClass->s_DisplayStruct->s_ResolutionX + s_ScreenCoordX + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
+            xcc >= s_ScreenCoordX - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
+            ycc <= s_GameClass->s_DisplayStruct->s_ResolutionY + s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY &&
+            ycc >= s_ScreenCoordY - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY; t += stepcalculateshoot)
     {
         if(atoi( s_GameClass->s_IniFile->getValue("settings", "maxdistanceshoot").c_str() ) != -1 && t > atoi( s_GameClass->s_IniFile->getValue("settings", "maxdistanceshoot").c_str() )) break;
         double xc = double(coordfireX) + t*cos(anglefirerad);
@@ -754,10 +754,10 @@ void CreatureDave::testShoot()
         }
         map<int, CreatureMonster*>::iterator iter;
         for ( iter = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters.begin(); iter != s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters.end(); iter++)
-            if(iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_ResolutionX + s_ScreenCoordX + 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersX").c_str() ) &&
-                iter->second->s_CoordX >= s_ScreenCoordX - 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersX").c_str() ) &&
-                iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_ResolutionY + s_ScreenCoordY + 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersY").c_str() ) &&
-                iter->second->s_CoordY >= s_ScreenCoordY - 16*atoi(s_GameClass->s_IniFile->getValue("settings","distancelivemonstersY").c_str() ))
+            if(iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_ResolutionX + s_ScreenCoordX + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
+                iter->second->s_CoordX >= s_ScreenCoordX - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
+                iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_ResolutionY + s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY &&
+                iter->second->s_CoordY >= s_ScreenCoordY - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY)
                         if(iter->second->s_DeleteNow == false && iter->second->s_CurrentLives != -2)
                         {
                             statedave = "traceshoot";
