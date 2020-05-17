@@ -40,7 +40,7 @@ While packs are supported:
  - Bonuspak
  - Screenpack
 6. Flexible settings.
-7. The new level format, that is, the original levels from the deiva will NOT work. But, thanks to Crazy Daver, he wrote the converter.
+7. The new level format, that is, the original levels from the Dangerous Dave 2 will NOT work. But, thanks to Crazy Daver, he wrote the converter.
 8. All the features of the original Dangerous Dave 2 are supported, except some monsters (their intelligence has not yet been written, but if you wish and if you can’t wait, you can do it yourself by creating your own modpack or modifying the standard modpack).
 9. The modpack has the ability to load its .ini settings file. Not particularly tested. Possible terrible bugs with a difference in values variables in the video section.
 10. Added console. Press '~', switch to the MS-DOS emulator window, enter commands.
@@ -60,4 +60,4 @@ While packs are supported:
 6. Make a compatibility check of any packs with the mod.
 7. Make a port on android (this is in the distant plans).
 8. Add save points directly on the map.
-9. There will be no bugs of the old deiva, like shooting through a wall, going through a wall and so on.
+9. There will be no bugs of the old Dangerous Dave 2, like shooting through a wall, going through a wall and so on.
