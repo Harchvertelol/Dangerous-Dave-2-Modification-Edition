@@ -112,8 +112,9 @@ int Level::getTileType(int x, int y)
     int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
     if(y >= SizeYLev || x >= SizeXLev)
     {
-        cout << "Error get tile ID! X or Y higher level." << endl;
-        return false;
+        cout << "Error get tile type! X or Y higher level." << endl;
+        cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x << ", Y = " << y << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
+        return IMPASSABLE;
     }
     return s_GameClass->s_Data->s_Textures->s_MaskTiles[frame][s_Fields["FieldTiles"][y*SizeXLev + x]];
 }
@@ -124,8 +125,9 @@ int Level::getTileID(int x, int y)
     int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
     if(y >= SizeYLev || x >= SizeXLev)
     {
-        cout << "Error set tile ID! X or Y higher level." << endl;
-        return false;
+        cout << "Error get tile ID! X or Y higher level." << endl;
+        cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x << ", Y = " << y << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
+        return -1;
     }
     return s_Fields["FieldTiles"][y*SizeXLev + x];
 }
@@ -137,6 +139,7 @@ bool Level::setTileID(int x, int y, int tileid)
     if(y >= SizeYLev || x >= SizeXLev)
     {
         cout << "Error set tile ID! X or Y higher level." << endl;
+        cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x << ", Y = " << y << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
         return false;
     }
     s_Fields["FieldTiles"][y*SizeXLev + x] = tileid;

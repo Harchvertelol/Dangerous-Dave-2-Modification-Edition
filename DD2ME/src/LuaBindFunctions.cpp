@@ -87,8 +87,8 @@ int LuaBindFunctions::goLeft(lua_State* s_Lua)
     CreatureMonster* mnst;
     if(keyMonster == -1) mnst = s_CurrentMonster;
     else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
-    int v = lua_tonumber(s_Lua, 2);
-    if(v == 0)
+    int shift = lua_tonumber(s_Lua, 2);
+    if(shift == 0)
     {
         lua_pushnumber(s_Lua, 0);
         return 1;
@@ -99,66 +99,73 @@ int LuaBindFunctions::goLeft(lua_State* s_Lua)
     bool onCeil = false;
     if(n >= 5) onCeil = (bool)lua_tonumber(s_Lua, 5);
     bool isCorrect = false;
-    mnst->s_CoordX -= v;
+    int frame = mnst->getFrame();
+    const int widthm = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
+    int shf = 0;
     int typeCorrect = 0;
-    if(correct == true)
+    for(int curshift = 0; curshift < shift && !isCorrect; curshift += widthm)
     {
-        isCorrect = mnst->correctionPhys(mnst->s_CoordX + v, 0);
-        typeCorrect = 1;
-    }
-    if(correctStand == true)
-    {
-        int frame = mnst->getFrame();
-        int SizeXMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL, 16, -1);
-        int SizeYMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL, 16, -1);
-        int SizeXMonster = SizeXMonsterPix/16 + 1;
-        int SizeYMonster = SizeYMonsterPix/16 + 1;
-        int** TileCoordX = new int* [SizeXMonster];
-        int** TileCoordY = new int* [SizeXMonster];
-        for(int i = 0; i < SizeXMonster; i++) TileCoordX[i] = new int[SizeYMonster];
-        for(int i = 0; i < SizeXMonster; i++) TileCoordY[i] = new int[SizeYMonster];
-        for(int i = 0; i < SizeXMonster; i++)
-            for(int j = 0; j < SizeYMonster; j++)
-            {
-                TileCoordX[i][j] = WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX,16,-1) + i*16;
-                TileCoordY[i][j] = WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordY,16,-1) + j*16;
-            }
-        int OldCoordXLeftTile = WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX + v,16,-1);
-        int NumberLabel;
-        int MoveCalc = 0;
-        string where_col_stand = "up";
-        if(onCeil == false) NumberLabel = SizeYMonster - 1;
-        else
+        shf = shift - curshift;
+        if(shf > widthm) shf = widthm;
+        mnst->s_CoordX -= shf;
+        if(correct == true)
         {
-            where_col_stand = "down";
-            MoveCalc = -1;
-            NumberLabel = 0;
+            isCorrect = mnst->correctionPhys(mnst->s_CoordX + shf, 0);
+            typeCorrect = 1;
         }
-        for(int i = 0; (i < SizeXMonster) && (TileCoordX[i][NumberLabel] <= OldCoordXLeftTile); i++)
-            if(WorkFunctions::GameFunctions::testCollision(mnst->s_CoordX, mnst->s_CoordY, TileCoordX[i][NumberLabel], TileCoordY[SizeXMonster - 1][NumberLabel] + MoveCalc*16, s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number - 1][mnst->s_State][mnst->getFrame()], Square(0,0,15,15), true, where_col_stand))
-            {
-                if(s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == EMPTY
-                   || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == DEATH
-                   || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == EXITLEVEL)
-                {
-                    mnst->s_CoordX += v;
-                    isCorrect = true;
-                    typeCorrect = 2;
-                }
-                else if(onCeil == true && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == LADDER)
-                {
-                    mnst->s_CoordX += v;
-                    isCorrect = true;
-                    typeCorrect = 2;
-                }
-            }
-        for(int i = 0; i < SizeXMonster; i++)
+        if(correctStand == true)
         {
-            delete[] TileCoordX[i];
-            delete[] TileCoordY[i];
+            int SizeXMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL, 16, -1);
+            int SizeYMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL, 16, -1);
+            int SizeXMonster = SizeXMonsterPix/16 + 1;
+            int SizeYMonster = SizeYMonsterPix/16 + 1;
+            int** TileCoordX = new int* [SizeXMonster];
+            int** TileCoordY = new int* [SizeXMonster];
+            for(int i = 0; i < SizeXMonster; i++) TileCoordX[i] = new int[SizeYMonster];
+            for(int i = 0; i < SizeXMonster; i++) TileCoordY[i] = new int[SizeYMonster];
+            for(int i = 0; i < SizeXMonster; i++)
+                for(int j = 0; j < SizeYMonster; j++)
+                {
+                    TileCoordX[i][j] = WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX,16,-1) + i*16;
+                    TileCoordY[i][j] = WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordY,16,-1) + j*16;
+                }
+            int OldCoordXLeftTile = WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX + shf,16,-1);
+            int NumberLabel;
+            int MoveCalc = 0;
+            string where_col_stand = "up";
+            if(onCeil == false) NumberLabel = SizeYMonster - 1;
+            else
+            {
+                where_col_stand = "down";
+                MoveCalc = -1;
+                NumberLabel = 0;
+            }
+            for(int i = 0; (i < SizeXMonster) && (TileCoordX[i][NumberLabel] <= OldCoordXLeftTile); i++)
+                if(WorkFunctions::GameFunctions::testCollision(mnst->s_CoordX, mnst->s_CoordY, TileCoordX[i][NumberLabel], TileCoordY[SizeXMonster - 1][NumberLabel] + MoveCalc*16, s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number - 1][mnst->s_State][mnst->getFrame()], Square(0,0,15,15), true, where_col_stand))
+                {
+                    if(s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == EMPTY
+                       || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == DEATH
+                       || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == EXITLEVEL)
+                    {
+                        mnst->s_CoordX += shf;
+                        isCorrect = true;
+                        typeCorrect = 2;
+                    }
+                    else if(onCeil == true && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == LADDER)
+                    {
+                        mnst->s_CoordX += shf;
+                        isCorrect = true;
+                        typeCorrect = 2;
+                    }
+                }
+            for(int i = 0; i < SizeXMonster; i++)
+            {
+                delete[] TileCoordX[i];
+                delete[] TileCoordY[i];
+            }
+            delete TileCoordX;
+            delete TileCoordY;
         }
-        delete TileCoordX;
-        delete TileCoordY;
     }
     lua_pushnumber(s_Lua, isCorrect);
     lua_pushnumber(s_Lua, typeCorrect);
@@ -182,8 +189,8 @@ int LuaBindFunctions::goRight(lua_State* s_Lua)
     CreatureMonster* mnst;
     if(keyMonster == -1) mnst = s_CurrentMonster;
     else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
-    int v = lua_tonumber(s_Lua, 2);
-    if(v == 0)
+    int shift = lua_tonumber(s_Lua, 2);
+    if(shift == 0)
     {
         lua_pushnumber(s_Lua, 0);
         return 1;
@@ -194,66 +201,73 @@ int LuaBindFunctions::goRight(lua_State* s_Lua)
     bool onCeil = false;
     if(n >= 5) onCeil = (bool)lua_tonumber(s_Lua, 5);
     bool isCorrect = false;
-    mnst->s_CoordX += v;
+    int frame = mnst->getFrame();
+    const int widthm = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
+    int shf = 0;
     int typeCorrect = 0;
-    if(correct == true)
+    for(int curshift = 0; curshift < shift && !isCorrect; curshift += widthm)
     {
-        isCorrect = mnst->correctionPhys(mnst->s_CoordX - v, 0);
-        typeCorrect = 1;
-    }
-    if(correctStand == true)
-    {
-        int frame = mnst->getFrame();
-        int SizeXMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL, 16, -1);
-        int SizeYMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL, 16, -1);
-        int SizeXMonster = SizeXMonsterPix/16 + 1;
-        int SizeYMonster = SizeYMonsterPix/16 + 1;
-        int** TileCoordX = new int* [SizeXMonster];
-        int** TileCoordY = new int* [SizeXMonster];
-        for(int i = 0; i < SizeXMonster; i++) TileCoordX[i] = new int[SizeYMonster];
-        for(int i = 0; i < SizeXMonster; i++) TileCoordY[i] = new int[SizeYMonster];
-        for(int i = 0; i < SizeXMonster; i++)
-            for(int j = 0; j < SizeYMonster; j++)
-            {
-                TileCoordX[i][j] = WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX,16,-1) + i*16;
-                TileCoordY[i][j] = WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordY,16,-1) + j*16;
-            }
-        int OldCoordXRightTile = WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX - v,16,-1) + (SizeXMonster - 1)*16;
-        int NumberLabel;
-        int MoveCalc = 0;
-        string where_col_stand = "up";
-        if(onCeil == false) NumberLabel = SizeYMonster - 1;
-        else
+        shf = shift - curshift;
+        if(shf > widthm) shf = widthm;
+        mnst->s_CoordX += shf;
+        if(correct == true)
         {
-            where_col_stand = "down";
-            MoveCalc = -1;
-            NumberLabel = 0;
+            isCorrect = mnst->correctionPhys(mnst->s_CoordX - shf, 0);
+            typeCorrect = 1;
         }
-        for(int i = SizeXMonster - 1; i >= 0&& TileCoordX[i][NumberLabel] >= OldCoordXRightTile; i--)
-            if(WorkFunctions::GameFunctions::testCollision(mnst->s_CoordX, mnst->s_CoordY, TileCoordX[i][NumberLabel], TileCoordY[SizeXMonster - 1][NumberLabel] + MoveCalc*16, s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number - 1][mnst->s_State][mnst->getFrame()], Square(0,0,15,15), true, where_col_stand))
-            {
-                if(s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == EMPTY
-                   || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == DEATH
-                   || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == EXITLEVEL)
-                {
-                    mnst->s_CoordX -= v;
-                    isCorrect = true;
-                    typeCorrect = 2;
-                }
-                else if(onCeil == true && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == LADDER)
-                {
-                    mnst->s_CoordX -= v;
-                    isCorrect = true;
-                    typeCorrect = 2;
-                }
-            }
-        for(int i = 0; i < SizeXMonster; i++)
+        if(correctStand == true)
         {
-            delete[] TileCoordX[i];
-            delete[] TileCoordY[i];
+            int SizeXMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL, 16, -1);
+            int SizeYMonsterPix = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL, 16, -1);
+            int SizeXMonster = SizeXMonsterPix/16 + 1;
+            int SizeYMonster = SizeYMonsterPix/16 + 1;
+            int** TileCoordX = new int* [SizeXMonster];
+            int** TileCoordY = new int* [SizeXMonster];
+            for(int i = 0; i < SizeXMonster; i++) TileCoordX[i] = new int[SizeYMonster];
+            for(int i = 0; i < SizeXMonster; i++) TileCoordY[i] = new int[SizeYMonster];
+            for(int i = 0; i < SizeXMonster; i++)
+                for(int j = 0; j < SizeYMonster; j++)
+                {
+                    TileCoordX[i][j] = WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX,16,-1) + i*16;
+                    TileCoordY[i][j] = WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordY,16,-1) + j*16;
+                }
+            int OldCoordXRightTile = WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordX - shf,16,-1) + (SizeXMonster - 1)*16;
+            int NumberLabel;
+            int MoveCalc = 0;
+            string where_col_stand = "up";
+            if(onCeil == false) NumberLabel = SizeYMonster - 1;
+            else
+            {
+                where_col_stand = "down";
+                MoveCalc = -1;
+                NumberLabel = 0;
+            }
+            for(int i = SizeXMonster - 1; i >= 0&& TileCoordX[i][NumberLabel] >= OldCoordXRightTile; i--)
+                if(WorkFunctions::GameFunctions::testCollision(mnst->s_CoordX, mnst->s_CoordY, TileCoordX[i][NumberLabel], TileCoordY[SizeXMonster - 1][NumberLabel] + MoveCalc*16, s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number - 1][mnst->s_State][mnst->getFrame()], Square(0,0,15,15), true, where_col_stand))
+                {
+                    if(s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == EMPTY
+                       || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == DEATH
+                       || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == EXITLEVEL)
+                    {
+                        mnst->s_CoordX -= shf;
+                        isCorrect = true;
+                        typeCorrect = 2;
+                    }
+                    else if(onCeil == true && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == LADDER)
+                    {
+                        mnst->s_CoordX -= shf;
+                        isCorrect = true;
+                        typeCorrect = 2;
+                    }
+                }
+            for(int i = 0; i < SizeXMonster; i++)
+            {
+                delete[] TileCoordX[i];
+                delete[] TileCoordY[i];
+            }
+            delete TileCoordX;
+            delete TileCoordY;
         }
-        delete TileCoordX;
-        delete TileCoordY;
     }
     lua_pushnumber(s_Lua, isCorrect);
     lua_pushnumber(s_Lua, typeCorrect);
@@ -277,8 +291,8 @@ int LuaBindFunctions::goUp(lua_State* s_Lua)
     CreatureMonster* mnst;
     if(keyMonster == -1) mnst = s_CurrentMonster;
     else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
-    int v = lua_tonumber(s_Lua, 2);
-    if(v == 0)
+    int shift = lua_tonumber(s_Lua, 2);
+    if(shift == 0)
     {
         lua_pushnumber(s_Lua, 0);
         return 1;
@@ -288,12 +302,20 @@ int LuaBindFunctions::goUp(lua_State* s_Lua)
     if(n == 4) correctStand = (bool)lua_tonumber(s_Lua, 4);
     else correctStand = false;*/
     bool isCorrect = false;
-    mnst->s_CoordY -= v;
+    int frame = mnst->getFrame();
+    const int heightm = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
+    int shf = 0;
     int typeCorrect = 0;
-    if(correct == true)
+    for(int curshift = 0; curshift < shift && !isCorrect; curshift += heightm)
     {
-        isCorrect = mnst->correctionPhys(mnst->s_CoordY + v, 1);
-        typeCorrect = 1;
+        shf = shift - curshift;
+        if(shf > heightm) shf = heightm;
+        mnst->s_CoordY -= shf;
+        if(correct == true)
+        {
+            isCorrect = mnst->correctionPhys(mnst->s_CoordY + shf, 1);
+            typeCorrect = 1;
+        }
     }
     /*if(correctStand == true)
     {
@@ -350,8 +372,8 @@ int LuaBindFunctions::goDown(lua_State* s_Lua)
     CreatureMonster* mnst;
     if(keyMonster == -1) mnst = s_CurrentMonster;
     else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
-    int v = lua_tonumber(s_Lua, 2);
-    if(v == 0)
+    int shift = lua_tonumber(s_Lua, 2);
+    if(shift == 0)
     {
         lua_pushnumber(s_Lua, 0);
         return 1;
@@ -364,12 +386,20 @@ int LuaBindFunctions::goDown(lua_State* s_Lua)
     if(n >= 4) ladder = (bool)lua_tonumber(s_Lua, 4);
     else ladder = false;
     bool isCorrect = false;
-    mnst->s_CoordY += v;
+    int frame = mnst->getFrame();
+    const int heightm = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
+    int shf = 0;
     int typeCorrect = 0;
-    if(correct == true)
+    for(int curshift = 0; curshift < shift && !isCorrect; curshift += heightm)
     {
-        isCorrect = mnst->correctionPhys(mnst->s_CoordY - v, 1, ladder);
-        typeCorrect = 1;
+        shf = shift - curshift;
+        if(shf > heightm) shf = heightm;
+        mnst->s_CoordY += shf;
+        if(correct == true)
+        {
+            isCorrect = mnst->correctionPhys(mnst->s_CoordY - shf, 1, ladder);
+            typeCorrect = 1;
+        }
     }
     /*if(correctStand == true)
     {

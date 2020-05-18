@@ -173,6 +173,14 @@ bool GameData::drawScreenState2()
 
 bool GameData::drawScreenState3()
 {
+    if(s_GameClass->s_GameInfo->s_Stop == true && s_GameClass->s_GameInfo->s_DeathType == 0)
+    {
+        s_Screens->drawScreen("endscreen", s_GameClass->s_DisplayStruct->s_ResolutionX/2 - s_Screens->s_StandardScreens["endscreen"]->width() / 2, s_GameClass->s_DisplayStruct->s_ResolutionY/2 - s_Screens->s_StandardScreens["endscreen"]->height() / 2, 0);
+        s_GameClass->s_Window->draw(Label("Thank you for playing in DD2:ME", s_GameClass->s_DisplayStruct->s_ResolutionX/2 - 110, s_GameClass->s_DisplayStruct->s_ResolutionY/2 - 30, 20), Pen(0, 255, 0));
+        s_GameClass->s_Window->draw(Label("" + STRING_CONSTANTS::SC_GAME_VERSION + "!", s_GameClass->s_DisplayStruct->s_ResolutionX/2 - 40, s_GameClass->s_DisplayStruct->s_ResolutionY/2, 20), Pen(0, 255, 0));
+        s_GameClass->s_Window->draw(Label("You win!", s_GameClass->s_DisplayStruct->s_ResolutionX/2 - 20, s_GameClass->s_DisplayStruct->s_ResolutionY/2 + 30, 20), Pen(0, 255, 0));
+        s_GameClass->s_Window->draw(Label("", s_GameClass->s_DisplayStruct->s_ResolutionX/2 - 20, s_GameClass->s_DisplayStruct->s_ResolutionY/2 + 30), Pen(0, 0, 0));
+    }
     s_GameClass->s_Gui->drawGuiState3();
     return true;
 }

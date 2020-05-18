@@ -28,8 +28,12 @@ int main(int argc, char** argv)
     NetClient* nc = new NetClient(gm);
     gm->s_NetClient = nc;
     string name = "Player", pass = "", host = "127.0.0.1";
+    string levelpack = "";
     int port = 11237;
-
+    if(argc == 2)
+    {
+        levelpack = argv[1];
+    }
     if(argc > 2)
     {
         name = argv[1];
@@ -66,6 +70,11 @@ int main(int argc, char** argv)
     {
         ParserInfoFile* prsfl = new ParserInfoFile;
         gm->s_IniFile = prsfl->getParsedFromFile("DD2.ini");
+        if(levelpack != "")
+        {
+            gm->s_IniFile->setValue("resources", "pooling", "true");
+            gm->s_IniFile->setValue("resources", "levelpack", levelpack);
+        }
         nc->s_NetInfo = prsfl->getParsedFromFile("Launcher.ini");
         if(!gm->s_IniFile || !nc->s_NetInfo)
         {

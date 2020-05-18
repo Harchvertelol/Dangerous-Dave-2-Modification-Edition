@@ -154,8 +154,10 @@ bool Game::changeLevel(int number, bool switchstate)
     s_GameInfo->s_FactoryMonsters->clear();
     if(!s_Data->s_Level->loadLevel( s_Data->PathToLevelPack + WorkFunctions::ConvertFunctions::itos(number))) return false;
     if(s_Data->s_Level->s_Params->isExists("options", "distancelivemonstersX")) s_GameInfo->s_CurrentDistanceLiveMonstersX = atoi(s_Data->s_Level->s_Params->getValue("options", "distancelivemonstersX").c_str());
+    else if(s_Data->s_LevelsInfo->isExists("options", "distancelivemonstersX")) s_GameInfo->s_CurrentDistanceLiveMonstersX = atoi(s_Data->s_LevelsInfo->getValue("options", "distancelivemonstersX").c_str());
     else s_GameInfo->s_CurrentDistanceLiveMonstersX = atoi( s_IniFile->getValue("settings", "distancelivemonstersX").c_str() );
     if(s_Data->s_Level->s_Params->isExists("options", "distancelivemonstersY")) s_GameInfo->s_CurrentDistanceLiveMonstersY = atoi(s_Data->s_Level->s_Params->getValue("options", "distancelivemonstersY").c_str());
+    else if(s_Data->s_LevelsInfo->isExists("options", "distancelivemonstersY")) s_GameInfo->s_CurrentDistanceLiveMonstersY = atoi(s_Data->s_LevelsInfo->getValue("options", "distancelivemonstersY").c_str());
     else s_GameInfo->s_CurrentDistanceLiveMonstersY = atoi( s_IniFile->getValue("settings", "distancelivemonstersY").c_str() );
     //...
     map<int, CreatureDave*>::iterator iter;
@@ -326,13 +328,6 @@ void Game::drawAll()
         s_GameInfo->s_MyDave->draw();
         s_Data->drawScreenState3();
         if(s_GameInfo->s_Stop == true && s_GameInfo->s_DeathType != 0) s_GameInfo->playDeath();
-    }
-    if(s_GameInfo->s_Stop == true && s_GameInfo->s_DeathType == 0)
-    {
-        s_Window->draw(Label("Thank you for playing in DD2:ME", s_DisplayStruct->s_ResolutionX/2 - 110, s_DisplayStruct->s_ResolutionY/2 - 30, 20), Pen(255, 0, 0));
-        s_Window->draw(Label("" + STRING_CONSTANTS::SC_GAME_VERSION + "!", s_DisplayStruct->s_ResolutionX/2 - 40, s_DisplayStruct->s_ResolutionY/2, 20), Pen(255, 0, 0));
-        s_Window->draw(Label("You win!", s_DisplayStruct->s_ResolutionX/2 - 20, s_DisplayStruct->s_ResolutionY/2 + 30, 20), Pen(255, 0, 0));
-        s_Window->draw(Label("", s_DisplayStruct->s_ResolutionX/2 - 20, s_DisplayStruct->s_ResolutionY/2 + 30), Pen(0, 0, 0));
     }
     s_Window->paint();
 }
