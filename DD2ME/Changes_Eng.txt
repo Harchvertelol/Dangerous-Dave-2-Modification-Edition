@@ -14,6 +14,7 @@ Changes in version 0.6 pre-beta: (May 18, 2020)
   6) Added information to the level loading screen.
   7) Added screen to end the game.
   8) Added an additional package of levels for passing. Run using a .bat file.
+  9) Fixed bug of the first boss.
 
 - Bugs fixed:
   
