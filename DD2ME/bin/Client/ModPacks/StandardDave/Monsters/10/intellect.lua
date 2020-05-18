@@ -5,6 +5,7 @@ function setFirstState()
 	setMonsterValue(-1, "rhand", "0")
 	setMonsterValue(-1, "freeze", "0")
 	setGlobalValue(-1, getNV(), "")
+	setGlobalValue(-1, "firsthandscreate", "0")
 	return "rightrun"
 end
 
@@ -119,13 +120,27 @@ function createHands()
 	local lh = tonumber(getMonsterValue(-1, "lhand"))
 	if rh + lh < 2 then
 		setMonsterValue(-1, "freeze", "32")
-		if rh == 0 then
-			setMonsterValue(-1, "rhand", "1")
-			addDuplicateMonster(-1, getCoordMonsterX(-1) + 0, getCoordMonsterY(-1) + 55, "hand", 0, 0, 2, string.format("tp=rhand;freeze=32;idBoss=%s;nv=%s;", tostring(getMonsterID()), getNV()))
+		local fhc = tonumber(getGlobalValue(-1, "firsthandscreate"))
+		local createrighthand = 1
+		local createlefthand = 1
+		if fhc > 0 then
+			if rh + lh == 0 then
+				if math.random(1, 2) == 1 then
+					createlefthand = 0
+				else
+					createrighthand = 0
+				end
+			end
+		else
+			setGlobalValue(-1, "firsthandscreate", "1")
 		end
-		if lh == 0 then
+		if rh == 0 and createrighthand == 1 then
+			setMonsterValue(-1, "rhand", "1")
+			addDuplicateMonster(-1, getCoordMonsterX(-1) - 5, getCoordMonsterY(-1) + 55, "hand", 0, 0, 2, string.format("tp=rhand;freeze=32;idBoss=%s;nv=%s;", tostring(getMonsterID()), getNV()))
+		end
+		if lh == 0 and createlefthand == 1 then
 			setMonsterValue(-1, "lhand", "1")
-			addDuplicateMonster(-1, getCoordMonsterX(-1) + 47, getCoordMonsterY(-1) + 55, "hand", 0, 0, 2, string.format("tp=lhand;freeze=32;idBoss=%s;nv=%s;", tostring(getMonsterID()), getNV()))
+			addDuplicateMonster(-1, getCoordMonsterX(-1) + 52, getCoordMonsterY(-1) + 55, "hand", 0, 0, 2, string.format("tp=lhand;freeze=32;idBoss=%s;nv=%s;", tostring(getMonsterID()), getNV()))
 		end
 	end
 end
