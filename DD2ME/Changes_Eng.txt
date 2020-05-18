@@ -1,4 +1,51 @@
--------------------------------------------------- -----------------------------------
+-------------------------------------------------------------------------------------
+Changes in version 0.6 pre-beta: (May 18, 2020)
+
+- This is the pre-beta version of the game Dangerous Dave 2: Modification Edition.
+  While there is an active search for bugs and their correction.
+  
+- Changes:
+  
+  1) Added API function getStateDave ().
+  2) Added two types of ghosts (beta algorithm).
+  3) Added the last boss and friend of Dave.
+  4) Introduced for the passage of all 8 original levels.
+  5) Two new possible level parameters have been introduced.
+  6) Added information to the level loading screen.
+  7) Added screen to end the game.
+  8) Added an additional package of levels for passing. Run using a .bat file.
+
+- Bugs fixed:
+  
+  1) Fixed a serious segmentation error (and program crash).
+  2) Fixed color shift bug after displaying the last message in the game.
+  3) Fixed physics in the function of moving monsters in the API.
+    
+- Detected bugs:
+
+  1) Go close to the wall to the left. Lower the gun down. Turn right. Click jump. Take off on the wall.
+  2) Will not fall from hard tiles from recoil when shooting to the left. If you shoot up or down - it does not fall from hard tiles (it was found that in the original
+     Dave also decided not to fix it yet).
+  3) When caching is off, the transparency mask does not work. The reason is known until corrected.
+  4) The screen follows the player too clearly. Not so in the original.
+  5) There is no illumination of a monster when hit.
+  6) Dave's quick switch to reload (planned to be fixed when transferring Dave's mechanics to lua).
+  7) Dave does not go down the stairs as quickly as in the original (it is planned to fix it when translating Dave's mechanics into a lua).
+  8) No animation in flight. Incorrect animation of the jump (must be fingered). Must hang longer at the top (planned to be fixed when transferring Dave's mechanics to lua).
+  9) Running animation when abutting against the wall should stop (it is planned to fix it when transferring Dave's mechanics to lua).
+  10) Fix the API. Functions goUp / goDown (add walking on the wall) and testTileDown (and the rest of them, to figure out how they should work).
+  11) The animation counter is not reset when the state of the monster changes. Thought: add a global parameter for each monster, giving you the opportunity to either manually manage it yourself, or let the program automatically reset.
+  12) Bonuses in the original blink randomly, but not harmoniously with each other.
+  13) Sometimes the animation of entering the door may go astray.
+  14) Points do not fly out of the monster. No points for a monster.
+
+- Minuses:
+
+  1) Bugs, bugs, bugs (already less than before, but still).
+  2) ALL settings are in the .ini file.
+  3) The initial screen saver is not the same as in the original Dave.
+
+-------------------------------------------------------------------------------------
 Changes in version 0.5 pre-beta: (May 14, 2020)
 
 - This is the pre-beta version of the game Dangerous Dave 2: Modification Edition.

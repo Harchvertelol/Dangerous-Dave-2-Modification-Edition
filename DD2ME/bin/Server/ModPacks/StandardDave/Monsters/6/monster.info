@@ -13,12 +13,20 @@ animationstepstar=3
 
 [options]
 lives=16
-speed4right=33
 speed1right=2
+speed1rightcorrection=8
 speed2right=32
+speed2rightcorrection=-8
 speed3right=0
-speed4left=8
+speed3rightcorrection=8
+speed4right=33
+speed4rightcorrection=-8
 speed1left=24
+speed1leftcorrection=-10
 speed2left=8
+speed2leftcorrection=10
 speed3left=26
+speed3leftcorrection=-10
+speed4left=8
+speed4leftcorrection=10
 type=boss
