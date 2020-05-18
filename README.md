@@ -2,17 +2,25 @@
 This is an open-source remake of a well-known platform game Dangerous Dave 2 with flexible and highly customizable core and many new features.
 This project has a repository on the sourceforge (I created it in 2013 year), but it is currently not supported there. Link: https://sourceforge.net/projects/dd2moded/
 
+**Now you can play (in addition to standard levels) in additional levels! For it start game alternatively with "start_levelpack_HarchPack.bat" file.**
+
 **Attention**: this development is a software shell that loads external modules (modpacks). The program code does not contain anything copyrighted by the original dangerous dave.
 
 # Screenshots
+Standard Game:
+
 <img src="Screenshots/1.png" width=33% alt="screenshot"> <img src="Screenshots/2.png" width=33% alt="screenshot"> <img src="Screenshots/3.png" width=32% alt="screenshot"><br>
+
+Additional levelpacks without troubles:
+
+<img src="Screenshots/5.png" width=33% alt="screenshot"> <img src="Screenshots/6.png" width=33% alt="screenshot"> <img src="Screenshots/7.png" width=32% alt="screenshot"><br>
 
 And a little preparing network mode:
 
 <img src="Screenshots/4.jpg" width=32% alt="screenshot">
 
 # Download
-Last version (v0.5 pre-beta): <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/tag/v0.5pre-beta-win" target="_blank">open</a>, <a href=https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/download/v0.5pre-beta-win/DD2MEv0.5pb.win.rar>direct link</a><br>
+Last version (v0.6 pre-beta): <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/tag/v0.6pre-beta-win" target="_blank">open</a>, <a href=https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/download/v0.6pre-beta-win/DD2MEv0.6pb.win.rar>direct link</a><br>
 All versions: <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases" target="_blank">open</a>
 
 # Control
