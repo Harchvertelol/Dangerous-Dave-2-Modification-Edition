@@ -18,6 +18,7 @@ class CreatureMonster
         int s_CurrentLives;
         unsigned int s_ID;
         bool s_DeleteNow;
+        bool s_Activated;
         std::string s_State;
         int s_Number;
         unsigned int s_NumberOfAction;

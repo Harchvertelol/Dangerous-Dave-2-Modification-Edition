@@ -57,7 +57,7 @@ bool MainServer::load()
 
             ParserInfoFile prsfl;
             gm->s_IniFile = prsfl.getParsedFromFile("DD2.ini");
-            nc->s_NetInfo = prsfl.getParsedFromFile("Launcher.ini");
+            nc->s_NetInfo = prsfl.getParsedFromFile("General.ini");
             if(!gm->s_IniFile || !nc->s_NetInfo)
             {
                 return false;

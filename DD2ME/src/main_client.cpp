@@ -75,7 +75,7 @@ int main(int argc, char** argv)
             gm->s_IniFile->setValue("resources", "pooling", "true");
             gm->s_IniFile->setValue("resources", "levelpack", levelpack);
         }
-        nc->s_NetInfo = prsfl->getParsedFromFile("Launcher.ini");
+        nc->s_NetInfo = prsfl->getParsedFromFile("General.ini");
         if(!gm->s_IniFile || !nc->s_NetInfo)
         {
             system("pause");

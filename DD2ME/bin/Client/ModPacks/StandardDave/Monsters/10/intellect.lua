@@ -3,9 +3,9 @@ function setFirstState()
 	setMonsterValue(-1, "timeaction", "64")
 	setMonsterValue(-1, "lhand", "0")
 	setMonsterValue(-1, "rhand", "0")
-	setMonsterValue(-1, "freeze", "0")
+	setMonsterValue(-1, "freeze", "32")
 	setGlobalValue(-1, getNV(), "")
-	setGlobalValue(-1, "firsthandscreate", "0")
+	setMonsterValue(-1, "firsthandscreate", "0")
 	return "rightrun"
 end
 
@@ -120,7 +120,7 @@ function createHands()
 	local lh = tonumber(getMonsterValue(-1, "lhand"))
 	if rh + lh < 2 then
 		setMonsterValue(-1, "freeze", "32")
-		local fhc = tonumber(getGlobalValue(-1, "firsthandscreate"))
+		local fhc = tonumber(getMonsterValue(-1, "firsthandscreate"))
 		local createrighthand = 1
 		local createlefthand = 1
 		if fhc > 0 then
@@ -132,7 +132,7 @@ function createHands()
 				end
 			end
 		else
-			setGlobalValue(-1, "firsthandscreate", "1")
+			setMonsterValue(-1, "firsthandscreate", "1")
 		end
 		if rh == 0 and createrighthand == 1 then
 			setMonsterValue(-1, "rhand", "1")

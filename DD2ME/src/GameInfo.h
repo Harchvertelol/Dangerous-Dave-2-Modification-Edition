@@ -37,6 +37,8 @@ class GameInfo
         CreatureDave* s_MyDave;
         int s_CurrentDistanceLiveMonstersX;
         int s_CurrentDistanceLiveMonstersY;
+        int s_CurrentDistanceActivateMonstersX;
+        int s_CurrentDistanceActivateMonstersY;
         bool s_ForcedChangeLevel;
         bool s_CheatGod;
         bool s_IsAIOn;

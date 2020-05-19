@@ -1136,6 +1136,7 @@ int LuaBindFunctions::addDuplicateMonster(lua_State* s_Lua)
     if(n >= 7) lives = lua_tonumber(s_Lua, 7);
     if(n >= 8) parameters = lua_tostring(s_Lua, 8);
     CreatureMonster* newMonster = s_GameClass->s_GameInfo->s_FactoryMonsters->addMonster(mnst->s_Number, coordX, coordY, false);
+    newMonster->s_Activated = true;
     newMonster->s_State = state;
     newMonster->s_NumberOfAction = numberofaction;
     newMonster->s_AdditionalNumberOfAction = additionalnumberofaction;

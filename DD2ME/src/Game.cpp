@@ -153,12 +153,21 @@ bool Game::changeLevel(int number, bool switchstate)
     s_GameInfo->s_CurrentLevel = number;
     s_GameInfo->s_FactoryMonsters->clear();
     if(!s_Data->s_Level->loadLevel( s_Data->PathToLevelPack + WorkFunctions::ConvertFunctions::itos(number))) return false;
+
     if(s_Data->s_Level->s_Params->isExists("options", "distancelivemonstersX")) s_GameInfo->s_CurrentDistanceLiveMonstersX = atoi(s_Data->s_Level->s_Params->getValue("options", "distancelivemonstersX").c_str());
     else if(s_Data->s_LevelsInfo->isExists("options", "distancelivemonstersX")) s_GameInfo->s_CurrentDistanceLiveMonstersX = atoi(s_Data->s_LevelsInfo->getValue("options", "distancelivemonstersX").c_str());
     else s_GameInfo->s_CurrentDistanceLiveMonstersX = atoi( s_IniFile->getValue("settings", "distancelivemonstersX").c_str() );
     if(s_Data->s_Level->s_Params->isExists("options", "distancelivemonstersY")) s_GameInfo->s_CurrentDistanceLiveMonstersY = atoi(s_Data->s_Level->s_Params->getValue("options", "distancelivemonstersY").c_str());
     else if(s_Data->s_LevelsInfo->isExists("options", "distancelivemonstersY")) s_GameInfo->s_CurrentDistanceLiveMonstersY = atoi(s_Data->s_LevelsInfo->getValue("options", "distancelivemonstersY").c_str());
     else s_GameInfo->s_CurrentDistanceLiveMonstersY = atoi( s_IniFile->getValue("settings", "distancelivemonstersY").c_str() );
+
+    if(s_Data->s_Level->s_Params->isExists("options", "distanceactivatemonstersX")) s_GameInfo->s_CurrentDistanceActivateMonstersX = atoi(s_Data->s_Level->s_Params->getValue("options", "distanceactivatemonstersX").c_str());
+    else if(s_Data->s_LevelsInfo->isExists("options", "distanceactivatemonstersX")) s_GameInfo->s_CurrentDistanceActivateMonstersX = atoi(s_Data->s_LevelsInfo->getValue("options", "distanceactivatemonstersX").c_str());
+    else s_GameInfo->s_CurrentDistanceActivateMonstersX = atoi( s_IniFile->getValue("settings", "distanceactivatemonstersX").c_str() );
+    if(s_Data->s_Level->s_Params->isExists("options", "distanceactivatemonstersY")) s_GameInfo->s_CurrentDistanceActivateMonstersY = atoi(s_Data->s_Level->s_Params->getValue("options", "distanceactivatemonstersY").c_str());
+    else if(s_Data->s_LevelsInfo->isExists("options", "distanceactivatemonstersY")) s_GameInfo->s_CurrentDistanceActivateMonstersY = atoi(s_Data->s_LevelsInfo->getValue("options", "distanceactivatemonstersY").c_str());
+    else s_GameInfo->s_CurrentDistanceActivateMonstersY = atoi( s_IniFile->getValue("settings", "distanceactivatemonstersY").c_str() );
+
     //...
     map<int, CreatureDave*>::iterator iter;
     for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)

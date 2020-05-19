@@ -19,6 +19,7 @@ CreatureMonster::CreatureMonster(Game* gameclass, int number, int id, bool getst
     s_CurrentLives(0),
     s_ID(id),
     s_DeleteNow(false),
+    s_Activated(false),
     s_State(""),
     s_Number(number),
     s_NumberOfAction(0),

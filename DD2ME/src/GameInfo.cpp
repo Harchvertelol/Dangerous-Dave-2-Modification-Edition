@@ -23,6 +23,8 @@ GameInfo::GameInfo(Game* gameclass):
     s_OldAnSt(0),
     s_CurrentDistanceLiveMonstersX(0),
     s_CurrentDistanceLiveMonstersY(0),
+    s_CurrentDistanceActivateMonstersX(0),
+    s_CurrentDistanceActivateMonstersY(0),
     s_ForcedChangeLevel(false),
     s_CheatGod(false),
     s_IsAIOn(true)

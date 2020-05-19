@@ -72,8 +72,16 @@ void FactoryMonsters::live()
             iter->second->s_CoordY >= s_GameClass->s_GameInfo->s_ScreenCoordY - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY)
                     if(iter->second->s_DeleteNow == false && iter->second->s_IsAlwaysLiveInStep == false)
                     {
-                        iter->second->live();
-                        iter->second->s_IsAlwaysLiveInStep = true;
+                        if(iter->second->s_Activated == false && iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_ResolutionX + s_GameClass->s_GameInfo->s_ScreenCoordX + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersX &&
+                            iter->second->s_CoordX >= s_GameClass->s_GameInfo->s_ScreenCoordX - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersX &&
+                            iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_ResolutionY + s_GameClass->s_GameInfo->s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersY &&
+                            iter->second->s_CoordY >= s_GameClass->s_GameInfo->s_ScreenCoordY - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersY)
+                                iter->second->s_Activated = true;
+                        if(iter->second->s_Activated == true)
+                        {
+                            iter->second->live();
+                            iter->second->s_IsAlwaysLiveInStep = true;
+                        }
                     }
     map<int, CreatureDave*>::iterator iter1;
     for(iter1 = s_GameClass->s_GameInfo->s_Daves.begin(); iter1 != s_GameClass->s_GameInfo->s_Daves.end(); iter1++)
@@ -85,8 +93,16 @@ void FactoryMonsters::live()
                 iter->second->s_CoordY >= iter1->second->s_ScreenCoordY - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY)
                         if(iter->second->s_DeleteNow == false && iter->second->s_IsAlwaysLiveInStep == false)
                         {
-                            iter->second->live();
-                            iter->second->s_IsAlwaysLiveInStep = true;
+                            if(iter->second->s_Activated == false && iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_ResolutionX + iter1->second->s_ScreenCoordX + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersX &&
+                                iter->second->s_CoordX >= iter1->second->s_ScreenCoordX - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersX &&
+                                iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_ResolutionY + iter1->second->s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersY &&
+                                iter->second->s_CoordY >= iter1->second->s_ScreenCoordY - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersY)
+                                    iter->second->s_Activated = true;
+                            if(iter->second->s_Activated == true)
+                            {
+                                iter->second->live();
+                                iter->second->s_IsAlwaysLiveInStep = true;
+                            }
                         }
     }
     for(iter = s_Monsters.begin(), iter2 = s_Monsters.end(); iter != iter2;)
