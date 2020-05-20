@@ -15,5 +15,7 @@ dave1X=4
 dave1Y=2
 
 [options]
-distancelivemonstersX=64
-distancelivemonstersY=64
+distancelivemonstersX=24
+distancelivemonstersY=42
+distanceactivatemonstersX=24
+distanceactivatemonstersY=42

@@ -1,5 +1,5 @@
 function setFirstState()
-	return "rightrun"
+	return "leftrun"
 end
 
 function mainFunc()
