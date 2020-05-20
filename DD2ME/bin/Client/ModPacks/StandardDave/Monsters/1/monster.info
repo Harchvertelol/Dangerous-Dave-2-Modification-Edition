@@ -7,7 +7,7 @@ numberofframesrightstrike=3
 
 [other]
 numberofframesdeathtiles=5
-outputshiftX=0
+outputshiftX=-8
 outputshiftY=-8
 animationstep=6
 

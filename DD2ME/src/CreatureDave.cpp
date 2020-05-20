@@ -585,7 +585,7 @@ void CreatureDave::testGetBonuses()
         {
             numberofframes = atoi ( s_GameClass->s_Data->s_Bonuses->s_BonusesInfo[bonus-1]->getValue("info", "numberofframes").c_str() );
             frame_bonus = s_GameClass->s_AnimationStep%numberofframes + 1;
-            if(testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus][frame_bonus] ) )
+            if(testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus] ) )
             {
                 CrPoints = s_CurrentPoints;
                 s_GameClass->s_Data->s_Level->s_Fields["FieldBonuses"][ TileCoordY[i]*SizeXLev/16 + TileCoordX[i]/16 ] = 0;
@@ -593,8 +593,8 @@ void CreatureDave::testGetBonuses()
                 s_GameClass->s_GameInfo->s_CurrentLives += atoi( s_GameClass->s_Data->s_Bonuses->s_BonusesInfo[bonus-1]->getValue("info", "up").c_str() );
                 s_GameClass->s_FactoryTmpImgs->addImage(s_GameClass->s_Data->s_Bonuses->s_BonusesBitmaps[bonus-1][numberofframes+1],
                                                         s_GameClass->s_Data->s_Bonuses->s_BonusesCache[bonus-1][numberofframes+1],
-                                                        TileCoordX[i] + s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus][frame_bonus].s_XL,
-                                                        TileCoordY[i] + s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus][frame_bonus].s_YL,
+                                                        TileCoordX[i] + s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus].s_XL,
+                                                        TileCoordY[i] + s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus].s_YL,
                                                         atoi(s_GameClass->s_IniFile->getValue("effects","timelivepointseffect").c_str() ),
                                                         atoi(s_GameClass->s_IniFile->getValue("effects","changeXpointseffect").c_str() ),
                                                         atoi(s_GameClass->s_IniFile->getValue("effects","changeYpointseffect").c_str() ),

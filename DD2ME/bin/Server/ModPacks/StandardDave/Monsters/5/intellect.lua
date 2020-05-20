@@ -144,7 +144,13 @@ function mainFunc()
 				local fbj = getMonsterOption(-1, "options", "freezeBeforeJump")
 				setMonsterValue(-1, "freezeBeforeJump", fbj)
 			else
-				setState(-1, "leftrun")
+				if testLookDaveX(-1) == 1 and typecorrect == 1 and timerdenyjump == 0 then
+					setState(-1, "rightprejump")
+					local fbj = getMonsterOption(-1, "options", "freezeBeforeJump")
+					setMonsterValue(-1, "freezeBeforeJump", fbj)
+				else
+					setState(-1, "leftrun")
+				end
 			end
 		else
 			if getState(-1) == "leftrun" then
@@ -154,7 +160,13 @@ function mainFunc()
 					local fbj = getMonsterOption(-1, "options", "freezeBeforeJump")
 					setMonsterValue(-1, "freezeBeforeJump", fbj)
 				else
-					setState(-1, "rightrun")
+					if testLookDaveX(-1) == -1 and typecorrect == 1 and timerdenyjump == 0 then
+						setState(-1, "leftprejump")
+						local fbj = getMonsterOption(-1, "options", "freezeBeforeJump")
+						setMonsterValue(-1, "freezeBeforeJump", fbj)
+					else
+						setState(-1, "rightrun")
+					end
 				end
 			end
 		end
