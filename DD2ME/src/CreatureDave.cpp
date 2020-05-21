@@ -195,6 +195,8 @@ void CreatureDave::live(bool doKey)
                     }
                 }
             }
+            if(s_State.find("left") != string::npos) s_CoordX -= 8;
+            else s_CoordX -= 4;
         }
     }
     else if(s_State == "doorexit")
