@@ -52,6 +52,7 @@ class Game
         bool loadPack();
         void startGame(int);
         void play();
+        void correctionAllScreens();
         void drawAll();
         bool changeLevel(int, bool switchstate = true);
         bool changeNextLevel(bool switchstate = true);

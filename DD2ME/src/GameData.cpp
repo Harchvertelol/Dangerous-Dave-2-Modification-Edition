@@ -60,7 +60,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     PathToSoundPack = "PacksData/SoundPacks/" + s_IniFile->getValue("resources", "soundpack") + "/";
     PathToLevelPack = "PacksData/LevelPacks/" + s_IniFile->getValue("resources", "levelpack") + "/";
     PathToDavePack = "PacksData/DavePacks/" + s_IniFile->getValue("resources", "davepack") + "/";
-    if( s_IniFile->getValue("resources", "standard") == "true" ) s_IniFile->getMapVariables()["resources"]["modpack"] = "standardDave";
+    if( s_IniFile->getValue("resources", "standard") == "true" ) s_IniFile->getMapVariables()["resources"]["modpack"] = "StandardDave";
     if( s_IniFile->getValue("resources", "modpack") != "")
     {
         s_NameMod = s_IniFile->getValue("resources", "modpack");

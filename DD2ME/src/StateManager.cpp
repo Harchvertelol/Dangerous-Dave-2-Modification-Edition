@@ -192,6 +192,10 @@ void StateManager::startState(int state)
     {
         if(!s_GameClass->changeLevel(s_GameClass->s_GameInfo->s_CurrentLevel, false)) return;
     }
+    if(state == 3)
+    {
+        s_GameClass->correctionAllScreens();
+    }
 }
 
 void StateManager::doState(int state)

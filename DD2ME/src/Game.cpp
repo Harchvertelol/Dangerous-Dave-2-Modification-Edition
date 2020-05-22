@@ -303,21 +303,26 @@ void Game::onTimer(unsigned int timer_id)
     }
 }
 
+void Game::correctionAllScreens()
+{
+    if(s_NetClient->s_NetInfo->getValue("program", "mode") == "client")
+    {
+        s_GameInfo->correctionScreen(s_GameInfo->s_MyDave);
+        s_GameInfo->s_ScreenCoordX = s_GameInfo->s_MyDave->s_ScreenCoordX;
+        s_GameInfo->s_ScreenCoordY = s_GameInfo->s_MyDave->s_ScreenCoordY;
+    }
+    map<int, CreatureDave*>::iterator iter;
+    for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)
+    {
+        s_GameInfo->correctionScreen(iter->second);
+    }
+}
+
 void Game::drawAll()
 {
     if(s_GameInfo->s_GameState == 3)
     {
-        if(s_NetClient->s_NetInfo->getValue("program", "mode") == "client")
-        {
-            s_GameInfo->correctionScreen(s_GameInfo->s_MyDave);
-            s_GameInfo->s_ScreenCoordX = s_GameInfo->s_MyDave->s_ScreenCoordX;
-            s_GameInfo->s_ScreenCoordY = s_GameInfo->s_MyDave->s_ScreenCoordY;
-        }
-        map<int, CreatureDave*>::iterator iter;
-        for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)
-        {
-            s_GameInfo->correctionScreen(iter->second);
-        }
+        correctionAllScreens();
     }
     if(s_NetClient->s_NetInfo->getValue("video", "graphicmodegame") == "false") return;
     s_Window->clear();

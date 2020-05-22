@@ -3,7 +3,7 @@ function setFirstState()
 	setMonsterValue(-1, "timeaction", "64")
 	setMonsterValue(-1, "lhand", "0")
 	setMonsterValue(-1, "rhand", "0")
-	setMonsterValue(-1, "freeze", "32")
+	setMonsterValue(-1, "freeze", "0")
 	setGlobalValue(-1, getNV(), "")
 	setMonsterValue(-1, "firsthandscreate", "0")
 	return "rightrun"
