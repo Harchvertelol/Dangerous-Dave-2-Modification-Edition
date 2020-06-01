@@ -27,7 +27,8 @@ GameInfo::GameInfo(Game* gameclass):
     s_CurrentDistanceActivateMonstersY(0),
     s_ForcedChangeLevel(false),
     s_CheatGod(false),
-    s_IsAIOn(true)
+    s_IsAIOn(true),
+    s_IsGhostOn(false)
 {
     s_MyDave = new CreatureDave(gameclass);
     s_FactoryMonsters = new FactoryMonsters(gameclass);

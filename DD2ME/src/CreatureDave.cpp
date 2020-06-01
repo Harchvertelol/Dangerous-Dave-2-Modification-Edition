@@ -59,7 +59,23 @@ CreatureDave::~CreatureDave()
 
 void CreatureDave::live(bool doKey)
 {
-    if(doKey) calculateDoKey();
+    string oldstate = s_State;
+    if(doKey)
+    {
+        if(!s_GameClass->s_GameInfo->s_IsGhostOn) calculateDoKey();
+        else
+        {
+            int shift = 4;
+            if(s_KeysState->s_KeyJump) shift *= 4;
+            if(s_KeysState->s_KeyShoot) shift /= 2;
+            if(s_KeysState->s_KeyJump && s_KeysState->s_KeyShoot) shift *= 2*2;
+            if(s_KeysState->s_KeyUp) s_CoordY -= shift;
+            if(s_KeysState->s_KeyDown) s_CoordY += shift;
+            if(s_KeysState->s_KeyRight) s_CoordX += shift;
+            if(s_KeysState->s_KeyLeft) s_CoordX -= shift;
+            return;
+        }
+    }
     if(s_State.find("jump") != string::npos && s_ShootNow) s_ShootNow = 0;
     string direction, typeexit, statedave;
     int dir = 0, timeshoot = atoi( s_GameClass->s_IniFile->getValue("settings", "timeshoot").c_str() );
@@ -318,6 +334,14 @@ void CreatureDave::live(bool doKey)
     if(testChangeLevel()) s_GameClass->changeNextLevel();
     int DeathType = testDeath();
     s_GameClass->s_GameInfo->deathDave(DeathType);
+    if(oldstate != s_State)
+    {
+        int oldXColSq = s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[oldstate][getFrame()].s_XL;
+        int newXColSq = s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[s_State][getFrame()].s_XL;
+        int diffX = oldXColSq - newXColSq;
+        //s_CoordX += diffX;
+        correctionPhys(s_CoordX + diffX, 0);
+    }
 }
 
 void CreatureDave::testSmallPassage(int y)
@@ -628,6 +652,15 @@ bool CreatureDave::correctionPhys(int coord, int what)
 {
     bool yes = false;
     if(s_GameClass->s_IniFile->getValue("settings", "correctionphysics") == "false") return false;
+    if(what == 0 || what == 1)
+    {
+        if(coord == s_CoordX || coord == s_CoordY) return false;
+    }
+    else
+    {
+        cout << "Error Dave physics correction: \"what\" not 0 or 1!" << endl;
+        return false;
+    }
     int TileCoordX[6];
     int TileCoordY[6];
     TileCoordX[0] = roundNumber(s_CoordX, 16, -1);

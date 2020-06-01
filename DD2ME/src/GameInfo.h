@@ -42,6 +42,7 @@ class GameInfo
         bool s_ForcedChangeLevel;
         bool s_CheatGod;
         bool s_IsAIOn;
+        bool s_IsGhostOn;
         void live();
         void deathDave(int);
         void playDeath();
