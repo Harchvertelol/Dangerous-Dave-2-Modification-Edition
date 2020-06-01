@@ -192,7 +192,7 @@
 	<string>
 	"PostParsingStruct.h"
 
-1590087244 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturedave.cpp
+1590976103 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturedave.cpp
 	"CreatureDave.h"
 	"Game.h"
 	"WorkFunctions.h"
@@ -241,7 +241,7 @@
 	"WorkFunctions.h"
 	"Defines.h"
 
-1589920506 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gameinfo.cpp
+1590972423 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gameinfo.cpp
 	"GameInfo.h"
 	"Game.h"
 
@@ -813,7 +813,7 @@
 1363272861 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\square.cpp
 	"Square.h"
 
-1590186499 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\statemanager.cpp
+1590972451 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\statemanager.cpp
 	"StateManager.h"
 	"Game.h"
 

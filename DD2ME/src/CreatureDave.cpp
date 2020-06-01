@@ -330,10 +330,6 @@ void CreatureDave::live(bool doKey)
             s_Acceleration = 0;
         }
     }
-    testGetBonuses();
-    if(testChangeLevel()) s_GameClass->changeNextLevel();
-    int DeathType = testDeath();
-    s_GameClass->s_GameInfo->deathDave(DeathType);
     if(oldstate != s_State && s_State.find("door") == string::npos)
     {
         int oldXColSq = s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[oldstate][getFrame()].s_XL;
@@ -347,6 +343,10 @@ void CreatureDave::live(bool doKey)
         s_CoordY += 8;
         correctionPhys(s_CoordY - 8, 1);
     }
+    testGetBonuses();
+    if(testChangeLevel()) s_GameClass->changeNextLevel();
+    int DeathType = testDeath();
+    s_GameClass->s_GameInfo->deathDave(DeathType);
 }
 
 void CreatureDave::testSmallPassage(int y)
