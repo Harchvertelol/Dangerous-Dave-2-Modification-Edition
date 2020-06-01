@@ -334,13 +334,18 @@ void CreatureDave::live(bool doKey)
     if(testChangeLevel()) s_GameClass->changeNextLevel();
     int DeathType = testDeath();
     s_GameClass->s_GameInfo->deathDave(DeathType);
-    if(oldstate != s_State)
+    if(oldstate != s_State && s_State.find("door") == string::npos)
     {
         int oldXColSq = s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[oldstate][getFrame()].s_XL;
         int newXColSq = s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[s_State][getFrame()].s_XL;
         int diffX = oldXColSq - newXColSq;
         //s_CoordX += diffX;
         correctionPhys(s_CoordX + diffX, 0);
+    }
+    if( testSetStates("rightdownshoot leftdownshoot") && (s_KeysState->s_KeyJump) )
+    {
+        s_CoordY += 8;
+        correctionPhys(s_CoordY - 8, 1);
     }
 }
 
@@ -894,11 +899,6 @@ void CreatureDave::calculateDoKey()
             else where = "left";
             s_State = where + "jumpup";
         }
-    }
-    if( testSetStates("rightdownshoot leftdownshoot") && (s_KeysState->s_KeyJump) )
-    {
-        s_CoordY += 8;
-        correctionPhys(s_CoordY - 8, 1);
     }
     if( !(s_KeysState->s_KeyJump) )
     {
