@@ -90,7 +90,7 @@ void GameInfo::playDeath()
             s_DopFrame = -1;
             s_DeathType = 0;
             s_OldAnSt = s_GameClass->s_AnimationStep;
-            if(s_CurrentLives == 0)
+            if(s_CurrentLives <= 0)
             {
                 s_CurrentLives = 4;
                 if(s_CurrentLevel > 1) s_CurrentLevel--;
@@ -111,7 +111,7 @@ void GameInfo::playDeath()
             s_DopFrame = -1;
             s_DeathType = 0;
             s_OldAnSt = s_GameClass->s_AnimationStep;
-            if(s_CurrentLives == 0)
+            if(s_CurrentLives <= 0)
             {
                 s_CurrentLives = 4;
                 if(s_CurrentLevel > 1) s_CurrentLevel--;
