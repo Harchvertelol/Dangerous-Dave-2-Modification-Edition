@@ -1,0 +1,7 @@
+[info]
+numberofmonsters=11
+
+[draw]
+transparentmaskR=204
+transparentmaskG=255
+transparentmaskB=204

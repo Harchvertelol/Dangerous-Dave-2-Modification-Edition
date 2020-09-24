@@ -1,0 +1,84 @@
+Renderer.1 {
+    textcolor = rgb(190, 190, 190);
+    textcolorhover = rgb(250, 250, 250);
+    texturechecked = "themes/Black.png" Part(124, 32, 32, 32);
+    texturecheckeddisabled = None;
+    texturecheckedfocused = "themes/Black.png" Part(252, 32, 32, 32);
+    texturecheckedhover = "themes/Black.png" Part(188, 32, 32, 32);
+    textureunchecked = "themes/Black.png" Part(92, 32, 32, 32);
+    textureuncheckeddisabled = None;
+    textureuncheckedfocused = "themes/Black.png" Part(220, 32, 32, 32);
+    textureuncheckedhover = "themes/Black.png" Part(156, 32, 32, 32);
+}
+
+Group.Group1 {
+    Position = (30, 20);
+    Size = (150, 150);
+
+    Renderer {
+    }
+
+    RadioButton.RadioButton2 {
+        Position = (10, 60);
+        Size = (18, 18);
+        Text = test2;
+        TextSize = 13;
+
+        Renderer {
+            textcolor = rgb(190, 190, 190);
+            textcolorhover = rgb(250, 250, 250);
+            texturechecked = "themes/Black.png" Part(124, 32, 32, 32);
+            texturecheckeddisabled = None;
+            texturecheckedfocused = "themes/Black.png" Part(252, 32, 32, 32);
+            texturecheckedhover = "themes/Black.png" Part(188, 32, 32, 32);
+            textureunchecked = "themes/Black.png" Part(92, 32, 32, 32);
+            textureuncheckeddisabled = None;
+            textureuncheckedfocused = "themes/Black.png" Part(220, 32, 32, 32);
+            textureuncheckedhover = "themes/Black.png" Part(156, 32, 32, 32);
+        }
+    }
+
+    RadioButton.RadioButton1 {
+        Position = (10, 20);
+        Size = (18, 18);
+        Text = test1;
+        TextSize = 13;
+
+        Renderer {
+            textcolor = rgb(190, 190, 190);
+            textcolorhover = rgb(250, 250, 250);
+            texturechecked = "themes/Black.png" Part(124, 32, 32, 32);
+            texturecheckeddisabled = None;
+            texturecheckedfocused = "themes/Black.png" Part(252, 32, 32, 32);
+            texturecheckedhover = "themes/Black.png" Part(188, 32, 32, 32);
+            textureunchecked = "themes/Black.png" Part(92, 32, 32, 32);
+            textureuncheckeddisabled = None;
+            textureuncheckedfocused = "themes/Black.png" Part(220, 32, 32, 32);
+            textureuncheckedhover = "themes/Black.png" Part(156, 32, 32, 32);
+        }
+    }
+}
+
+Group.Group2 {
+    Position = (320, 20);
+    Size = (150, 150);
+
+    Renderer {
+    }
+
+    RadioButton.RadioButton3 {
+        Position = (0, 20);
+        Size = (18, 18);
+        Text = t1;
+        TextSize = 13;
+        renderer = &1;
+    }
+
+    RadioButton.RadioButton4 {
+        Position = (0, 60);
+        Size = (18, 18);
+        Text = t1;
+        TextSize = 13;
+        renderer = &1;
+    }
+}

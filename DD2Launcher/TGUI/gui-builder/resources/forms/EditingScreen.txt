@@ -1,0 +1,254 @@
+MenuBar.MenuBar {
+    MinimumSubMenuWidth = 125;
+    Size = (&.size, 20);
+    TextSize = 13;
+
+    Renderer {
+        backgroundcolor = #D8D8D8;
+        distancetoside = 4;
+        selectedbackgroundcolor = #006EFF;
+        selectedtextcolor = white;
+        textcolor = black;
+        textcolordisabled = #7D7D7D;
+    }
+
+    Menu {
+        Text = File;
+
+        Menu {
+            Text = New;
+        }
+
+        Menu {
+            Text = Load;
+        }
+
+        Menu {
+            Enabled = false;
+            Text = Recent;
+        }
+
+        Menu {
+            Text = Save;
+        }
+
+        Menu {
+            Text = Quit;
+        }
+    }
+
+    Menu {
+        Items = [Edit];
+        Text = Themes;
+    }
+
+    Menu {
+        Items = ["Bring to front", "Send to back", Cut, Copy, Paste, Delete];
+        Text = Widget;
+    }
+
+    Menu {
+        Items = ["Keyboard shortcuts", About];
+        Text = Help;
+    }
+}
+
+ChildWindow.PropertiesWindow {
+    Position = (&.w - w, menubar.h);
+    Size = (24%, (&.h - menubar.h) - 20);
+    Title = Properties;
+    TitleAlignment = Center;
+    TitleButtons = None;
+
+    Renderer {
+        backgroundcolor = #E6E6E6;
+        bordercolor = Black;
+        bordercolorfocused = Blue;
+        borders = (1, 1, 1, 1);
+        distancetoside = 3;
+        paddingbetweenbuttons = 1;
+        titlebarcolor = White;
+        titlecolor = Black;
+
+        closebutton {
+            backgroundcolor = #F5F5F5;
+            backgroundcolordown = #EBEBEB;
+            backgroundcolorhover = white;
+            bordercolor = #3C3C3C;
+            bordercolordown = black;
+            bordercolorhover = black;
+            borders = (1, 1, 1, 1);
+            textcolor = #3C3C3C;
+            textcolordown = black;
+            textcolorhover = black;
+        }
+    }
+
+    ComboBox.SelectedWidgetComboBox {
+        ChangeItemOnScroll = false;
+        ExpandDirection = Down;
+        ItemsToDisplay = 15;
+        MaximumItems = 0;
+        Position = (10, 10);
+        Size = (100% - 20, 24);
+        TextSize = 13;
+
+        Renderer {
+            arrowbackgroundcolor = #F5F5F5;
+            arrowbackgroundcolorhover = White;
+            arrowcolor = #3C3C3C;
+            arrowcolorhover = Black;
+            backgroundcolor = #F5F5F5;
+            bordercolor = Black;
+            borders = (2, 2, 2, 2);
+            padding = (2, 0, 0, 0);
+            textcolor = Black;
+        }
+    }
+
+    ScrollablePanel.Properties {
+        ContentSize = (0, 0);
+        Position = (10, (10 + 24) + 10);
+        Size = ((&.w - x) - 5, (&.h - y) - 10);
+
+        Renderer {
+            backgroundcolor = #E6E6E6;
+        }
+    }
+}
+
+ChildWindow.ToolboxWindow {
+    Position = (0, 20);
+    Size = (12%, ((&.h * 0.5) - menubar.h) - 20);
+    Title = Toolbox;
+    TitleAlignment = Center;
+    TitleButtons = None;
+
+    Renderer {
+        backgroundcolor = #E6E6E6;
+        bordercolor = Black;
+        bordercolorfocused = Blue;
+        borders = (1, 1, 1, 1);
+        distancetoside = 3;
+        paddingbetweenbuttons = 1;
+        titlebarcolor = White;
+        titlecolor = Black;
+
+        closebutton {
+            backgroundcolor = #F5F5F5;
+            backgroundcolordown = #EBEBEB;
+            backgroundcolorhover = white;
+            bordercolor = #3C3C3C;
+            bordercolordown = black;
+            bordercolorhover = black;
+            borders = (1, 1, 1, 1);
+            textcolor = #3C3C3C;
+            textcolordown = black;
+            textcolorhover = black;
+        }
+    }
+
+    ScrollablePanel.Widgets {
+        ContentSize = (0, 0);
+        Size = (100%, 100%);
+
+        Renderer {
+            backgroundcolor = #E6E6E6;
+        }
+    }
+}
+
+ChildWindow.HierarchyWindow {
+    Position = (0, (toolboxwindow.h + menubar.h) + 20);
+    Size = (12%, (&.h * 0.5) - 20);
+    Title = "Widgets hierarchy";
+    TitleAlignment = Center;
+    TitleButtons = None;
+
+    Renderer {
+        backgroundcolor = #E6E6E6;
+        bordercolor = Black;
+        bordercolorfocused = Blue;
+        borders = (1, 1, 1, 1);
+        distancetoside = 3;
+        paddingbetweenbuttons = 1;
+        titlebarcolor = White;
+        titlecolor = Black;
+
+        closebutton {
+            backgroundcolor = #F5F5F5;
+            backgroundcolordown = #EBEBEB;
+            backgroundcolorhover = white;
+            bordercolor = #3C3C3C;
+            bordercolordown = black;
+            bordercolorhover = black;
+            borders = (1, 1, 1, 1);
+            textcolor = #3C3C3C;
+            textcolordown = black;
+            textcolorhover = black;
+        }
+    }
+
+    TreeView.WidgetsTree {
+        ItemHeight = 20;
+        Size = (100%, 100%);
+        TextSize = 13;
+
+        Renderer {
+            backgroundcolor = #F5F5F5;
+            backgroundcolorhover = white;
+            bordercolor = black;
+            borders = (0, 0, 0, 0);
+            padding = (0, 0, 0, 0);
+            selectedbackgroundcolor = #006EFF;
+            selectedbackgroundcolorhover = #1E96FF;
+            selectedtextcolor = white;
+            textcolor = #3C3C3C;
+            textcolorhover = black;
+        }
+    }
+}
+
+ChildWindow.Form {
+    Position = (((((&.w - toolboxwindow.w) - propertieswindow.w) - w) / 2) + toolboxwindow.w, (&.h - h) / 2);
+    Resizable = true;
+    Size = (&.w - (toolboxwindow.w + propertieswindow.w + 20), &.h - menubar.h - 20);
+    TitleAlignment = Center;
+    TitleButtons = Close;
+
+    Renderer {
+        backgroundcolor = #E6E6E6;
+        bordercolor = Black;
+        bordercolorfocused = Blue;
+        borders = (1, 1, 1, 1);
+        distancetoside = 3;
+        paddingbetweenbuttons = 1;
+        showtextontitlebuttons = true;
+        texturetitlebar = None;
+        titlebarcolor = White;
+        titlecolor = Black;
+
+        closebutton {
+            borders = (1, 1, 1, 1);
+        }
+    }
+
+    ScrollablePanel.ScrollablePanel {
+        ContentSize = (0, 0);
+        Size = (100%, 100%);
+
+        Renderer {
+            backgroundcolor = #D7D7D7;
+        }
+
+        Panel.WidgetContainer {
+            Enabled = false;
+            Size = (100%, 100%);
+
+            Renderer {
+                backgroundcolor = #E6E6E6;
+                borders = (0, 0, 0, 0);
+            }
+        }
+    }
+}

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Launcher" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/LauncherDebug" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Debug/" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="tgui-d" />
+					<Add library="sfml-graphics-d" />
+					<Add library="sfml-window-d" />
+					<Add library="sfml-system-d" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Launcher" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Release/" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="tgui" />
+					<Add library="sfml-graphics" />
+					<Add library="sfml-window" />
+					<Add library="sfml-system" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=c++14" />
+			<Add option="-DWIN32" />
+			<Add directory="../SFML/include" />
+			<Add directory="../TGUI/include" />
+		</Compiler>
+		<Linker>
+			<Add directory="../SFML/lib" />
+			<Add directory="../TGUI/lib" />
+		</Linker>
+		<Unit filename="Defines.h" />
+		<Unit filename="IniParser/ParserInfoFile.cpp" />
+		<Unit filename="IniParser/ParserInfoFile.h" />
+		<Unit filename="IniParser/PostParsingStruct.cpp" />
+		<Unit filename="IniParser/PostParsingStruct.h" />
+		<Unit filename="Square.cpp" />
+		<Unit filename="Square.h" />
+		<Unit filename="WorkFunctions.cpp" />
+		<Unit filename="WorkFunctions.h" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

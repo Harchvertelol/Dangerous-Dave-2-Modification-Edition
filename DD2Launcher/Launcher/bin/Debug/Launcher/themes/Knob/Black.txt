@@ -1,0 +1,5 @@
+Knob {
+    TextureBackground = "Back.png";
+    TextureForeground = "Front.png";
+    ImageRotation     = 90;
+}

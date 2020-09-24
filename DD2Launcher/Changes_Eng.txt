@@ -1,0 +1,23 @@
+-------------------------------------------------------------------------------------
+Changes in version 0.1 pre-beta: (--- --, ----)
+
+- This is the pre-beta version of the Launcher for game Dangerous Dave 2: Modification Edition.
+  While there is an active search for bugs and their correction.
+  
+- Changes:
+  
+  1) 
+
+- Bugs fixed:
+  
+  1) 
+    
+- Detected bugs:
+
+  1) 
+
+- Minuses:
+
+  1) 
+
+-------------------------------------------------------------------------------------

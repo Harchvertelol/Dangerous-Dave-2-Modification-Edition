@@ -1,0 +1,11 @@
+[info]
+flylogo=flylogo
+flybackground=flybackground
+changelevelprefix=changelevel_
+mainscreenprefix=mainscreen_
+endscreen=endscreen
+
+[draw]
+transparentmaskR=0
+transparentmaskG=0
+transparentmaskB=168

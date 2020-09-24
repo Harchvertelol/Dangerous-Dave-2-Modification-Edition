@@ -1,0 +1,3 @@
+FormSize = (1280, 720);
+RecentFiles = ["LauncherDD2.gui"];
+Themes = ["themes/BabyBlue.txt", "themes/BabyBlue.txt", "themes/Black.txt", "themes/TransparentGrey.txt"];
