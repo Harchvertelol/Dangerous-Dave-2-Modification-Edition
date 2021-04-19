@@ -59,6 +59,10 @@ class LuaBindFunctions
         int getMonsterValue(lua_State* s_Lua);
         int setGlobalValue(lua_State* s_Lua);
         int getGlobalValue(lua_State* s_Lua);
+
+        int setModSettingsValue(lua_State* s_Lua);
+        int getModSettingsValue(lua_State* s_Lua);
+
         int getMonsterID(lua_State* s_Lua);
         int testTileTypeRight(lua_State* s_Lua);
         int testTileTypeLeft(lua_State* s_Lua);

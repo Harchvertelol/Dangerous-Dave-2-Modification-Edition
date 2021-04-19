@@ -1589,6 +1589,53 @@ int LuaBindFunctions::getGlobalValue(lua_State* s_Lua)
     return 1;
 }
 
+static int __setModSettingsValue(lua_State* s_Lua)
+{
+    return s_LBF->setModSettingsValue(s_Lua);
+}
+
+int LuaBindFunctions::setModSettingsValue(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n != 4)
+    {
+        cout<<"Error! Number of arguments of function \"setModSettingsValue\" is incorrect!"<<endl;
+        return 0;
+    }
+    int keyMonster = lua_tonumber(s_Lua, 1);
+    CreatureMonster* mnst;
+    if(keyMonster == -1) mnst = s_CurrentMonster;
+    else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
+    string key1 = lua_tostring(s_Lua, 2);
+    string key2 = lua_tostring(s_Lua, 3);
+    string value = lua_tostring(s_Lua, 4);
+    s_GameClass->s_Data->s_ModSettings->setValue(key1, key2, value);
+    return 0;
+}
+
+static int __getModSettingsValue(lua_State* s_Lua)
+{
+    return s_LBF->getModSettingsValue(s_Lua);
+}
+
+int LuaBindFunctions::getModSettingsValue(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n != 3)
+    {
+        cout<<"Error! Number of arguments of function \"getModSettingsValue\" is incorrect!"<<endl;
+        return 0;
+    }
+    int keyMonster = lua_tonumber(s_Lua, 1);
+    CreatureMonster* mnst;
+    if(keyMonster == -1) mnst = s_CurrentMonster;
+    else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
+    string s1 = lua_tostring(s_Lua, 2);
+    string s2 = lua_tostring(s_Lua, 3);
+    lua_pushstring(s_Lua, s_GameClass->s_Data->s_ModSettings->getValue(s1, s2).c_str());
+    return 1;
+}
+
 static int __getMonsterID(lua_State* s_Lua)
 {
     return s_LBF->getMonsterID(s_Lua);
@@ -1652,6 +1699,8 @@ void LuaBindFunctions::registerFunctionsMonster(lua_State* s_Lua)
     lua_register(s_Lua,"getMonsterValue", &__getMonsterValue);
     lua_register(s_Lua,"setGlobalValue", &__setGlobalValue);
     lua_register(s_Lua,"getGlobalValue", &__getGlobalValue);
+    lua_register(s_Lua,"setModSettingsValue", &__setModSettingsValue);
+    lua_register(s_Lua,"getModSettingsValue", &__getModSettingsValue);
     lua_register(s_Lua,"getMonsterID", &__getMonsterID);
     lua_register(s_Lua,"testTileTypeRight", &__testTileTypeRight);
     lua_register(s_Lua,"testTileTypeLeft", &__testTileTypeLeft);

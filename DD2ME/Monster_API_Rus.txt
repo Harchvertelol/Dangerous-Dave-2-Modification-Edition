@@ -362,12 +362,26 @@ setGlobalValue(id, nameofvalue, valueofvalue) - установить глобальное значение, 
 	valueofvalue - значение значения
 	Примеры: setGlobalValue(-1, "test", "value") - установили переменную test == "value".
 
-getGlobalValue(id, nameofvalue) - пполучить глобальное значение, которое доступно всем монстрам. Все значения имеют тип "строка".
+getGlobalValue(id, nameofvalue) - получить глобальное значение, которое доступно всем монстрам. Все значения имеют тип "строка".
 						Если нужны числа, то необходимо преобразовывать туда-обратно.
 	id - идентификатор монстра, если -1, то текущий монстр
 	nameofvalue - название значения
 	Возвращает "значение" запрашиваемого значения.
 	Примеры: myvaluetest = getGlobalValue(-1, "test") - получили переменную.
+
+getModSettingsValue(id, nameofblock, nameofvalue) - получить значение из ModPackName/settings.ini.
+	id - идентификатор монстра, если -1, то текущий монстр
+	nameofblock - название блока
+	nameofvalue - название значения
+	Возвращает "значение" запрашиваемого значения.
+	Примеры: getModSettingsValue(-1, "general", "spawn_frequency") - получили переменную.
+
+setModSettingsValue(id, nameofblock, nameofvalue, valueofvalue) - установить значение в ModPackName/settings.ini (не сохраняется в файл, только на текущую "сессию", сохраняется между уровнями)
+	id - идентификатор монстра, если -1, то текущий монстр
+	nameofblock - название блока
+	nameofvalue - название значения
+	valueofvalue - значение значения
+	Примеры: setModSettingsValue(-1, "general", "spawn_frequency", "10") - установили значение.
 
 getCoordMonsterX(id) - получение координаты монстра по X.
 	id - идентификатор монстра, если -1, то текущий монстр

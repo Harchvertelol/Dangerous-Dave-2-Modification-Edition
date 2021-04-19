@@ -18,6 +18,7 @@ GameData::GameData(Game* gameclass):
     PathToLevelPack(""),
     PathToDavePack(""),
     s_ModInfo(0),
+    s_ModSettings(0),
     s_LevelsInfo(0),
     s_GameClass(gameclass)
 {
@@ -65,7 +66,8 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     {
         s_NameMod = s_IniFile->getValue("resources", "modpack");
         s_ModInfo = prs.getParsedFromFile("ModPacks/" + s_NameMod + "/mod.info");
-        if(!s_ModInfo) return false;
+        s_ModSettings = prs.getParsedFromFile("ModPacks/" + s_NameMod + "/settings.ini");
+        if(!s_ModInfo || !s_ModSettings) return false;
         if(s_ModInfo->getValue("other", "inifile") != "")
         {
             delete s_GameClass->s_IniFile;

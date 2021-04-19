@@ -335,10 +335,10 @@ addDuplicateMonster (id, coordX, coordY, state, numberofaction, additionalnumber
 	numberofaction - animation counter of the new monster
 	additionalnumberofaction - additional animation counter of the new monster
 	lives - the number of lives, an optional parameter, by default it is infinite, taking into account collisions (-1)
-	params - parameters that you set to the created monster (analogue of setMonsterValue), format: "test1 = 34; name = DaveKiller; gun = super;". It is very important to put a semicolon
+	params - parameters that you set to the created monster (analogue of setMonsterValue), format: "test1=34;name=DaveKiller;gun=super;". It is very important to put a semicolon
 	at the end, otherwise the last parameter will not be processed.
 	Returns the identifier of the created monster.
-	Examples: addDuplicateMonster (-1, 0, 0, "leftstrike", 0, 0, -2, "direction = left; timelife = 10;") - created a copy of the zombie in a "hit", transparent and with infinite lives and with parameters ,
+	Examples: addDuplicateMonster (-1, 0, 0, "leftstrike", 0, 0, -2, "direction=left;timelife=10;") - created a copy of the zombie in a "hit", transparent and with infinite lives and with parameters ,
 	which can be obtained through getMonsterValue ().
 
 setMonsterValue (id, nameofvalue, valueofvalue) - set the current monster to a value that will not be erased after the end of the script loop. All values are of type string.
@@ -367,6 +367,20 @@ getGlobalValue (id, nameofvalue) - get a global value that is available to all m
 	nameofvalue - value name
 	Returns the "value" of the requested value.
 	Examples: myvaluetest = getGlobalValue (-1, "test") - received a variable.
+
+getModSettingsValue (id, nameofblock, nameofvalue) - get the value from ModPackName/settings.ini.
+	id - monster identifier, if -1, then the current monster
+	nameofblock - block name
+	nameofvalue - the name of the value
+	Returns the "value" of the requested value.
+	Examples: getModSettingsValue (-1, "general", "spawn_frequency") - got a variable.
+
+setModSettingsValue (id, nameofblock, nameofvalue, valueofvalue) - set the value in ModPackName/settings.ini (not saved to file, only for the current "session", saved between levels)
+	id - monster identifier, if -1, then the current monster
+	nameofblock - block name
+	nameofvalue - the name of the value
+	valueofvalue - the value of the value
+	Examples: setModSettingsValue (-1, "general", "spawn_frequency", "10") - set the value.
 
 getCoordMonsterX (id) - get the coordinates of the monster in X.
 	id - monster id, if -1, then the current monster

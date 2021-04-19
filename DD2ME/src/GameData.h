@@ -24,6 +24,7 @@ class GameData
         std::string PathToLevelPack;
         std::string PathToDavePack;
         IniParser::PostParsingStruct* s_ModInfo;
+        IniParser::PostParsingStruct* s_ModSettings;
         IniParser::PostParsingStruct* s_LevelsInfo;
         Textures* s_Textures;
         Level* s_Level;
