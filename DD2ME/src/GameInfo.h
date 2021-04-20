@@ -33,6 +33,7 @@ class GameInfo
         int s_KeyDown;
         int s_KeyShoot;
         int s_KeyJump;
+        int s_KeyConsole;
         unsigned int s_OldAnSt;
         CreatureDave* s_MyDave;
         int s_CurrentDistanceLiveMonstersX;

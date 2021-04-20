@@ -20,6 +20,7 @@ GameInfo::GameInfo(Game* gameclass):
     s_KeyDown(0),
     s_KeyShoot(0),
     s_KeyJump(0),
+    s_KeyConsole(0),
     s_OldAnSt(0),
     s_CurrentDistanceLiveMonstersX(0),
     s_CurrentDistanceLiveMonstersY(0),
@@ -143,8 +144,8 @@ void GameInfo::correctionScreen(CreatureDave* dave)
 {
     dave->s_ScreenCoordX = dave->s_CoordX - s_GameClass->s_DisplayStruct->s_ResolutionX/2;
     dave->s_ScreenCoordY = dave->s_CoordY - s_GameClass->s_DisplayStruct->s_ResolutionY/2;
-    if(dave->s_ScreenCoordX < 32) dave->s_ScreenCoordX = 32;
     if(dave->s_ScreenCoordX + s_GameClass->s_DisplayStruct->s_ResolutionX > 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) - 32) dave->s_ScreenCoordX = 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) - s_GameClass->s_DisplayStruct->s_ResolutionX - 32;
-    if(dave->s_ScreenCoordY < 32) dave->s_ScreenCoordY = 32;
+    if(dave->s_ScreenCoordX < 32) dave->s_ScreenCoordX = 32;
     if(dave->s_ScreenCoordY + s_GameClass->s_DisplayStruct->s_ResolutionY > 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeY") ).c_str() ) - 32) dave->s_ScreenCoordY = 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeY") ).c_str() ) - s_GameClass->s_DisplayStruct->s_ResolutionY - 32;
+    if(dave->s_ScreenCoordY < 32) dave->s_ScreenCoordY = 32;
 }
