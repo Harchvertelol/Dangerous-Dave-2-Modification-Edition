@@ -31,8 +31,13 @@ class GameInfo
         int s_KeyRight;
         int s_KeyUp;
         int s_KeyDown;
+        int s_KeyLeftUp;
+        int s_KeyRightUp;
+        int s_KeyLeftDown;
+        int s_KeyRightDown;
         int s_KeyShoot;
         int s_KeyJump;
+        int s_KeySkip;
         int s_KeyConsole;
         unsigned int s_OldAnSt;
         CreatureDave* s_MyDave;

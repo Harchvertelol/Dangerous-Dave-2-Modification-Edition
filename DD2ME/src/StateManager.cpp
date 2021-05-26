@@ -19,11 +19,9 @@ LRESULT StateManager::s0(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     switch (uMsg) //рассматриваем ИМЯ сообщения
     {
         case WM_KEYDOWN: //сообщение WM_KEYDOWN - пользователь нажал какую-то клавишу
-                switch(wParam) //в параметре wParam код клавишы. Рассматриваем код
+                if(wParam == s_GameClass->s_GameInfo->s_KeySkip) //в параметре wParam код клавишы. Рассматриваем код
                 {
-                    case VK_SPACE:
-                        switchState(1);
-                        break;
+                    switchState(1);
                 }
                 break;
     }
@@ -34,11 +32,9 @@ LRESULT StateManager::s1(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     switch (uMsg) //рассматриваем ИМЯ сообщения
     {
         case WM_KEYDOWN: //сообщение WM_KEYDOWN - пользователь нажал какую-то клавишу
-                switch(wParam) //в параметре wParam код клавишы. Рассматриваем код
+                if(wParam == s_GameClass->s_GameInfo->s_KeySkip) //в параметре wParam код клавишы. Рассматриваем код
                 {
-                    case VK_SPACE:
-                        switchState(2);
-                        break;
+                    switchState(2);
                 }
                 break;
     }
@@ -49,11 +45,9 @@ LRESULT StateManager::s2(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     switch (uMsg) //рассматриваем ИМЯ сообщения
     {
         case WM_KEYDOWN: //сообщение WM_KEYDOWN - пользователь нажал какую-то клавишу
-                switch(wParam) //в параметре wParam код клавишы. Рассматриваем код
+                if(wParam == s_GameClass->s_GameInfo->s_KeySkip) //в параметре wParam код клавишы. Рассматриваем код
                 {
-                    case VK_SPACE:
-                        switchState(3);
-                        break;
+                    switchState(3);
                 }
                 break;
     }
@@ -65,68 +59,67 @@ LRESULT StateManager::s3(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     switch (uMsg) //рассматриваем ИМЯ сообщения
     {
         case WM_KEYDOWN: //сообщение WM_KEYDOWN - пользователь нажал какую-то клавишу
-                switch(wParam) //в параметре wParam код клавишы. Рассматриваем код
+                if(wParam == s_GameClass->s_GameInfo->s_KeySkip) //в параметре wParam код клавишы. Рассматриваем код
                 {
-                    case VK_SPACE:
-                        switchState(0);
-                        break;
-                    case 0xC0:
-                        if(s_GameClass->s_IniFile->getValue("system", "consolemode") == "true")
+                    switchState(0);
+                }
+                else if(wParam == s_GameClass->s_GameInfo->s_KeyConsole)
+                {
+                    if(s_GameClass->s_IniFile->getValue("system", "consolemode") == "true")
+                    {
+                        cout<<"console> ";
+                        char buf[5000];
+                        cin.getline(buf, 5000);
+                        str = buf;
+                        if(str.find("level ") == 0)
                         {
-                            cout<<"console> ";
-                            char buf[5000];
-                            cin.getline(buf, 5000);
-                            str = buf;
-                            if(str.find("level ") == 0)
+                            s_GameClass->changeLevel(atoi( str.substr(str.find(" ") + 1).c_str()));
+                        }
+                        if(str.find("god ") == 0)
+                        {
+                            if(str.substr(str.find(" ") + 1) == "on")
                             {
-                                s_GameClass->changeLevel(atoi( str.substr(str.find(" ") + 1).c_str()));
+                                s_GameClass->s_GameInfo->s_CheatGod = true;
+                                cout << "God on." << endl;
                             }
-                            if(str.find("god ") == 0)
+                            else if(str.substr(str.find(" ") + 1) == "off")
                             {
-                                if(str.substr(str.find(" ") + 1) == "on")
-                                {
-                                    s_GameClass->s_GameInfo->s_CheatGod = true;
-                                    cout << "God on." << endl;
-                                }
-                                else if(str.substr(str.find(" ") + 1) == "off")
-                                {
-                                    s_GameClass->s_GameInfo->s_CheatGod = false;
-                                    cout << "God off." << endl;
-                                }
-                            }
-                            if(str.find("AI ") == 0)
-                            {
-                                if(str.substr(str.find(" ") + 1) == "on")
-                                {
-                                    s_GameClass->s_GameInfo->s_IsAIOn = true;
-                                    cout << "AI on." << endl;
-                                }
-                                else if(str.substr(str.find(" ") + 1) == "off")
-                                {
-                                    s_GameClass->s_GameInfo->s_IsAIOn = false;
-                                    cout << "AI off." << endl;
-                                }
-                                else if(str.substr(str.find(" ") + 1) == "reload")
-                                {
-                                    s_GameClass->s_GameInfo->s_FactoryMonsters->reloadAIAll();
-                                    cout << "Reload AI completed." << endl;
-                                }
-                            }
-                            if(str.find("ghost ") == 0)
-                            {
-                                if(str.substr(str.find(" ") + 1) == "on")
-                                {
-                                    s_GameClass->s_GameInfo->s_IsGhostOn = true;
-                                    cout << "Ghost on." << endl;
-                                }
-                                else if(str.substr(str.find(" ") + 1) == "off")
-                                {
-                                    s_GameClass->s_GameInfo->s_IsGhostOn = false;
-                                    cout << "Ghost off." << endl;
-                                }
+                                s_GameClass->s_GameInfo->s_CheatGod = false;
+                                cout << "God off." << endl;
                             }
                         }
-                        break;
+                        if(str.find("AI ") == 0)
+                        {
+                            if(str.substr(str.find(" ") + 1) == "on")
+                            {
+                                s_GameClass->s_GameInfo->s_IsAIOn = true;
+                                cout << "AI on." << endl;
+                            }
+                            else if(str.substr(str.find(" ") + 1) == "off")
+                            {
+                                s_GameClass->s_GameInfo->s_IsAIOn = false;
+                                cout << "AI off." << endl;
+                            }
+                            else if(str.substr(str.find(" ") + 1) == "reload")
+                            {
+                                s_GameClass->s_GameInfo->s_FactoryMonsters->reloadAIAll();
+                                cout << "Reload AI completed." << endl;
+                            }
+                        }
+                        if(str.find("ghost ") == 0)
+                        {
+                            if(str.substr(str.find(" ") + 1) == "on")
+                            {
+                                s_GameClass->s_GameInfo->s_IsGhostOn = true;
+                                cout << "Ghost on." << endl;
+                            }
+                            else if(str.substr(str.find(" ") + 1) == "off")
+                            {
+                                s_GameClass->s_GameInfo->s_IsGhostOn = false;
+                                cout << "Ghost off." << endl;
+                            }
+                        }
+                    }
                 }
                 break;
     }
@@ -169,6 +162,18 @@ void StateManager::s3I()
 
     if(!(GetKeyState(s_GameClass->s_GameInfo->s_KeyShoot) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyShoot = false;
     if((GetKeyState(s_GameClass->s_GameInfo->s_KeyShoot) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyShoot = true;
+
+    if(!(GetKeyState(s_GameClass->s_GameInfo->s_KeyLeftDown) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftDown = false;
+    if((GetKeyState(s_GameClass->s_GameInfo->s_KeyLeftDown) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftDown = true;
+
+    if(!(GetKeyState(s_GameClass->s_GameInfo->s_KeyLeftUp) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftUp = false;
+    if((GetKeyState(s_GameClass->s_GameInfo->s_KeyLeftUp) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftUp = true;
+
+    if(!(GetKeyState(s_GameClass->s_GameInfo->s_KeyRightDown) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightDown = false;
+    if((GetKeyState(s_GameClass->s_GameInfo->s_KeyRightDown) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightDown = true;
+
+    if(!(GetKeyState(s_GameClass->s_GameInfo->s_KeyRightUp) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightUp = false;
+    if((GetKeyState(s_GameClass->s_GameInfo->s_KeyRightUp) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightUp = true;
 }
 
 bool StateManager::switchState(int state, bool callstartstate)

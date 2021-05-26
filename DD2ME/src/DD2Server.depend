@@ -38,7 +38,7 @@
 	<stdio.h>
 	"lua.h"
 
-1589677267 e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.h
+1618874328 e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.h
 	"lua/lua.hpp"
 	<math.h>
 	"CreatureMonster.h"
@@ -62,7 +62,7 @@
 	<map>
 	<string>
 
-1589019898 e:\github\dangerous-dave-2-modification-edition\dd2me\src\gamedata.h
+1618871440 e:\github\dangerous-dave-2-modification-edition\dd2me\src\gamedata.h
 	"Level.h"
 	"Textures.h"
 	"Bonuses.h"
@@ -117,7 +117,7 @@
 	"Square.h"
 	"IniParser/PostParsingStruct.h"
 
-1590972427 e:\github\dangerous-dave-2-modification-edition\dd2me\src\gameinfo.h
+1621987315 e:\github\dangerous-dave-2-modification-edition\dd2me\src\gameinfo.h
 	<map>
 	"canvas.hpp"
 	"CreatureDave.h"
@@ -170,7 +170,7 @@
 
 1589678325 e:\github\dangerous-dave-2-modification-edition\dd2me\src\gui.h
 
-1363267640 e:\github\dangerous-dave-2-modification-edition\dd2me\src\keysstate.h
+1621987503 e:\github\dangerous-dave-2-modification-edition\dd2me\src\keysstate.h
 
 1589022356 e:\github\dangerous-dave-2-modification-edition\dd2me\src\workfunctions.h
 	<iostream>

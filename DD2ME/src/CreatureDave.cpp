@@ -831,19 +831,19 @@ void CreatureDave::calculateDoKey()
     if(s_ShootNow > 0) return;
     bool command = false;
     string where;
-    if( testSetStates("leftupshoot rightupshoot leftdownshoot rightdownshoot rightrun leftrun rightstand leftstand recharge") && (s_KeysState->s_KeyLeft) && (s_KeysState->s_KeyUp) && command == false)
+    if( testSetStates("leftupshoot rightupshoot leftdownshoot rightdownshoot rightrun leftrun rightstand leftstand recharge") && ((s_KeysState->s_KeyLeft) && (s_KeysState->s_KeyUp) || s_KeysState->s_KeyLeftUp) && command == false)
     {
         s_State = "leftupshoot";
     }
-    else if( testSetStates("leftupshoot rightupshoot leftdownshoot rightdownshoot rightrun leftrun rightstand leftstand recharge") && (s_KeysState->s_KeyLeft) && (s_KeysState->s_KeyDown) && command == false)
+    else if( testSetStates("leftupshoot rightupshoot leftdownshoot rightdownshoot rightrun leftrun rightstand leftstand recharge") && ((s_KeysState->s_KeyLeft) && (s_KeysState->s_KeyDown) || s_KeysState->s_KeyLeftDown) && command == false)
     {
         s_State = "leftdownshoot";
     }
-    else if( testSetStates("leftupshoot rightupshoot leftdownshoot rightdownshoot rightrun leftrun rightstand leftstand recharge") && (s_KeysState->s_KeyRight) && (s_KeysState->s_KeyUp) && command == false)
+    else if( testSetStates("leftupshoot rightupshoot leftdownshoot rightdownshoot rightrun leftrun rightstand leftstand recharge") && ((s_KeysState->s_KeyRight) && (s_KeysState->s_KeyUp) || s_KeysState->s_KeyRightUp) && command == false)
     {
         s_State = "rightupshoot";
     }
-    else if( testSetStates("leftupshoot rightupshoot leftdownshoot rightdownshoot rightrun leftrun rightstand leftstand recharge") && (s_KeysState->s_KeyRight) && (s_KeysState->s_KeyDown) && command == false)
+    else if( testSetStates("leftupshoot rightupshoot leftdownshoot rightdownshoot rightrun leftrun rightstand leftstand recharge") && ((s_KeysState->s_KeyRight) && (s_KeysState->s_KeyDown) || s_KeysState->s_KeyRightDown) && command == false)
     {
         s_State = "rightdownshoot";
     }
@@ -918,19 +918,19 @@ void CreatureDave::calculateDoKey()
     }
     if(s_ShootNow == 0)
     {
-        if( !(s_KeysState->s_KeyLeft) && !(s_KeysState->s_KeyUp) && (s_State == "leftupshoot") )
+        if( !(s_KeysState->s_KeyLeft) && !(s_KeysState->s_KeyUp) && !(s_KeysState->s_KeyLeftUp) && (s_State == "leftupshoot") )
         {
             s_State = "leftstand";
         }
-        if( !(s_KeysState->s_KeyLeft) && !(s_KeysState->s_KeyDown) && (s_State == "leftdownshoot") )
+        if( !(s_KeysState->s_KeyLeft) && !(s_KeysState->s_KeyDown) && !(s_KeysState->s_KeyLeftDown) && (s_State == "leftdownshoot") )
         {
             s_State = "leftstand";
         }
-        if( !(s_KeysState->s_KeyRight) && !(s_KeysState->s_KeyUp) && (s_State == "rightupshoot") )
+        if( !(s_KeysState->s_KeyRight) && !(s_KeysState->s_KeyUp) && !(s_KeysState->s_KeyRightUp) && (s_State == "rightupshoot") )
         {
             s_State = "rightstand";
         }
-        if( !(s_KeysState->s_KeyRight) && !(s_KeysState->s_KeyDown) && (s_State == "rightdownshoot") )
+        if( !(s_KeysState->s_KeyRight) && !(s_KeysState->s_KeyDown) && !(s_KeysState->s_KeyRightDown) && (s_State == "rightdownshoot") )
         {
             s_State = "rightstand";
         }
