@@ -8,10 +8,18 @@ function mainFunc()
 		oldFrame = getMonsterFrame(-1)
 	end
 	nextAdditionalNumberOfAction(-1)
-	if getAdditionalNumberOfAction(-1) % getMonsterOption(-1, "other", "animationstep") == 0 then
-		nextNumberOfAction(-1)
+	if string.find(getState(-1), "strike") == nil then
+		if getAdditionalNumberOfAction(-1) % getMonsterOption(-1, "other", "animationstep") == 0 then
+			nextNumberOfAction(-1)
+		else
+			return
+		end
 	else
-		return
+		if getAdditionalNumberOfAction(-1) % (tonumber(getMonsterOption(-1, "other", "animationstep")) - 1) == 0 then
+			nextNumberOfAction(-1)
+		else
+			return
+		end
 	end
 	if getMonsterFrame(-1) == 2 and string.find(getState(-1), "strike") ~= nil and testCollisionDave(-1) == 1 then
 		killDave(-1)
