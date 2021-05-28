@@ -1,0 +1,15 @@
+[info]
+sizeX=50
+sizeY=50
+modpackuniquenumber=0
+modpacktest=0
+modpackname=standart
+numberoftiles=858
+numberofmonsters=11
+numberofbonuses=6
+type=single
+
+[daves]
+numberofdaves=1
+dave1X=43
+dave1Y=45

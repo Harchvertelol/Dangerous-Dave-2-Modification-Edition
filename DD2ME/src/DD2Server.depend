@@ -192,7 +192,7 @@
 	<string>
 	"PostParsingStruct.h"
 
-1590976103 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturedave.cpp
+1621988701 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturedave.cpp
 	"CreatureDave.h"
 	"Game.h"
 	"WorkFunctions.h"
@@ -234,14 +234,14 @@
 	"Defines.h"
 	<ctime>
 
-1590100574 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gamedata.cpp
+1618871551 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gamedata.cpp
 	"GameData.h"
 	"Game.h"
 	"IniParser/ParserInfoFile.h"
 	"WorkFunctions.h"
 	"Defines.h"
 
-1590972423 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gameinfo.cpp
+1621987377 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\gameinfo.cpp
 	"GameInfo.h"
 	"Game.h"
 
@@ -710,7 +710,7 @@
 	"lstate.h"
 	"lzio.h"
 
-1589922655 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.cpp
+1618873193 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.cpp
 	"LuaBindFunctions.h"
 	"Game.h"
 	"WorkFunctions.h"
@@ -813,7 +813,7 @@
 1363272861 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\square.cpp
 	"Square.h"
 
-1590972451 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\statemanager.cpp
+1621988550 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\statemanager.cpp
 	"StateManager.h"
 	"Game.h"
 

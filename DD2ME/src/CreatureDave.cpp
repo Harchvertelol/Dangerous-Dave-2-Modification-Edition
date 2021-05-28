@@ -659,7 +659,7 @@ bool CreatureDave::correctionPhys(int coord, int what)
     if(s_GameClass->s_IniFile->getValue("settings", "correctionphysics") == "false") return false;
     if(what == 0 || what == 1)
     {
-        if(coord == s_CoordX || coord == s_CoordY) return false;
+        if(coord == s_CoordX && what == 0 || coord == s_CoordY && what == 1) return false;
     }
     else
     {
@@ -714,8 +714,14 @@ bool CreatureDave::correctionPhys(int coord, int what)
     if(what == 1) s_CoordY += sign;
     if(yes && s_GameClass->s_IniFile->getValue("loggers","correctionphysics") == "true")
     {
-        if(what == 0) cout<<"(Dave) Physics correction X: "<<"old - "<<coord<<", new - "<<s_CoordX<<endl;
-        else if(what == 1) cout<<"(Dave) Physics correction Y: "<<"old - "<<coord<<", new - "<<s_CoordY<<endl;
+        string axis = "Y";
+        int correctionCoord = s_CoordY;
+        if(what == 0)
+        {
+            axis = "X";
+            correctionCoord = s_CoordX;
+        }
+        cout << "(Dave) Physics correction " << axis << ": " << "old - " << coord << ", new - " << correctionCoord << ", state - " << s_State << endl;
     }
     return yes;
 }
