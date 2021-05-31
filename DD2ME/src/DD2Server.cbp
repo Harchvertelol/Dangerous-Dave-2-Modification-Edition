@@ -86,6 +86,8 @@
 		<Unit filename="NetServer/Server.h" />
 		<Unit filename="Screens.cpp" />
 		<Unit filename="Screens.h" />
+		<Unit filename="Sounds.cpp" />
+		<Unit filename="Sounds.h" />
 		<Unit filename="Square.cpp" />
 		<Unit filename="Square.h" />
 		<Unit filename="StateManager.cpp" />
