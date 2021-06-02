@@ -13,8 +13,8 @@ namespace STRING_CONSTANTS
 {
     const std::string SPLITTER_STR_VARIABLE = ";";
     const std::string MISSING_ID_SERVER = "-1";
-    const std::string SC_TITLE_WINDOW = "DD2 Remake: ME v0.6 pre-beta";
-    const std::string SC_GAME_VERSION = "pre-beta v0.6";
+    const std::string SC_TITLE_WINDOW = "DD2 Remake: ME v0.7 pre-beta";
+    const std::string SC_GAME_VERSION = "pre-beta v0.7";
     const std::string DEFAULT_FOLDER_SPLITTER = "/";
 }
 enum TILEMASK

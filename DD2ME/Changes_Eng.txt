@@ -1,4 +1,60 @@
 -------------------------------------------------------------------------------------
+Changes in version 0.7 pre-beta: (03 June, 2021)
+
+- This is a pre-beta version of Dangerous Dave 2: Modification Edition.
+  While there is an active search for bugs and their fixes.
+  
+- Changes:
+  
+  1) Reduced the difficulty of the last boss
+  2) Reduced the difficulty of level 8 from the levelpack HarchPack.
+  3) Added a delay to the first start of the last boss.
+  4) Changed the logic of processing monsters.
+  5) Added modpack parameters and corresponding API read / write functions for monsters.
+  6) Now you can change the console key and the screen saver skip key.
+  7) Added separate keys for diagonal hovering. By default, these are the keys on the numpad.
+  8) The speed of the zombie strike has been increased, now it has become more difficult to run through it.
+  9) Launcher has appeared.
+  10) Added a new levelpack "Campaign Three Brothers". Choose it in the launcher.
+
+- Fixed bugs:
+  
+  1) Fixed a bug in determining the collision bonuses.
+  2) Fixed a small bug of the monster. Now it will try to jump over walls to catch up with you.
+  3) Fixed a bug with Dave's physics when opening doors. Under some conditions, you could be thrown into textures.
+  4) Slime can no longer be killed with a direct shot while it is crawling.
+  5) Fixed a bug with processing monsters.
+  6) Come close to the wall to the left. Lower the gun down. Turn right. Press jump. Take off the wall.
+  7) If you stand one tile lower than the end of the stairs, the descending zombie will try to descend half a tile lower.
+  8) Fixed the error in determining the coordinates of objects when the screen size is larger than the level.
+  9) Fixed a bug with collisions at Dave, leading to passing through walls in certain cases.
+    
+- Found bugs:
+
+  1) There are no flying pieces from the killed monster.
+  2) Will not fall from solid tiles from recoil when shooting to the left. If you shoot up or down, it does not fall from solid tiles (it was found that in the original
+     Dave the same, it was decided not to fix it yet).
+  3) When caching is off, the transparency mask does not work. The cause is known and has not yet been corrected.
+  4) The screen follows the player too clearly. Not so in the original.
+  5) There is no illumination of the monster on hit.
+  6) Fast switching Dave to reload (it is planned to fix it when transferring Dave's mechanics to lua).
+  7) Dave is not going down the stairs as fast as in the original (it is planned to fix it when translating Dave's mechanics to lua).
+  8) There is no animation in flight. Wrong jump animation (must move with legs). Should hang at the top longer (it is planned to fix it when translating Dave's mechanics to lua).
+  9) The animation of running should stop when you hit the wall (it is planned to fix it when translating Dave's mechanics into lua).
+  10) Fix API. The functions goUp / goDown (add wall walking) and testTileDown (and the rest of them, figure out how they should work).
+  11) The animation counter is not reset when the state of the monster changes. Thought: add a global parameter for each monster, allowing you to either manually control it yourself, or let the program automatically reset.
+  12) Bonuses in the original flash chaotically, and not harmoniously with each other.
+  13) No points from the monster.
+  14) There is no animation of getting a new life.
+  15) In the original, the zombie hits unevenly: first, a swing with a delay, and then a quick blow. In the remake, he hits evenly.
+
+- Minuses:
+
+  1) Bugs, bugs, bugs (less than before, but still).
+  2) ALL settings are in the .ini file.
+  3) The opening screen is not the same as in the original Dave.
+
+-------------------------------------------------------------------------------------
 Changes in version 0.6 pre-beta: (May 18, 2020)
 
 - This is the pre-beta version of the game Dangerous Dave 2: Modification Edition.
@@ -222,7 +278,7 @@ Changes in version 0.2 pre-beta: (February 06, 2013)
   3) There is no illumination of a monster when hit.
   4) The initial screen saver is not the same as in the original Dave.
 
--------------------------------------------------- -----------------------------------
+-------------------------------------------------------------------------------------
 Changes in version 0.1 pre-beta: (December 17, 2012)
 
 - This is the pre-beta version of the game Dangerous Dave 2: Modification Edition.

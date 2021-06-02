@@ -326,6 +326,7 @@ class Launcher
         }
         PostParsingStruct* s_DD2Ini;
         PostParsingStruct* s_DD2General;
+        PostParsingStruct* s_LauncherConfig;
         string s_GuiFile;
         sf::RenderWindow* s_Window;
         tgui::Gui s_TGUI;
@@ -358,13 +359,15 @@ int main()
     ParserInfoFile prs;
     ln.s_DD2Ini = prs.getParsedFromFile("DD2.ini");
     ln.s_DD2General = prs.getParsedFromFile("General.ini");
+    ln.s_LauncherConfig = prs.getParsedFromFile("Launcher/Launcher.ini");
     ln.s_GuiFile = "Launcher/LauncherDD2.gui";
 
     ln.loadWidgets();
 
     ln.loadData();
 
-    ln.s_DD2FileName = "DD2Debug.exe";
+    //ln.s_DD2FileName = "DD2Debug.exe";
+    ln.s_DD2FileName = ln.s_LauncherConfig->getValue("general", "dd2_filename");
 
     sf::Sprite posguisprite;
 

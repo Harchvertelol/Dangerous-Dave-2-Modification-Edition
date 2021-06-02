@@ -8,10 +8,18 @@ function mainFunc()
 		oldFrame = getMonsterFrame(-1)
 	end
 	nextAdditionalNumberOfAction(-1)
-	if getAdditionalNumberOfAction(-1) % getMonsterOption(-1, "other", "animationstep") == 0 then
-		nextNumberOfAction(-1)
+	if string.find(getState(-1), "strike") == nil then
+		if getAdditionalNumberOfAction(-1) % getMonsterOption(-1, "other", "animationstep") == 0 then
+			nextNumberOfAction(-1)
+		else
+			return
+		end
 	else
-		return
+		if getAdditionalNumberOfAction(-1) % (tonumber(getMonsterOption(-1, "other", "animationstep")) - 1) == 0 then
+			nextNumberOfAction(-1)
+		else
+			return
+		end
 	end
 	if getMonsterFrame(-1) == 2 and string.find(getState(-1), "strike") ~= nil and testCollisionDave(-1) == 1 then
 		killDave(-1)
@@ -79,7 +87,7 @@ function mainFunc()
 			testgo = goLeft(-1, speed, 1, 1)
 		else
 			if getState(-1) == "downrun" then
-				if (getDistanceToDave(-1) <= 16*6 and getDistanceToDaveYHead(-1, 1) >= 16) or getMonsterValue(-1, "testdownrun") == "1" or getMonsterValue(-1, "testfirstdownrun") == "1" then
+				if (getDistanceToDave(-1) <= 16*6 and getDistanceToDaveYHead(-1, 1) >= 16 and testTileTypeDown(-1, "IMPASSABLE", 1) == 0 ) or getMonsterValue(-1, "testdownrun") == "1" or getMonsterValue(-1, "testfirstdownrun") == "1" then
 					testgo = goDown(-1, 8, tonumber(getMonsterValue(-1, "testdownrun")))
 					setMonsterValue(-1, "testdownrun", tostring((tonumber(getMonsterValue(-1, "testdownrun")) + 1) % 2))
 					setMonsterValue(-1, "testfirstdownrun", "0")
