@@ -28,6 +28,7 @@ GameData::GameData(Game* gameclass):
     s_Screens = new Screens(gameclass);
     s_Dave = new Dave(gameclass);
     s_Monsters = new Monsters(gameclass);
+    s_Sounds = new Sounds(gameclass);
 }
 
 GameData::~GameData()
@@ -40,6 +41,7 @@ GameData::~GameData()
     if(s_Screens != 0) delete s_Screens;
     if(s_Dave != 0) delete s_Dave;
     if(s_Monsters != 0) delete s_Monsters;
+    if(s_Sounds != 0) delete s_Sounds;
 }
 
 void GameData::deleteAllGDIObjects()
@@ -124,6 +126,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     if( !s_Textures->load(PathToTexturePack) ) return false;
     if( !s_Dave->load(PathToDavePack) ) return false;
     if( !s_Monsters->load(PathToMonsterPack) ) return false;
+    if( !s_Sounds->load(PathToSoundPack) ) return false;
     return true;
 }
 

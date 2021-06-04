@@ -27,6 +27,7 @@ function mainFunc()
 			setNullAdditionalNumberOfAction(-1)
 			setMonsterValue(-1, "stateba", getState(-1))
 			setState(-1, "invisoff")
+			playSound("materialisation")
 			return
 		end
 	end

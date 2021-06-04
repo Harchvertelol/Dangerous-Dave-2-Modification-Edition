@@ -143,7 +143,7 @@ bool Game::changeNextLevel(bool switchstate)
     return true;
 }
 
-bool Game::changeLevel(int number, bool switchstate)
+bool Game::changeLevel(int number, bool switchstate, bool playmusic)
 {
     if(number < 1 || number > atoi( s_Data->s_LevelsInfo->getValue("info", "numberoflevels").c_str()  ) )
     {
@@ -184,6 +184,11 @@ bool Game::changeLevel(int number, bool switchstate)
     s_GameInfo->s_Stop = false;
     s_GameInfo->s_MyDave->s_Cartridges = s_GameInfo->s_MyDave->s_MaxCartridges;
     if(switchstate == true) s_StateManager->switchState(2, false);
+    if(playmusic)
+    {
+        if(s_GameInfo->s_CurrentLevel == 1) s_Data->s_Sounds->play("before_first_level");
+        else s_Data->s_Sounds->play("changelevel");
+    }
     return true;
 }
 
@@ -264,6 +269,7 @@ void Game::onTimer(unsigned int timer_id)
 {
     if(timer_id == s_IdTimerDrawStep)
     {
+        s_Data->s_Sounds->clearInactiveTempSounds();
         calculateGameDrawFPS();
         if(s_Window != 0 && GetForegroundWindow() == s_Window->hwnd() )
         {

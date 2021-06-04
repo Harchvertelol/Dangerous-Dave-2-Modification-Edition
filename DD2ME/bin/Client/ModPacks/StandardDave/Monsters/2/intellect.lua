@@ -45,11 +45,13 @@ function mainFunc()
 	if getMonsterFrame(-1) == 2 and string.find(getState(-1), "strike") ~= nil then
 		if getState(-1) == "leftstrike" then
 			addDuplicateMonster(-1, getCoordMonsterX(-1), getCoordMonsterY(-1), "leftknife", 0, 0, -2)
+			playSound("knife")
 			return
 		else
 			if getState(-1) == "rightstrike" then
 				if math.random(5) ~= 1 then
 					addDuplicateMonster(-1, getCoordMonsterX(-1) + 34, getCoordMonsterY(-1), "rightknife", 0, 0, -2)
+					playSound("knife")
 				end
 				return
 			end

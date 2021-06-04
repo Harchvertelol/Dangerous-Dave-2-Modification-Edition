@@ -125,10 +125,12 @@ function mainFunc()
 				NewState = string.format("%sfloor", NewState)
 				setState(-1, NewState)
 				goDown(-1, 8, 1)
+				playSound("lambla")
 			else
 				NewState = string.gsub(getState(-1), "up", "")
 				NewState = string.format("%sceiling", NewState)
 				setState(-1, NewState)
+				playSound("lambla")
 			end
 		end
 	end

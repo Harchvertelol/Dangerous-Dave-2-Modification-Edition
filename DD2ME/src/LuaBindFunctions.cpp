@@ -1666,52 +1666,52 @@ void LuaBindFunctions::registerFunctions(lua_State* s_Lua, string what)
 
 void LuaBindFunctions::registerFunctionsMonster(lua_State* s_Lua)
 {
-    lua_register(s_Lua,"setState", &__setState);
-    lua_register(s_Lua,"getState", &__getState);
-    lua_register(s_Lua,"goLeft", &__goLeft);
-    lua_register(s_Lua,"goRight", &__goRight);
-    lua_register(s_Lua,"goUp", &__goUp);
-    lua_register(s_Lua,"goDown", &__goDown);
-    lua_register(s_Lua,"setNumberOfAction", &__setNumberOfAction);
-    lua_register(s_Lua,"getNumberOfAction", &__getNumberOfAction);
-    lua_register(s_Lua,"nextNumberOfAction", &__nextNumberOfAction);
-    lua_register(s_Lua,"setNullNumberOfAction", &__setNullNumberOfAction);
-    lua_register(s_Lua,"setAdditionalNumberOfAction", &__setAdditionalNumberOfAction);
-    lua_register(s_Lua,"getAdditionalNumberOfAction", &__getAdditionalNumberOfAction);
-    lua_register(s_Lua,"nextAdditionalNumberOfAction", &__nextAdditionalNumberOfAction);
-    lua_register(s_Lua,"setNullAdditionalNumberOfAction", &__setNullAdditionalNumberOfAction);
-    lua_register(s_Lua,"getMonsterOption", &__getMonsterOption);
-    lua_register(s_Lua,"testLookDaveX", &__testLookDaveX);
-    lua_register(s_Lua,"testLookDaveY", &__testLookDaveY);
-    lua_register(s_Lua,"getMonsterFrame", &__getMonsterFrame);
-    lua_register(s_Lua,"getDistanceToDave", &__getDistanceToDave);
-    lua_register(s_Lua,"getDistanceToDaveX", &__getDistanceToDaveX);
-    lua_register(s_Lua,"getDistanceToDaveY", &__getDistanceToDaveY);
-    lua_register(s_Lua,"testTileTypeDown", &__testTileTypeDown);
-    lua_register(s_Lua,"getDistanceToDaveHead", &__getDistanceToDaveHead);
-    lua_register(s_Lua,"getDistanceToDaveXHead", &__getDistanceToDaveXHead);
-    lua_register(s_Lua,"getDistanceToDaveYHead", &__getDistanceToDaveYHead);
-    lua_register(s_Lua,"testCollisionDave", &__testCollisionDave);
-    lua_register(s_Lua,"killDave", &__killDave);
-    lua_register(s_Lua,"killMonster", &__killMonster);
-    lua_register(s_Lua,"addDuplicateMonster", &__addDuplicateMonster);
-    lua_register(s_Lua,"setMonsterValue", &__setMonsterValue);
-    lua_register(s_Lua,"getMonsterValue", &__getMonsterValue);
-    lua_register(s_Lua,"setGlobalValue", &__setGlobalValue);
-    lua_register(s_Lua,"getGlobalValue", &__getGlobalValue);
-    lua_register(s_Lua,"setModSettingsValue", &__setModSettingsValue);
-    lua_register(s_Lua,"getModSettingsValue", &__getModSettingsValue);
-    lua_register(s_Lua,"getMonsterID", &__getMonsterID);
-    lua_register(s_Lua,"testTileTypeRight", &__testTileTypeRight);
-    lua_register(s_Lua,"testTileTypeLeft", &__testTileTypeLeft);
-    lua_register(s_Lua,"testTileTypeUp", &__testTileTypeUp);
-    lua_register(s_Lua,"getCoordMonsterX", &__getCoordMonsterX);
-    lua_register(s_Lua,"getCoordMonsterY", &__getCoordMonsterY);
-    lua_register(s_Lua,"getCoordDaveX", &__getCoordDaveX);
-    lua_register(s_Lua,"getCoordDaveY", &__getCoordDaveY);
-    lua_register(s_Lua,"getStateDave", &__getStateDave);
-    lua_register(s_Lua,"getNumberOfLives", &__getNumberOfLives);
-    lua_register(s_Lua,"setNumberOfLives", &__setNumberOfLives);
+    lua_register(s_Lua, "setState", &__setState);
+    lua_register(s_Lua, "getState", &__getState);
+    lua_register(s_Lua, "goLeft", &__goLeft);
+    lua_register(s_Lua, "goRight", &__goRight);
+    lua_register(s_Lua, "goUp", &__goUp);
+    lua_register(s_Lua, "goDown", &__goDown);
+    lua_register(s_Lua, "setNumberOfAction", &__setNumberOfAction);
+    lua_register(s_Lua, "getNumberOfAction", &__getNumberOfAction);
+    lua_register(s_Lua, "nextNumberOfAction", &__nextNumberOfAction);
+    lua_register(s_Lua, "setNullNumberOfAction", &__setNullNumberOfAction);
+    lua_register(s_Lua, "setAdditionalNumberOfAction", &__setAdditionalNumberOfAction);
+    lua_register(s_Lua, "getAdditionalNumberOfAction", &__getAdditionalNumberOfAction);
+    lua_register(s_Lua, "nextAdditionalNumberOfAction", &__nextAdditionalNumberOfAction);
+    lua_register(s_Lua, "setNullAdditionalNumberOfAction", &__setNullAdditionalNumberOfAction);
+    lua_register(s_Lua, "getMonsterOption", &__getMonsterOption);
+    lua_register(s_Lua, "testLookDaveX", &__testLookDaveX);
+    lua_register(s_Lua, "testLookDaveY", &__testLookDaveY);
+    lua_register(s_Lua, "getMonsterFrame", &__getMonsterFrame);
+    lua_register(s_Lua, "getDistanceToDave", &__getDistanceToDave);
+    lua_register(s_Lua, "getDistanceToDaveX", &__getDistanceToDaveX);
+    lua_register(s_Lua, "getDistanceToDaveY", &__getDistanceToDaveY);
+    lua_register(s_Lua, "testTileTypeDown", &__testTileTypeDown);
+    lua_register(s_Lua, "getDistanceToDaveHead", &__getDistanceToDaveHead);
+    lua_register(s_Lua, "getDistanceToDaveXHead", &__getDistanceToDaveXHead);
+    lua_register(s_Lua, "getDistanceToDaveYHead", &__getDistanceToDaveYHead);
+    lua_register(s_Lua, "testCollisionDave", &__testCollisionDave);
+    lua_register(s_Lua, "killDave", &__killDave);
+    lua_register(s_Lua, "killMonster", &__killMonster);
+    lua_register(s_Lua, "addDuplicateMonster", &__addDuplicateMonster);
+    lua_register(s_Lua, "setMonsterValue", &__setMonsterValue);
+    lua_register(s_Lua, "getMonsterValue", &__getMonsterValue);
+    lua_register(s_Lua, "setGlobalValue", &__setGlobalValue);
+    lua_register(s_Lua, "getGlobalValue", &__getGlobalValue);
+    lua_register(s_Lua, "setModSettingsValue", &__setModSettingsValue);
+    lua_register(s_Lua, "getModSettingsValue", &__getModSettingsValue);
+    lua_register(s_Lua, "getMonsterID", &__getMonsterID);
+    lua_register(s_Lua, "testTileTypeRight", &__testTileTypeRight);
+    lua_register(s_Lua, "testTileTypeLeft", &__testTileTypeLeft);
+    lua_register(s_Lua, "testTileTypeUp", &__testTileTypeUp);
+    lua_register(s_Lua, "getCoordMonsterX", &__getCoordMonsterX);
+    lua_register(s_Lua, "getCoordMonsterY", &__getCoordMonsterY);
+    lua_register(s_Lua, "getCoordDaveX", &__getCoordDaveX);
+    lua_register(s_Lua, "getCoordDaveY", &__getCoordDaveY);
+    lua_register(s_Lua, "getStateDave", &__getStateDave);
+    lua_register(s_Lua, "getNumberOfLives", &__getNumberOfLives);
+    lua_register(s_Lua, "setNumberOfLives", &__setNumberOfLives);
 }
 
 static int __addPackImagesToFactoryTemporaryImage(lua_State* s_Lua)
@@ -1800,10 +1800,78 @@ int LuaBindFunctions::changeNextLevel(lua_State* s_Lua)
     return 0;
 }
 
+static int __playSound(lua_State* s_Lua)
+{
+    return s_LBF->playSound(s_Lua);
+}
+
+int LuaBindFunctions::playSound(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n != 1 && n != 2 && n != 3 && n != 4 && n != 5)
+    {
+        cout<<"Error! Number of arguments of function \"playSound\" is incorrect!"<<endl;
+        return 0;
+    }
+    string soundname = lua_tostring(s_Lua, 1);
+    int new_sound = 1;
+    int restart = 0;
+    int loop = 0;
+    int offset_ms = 0;
+    if(n > 1) new_sound = lua_tonumber(s_Lua, 2);
+    if(n > 2) restart = lua_tonumber(s_Lua, 3);
+    if(n > 3) loop = lua_tonumber(s_Lua, 4);
+    if(n > 4) offset_ms = lua_tonumber(s_Lua, 5);
+    int result_play = s_GameClass->s_Data->s_Sounds->play(soundname, new_sound, restart, loop, offset_ms);
+    lua_pushnumber(s_Lua, result_play);
+    return 0;
+}
+
+static int __stopSound(lua_State* s_Lua)
+{
+    return s_LBF->playSound(s_Lua);
+}
+
+int LuaBindFunctions::stopSound(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n != 1)
+    {
+        cout<<"Error! Number of arguments of function \"stopSound\" is incorrect!"<<endl;
+        return 0;
+    }
+    string soundname = lua_tostring(s_Lua, 1);
+    bool result_stop = s_GameClass->s_Data->s_Sounds->stop(soundname);
+    lua_pushnumber(s_Lua, result_stop);
+    return 0;
+}
+
+static int __pauseSound(lua_State* s_Lua)
+{
+    return s_LBF->playSound(s_Lua);
+}
+
+int LuaBindFunctions::pauseSound(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n != 1)
+    {
+        cout<<"Error! Number of arguments of function \"pauseSound\" is incorrect!"<<endl;
+        return 0;
+    }
+    string soundname = lua_tostring(s_Lua, 1);
+    bool result_stop = s_GameClass->s_Data->s_Sounds->pause(soundname);
+    lua_pushnumber(s_Lua, result_stop);
+    return 0;
+}
+
 void LuaBindFunctions::registerFunctionsAll(lua_State* s_Lua)
 {
-    lua_register(s_Lua,"getMainValue", &__getMainValue);
-    lua_register(s_Lua,"addPackImagesToFactoryTemporaryImage", &__addPackImagesToFactoryTemporaryImage);
-    lua_register(s_Lua,"addImageToFactoryTemporaryImage", &__addImageToFactoryTemporaryImage);
-    lua_register(s_Lua,"changeNextLevel", &__changeNextLevel);
+    lua_register(s_Lua, "getMainValue", &__getMainValue);
+    lua_register(s_Lua, "addPackImagesToFactoryTemporaryImage", &__addPackImagesToFactoryTemporaryImage);
+    lua_register(s_Lua, "addImageToFactoryTemporaryImage", &__addImageToFactoryTemporaryImage);
+    lua_register(s_Lua, "changeNextLevel", &__changeNextLevel);
+    lua_register(s_Lua, "playSound", &__playSound);
+    lua_register(s_Lua, "stopSound", &__stopSound);
+    lua_register(s_Lua, "pauseSound", &__pauseSound);
 }

@@ -6,6 +6,7 @@
 #include "Screens.h"
 #include "Dave.h"
 #include "Monsters.h"
+#include "Sounds.h"
 
 class Game;
 
@@ -32,6 +33,7 @@ class GameData
         Screens* s_Screens;
         Dave* s_Dave;
         Monsters* s_Monsters;
+        Sounds* s_Sounds;
         Game* s_GameClass;
         bool loadData(IniParser::PostParsingStruct*);
         bool drawScreenState0();

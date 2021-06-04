@@ -76,6 +76,7 @@ void GameInfo::deathDave(int type)
     s_OldAnSt = s_GameClass->s_AnimationStep;
     s_DopFrame = -1;
     s_CurrentLives--;
+    s_GameClass->s_Data->s_Sounds->play("death");
 }
 
 void GameInfo::playDeath()
@@ -100,8 +101,9 @@ void GameInfo::playDeath()
             {
                 s_CurrentLives = 4;
                 if(s_CurrentLevel > 1) s_CurrentLevel--;
+                s_GameClass->s_Data->s_Sounds->play("gameover");
             }
-            s_GameClass->changeLevel(s_CurrentLevel);
+            s_GameClass->changeLevel(s_CurrentLevel, true, false);
             return;
         }
         if(frame >= numberofframes) frame = numberofframes - 1;
@@ -121,8 +123,9 @@ void GameInfo::playDeath()
             {
                 s_CurrentLives = 4;
                 if(s_CurrentLevel > 1) s_CurrentLevel--;
+                s_GameClass->s_Data->s_Sounds->play("gameover");
             }
-            s_GameClass->changeLevel(s_CurrentLevel);
+            s_GameClass->changeLevel(s_CurrentLevel, true, false);
             return;
         }
         if(frame >= numberofframes) frame = numberofframes - 1;

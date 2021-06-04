@@ -37,6 +37,7 @@ function mainFunc()
 				setNullAdditionalNumberOfAction(-1)
 				setMonsterValue(-1, "stateba", getState(-1))
 				setState(-1, "invisoff")
+				playSound("ghost_view_start")
 				return
 			end
 		end
@@ -49,6 +50,7 @@ function mainFunc()
 				if getNumberOfLives(-1) < 0 then
 					setNumberOfLives(-1, 1)
 				end
+				playSound("materialisation")
 			end
 			if getMonsterFrame(-1) == 0 then
 				local stateba = getMonsterValue(-1, "stateba")

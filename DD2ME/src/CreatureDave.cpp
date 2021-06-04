@@ -89,6 +89,7 @@ void CreatureDave::live(bool doKey)
         {
             if(s_Cartridges <= 0)
             {
+                s_GameClass->s_Data->s_Sounds->play("noammo");
                 s_ShootNow = 0;
                 if(s_State.find("down") == string::npos && s_State.find("up") == string::npos) s_State = s_State.substr(0, s_State.find("shoot")) + "stand";
             }
@@ -171,6 +172,7 @@ void CreatureDave::live(bool doKey)
     }
     else if(s_State == "dooropen")
     {
+        s_GameClass->s_Data->s_Sounds->play("opendoor");
         s_TimeDoorOpen--;
         if(s_TimeDoorOpen == 0)
         {
@@ -267,6 +269,7 @@ void CreatureDave::live(bool doKey)
     }
     if(s_Cartridges < s_MaxCartridges && testSetStates("rightstand leftstand"))
     {
+        if(s_Cartridges + 1 == s_MaxCartridges) s_GameClass->s_Data->s_Sounds->play("ammo", false, false, false, 200);
         s_DopState = s_State;
         s_State = "recharge";
         s_NumberOfAction = 0;
@@ -289,6 +292,7 @@ void CreatureDave::live(bool doKey)
             s_AdditionalNumberOfAction++;
             if(s_AdditionalNumberOfAction % atoi( s_GameClass->s_IniFile->getValue("settings", "rechargetime").c_str() ) == 0 )
             {
+                if(s_Cartridges + 1 != s_MaxCartridges) s_GameClass->s_Data->s_Sounds->play("ammo", false, false, false);
                 s_NumberOfAction++;
                 s_OldNumberOfAction = s_NumberOfAction;
                 if(s_NumberOfAction % atoi(s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("other", "rechargeframe").c_str() ) == 0 ) s_Cartridges++;
@@ -307,6 +311,7 @@ void CreatureDave::live(bool doKey)
     {
         if(s_State.find("jump") != string::npos)
         {
+            s_GameClass->s_Data->s_Sounds->play("fall");
             if(s_State.find("right") == 0) step("right");
             else step("left");
             if(s_State.find("right") == 0) s_State = "rightstand";
@@ -347,6 +352,7 @@ void CreatureDave::live(bool doKey)
     if(testChangeLevel()) s_GameClass->changeNextLevel();
     int DeathType = testDeath();
     s_GameClass->s_GameInfo->deathDave(DeathType);
+    if(s_State.find("recharge") == string::npos) s_GameClass->s_Data->s_Sounds->stop("ammo");
 }
 
 void CreatureDave::testSmallPassage(int y)
@@ -621,7 +627,13 @@ void CreatureDave::testGetBonuses()
                 CrPoints = s_CurrentPoints;
                 s_GameClass->s_Data->s_Level->s_Fields["FieldBonuses"][ TileCoordY[i]*SizeXLev/16 + TileCoordX[i]/16 ] = 0;
                 s_CurrentPoints += atoi( s_GameClass->s_Data->s_Bonuses->s_BonusesInfo[bonus-1]->getValue("info", "point").c_str() );
-                s_GameClass->s_GameInfo->s_CurrentLives += atoi( s_GameClass->s_Data->s_Bonuses->s_BonusesInfo[bonus-1]->getValue("info", "up").c_str() );
+                int numb_ups = atoi( s_GameClass->s_Data->s_Bonuses->s_BonusesInfo[bonus-1]->getValue("info", "up").c_str() );
+                if(numb_ups > 0)
+                {
+                    s_GameClass->s_GameInfo->s_CurrentLives += numb_ups;
+                    s_GameClass->s_Data->s_Sounds->play("1up");
+                }
+                else s_GameClass->s_Data->s_Sounds->play("bonus");
                 s_GameClass->s_FactoryTmpImgs->addImage(s_GameClass->s_Data->s_Bonuses->s_BonusesBitmaps[bonus-1][numberofframes+1],
                                                         s_GameClass->s_Data->s_Bonuses->s_BonusesCache[bonus-1][numberofframes+1],
                                                         TileCoordX[i] + s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus].s_XL,
@@ -635,6 +647,7 @@ void CreatureDave::testGetBonuses()
                     if(i% atoi( s_GameClass->s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("info", "pointforup").c_str() ) == 0)
                     {
                         s_GameClass->s_GameInfo->s_CurrentLives++;
+                        s_GameClass->s_Data->s_Sounds->play("1up");
                     }
                 }
             }
@@ -796,6 +809,7 @@ void CreatureDave::testShoot()
             s_GameClass->s_FactoryTmpImgs->addImage(s_GameClass->s_Data->s_Dave->s_Bitmaps[statedave][getFrame(statedave)],
                                                         s_GameClass->s_Data->s_Dave->s_CacheImages[statedave][getFrame(statedave)],
                                                         xcc, ycc, 4, 0, 0, "traceshoot");
+            s_GameClass->s_Data->s_Sounds->play("shoot_dave", false, true);
             return;
         }
         map<int, CreatureMonster*>::iterator iter;
@@ -822,10 +836,12 @@ void CreatureDave::testShoot()
                                 s_GameClass->s_FactoryTmpImgs->addImage(s_GameClass->s_Data->s_Dave->s_Bitmaps[statedave][getFrame(statedave)],
                                                         s_GameClass->s_Data->s_Dave->s_CacheImages[statedave][getFrame(statedave)],
                                                         xcc, ycc, 4, 0, 0, "traceshoot");
+                                s_GameClass->s_Data->s_Sounds->play("shoot_dave", false, true);
                                 return;
                             }
                         }
     }
+    s_GameClass->s_Data->s_Sounds->play("shoot_empty", false, true);
 }
 
 void CreatureDave::calculateDoKey()
@@ -904,6 +920,7 @@ void CreatureDave::calculateDoKey()
             if(s_State.find("right") == 0) where = "right";
             else where = "left";
             s_State = where + "jumpup";
+            s_GameClass->s_Data->s_Sounds->play("jump");
         }
     }
     if( !(s_KeysState->s_KeyJump) )

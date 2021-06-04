@@ -54,7 +54,7 @@ class Game
         void play();
         void correctionAllScreens();
         void drawAll();
-        bool changeLevel(int, bool switchstate = true);
+        bool changeLevel(int, bool switchstate = true, bool playmusic = true);
         bool changeNextLevel(bool switchstate = true);
         void onTimer(unsigned int);
         void configureForGame();

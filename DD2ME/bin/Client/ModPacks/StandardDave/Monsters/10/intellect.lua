@@ -196,6 +196,7 @@ function mainFunc()
 			setMonsterValue(-1, "oldstate", statem)
 			setState(-1, "openmouth")
 			setMonsterValue(-1, "attackCounter", "32")
+			playSound("finalboss")
 		end
 		setMonsterValue(-1, "timeaction", tostring(timeaction))
 	end

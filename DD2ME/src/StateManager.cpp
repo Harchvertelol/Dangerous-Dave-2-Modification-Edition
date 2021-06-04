@@ -188,6 +188,7 @@ void StateManager::startState(int state)
 {
     if(state == 0)
     {
+        s_GameClass->s_Data->s_Sounds->play("game_start");
         if(s_GameClass->s_GameInfo->s_Stop == true && s_GameClass->s_GameInfo->s_DeathType == 0)
         {
             s_GameClass->s_GameInfo->s_CurrentLevel = 1;
@@ -199,6 +200,7 @@ void StateManager::startState(int state)
     }
     if(state == 1)
     {
+        s_GameClass->s_Data->s_Sounds->stop("game_start");
         s_GameClass->s_GameInfo->s_DopScreenCoordX = 0;
         s_GameClass->s_GameInfo->s_DopScreenCoordY = 0;
         s_MainscreenPar->s_StateMove = false;
@@ -212,6 +214,10 @@ void StateManager::startState(int state)
     }
     if(state == 3)
     {
+        s_GameClass->s_Data->s_Sounds->stop("before_first_level");
+        s_GameClass->s_Data->s_Sounds->stop("changelevel");
+        s_GameClass->s_Data->s_Sounds->stop("gameover");
+        s_GameClass->s_Data->s_Sounds->stop("death");
         s_GameClass->correctionAllScreens();
     }
 }
