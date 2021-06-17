@@ -1,7 +1,11 @@
 [sounds]
 1up=1up.wav
 ammo=ammo.wav
-bonus=bonus.wav
+bonus_1=bonus.wav
+bonus_2=bonus.wav
+bonus_3=bonus.wav
+bonus_4=bonus.wav
+bonus_5=bonus.wav
 death=death.wav
 fall=fall.wav
 finalboss=finalboss.wav
@@ -11,7 +15,8 @@ jump=jump.wav
 noammo=noammo.wav
 opendoor=opendoor.wav
 shoot_empty=shoot_empty.wav
-shoot_dave=shoot_dave.wav
+shoot_monster=shoot_monster.wav
+shoot_wall=shoot_monster.wav
 materialisation=materialisation.wav
 game_start=game_start.wav
 knife=knife.wav

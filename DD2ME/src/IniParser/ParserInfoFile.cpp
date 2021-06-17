@@ -37,14 +37,16 @@ bool IniParser::ParserInfoFile::writeParsedToFile(PostParsingStruct* pps, string
     return true;
 }
 
-PostParsingStruct* IniParser::ParserInfoFile::getParsedFromFile(string s_FileName, bool log)
+PostParsingStruct* IniParser::ParserInfoFile::getParsedFromFile(string s_FileName, PostParsingStruct* prs, bool log)
 {
     char buf[FILE_READ_SIZE_STR];
     string str;
     string NameMainVariable;
     string NameSecondaryVariable;
     string ValueSecondaryVariable;
-    PostParsingStruct* s_PrsStr = new PostParsingStruct;
+    PostParsingStruct* s_PrsStr = 0;
+    if(prs) s_PrsStr = prs;
+    else s_PrsStr = new PostParsingStruct;
     map<string, map<string, string> >* s_Variables = &s_PrsStr->getMapVariables();
     ifstream FileInfo(s_FileName.c_str());
     if(!FileInfo)
@@ -83,6 +85,11 @@ PostParsingStruct* IniParser::ParserInfoFile::getParsedFromFile(string s_FileNam
     }
     FileInfo.close();
     return s_PrsStr;
+}
+
+void IniParser::ParserInfoFile::addParsedFromFile(PostParsingStruct* prs, string filename, bool log)
+{
+    getParsedFromFile(filename, prs, log);
 }
 
 PostParsingStruct* IniParser::ParserInfoFile::getParsedFromString(string str_s, string splitter)

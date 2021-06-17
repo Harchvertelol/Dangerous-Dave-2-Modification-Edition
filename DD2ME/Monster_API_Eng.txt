@@ -85,6 +85,10 @@ The following functions can be described, but not necessarily:
 2) onKill (type), called upon the death of a monster, accepts the type of death of the monster. IMPORTANT: no matter what you do in
 of this function, the monster will be deleted. You can create a copy of it to continue its existence. But you can in function
 onDamage (dmg) check the number of his lives, and change it if you want not to kill the monster.
+3) getAPIVersion (), returns the API version for which the script code is written. You need to return a number.
+function getAPIVersion ()
+	return 0.1
+end
 
 Now we turn to the description of the intellect itself. Before describing the API, I will say a few words about animation.
 All animations are switched in the intelligence file. To do this, there is a function to switch to the next frame and

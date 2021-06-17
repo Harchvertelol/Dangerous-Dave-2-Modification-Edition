@@ -1,12 +1,14 @@
 #include "GameInfo.h"
 
+#include "Defines.h"
+
 #include "Game.h"
 
 GameInfo::GameInfo(Game* gameclass):
     s_GameClass(gameclass),
     s_CurrentLevel(1),
     s_GameState(0),
-    s_CurrentLives(4),
+    s_CurrentLives(GC_START_LIVES_NUMBER),
     s_ScreenCoordX(0),
     s_ScreenCoordY(0),
     s_DopScreenCoordX(0),
@@ -99,7 +101,7 @@ void GameInfo::playDeath()
             s_OldAnSt = s_GameClass->s_AnimationStep;
             if(s_CurrentLives <= 0)
             {
-                s_CurrentLives = 4;
+                s_CurrentLives = GC_START_LIVES_NUMBER;
                 if(s_CurrentLevel > 1) s_CurrentLevel--;
                 s_GameClass->s_Data->s_Sounds->play("gameover");
             }
@@ -121,7 +123,7 @@ void GameInfo::playDeath()
             s_OldAnSt = s_GameClass->s_AnimationStep;
             if(s_CurrentLives <= 0)
             {
-                s_CurrentLives = 4;
+                s_CurrentLives = GC_START_LIVES_NUMBER;
                 if(s_CurrentLevel > 1) s_CurrentLevel--;
                 s_GameClass->s_Data->s_Sounds->play("gameover");
             }
@@ -150,8 +152,15 @@ void GameInfo::drawDeathFrame(map<int, Bitmap*>* bt, map<int, Bitmap*>* img, int
 
 void GameInfo::correctionScreen(CreatureDave* dave)
 {
-    dave->s_ScreenCoordX = dave->s_CoordX - s_GameClass->s_DisplayStruct->s_ResolutionX/2;
-    dave->s_ScreenCoordY = dave->s_CoordY - s_GameClass->s_DisplayStruct->s_ResolutionY/2;
+    //dave->s_ScreenCoordX = dave->s_CoordX - s_GameClass->s_DisplayStruct->s_ResolutionX/2;
+    //dave->s_ScreenCoordY = dave->s_CoordY - s_GameClass->s_DisplayStruct->s_ResolutionY/2;
+
+    if(dave->s_CoordX - dave->s_ScreenCoordX < atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXleft").c_str()) * 16) dave->s_ScreenCoordX = dave->s_CoordX - atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXleft").c_str()) * 16;
+    else if( (dave->s_ScreenCoordX + s_GameClass->s_DisplayStruct->s_ResolutionX) - dave->s_CoordX < (atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXright").c_str()) - 1) * 16) dave->s_ScreenCoordX = dave->s_CoordX + (atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXright").c_str()) - 1) * 16 - s_GameClass->s_DisplayStruct->s_ResolutionX;
+
+    if(dave->s_CoordY - dave->s_ScreenCoordY < atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYup").c_str()) * 16) dave->s_ScreenCoordY = dave->s_CoordY - atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYup").c_str()) * 16;
+    else if( (dave->s_ScreenCoordY + s_GameClass->s_DisplayStruct->s_ResolutionY) - dave->s_CoordY < (2 + atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYdown").c_str())) * 16) dave->s_ScreenCoordY = dave->s_CoordY + (2 + atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYdown").c_str())) * 16 - s_GameClass->s_DisplayStruct->s_ResolutionY;
+
     if(dave->s_ScreenCoordX + s_GameClass->s_DisplayStruct->s_ResolutionX > 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) - 32) dave->s_ScreenCoordX = 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) - s_GameClass->s_DisplayStruct->s_ResolutionX - 32;
     if(dave->s_ScreenCoordX < 32) dave->s_ScreenCoordX = 32;
     if(dave->s_ScreenCoordY + s_GameClass->s_DisplayStruct->s_ResolutionY > 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeY") ).c_str() ) - 32) dave->s_ScreenCoordY = 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeY") ).c_str() ) - s_GameClass->s_DisplayStruct->s_ResolutionY - 32;

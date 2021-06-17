@@ -38,6 +38,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-std=c++11" />
 			<Add option="-DWIN32" />
 			<Add directory="../../Engines/SFML/include" />
 		</Compiler>

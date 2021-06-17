@@ -70,10 +70,18 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
         s_ModInfo = prs.getParsedFromFile("ModPacks/" + s_NameMod + "/mod.info");
         s_ModSettings = prs.getParsedFromFile("ModPacks/" + s_NameMod + "/settings.ini");
         if(!s_ModInfo || !s_ModSettings) return false;
+
+        int str_vers_cut = s_ModInfo->getValue("info", "gameversion").find("pb");
+        if(str_vers_cut == string::npos) str_vers_cut = s_ModInfo->getValue("info", "gameversion").find("b");
+        else if(str_vers_cut == string::npos) str_vers_cut = s_ModInfo->getValue("info", "gameversion").find("a");
+        else str_vers_cut = s_ModInfo->getValue("info", "gameversion").size();
+        if(stof(s_ModInfo->getValue("info", "gameversion").substr(0, str_vers_cut)) < NUMBER_CONSTANTS::NC_GAME_VERSION) cout << "Warning: this modpack was added for previously version of DD2:ME!" << endl;
+
         if(s_ModInfo->getValue("other", "inifile") != "")
         {
-            delete s_GameClass->s_IniFile;
-            s_GameClass->s_IniFile = prs.getParsedFromFile("ModPacks/" + s_NameMod + "/"+ s_ModInfo->getValue("other", "inifile"));
+            //delete s_GameClass->s_IniFile;
+            //s_GameClass->s_IniFile = prs.getParsedFromFile("ModPacks/" + s_NameMod + "/"+ s_ModInfo->getValue("other", "inifile"));
+            prs.addParsedFromFile(s_GameClass->s_IniFile, "ModPacks/" + s_NameMod + "/"+ s_ModInfo->getValue("other", "inifile"));
             if(!s_GameClass->s_IniFile) return false;
             s_IniFile = s_GameClass->s_IniFile;
             //...

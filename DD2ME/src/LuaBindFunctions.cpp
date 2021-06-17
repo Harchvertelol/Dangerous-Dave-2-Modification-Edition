@@ -674,15 +674,20 @@ int LuaBindFunctions::testLookDaveX(lua_State* s_Lua)
     if(keyMonster == -1) mnst = s_CurrentMonster;
     else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
     int frame = mnst->getFrame();
-    int SizeXMonster = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL, 16, -1);
-    int SizeYMonster = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL, 16, -1);
+    /*int SizeXMonster = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL, 16, -1);
+    int SizeYMonster = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL, 16, -1);*/
+    int SizeXMonster = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
+    int SizeYMonster = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
+    int realColCoordXMonster = mnst->s_CoordX + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
+    int realColCoordYMonster = mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
     int SizeYMonsterPix = SizeYMonster;
     int CoordY1, CoordY2;
     CoordY1 = s_GameClass->s_GameInfo->s_MyDave->s_CoordY;
-    CoordY2 = s_GameClass->s_GameInfo->s_MyDave->s_CoordY + 32;
+    CoordY2 = s_GameClass->s_GameInfo->s_MyDave->s_CoordY + 32 - 1;
     int CoordX = s_GameClass->s_GameInfo->s_MyDave->s_CoordX;
-    if( ( (CoordY1 >= mnst->s_CoordY && CoordY1 <= mnst->s_CoordY + SizeYMonsterPix) ||
-        (CoordY2 >= mnst->s_CoordY && CoordY2 <= mnst->s_CoordY + SizeYMonsterPix) ) )
+    if( ( (CoordY1 >= realColCoordYMonster && CoordY1 <= realColCoordYMonster + SizeYMonsterPix) ||
+        (CoordY2 >= realColCoordYMonster && CoordY2 <= realColCoordYMonster + SizeYMonsterPix) ||
+        (CoordY1 <= realColCoordYMonster && CoordY2 >= realColCoordYMonster + SizeYMonsterPix) ) )
     {
         if(CoordX - mnst->s_CoordX != 0) lua_pushnumber(s_Lua, (CoordX - mnst->s_CoordX)/abs(CoordX - mnst->s_CoordX));
         else lua_pushnumber(s_Lua, 1);
@@ -705,15 +710,20 @@ int LuaBindFunctions::testLookDaveY(lua_State* s_Lua)
     if(keyMonster == -1) mnst = s_CurrentMonster;
     else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
     int frame = mnst->getFrame();
-    int SizeXMonster = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL, 16, -1);
-    int SizeYMonster = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL, 16, -1);
+    /*int SizeXMonster = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL, 16, -1);
+    int SizeYMonster = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL, 16, -1);*/
+    int SizeXMonster = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
+    int SizeYMonster = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
+    int realColCoordXMonster = mnst->s_CoordX + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
+    int realColCoordYMonster = mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
     int SizeXMonsterPix = SizeXMonster;
     int CoordX1, CoordX2;
     CoordX1 = s_GameClass->s_GameInfo->s_MyDave->s_CoordX;
-    CoordX2 = s_GameClass->s_GameInfo->s_MyDave->s_CoordX + 16;
+    CoordX2 = s_GameClass->s_GameInfo->s_MyDave->s_CoordX + 16 - 1;
     int CoordY = s_GameClass->s_GameInfo->s_MyDave->s_CoordY;
-    if( ( (CoordX1 >= mnst->s_CoordX && CoordX1 <= mnst->s_CoordX + SizeXMonsterPix) ||
-        (CoordX2 >= mnst->s_CoordX && CoordX2 <= mnst->s_CoordX + SizeXMonsterPix) ) )
+    if( ( (CoordX1 >= realColCoordXMonster && CoordX1 <= realColCoordXMonster + SizeXMonsterPix) ||
+        (CoordX2 >= realColCoordXMonster && CoordX2 <= realColCoordXMonster + SizeXMonsterPix) ||
+        (CoordX1 <= realColCoordXMonster && CoordX2 >= realColCoordXMonster + SizeXMonsterPix) ) )
     {
         if(CoordY - mnst->s_CoordY != 0) lua_pushnumber(s_Lua, (CoordY - mnst->s_CoordY)/abs(CoordY - mnst->s_CoordY));
         else lua_pushnumber(s_Lua, 1);
