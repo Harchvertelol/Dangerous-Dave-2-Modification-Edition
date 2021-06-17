@@ -449,3 +449,41 @@ addPackImagesToFactoryTemporaryImage (pack, number, state, coordX, coordY, timeL
 	isAnimated - whether to animate the created image
 
 changeNextLevel () - change the level to the next.
+
+playSound (soundname, new_sound = true, restart = false, is_loop = false, offset_ms = 0) - start playing sound.
+	soundname - the name of the sound.
+	new_sound - whether to make the sound new (if not, then if it plays, it will either start over depending on
+	from the restart parameter, or nothing happens).
+	restart - whether to restart the sound if it is playing. Works only when new_sound = false.
+	is_loop - whether to loop the sound.
+	offset_ms - clipping at the beginning of the sound.
+	Returns the key of the sound being played (after the completion of playing, the key becomes invalid).
+	Example: playSound ("boom", 0, 1, 1, 2) - start playing the boom sound not like a new one, again, loop, with cutoff 2.
+
+stopSound (soundname) - stop playing sound.
+	soundname - the name of the sound.
+	Returns 1 if successful, 0 otherwise.
+	Example: stopSound ("boom") - stop the sound.
+
+pauseSound (soundname) - pause sound playback.
+	soundname - the name of the sound.
+	Returns 1 if successful, 0 otherwise.
+	Example: pauseSound ("boom") - pause the sound.
+
+playMusic (soundname, restart = false, is_loop = false, offset_ms = 0) - start playing sound.
+	soundname is the name of the music.
+	restart - whether to start the music again if it is playing.
+	is_loop - whether to loop the music.
+	offset_ms - cut off at the beginning of the music.
+	Returns 1 if successful, 0 otherwise.
+	Example: playMusic ("boom", 1, 1, 2) - start playing the boom sound again, loop, with cutoff 2.
+
+stopMusic (soundname) - stop playing music.
+	soundname is the name of the music.
+	Returns 1 if successful, 0 otherwise.
+	Example: stopMusic ("boom") - stop music.
+
+pauseMusic (soundname) - pause music playing.
+	soundname is the name of the music.
+	Returns 1 if successful, 0 otherwise.
+	Example: pauseMusic ("boom") - pause music.

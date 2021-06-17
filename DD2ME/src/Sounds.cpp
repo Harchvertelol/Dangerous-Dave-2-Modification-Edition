@@ -42,7 +42,7 @@ bool Sounds::load(string PathToSoundPack)
     int i = 0;
     for (iter1 = list_all_sounds.begin(), iter2 = list_all_sounds.end(); iter1 != iter2;)
     {
-        if(s_SoundsBuffersList.find(iter1->second) == s_SoundsBuffersList.end()) { s_SoundsBuffersList[iter1->second].loadFromFile(PathToSoundPack + iter1->second); i++; }
+        if(iter1->second != "" && s_SoundsBuffersList.find(iter1->second) == s_SoundsBuffersList.end()) { s_SoundsBuffersList[iter1->second].loadFromFile(PathToSoundPack + iter1->second); i++; }
         s_SoundsList[iter1->first].setBuffer(s_SoundsBuffersList[iter1->second]);
         s_SoundsList[iter1->first].setVolume(stof(s_GameClass->s_IniFile->getValue("audio", "soundvolume")));
         iter1++;
@@ -80,7 +80,7 @@ int Sounds::play(string name, bool new_sound, bool restart, bool is_loop, int of
         return s_MaxIdTempSoundsList - 1;
     }
     if(!restart && s_SoundsList[name].getStatus() == sf::SoundSource::Status::Playing) return -2;
-    s_SoundsList[name].setPlayingOffset(sf::milliseconds(offset_ms));
+    if(offset_ms != 0) s_SoundsList[name].setPlayingOffset(sf::milliseconds(offset_ms));
     s_SoundsList[name].setLoop(is_loop);
     s_SoundsList[name].play();
     return -1;

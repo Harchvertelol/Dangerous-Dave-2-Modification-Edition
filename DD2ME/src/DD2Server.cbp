@@ -75,6 +75,8 @@
 		<Unit filename="MainServer.h" />
 		<Unit filename="Monsters.cpp" />
 		<Unit filename="Monsters.h" />
+		<Unit filename="Music.cpp" />
+		<Unit filename="Music.h" />
 		<Unit filename="NetClient/NetClient.cpp" />
 		<Unit filename="NetClient/NetClient.h" />
 		<Unit filename="NetClient/NetClientCallback.cpp" />

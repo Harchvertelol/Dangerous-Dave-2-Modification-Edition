@@ -183,6 +183,7 @@ bool Game::changeLevel(int number, bool switchstate, bool playmusic)
     s_GameInfo->s_ForcedChangeLevel = false;
     s_GameInfo->s_Stop = false;
     s_GameInfo->s_MyDave->s_Cartridges = s_GameInfo->s_MyDave->s_MaxCartridges;
+    s_Data->s_Music->stopAllMusic();
     if(switchstate == true) s_StateManager->switchState(2, false);
     if(playmusic)
     {

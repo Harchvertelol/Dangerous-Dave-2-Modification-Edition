@@ -281,7 +281,17 @@ class Launcher
             if(s_DD2Ini->getValue("resources", "screenpack") != "") screenpack->setSelectedItem(s_DD2Ini->getValue("resources", "screenpack"));
             else screenpack->setSelectedItem("");
 
-            // SoundPacks
+            tgui::ComboBox::Ptr soundpack = s_TGUI.get<tgui::ComboBox>("Soundpack");
+            vector<string> soundpacks = getDirs("PacksData/SoundPacks", "sounds.info");
+            for(unsigned int i = 0; i < soundpacks.size(); i++) soundpack->addItem(soundpacks[i]);
+            if(s_DD2Ini->getValue("resources", "soundpack") != "") soundpack->setSelectedItem(s_DD2Ini->getValue("resources", "soundpack"));
+            else soundpack->setSelectedItem("");
+
+            tgui::ComboBox::Ptr musicpack = s_TGUI.get<tgui::ComboBox>("Musicpack");
+            vector<string> musicpacks = getDirs("PacksData/MusicPacks", "music.info");
+            for(unsigned int i = 0; i < musicpacks.size(); i++) musicpack->addItem(musicpacks[i]);
+            if(s_DD2Ini->getValue("resources", "musicpack") != "") musicpack->setSelectedItem(s_DD2Ini->getValue("resources", "musicpack"));
+            else musicpack->setSelectedItem("");
 
             tgui::ComboBox::Ptr davepack = s_TGUI.get<tgui::ComboBox>("Davepack");
             vector<string> davepacks = getDirs("PacksData/DavePacks", "dave.dat");

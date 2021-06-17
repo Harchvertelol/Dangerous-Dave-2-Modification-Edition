@@ -28,6 +28,10 @@ class LuaBindFunctions
         int playSound(lua_State* s_Lua);
         int stopSound(lua_State* s_Lua);
         int pauseSound(lua_State* s_Lua);
+
+        int playMusic(lua_State* s_Lua);
+        int stopMusic(lua_State* s_Lua);
+        int pauseMusic(lua_State* s_Lua);
         //Lua Functions Monsters
         int setState(lua_State* s_Lua);
         int getState(lua_State* s_Lua);

@@ -3,5 +3,6 @@
 	<Workspace title="Workspace">
 		<Project filename="DD2Client.cbp" />
 		<Project filename="DD2Server.cbp" />
+		<Project filename="../../DD2Launcher/Launcher/Launcher.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

@@ -1,8 +1,15 @@
 Renderer.1 {
-    backgroundcolor = transparent;
-    bordercolor = #3C3C3C;
-    borders = (0, 0, 0, 0);
+    arrowbackgroundcolor = #F5F5F5;
+    arrowbackgroundcolorhover = white;
+    arrowcolor = #3C3C3C;
+    arrowcolorhover = black;
+    backgroundcolor = #F5F5F5;
+    bordercolor = black;
+    borders = (1, 1, 1, 1);
+    padding = (0, 0, 0, 0);
     textcolor = #3C3C3C;
+    texturearrow = None;
+    texturearrowhover = None;
     texturebackground = None;
 }
 
@@ -55,9 +62,39 @@ Renderer.3 {
 }
 
 Renderer.4 {
+    backgroundcolor = transparent;
+    bordercolor = #3C3C3C;
+    borders = (0, 0, 0, 0);
+    textcolor = #3C3C3C;
+    texturebackground = None;
 }
 
 Renderer.5 {
+    backgroundcolor = #F5F5F5;
+    backgroundcolordisabled = #E6E6E6;
+    backgroundcolordown = #EBEBEB;
+    backgroundcolorhover = white;
+    bordercolor = #3C3C3C;
+    bordercolordisabled = #7D7D7D;
+    bordercolordown = black;
+    bordercolorfocused = #1E1EB4;
+    bordercolorhover = black;
+    borders = (1, 1, 1, 1);
+    textcolor = #3C3C3C;
+    textcolordisabled = #7D7D7D;
+    textcolordown = black;
+    textcolorhover = black;
+    texture = None;
+    texturedisabled = None;
+    texturedown = None;
+    texturefocused = None;
+    texturehover = None;
+}
+
+Renderer.6 {
+}
+
+Renderer.7 {
     backgroundcolor = #F5F5F5;
     backgroundcolordisabled = #E6E6E6;
     backgroundcolorhover = white;
@@ -83,43 +120,6 @@ Renderer.5 {
     textureuncheckedhover = None;
 }
 
-Renderer.6 {
-    backgroundcolor = #F5F5F5;
-    backgroundcolordisabled = #E6E6E6;
-    backgroundcolordown = #EBEBEB;
-    backgroundcolorhover = white;
-    bordercolor = #3C3C3C;
-    bordercolordisabled = #7D7D7D;
-    bordercolordown = black;
-    bordercolorfocused = #1E1EB4;
-    bordercolorhover = black;
-    borders = (1, 1, 1, 1);
-    textcolor = #3C3C3C;
-    textcolordisabled = #7D7D7D;
-    textcolordown = black;
-    textcolorhover = black;
-    texture = None;
-    texturedisabled = None;
-    texturedown = None;
-    texturefocused = None;
-    texturehover = None;
-}
-
-Renderer.7 {
-    arrowbackgroundcolor = #F5F5F5;
-    arrowbackgroundcolorhover = white;
-    arrowcolor = #3C3C3C;
-    arrowcolorhover = black;
-    backgroundcolor = #F5F5F5;
-    bordercolor = black;
-    borders = (1, 1, 1, 1);
-    padding = (0, 0, 0, 0);
-    textcolor = #3C3C3C;
-    texturearrow = None;
-    texturearrowhover = None;
-    texturebackground = None;
-}
-
 Label.DifficultyText {
     AutoSize = true;
     Position = (20, 10);
@@ -128,7 +128,7 @@ Label.DifficultyText {
     Text = "Difficulty:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &1;
+    renderer = &4;
 }
 
 Tabs.Difficulty {
@@ -164,7 +164,7 @@ CheckBox.Standard {
     Size = (18, 18);
     Text = "Using standard modpack";
     TextSize = 13;
-    renderer = &5;
+    renderer = &7;
 }
 
 CheckBox.Pooling {
@@ -172,7 +172,7 @@ CheckBox.Pooling {
     Size = (18, 18);
     Text = "Pooling resources";
     TextSize = 13;
-    renderer = &5;
+    renderer = &7;
 }
 
 Label.ModpackText {
@@ -183,7 +183,7 @@ Label.ModpackText {
     Text = "Modpack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &1;
+    renderer = &4;
 }
 
 ComboBox.Modpack {
@@ -195,7 +195,7 @@ ComboBox.Modpack {
     Position = (120, 200);
     Size = (160, 22);
     TextSize = 13;
-    renderer = &7;
+    renderer = &1;
 }
 
 Label.LevelpackText {
@@ -206,7 +206,7 @@ Label.LevelpackText {
     Text = "Levelpack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &1;
+    renderer = &4;
 }
 
 ComboBox.Levelpack {
@@ -218,7 +218,7 @@ ComboBox.Levelpack {
     Position = (120, 280);
     Size = (160, 22);
     TextSize = 13;
-    renderer = &7;
+    renderer = &1;
 }
 
 Label.TexturepackText {
@@ -229,7 +229,7 @@ Label.TexturepackText {
     Text = "Texturepack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &1;
+    renderer = &4;
 }
 
 ComboBox.Texturepack {
@@ -241,7 +241,7 @@ ComboBox.Texturepack {
     Position = (120, 320);
     Size = (160, 22);
     TextSize = 13;
-    renderer = &7;
+    renderer = &1;
 }
 
 Label.MonsterpackText {
@@ -252,7 +252,7 @@ Label.MonsterpackText {
     Text = "Monsterpack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &1;
+    renderer = &4;
 }
 
 ComboBox.Monsterpack {
@@ -264,7 +264,7 @@ ComboBox.Monsterpack {
     Position = (120, 360);
     Size = (160, 22);
     TextSize = 13;
-    renderer = &7;
+    renderer = &1;
 }
 
 Label.BonuspackText {
@@ -275,7 +275,7 @@ Label.BonuspackText {
     Text = "Bonuspack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &1;
+    renderer = &4;
 }
 
 ComboBox.Bonuspack {
@@ -287,7 +287,7 @@ ComboBox.Bonuspack {
     Position = (120, 400);
     Size = (160, 22);
     TextSize = 13;
-    renderer = &7;
+    renderer = &1;
 }
 
 Label.ScreenpackText {
@@ -298,7 +298,7 @@ Label.ScreenpackText {
     Text = "Screenpack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &1;
+    renderer = &4;
 }
 
 Label.SoundpackText {
@@ -309,18 +309,18 @@ Label.SoundpackText {
     Text = "Soundpack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &1;
+    renderer = &4;
 }
 
 Label.DavepackText {
     AutoSize = true;
-    Position = (20, 520);
+    Position = (20, 560);
     ScrollbarPolicy = Never;
     Size = (72.2, 18);
     Text = "Davepack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &1;
+    renderer = &4;
 }
 
 ComboBox.Screenpack {
@@ -332,7 +332,7 @@ ComboBox.Screenpack {
     Position = (120, 440);
     Size = (160, 22);
     TextSize = 13;
-    renderer = &7;
+    renderer = &1;
 }
 
 ComboBox.Soundpack {
@@ -344,7 +344,7 @@ ComboBox.Soundpack {
     Position = (120, 480);
     Size = (160, 22);
     TextSize = 13;
-    renderer = &7;
+    renderer = &1;
 }
 
 ComboBox.Davepack {
@@ -353,10 +353,10 @@ ComboBox.Davepack {
     Items = [""];
     ItemsToDisplay = 0;
     MaximumItems = 0;
-    Position = (120, 520);
+    Position = (120, 560);
     Size = (160, 22);
     TextSize = 13;
-    renderer = &7;
+    renderer = &1;
 }
 
 Button.SaveLaunchGame {
@@ -393,7 +393,7 @@ Button.SaveConfig {
     Size = (160, 38.6667);
     Text = "Save config";
     TextSize = 18;
-    renderer = &6;
+    renderer = &5;
 }
 
 Button.ResetToDefault {
@@ -401,7 +401,7 @@ Button.ResetToDefault {
     Size = (160, 38.6667);
     Text = "Reset to default";
     TextSize = 18;
-    renderer = &6;
+    renderer = &5;
 }
 
 Button.EdAllVar {
@@ -409,7 +409,7 @@ Button.EdAllVar {
     Size = (250, 51.3333);
     Text = "Edit all variables (expert)";
     TextSize = 18;
-    renderer = &6;
+    renderer = &5;
 }
 
 Button.GoToServer {
@@ -418,7 +418,7 @@ Button.GoToServer {
     Size = (250, 51.3333);
     Text = "Go to server...";
     TextSize = 18;
-    renderer = &6;
+    renderer = &5;
 }
 
 Label.TextDifficulty {
@@ -443,7 +443,7 @@ Button.Keys {
     Size = (160, 32.8533);
     Text = Keys;
     TextSize = 18;
-    renderer = &6;
+    renderer = &5;
 }
 
 Button.Exit {
@@ -481,14 +481,14 @@ Button.Editor {
     Size = (160, 38.6667);
     Text = Editor;
     TextSize = 18;
-    renderer = &6;
+    renderer = &5;
 }
 
 Group.RadioButtonsDaveVersion {
     Enabled = false;
     Position = (220, 120);
     Size = (310, 60);
-    renderer = &4;
+    renderer = &6;
 
     RadioButton.DD1 {
         Position = (0, 10);
@@ -528,7 +528,7 @@ Group.CustomDifficlutyField {
     Enabled = false;
     Position = (20, 40);
     Size = (570, 90);
-    renderer = &4;
+    renderer = &6;
 
     Label.TextLivesDecreasePerDeath {
         AutoSize = true;
@@ -537,7 +537,7 @@ Group.CustomDifficlutyField {
         Text = "Decrease lives per death:";
         TextSize = 13;
         VerticalAlignment = Center;
-        renderer = &1;
+        renderer = &4;
     }
 
     EditBox.LivesMinusPerDeath {
@@ -551,7 +551,7 @@ Group.CustomDifficlutyField {
     Group.RadioButtonsOnDeath {
         Position = (0, 30);
         Size = (570, 20);
-        renderer = &4;
+        renderer = &6;
 
         RadioButton.NoReloadLevel {
             Position = (80, 0);
@@ -593,7 +593,7 @@ Group.CustomDifficlutyField {
             Size = (67.2, 18);
             Text = "On death:";
             TextSize = 13;
-            renderer = &1;
+            renderer = &4;
         }
     }
 
@@ -605,7 +605,7 @@ Group.CustomDifficlutyField {
         Text = "Health points:";
         TextSize = 13;
         VerticalAlignment = Center;
-        renderer = &1;
+        renderer = &4;
     }
 
     EditBox.HealthPoints {
@@ -615,4 +615,27 @@ Group.CustomDifficlutyField {
         TextSize = 13;
         renderer = &3;
     }
+}
+
+Label.MusicPackText {
+    AutoSize = true;
+    Position = (20, 520);
+    ScrollbarPolicy = Never;
+    Size = (73.2, 18);
+    Text = "Musicpack:";
+    TextSize = 13;
+    VerticalAlignment = Center;
+    renderer = &4;
+}
+
+ComboBox.Musicpack {
+    ChangeItemOnScroll = true;
+    ExpandDirection = Down;
+    Items = [""];
+    ItemsToDisplay = 0;
+    MaximumItems = 0;
+    Position = (120, 520);
+    Size = (160, 22);
+    TextSize = 13;
+    renderer = &1;
 }

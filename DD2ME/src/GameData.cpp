@@ -15,6 +15,7 @@ GameData::GameData(Game* gameclass):
     PathToBonusPack(""),
     PathToScreenPack(""),
     PathToSoundPack(""),
+    PathToMusicPack(""),
     PathToLevelPack(""),
     PathToDavePack(""),
     s_ModInfo(0),
@@ -29,6 +30,7 @@ GameData::GameData(Game* gameclass):
     s_Dave = new Dave(gameclass);
     s_Monsters = new Monsters(gameclass);
     s_Sounds = new Sounds(gameclass);
+    s_Music = new Music(gameclass);
 }
 
 GameData::~GameData()
@@ -42,6 +44,7 @@ GameData::~GameData()
     if(s_Dave != 0) delete s_Dave;
     if(s_Monsters != 0) delete s_Monsters;
     if(s_Sounds != 0) delete s_Sounds;
+    if(s_Music != 0) delete s_Music;
 }
 
 void GameData::deleteAllGDIObjects()
@@ -61,6 +64,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     PathToBonusPack = "PacksData/BonusPacks/" + s_IniFile->getValue("resources", "bonuspack") + "/";
     PathToScreenPack = "PacksData/ScreenPacks/" + s_IniFile->getValue("resources", "screenpack") + "/";
     PathToSoundPack = "PacksData/SoundPacks/" + s_IniFile->getValue("resources", "soundpack") + "/";
+    PathToMusicPack = "PacksData/MusicPacks/" + s_IniFile->getValue("resources", "musicpack") + "/";
     PathToLevelPack = "PacksData/LevelPacks/" + s_IniFile->getValue("resources", "levelpack") + "/";
     PathToDavePack = "PacksData/DavePacks/" + s_IniFile->getValue("resources", "davepack") + "/";
     if( s_IniFile->getValue("resources", "standard") == "true" ) s_IniFile->getMapVariables()["resources"]["modpack"] = "StandardDave";
@@ -113,6 +117,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             PathToBonusPack = "ModPacks/" + s_NameMod + "/Bonuses/";
             PathToScreenPack = "ModPacks/" + s_NameMod + "/Screens/";
             PathToSoundPack = "ModPacks/" + s_NameMod + "/Sounds/";
+            PathToMusicPack = "ModPacks/" + s_NameMod + "/Music/";
             PathToLevelPack = "ModPacks/" + s_NameMod + "/Levels/";
             PathToDavePack = "ModPacks/" + s_NameMod + "/Dave/";
         }
@@ -123,6 +128,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             if(s_IniFile->getValue("resources", "bonuspack") == "") PathToBonusPack = "ModPacks/" + s_NameMod + "/Bonuses/";
             if(s_IniFile->getValue("resources", "screenpack") == "") PathToScreenPack = "ModPacks/" + s_NameMod + "/Screens/";
             if(s_IniFile->getValue("resources", "soundpack") == "") PathToSoundPack = "ModPacks/" + s_NameMod + "/Sounds/";
+            if(s_IniFile->getValue("resources", "musicpack") == "") PathToMusicPack = "ModPacks/" + s_NameMod + "/Music/";
             if(s_IniFile->getValue("resources", "levelpack") == "") PathToLevelPack = "ModPacks/" + s_NameMod + "/Levels/";
             if(s_IniFile->getValue("resources", "davepack") == "") PathToDavePack = "ModPacks/" + s_NameMod + "/Dave/";
         }
@@ -135,6 +141,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     if( !s_Dave->load(PathToDavePack) ) return false;
     if( !s_Monsters->load(PathToMonsterPack) ) return false;
     if( !s_Sounds->load(PathToSoundPack) ) return false;
+    if( !s_Music->load(PathToMusicPack) ) return false;
     return true;
 }
 

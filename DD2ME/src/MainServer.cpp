@@ -86,10 +86,11 @@ bool MainServer::load()
             string bonuspack = s_ServerList->getValue(iter->first, "bonuspack");
             string screenpack = s_ServerList->getValue(iter->first, "screenpack");
             string soundpack = s_ServerList->getValue(iter->first, "soundpack");
+            string musicpack = s_ServerList->getValue(iter->first, "musicpack");
             string levelpack = s_ServerList->getValue(iter->first, "levelpack");
             string davepack = s_ServerList->getValue(iter->first, "davepack");
             bool changeAll = false;
-            if(modpack != "standard" || texturepack != "" || monsterpack != "" || bonuspack != "" || screenpack != "" || soundpack != "" || levelpack != "" || davepack != "")
+            if(modpack != "standard" || texturepack != "" || monsterpack != "" || bonuspack != "" || screenpack != "" || soundpack != "" || soundpack == "" || levelpack != "" || davepack != "")
             {
                 if(gm->s_IniFile->getValue("resources", "pooling") == "false")
                 {
@@ -105,6 +106,7 @@ bool MainServer::load()
             if(changeAll || bonuspack != "") gm->s_IniFile->setValue("resources", "bonuspack", bonuspack);
             if(changeAll || screenpack != "") gm->s_IniFile->setValue("resources", "screenpack", screenpack);
             if(changeAll || soundpack != "") gm->s_IniFile->setValue("resources", "soundpack", soundpack);
+            if(changeAll || musicpack != "") gm->s_IniFile->setValue("resources", "musicpack", musicpack);
             if(changeAll || levelpack != "") gm->s_IniFile->setValue("resources", "levelpack", levelpack);
             if(changeAll || davepack != "") gm->s_IniFile->setValue("resources", "davepack", davepack);
             //...

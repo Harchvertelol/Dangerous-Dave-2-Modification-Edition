@@ -38,12 +38,12 @@
 	<stdio.h>
 	"lua.h"
 
-1618874328 e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.h
+1623941559 e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.h
 	"lua/lua.hpp"
 	<math.h>
 	"CreatureMonster.h"
 
-1590186265 e:\github\dangerous-dave-2-modification-edition\dd2me\src\game.h
+1622678535 e:\github\dangerous-dave-2-modification-edition\dd2me\src\game.h
 	"DisplayStruct.h"
 	"IniParser/PostParsingStruct.h"
 	"GameData.h"
@@ -62,13 +62,15 @@
 	<map>
 	<string>
 
-1618871440 e:\github\dangerous-dave-2-modification-edition\dd2me\src\gamedata.h
+1623935500 e:\github\dangerous-dave-2-modification-edition\dd2me\src\gamedata.h
 	"Level.h"
 	"Textures.h"
 	"Bonuses.h"
 	"Screens.h"
 	"Dave.h"
 	"Monsters.h"
+	"Sounds.h"
+	"Music.h"
 
 1589320124 e:\github\dangerous-dave-2-modification-edition\dd2me\src\level.h
 	<map>
@@ -179,7 +181,7 @@
 	"Defines.h"
 	"Square.h"
 
-1622666038 e:\github\dangerous-dave-2-modification-edition\dd2me\src\defines.h
+1623931098 e:\github\dangerous-dave-2-modification-edition\dd2me\src\defines.h
 	<string>
 
 1590012986 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\bonuses.cpp
@@ -188,7 +190,7 @@
 	"WorkFunctions.h"
 	"Game.h"
 
-1419363618 e:\github\dangerous-dave-2-modification-edition\dd2me\src\iniparser\parserinfofile.h
+1623930423 e:\github\dangerous-dave-2-modification-edition\dd2me\src\iniparser\parserinfofile.h
 	<string>
 	"PostParsingStruct.h"
 
@@ -841,4 +843,12 @@
 	<sys/stat.h>
 	<io.h>
 	<direct.h>
+
+1623938274 e:\github\dangerous-dave-2-modification-edition\dd2me\src\sounds.h
+	<SFML/Audio.hpp>
+	"IniParser/PostParsingStruct.h"
+
+1623942296 e:\github\dangerous-dave-2-modification-edition\dd2me\src\music.h
+	<SFML/Audio.hpp>
+	"IniParser/PostParsingStruct.h"
 

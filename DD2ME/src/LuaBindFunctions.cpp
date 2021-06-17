@@ -1839,7 +1839,7 @@ int LuaBindFunctions::playSound(lua_State* s_Lua)
 
 static int __stopSound(lua_State* s_Lua)
 {
-    return s_LBF->playSound(s_Lua);
+    return s_LBF->stopSound(s_Lua);
 }
 
 int LuaBindFunctions::stopSound(lua_State* s_Lua)
@@ -1858,7 +1858,7 @@ int LuaBindFunctions::stopSound(lua_State* s_Lua)
 
 static int __pauseSound(lua_State* s_Lua)
 {
-    return s_LBF->playSound(s_Lua);
+    return s_LBF->pauseSound(s_Lua);
 }
 
 int LuaBindFunctions::pauseSound(lua_State* s_Lua)
@@ -1875,6 +1875,69 @@ int LuaBindFunctions::pauseSound(lua_State* s_Lua)
     return 0;
 }
 
+static int __playMusic(lua_State* s_Lua)
+{
+    return s_LBF->playMusic(s_Lua);
+}
+
+int LuaBindFunctions::playMusic(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n != 1 && n != 2 && n != 3 && n != 4)
+    {
+        cout<<"Error! Number of arguments of function \"playMusic\" is incorrect!"<<endl;
+        return 0;
+    }
+    string musicname = lua_tostring(s_Lua, 1);
+    int restart = 0;
+    int loop = 0;
+    int offset_ms = 0;
+    if(n > 1) restart = lua_tonumber(s_Lua, 3);
+    if(n > 2) loop = lua_tonumber(s_Lua, 4);
+    if(n > 3) offset_ms = lua_tonumber(s_Lua, 5);
+    bool result_play = s_GameClass->s_Data->s_Music->play(musicname, restart, loop, offset_ms);
+    lua_pushnumber(s_Lua, result_play);
+    return 0;
+}
+
+static int __stopMusic(lua_State* s_Lua)
+{
+    return s_LBF->stopMusic(s_Lua);
+}
+
+int LuaBindFunctions::stopMusic(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n != 1)
+    {
+        cout<<"Error! Number of arguments of function \"stopMusic\" is incorrect!"<<endl;
+        return 0;
+    }
+    string musicname = lua_tostring(s_Lua, 1);
+    bool result_stop = s_GameClass->s_Data->s_Music->stop(musicname);
+    lua_pushnumber(s_Lua, result_stop);
+    return 0;
+}
+
+static int __pauseMusic(lua_State* s_Lua)
+{
+    return s_LBF->pauseMusic(s_Lua);
+}
+
+int LuaBindFunctions::pauseMusic(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n != 1)
+    {
+        cout<<"Error! Number of arguments of function \"pauseMusic\" is incorrect!"<<endl;
+        return 0;
+    }
+    string musicname = lua_tostring(s_Lua, 1);
+    bool result_stop = s_GameClass->s_Data->s_Music->pause(musicname);
+    lua_pushnumber(s_Lua, result_stop);
+    return 0;
+}
+
 void LuaBindFunctions::registerFunctionsAll(lua_State* s_Lua)
 {
     lua_register(s_Lua, "getMainValue", &__getMainValue);
@@ -1884,4 +1947,7 @@ void LuaBindFunctions::registerFunctionsAll(lua_State* s_Lua)
     lua_register(s_Lua, "playSound", &__playSound);
     lua_register(s_Lua, "stopSound", &__stopSound);
     lua_register(s_Lua, "pauseSound", &__pauseSound);
+    lua_register(s_Lua, "playMusic", &__playMusic);
+    lua_register(s_Lua, "stopMusic", &__stopMusic);
+    lua_register(s_Lua, "pauseMusic", &__pauseMusic);
 }
