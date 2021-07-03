@@ -2,10 +2,6 @@
 1up=1up.wav
 ammo=ammo.wav
 bonus_1=bonus.wav
-bonus_2=bonus.wav
-bonus_3=bonus.wav
-bonus_4=bonus.wav
-bonus_5=bonus.wav
 death=death.wav
 fall=fall.wav
 finalboss=finalboss.wav

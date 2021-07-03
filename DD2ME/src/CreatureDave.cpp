@@ -633,7 +633,7 @@ void CreatureDave::testGetBonuses()
                     s_GameClass->s_GameInfo->s_CurrentLives += numb_ups;
                     s_GameClass->s_Data->s_Sounds->play("1up");
                 }
-                else s_GameClass->s_Data->s_Sounds->play("bonus_" + WorkFunctions::ConvertFunctions::itos(bonus));
+                else if( !s_GameClass->s_Data->s_Sounds->play("bonus_" + WorkFunctions::ConvertFunctions::itos(bonus)) ) s_GameClass->s_Data->s_Sounds->play("bonus_1");
                 s_GameClass->s_FactoryTmpImgs->addImage(s_GameClass->s_Data->s_Bonuses->s_BonusesBitmaps[bonus-1][numberofframes+1],
                                                         s_GameClass->s_Data->s_Bonuses->s_BonusesCache[bonus-1][numberofframes+1],
                                                         TileCoordX[i] + s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus].s_XL,

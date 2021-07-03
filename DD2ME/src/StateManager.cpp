@@ -2,6 +2,8 @@
 
 #include "Defines.h"
 
+#include "WorkFunctions.h"
+
 #include "Game.h"
 
 StateManager::StateManager(Game* gameclass):
@@ -224,7 +226,7 @@ void StateManager::startState(int state)
     }
     if(state == 3)
     {
-        s_GameClass->s_Data->s_Music->play("in_game");
+        if( !s_GameClass->s_Data->s_Music->play("level_" + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel)) ) s_GameClass->s_Data->s_Music->play("in_game");
         s_GameClass->s_Data->s_Sounds->stop("before_first_level");
         s_GameClass->s_Data->s_Sounds->stop("changelevel");
         s_GameClass->s_Data->s_Sounds->stop("gameover");

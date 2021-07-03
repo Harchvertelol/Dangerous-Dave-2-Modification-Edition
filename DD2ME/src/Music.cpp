@@ -48,12 +48,12 @@ bool Music::load(string PathToMusicPack)
 bool Music::play(string name, bool restart, bool is_loop, int offset_ms)
 {
     if(s_GameClass->s_IniFile->getValue("audio", "music") != "true") return 0;
-    if(s_MusicList.find(name) == s_MusicList.end()) return 0;
+    if(s_MusicList.find(name) == s_MusicList.end()) return false;
     if(!restart && s_MusicList[name].getStatus() == sf::SoundSource::Status::Playing) return false;
     if(offset_ms != 0) s_MusicList[name].setPlayingOffset(sf::milliseconds(offset_ms));
     s_MusicList[name].setLoop(is_loop);
     s_MusicList[name].play();
-    return false;
+    return true;
 }
 
 bool Music::stop(string name)
