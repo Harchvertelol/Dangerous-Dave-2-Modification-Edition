@@ -79,12 +79,12 @@ bool Textures::load(string PathToTexturePack)
     ParserInfoFile prs;
     s_TilesInfo = prs.getParsedFromFile(PathToTexturePack + "tiles.info");
     if(!s_TilesInfo) return false;
-    int numberofframes = atoi( s_TilesInfo->getValue("info", "numberofframes").c_str() );
-    for(int i = 0; i < numberofframes; i++) s_Tiles[i] = new Bitmap(PathToTexturePack + "tiles_" + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp");
+    int numberoftilesets = atoi( s_TilesInfo->getValue("info", "numberoftilesets").c_str() );
+    for(int i = 0; i < numberoftilesets; i++) s_Tiles[i] = new Bitmap(PathToTexturePack + "tiles_" + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp");
     int sizeXTiles = atoi( s_TilesInfo->getValue("info", "sizeX").c_str() );
     int sizeYTiles = atoi( s_TilesInfo->getValue("info", "sizeY").c_str() );
     int numberoftiles = sizeXTiles * sizeYTiles;
-    for(int i = 0; i < numberofframes; i++)
+    for(int i = 0; i < numberoftilesets; i++)
     {
         ifstream mask( (PathToTexturePack + "tiles_" + WorkFunctions::ConvertFunctions::itos(i+1) + ".mask").c_str() );
         if(!mask) return false;
@@ -96,28 +96,63 @@ bool Textures::load(string PathToTexturePack)
         mask.close();
     }
     int numberofdeathframes;
-    for(int j = 0; j < numberofframes; j++)
+    for(int j = 0; j < numberoftilesets; j++)
         for(int i = 0; i < numberoftiles; i++)
         {
             if(s_MaskTiles[j][i] == DEATH)
             {
-                if(!s_DeathTilesInfo[i]) s_DeathTilesInfo[i] = prs.getParsedFromFile(PathToTexturePack + "DeathTiles/" + WorkFunctions::ConvertFunctions::itos(i) + "/tile.info");
+                if(!s_DeathTilesInfo[i]) s_DeathTilesInfo[i] = prs.getParsedFromFile(PathToTexturePack + "DeathTiles/" + WorkFunctions::ConvertFunctions::itos(j + 1) + "/" + WorkFunctions::ConvertFunctions::itos(i) + "/tile.info");
                 if(!s_DeathTilesInfo[i]) return false;
-                numberofdeathframes = atoi( s_DeathTilesInfo[i]->getValue("info","numberofframes").c_str() );
+                numberofdeathframes = atoi( s_DeathTilesInfo[i]->getValue("info", "numberofframes").c_str() );
                 for(int q = 0; q < numberofdeathframes; q++)
-                    if(!s_DeathTiles[i][q]) s_DeathTiles[i][q] = new Bitmap(PathToTexturePack + "DeathTiles/" + WorkFunctions::ConvertFunctions::itos(i) + "/" + WorkFunctions::ConvertFunctions::itos(q+1) + ".bmp");
+                    if(!s_DeathTiles[i][q]) s_DeathTiles[i][q] = new Bitmap(PathToTexturePack + "DeathTiles/" + WorkFunctions::ConvertFunctions::itos(j + 1) + "/" + WorkFunctions::ConvertFunctions::itos(i) + "/" + WorkFunctions::ConvertFunctions::itos(q+1) + ".bmp");
             }
         }
+
+    int numberofanimations = atoi( s_TilesInfo->getValue("info", "numberofaniomations").c_str() );
+    for(int i = 0; i < numberofanimations; i++)
+    {
+        int numberofframestile = atoi( s_TilesInfo->getValue("animation_" + WorkFunctions::ConvertFunctions::itos(i + 1), "numberofframes").c_str() );
+        if(!numberofframestile) return false;
+        TileAnimationInfo tmptai;
+        for(int j = 0; j < numberofframestile; j++)
+        {
+            int tile = atoi( s_TilesInfo->getValue("animation_" + WorkFunctions::ConvertFunctions::itos(i + 1), "frame" + WorkFunctions::ConvertFunctions::itos(j + 1)).c_str() );
+            int sleep = atoi( s_TilesInfo->getValue("animation_" + WorkFunctions::ConvertFunctions::itos(i + 1), "sleep" + WorkFunctions::ConvertFunctions::itos(j + 1)).c_str() );
+            TileAnimationStepInfo tmptasi;
+            tmptasi.s_TileID = tile;
+            tmptasi.s_AnimationSleep = sleep;
+            tmptai.s_TileFrames.push_back(tmptasi);
+            tmptai.s_GeneralAnimationSteps += sleep;
+        }
+        s_TilesAnimationInfo[0][tmptai.s_TileFrames[0].s_TileID] = tmptai;
+    }
     return true;
 }
 
-int Textures::getFrame()
+int Textures::getCurrentAnimationTileID(int tile)
 {
-    int numberofframes = atoi( s_TilesInfo->getValue("info", "numberofframes").c_str() );
-    int frame;
-    if(s_GameClass->s_IniFile->getValue("video", "tileanimation") == "true") frame = s_GameClass->s_AnimationStep%numberofframes;
-    else frame = 0;
-    return frame;
+    return getTileIDByFrame(tile, getFrame(tile));
+}
+
+int Textures::getTileIDByFrame(int tile, int frame)
+{
+    if(s_TilesAnimationInfo[0].find(tile) == s_TilesAnimationInfo[0].end() || s_GameClass->s_IniFile->getValue("video", "tileanimation") != "true") return tile;
+    return s_TilesAnimationInfo[0][tile].s_TileFrames[frame].s_TileID;
+}
+
+int Textures::getFrame(int tile)
+{
+    if(s_TilesAnimationInfo[0].find(tile) == s_TilesAnimationInfo[0].end() || s_GameClass->s_IniFile->getValue("video", "tileanimation") != "true") return 0;
+    int tmpframe = s_GameClass->s_TileAnimationStep%s_TilesAnimationInfo[0][tile].s_GeneralAnimationSteps;
+    int tmpschframe = 0;
+    int sch = 0;
+    for(sch = 0; sch < s_TilesAnimationInfo[0][tile].s_TileFrames.size(); sch++)
+    {
+        tmpschframe += s_TilesAnimationInfo[0][tile].s_TileFrames[sch].s_AnimationSleep;
+        if(tmpschframe > tmpframe) break;
+    }
+    return sch;
 }
 
 void Textures::drawTile(int tile, int x, int y)
@@ -126,17 +161,14 @@ void Textures::drawTile(int tile, int x, int y)
     int sizeYTiles = atoi( s_TilesInfo->getValue("info", "sizeY").c_str() );
     int numberoftiles = sizeXTiles * sizeYTiles;
     if(tile >= numberoftiles) return;
+    int frame = getFrame(tile);
+    tile = getTileIDByFrame(tile, frame);
+    if(tile >= numberoftiles) return;
     int NumberDrawTileX = tile % sizeXTiles;
     int NumberDrawTileY = ( tile - ( tile % sizeXTiles ) ) / sizeXTiles;
-    int frame = getFrame();
-    if(s_CacheCreated == false) s_GameClass->s_Window->draw(Image(Bitmap( (*s_Tiles[frame]), NumberDrawTileX*16, NumberDrawTileY*16, 16, 16), x, y));
-    else
-    {
-        /*s_CacheTiles[frame][tile]->toX = x;
-        s_CacheTiles[frame][tile]->toY = y;
-        s_GameClass->s_Window->draw( (*s_CacheTiles[frame][tile]) );*/
-        s_GameClass->s_Window->draw(Image((*s_CacheTiles[frame][tile]), x, y));
-    }
+    int tileset = 0;
+    if(s_CacheCreated == false) s_GameClass->s_Window->draw(Image(Bitmap( (*s_Tiles[tileset]), NumberDrawTileX*16, NumberDrawTileY*16, 16, 16), x, y));
+    else s_GameClass->s_Window->draw(Image((*s_CacheTiles[tileset][tile]), x, y));
 }
 
 bool Textures::createCache()
@@ -144,11 +176,11 @@ bool Textures::createCache()
     cout<<"Creating textures cache..."<<endl;
     int sizeXTiles = atoi( s_TilesInfo->getValue("info", "sizeX").c_str() );
     int sizeYTiles = atoi( s_TilesInfo->getValue("info", "sizeY").c_str() );
-    int numberofframes = atoi( s_TilesInfo->getValue("info", "numberofframes").c_str() );
+    int numberoftilesets = atoi( s_TilesInfo->getValue("info", "numberoftilesets").c_str() );
     int numberoftiles = sizeXTiles * sizeYTiles;
     int NumberDrawTileX;
     int NumberDrawTileY;
-    for(int j = 0; j < numberofframes; j++)
+    for(int j = 0; j < numberoftilesets; j++)
         for(int i = 0; i < numberoftiles; i++)
         {
             NumberDrawTileX = i % sizeXTiles;

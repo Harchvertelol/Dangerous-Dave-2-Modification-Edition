@@ -1938,6 +1938,23 @@ int LuaBindFunctions::pauseMusic(lua_State* s_Lua)
     return 0;
 }
 
+static int __stopAllMusic(lua_State* s_Lua)
+{
+    return s_LBF->stopAllMusic(s_Lua);
+}
+
+int LuaBindFunctions::stopAllMusic(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n != 0)
+    {
+        cout<<"Error! Number of arguments of function \"stopAllMusic\" is incorrect!"<<endl;
+        return 0;
+    }
+    s_GameClass->s_Data->s_Music->stopAllMusic();
+    return 0;
+}
+
 void LuaBindFunctions::registerFunctionsAll(lua_State* s_Lua)
 {
     lua_register(s_Lua, "getMainValue", &__getMainValue);
@@ -1950,4 +1967,5 @@ void LuaBindFunctions::registerFunctionsAll(lua_State* s_Lua)
     lua_register(s_Lua, "playMusic", &__playMusic);
     lua_register(s_Lua, "stopMusic", &__stopMusic);
     lua_register(s_Lua, "pauseMusic", &__pauseMusic);
+    lua_register(s_Lua, "pauseMusic", &__stopAllMusic);
 }

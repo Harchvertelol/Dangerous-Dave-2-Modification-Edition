@@ -46,10 +46,13 @@ Game::Game():
     s_IniFile(0),
     s_NetClient(0),
     s_AnimationStep(0),
+    s_TileAnimationStep(0),
     s_IdGameClass(0),
     s_IdTimerAnimationStep(0),
     s_IdTimerCreaturesAnimationStep(0),
     s_IdTimerDrawStep(0),
+    s_IdTimerTilesAnimationStep(0),
+    s_IdTimerAIRunStep(0),
     s_GameDrawFPS(0),
     s_GameDrawFPSMaximal(0),
     s_GameDrawFPSMinimal(MAXIMAL_UNSIGNED_NUMBER),
@@ -102,11 +105,14 @@ void Game::calculateFPS(unsigned int* fps, unsigned int* calcfps, time_t* timeol
 {
     time_t timenew = clock();
     (*calcfps)++;
-    if(timenew - (*timeold) > TIME_SECOND_FPS)
+    //if(timenew - (*timeold) > 0)
+    if(timenew - (*timeold) >= TIME_SECOND_FPS)
     {
-        (*timeold) = timenew;
         (*fps) = (*calcfps);
+        int tmp_t = timenew - (*timeold);
+        //(*fps) = 1000 / tmp_t;
         (*calcfps) = 0;
+        (*timeold) = timenew;
         if((*maximalfps) < (*fps)) (*maximalfps) = (*fps);
         if((*minimalfps) > (*fps)) (*minimalfps) = (*fps);
         if(s_IniFile->getValue("FPS", "ShowFPS") == "true" && s_IniFile->getValue("FPS", "ShowFPSMode") == "console")
@@ -233,6 +239,8 @@ void Game::configureForGame()
     s_IdTimerAnimationStep = set_timer(atoi( s_IniFile->getValue("video", "animationstep").c_str() ));
     s_IdTimerCreaturesAnimationStep = set_timer(atoi( s_IniFile->getValue("video", "creaturesanimationstep").c_str() ));
     s_IdTimerDrawStep = set_timer(atoi( s_IniFile->getValue("video", "drawstep").c_str() ));
+    s_IdTimerTilesAnimationStep = set_timer(atoi( s_IniFile->getValue("video", "tilesanimationstep").c_str() ));
+    s_IdTimerAIRunStep = set_timer(atoi( s_IniFile->getValue("video", "AIrunstep").c_str() ));
 }
 
 void Game::play()
@@ -280,7 +288,6 @@ void Game::onTimer(unsigned int timer_id)
             if(s_GameInfo->s_GameState == 3 && s_GameInfo->s_Stop == false) s_StateManager->s3I();
         }
         s_StateManager->doState(s_GameInfo->s_GameState);
-        if(s_GameInfo->s_GameState == 3 && s_GameInfo->s_Stop == false) s_GameInfo->live();
         drawAll();
     }
     if(timer_id == s_IdTimerAnimationStep)
@@ -290,7 +297,6 @@ void Game::onTimer(unsigned int timer_id)
             s_AnimationStep++;
             if(s_AnimationStep > MAXIMAL_UNSIGNED_NUMBER) s_AnimationStep = 0;
         }
-        if(s_GameInfo->s_GameState == 1) s_StateManager->s_MainscreenPar->s_Fix--;
     }
     if(timer_id == s_IdTimerCreaturesAnimationStep)
     {
@@ -301,12 +307,23 @@ void Game::onTimer(unsigned int timer_id)
             for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)
             {
                 iter->second->s_NumberOfAction++;
+                if(iter->second->s_State == "doorexit") iter->second->s_NumberOfAction--;
                 if(iter->second->s_NumberOfAction > MAXIMAL_UNSIGNED_NUMBER) iter->second->s_NumberOfAction = 0;
             }
             //...
             s_GameInfo->s_MyDave->s_NumberOfAction++;
+            if(s_GameInfo->s_MyDave->s_State == "doorexit") s_GameInfo->s_MyDave->s_NumberOfAction--;
             if(s_GameInfo->s_MyDave->s_NumberOfAction > MAXIMAL_UNSIGNED_NUMBER) s_GameInfo->s_MyDave->s_NumberOfAction = 0;
         }
+    }
+    if(timer_id == s_IdTimerTilesAnimationStep)
+    {
+        s_TileAnimationStep++;
+        if(s_TileAnimationStep > MAXIMAL_UNSIGNED_NUMBER) s_TileAnimationStep = 0;
+    }
+    if(timer_id == s_IdTimerAIRunStep)
+    {
+        if(s_GameInfo->s_GameState == 3 && s_GameInfo->s_Stop == false) s_GameInfo->live();
     }
 }
 

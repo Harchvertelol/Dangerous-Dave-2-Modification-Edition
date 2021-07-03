@@ -107,16 +107,10 @@ void Level::draw()
 
 int Level::getTileType(int x, int y)
 {
-    int frame = s_GameClass->s_Data->s_Textures->getFrame();
-    int SizeXLev = atoi( ( s_Params->getValue("info", "sizeX") ).c_str() );
-    int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
-    if(y >= SizeYLev || x >= SizeXLev)
-    {
-        cout << "Error get tile type! X or Y higher level." << endl;
-        cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x << ", Y = " << y << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
-        return IMPASSABLE;
-    }
-    return s_GameClass->s_Data->s_Textures->s_MaskTiles[frame][s_Fields["FieldTiles"][y*SizeXLev + x]];
+    int tileid = getTileID(x, y);
+    if(tileid == -1) return IMPASSABLE;
+    int curtileid = s_GameClass->s_Data->s_Textures->getCurrentAnimationTileID(tileid);
+    return s_GameClass->s_Data->s_Textures->s_MaskTiles[0][curtileid];
 }
 
 int Level::getTileID(int x, int y)

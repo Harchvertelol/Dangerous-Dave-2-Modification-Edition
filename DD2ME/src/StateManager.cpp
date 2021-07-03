@@ -216,7 +216,7 @@ void StateManager::startState(int state)
         s_GameClass->s_GameInfo->s_DopScreenCoordY = 0;
         s_MainscreenPar->s_StateMove = false;
         s_MainscreenPar->s_Direction = 1;
-        s_MainscreenPar->s_Fix = atoi ( s_GameClass->s_IniFile->getValue("video", "mainscreentimefreez").c_str() );
+        s_MainscreenPar->s_Fix = atoi ( s_GameClass->s_IniFile->getValue("video", "mainscreentimefreeze").c_str() );
         s_MainscreenPar->s_CurrentScreen = 0;
     }
     if(state == 2)
@@ -244,6 +244,7 @@ void StateManager::doState(int state)
     }
     if(state == 1)
     {
+        s_MainscreenPar->s_Fix--;
         if(s_MainscreenPar->s_Fix == 0)
         {
             s_MainscreenPar->s_StateMove = true;
@@ -255,7 +256,7 @@ void StateManager::doState(int state)
             if(s_GameClass->s_GameInfo->s_DopScreenCoordX%s_GameClass->s_DisplayStruct->s_ResolutionX == 0)
             {
                 s_MainscreenPar->s_StateMove = false;
-                s_MainscreenPar->s_Fix = atoi ( s_GameClass->s_IniFile->getValue("video", "mainscreentimefreez").c_str() );
+                s_MainscreenPar->s_Fix = atoi ( s_GameClass->s_IniFile->getValue("video", "mainscreentimefreeze").c_str() );
                 if(s_MainscreenPar->s_Direction == 1) s_MainscreenPar->s_CurrentScreen++;
                 if(s_MainscreenPar->s_Direction == -1) s_MainscreenPar->s_CurrentScreen--;
                 if(s_MainscreenPar->s_CurrentScreen == atoi( s_GameClass->s_Data->s_Screens->s_MainScreenInfo->getValue("info", "numberofscreens").c_str() ) - 1 ) s_MainscreenPar->s_Direction = -1;

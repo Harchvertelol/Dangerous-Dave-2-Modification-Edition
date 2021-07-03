@@ -220,7 +220,7 @@ void CreatureDave::live(bool doKey)
     else if(s_State == "doorexit")
     {
         s_NumberOfAction = s_OldNumberOfAction;
-        if(s_GameClass->s_AnimationStep - s_OldAnSt > (unsigned int)atoi( s_GameClass->s_IniFile->getValue("settings","timeexitdoor").c_str() ) )
+        if(s_GameClass->s_AnimationStep - s_OldAnSt > (unsigned int)atoi( s_GameClass->s_IniFile->getValue("settings", "timeexitdoor").c_str() ) )
         {
             s_TimeDoorOpen--;
             s_NumberOfAction = s_OldNumberOfAction + 1;
@@ -263,6 +263,10 @@ void CreatureDave::live(bool doKey)
             }
             else if(s_HowDoorOpen == "exitlevel")
             {
+                s_NumberOfAction = 0;
+                s_AdditionalNumberOfAction = 0;
+                s_OldAnSt = 0;
+                s_OldNumberOfAction = 0;
                 s_GameClass->changeLevel(s_GameClass->s_Data->s_Level->s_Fields["FieldExitLevelDoors"][s_CoordY/16*SizeXLev + s_CoordX/16]);
             }
         }
@@ -500,6 +504,7 @@ bool CreatureDave::testOpenDoor()
         s_State = "doorexit";
         s_HowDoorOpen = "exit";
         s_NumberOfAction = -1 + s_GameClass->s_AnimationStep - s_GameClass->s_AnimationStep%atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
+        s_OldNumberOfAction = 0;
         s_TimeDoorOpen = atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
         s_OldAnSt = s_GameClass->s_AnimationStep;
         return true;
@@ -511,6 +516,7 @@ bool CreatureDave::testOpenDoor()
         s_State = "doorexit";
         s_HowDoorOpen = "exit";
         s_NumberOfAction = -1 + s_GameClass->s_AnimationStep - s_GameClass->s_AnimationStep%atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
+        s_OldNumberOfAction = 0;
         s_TimeDoorOpen = atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
         s_OldAnSt = s_GameClass->s_AnimationStep;
         return true;
@@ -522,6 +528,7 @@ bool CreatureDave::testOpenDoor()
         s_State = "doorexit";
         s_HowDoorOpen = "exitlevel";
         s_NumberOfAction = -1 + s_GameClass->s_AnimationStep - s_GameClass->s_AnimationStep%atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
+        s_OldNumberOfAction = 0;
         s_TimeDoorOpen = atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
         s_OldAnSt = s_GameClass->s_AnimationStep;
         return true;
@@ -533,6 +540,7 @@ bool CreatureDave::testOpenDoor()
         s_State = "doorexit";
         s_HowDoorOpen = "exitlevel";
         s_NumberOfAction = -1 + s_GameClass->s_AnimationStep - s_GameClass->s_AnimationStep%atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
+        s_OldNumberOfAction = 0;
         s_TimeDoorOpen = atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
         s_OldAnSt = s_GameClass->s_AnimationStep;
         return true;

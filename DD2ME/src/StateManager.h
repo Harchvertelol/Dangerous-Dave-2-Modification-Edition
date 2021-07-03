@@ -9,10 +9,10 @@ class Game;
 
 struct MainscreenPar
 {
-    bool s_StateMove;
-    int s_Direction;
-    int s_Fix;
-    int s_CurrentScreen;
+    bool s_StateMove = false;
+    int s_Direction = 1;
+    int s_Fix = 0;
+    int s_CurrentScreen = 0;
 };
 
 class StateManager

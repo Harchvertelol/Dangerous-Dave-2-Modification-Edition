@@ -28,10 +28,13 @@ class Game
         Gui* s_Gui;
         NetClient* s_NetClient;
         unsigned int s_AnimationStep;
+        unsigned int s_TileAnimationStep;
         unsigned int s_IdGameClass;
         unsigned int s_IdTimerAnimationStep;
         unsigned int s_IdTimerCreaturesAnimationStep;
         unsigned int s_IdTimerDrawStep;
+        unsigned int s_IdTimerTilesAnimationStep;
+        unsigned int s_IdTimerAIRunStep;
         // FPS
         unsigned int s_GameDrawFPS;
         unsigned int s_GameDrawFPSMaximal;

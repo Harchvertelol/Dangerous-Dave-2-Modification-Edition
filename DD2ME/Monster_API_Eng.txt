@@ -487,3 +487,6 @@ pauseMusic (soundname) - pause music playing.
 	soundname is the name of the music.
 	Returns 1 if successful, 0 otherwise.
 	Example: pauseMusic ("boom") - pause music.
+
+stopAllMusic() - stop playing all music.
+	Example: stopAllMusic() - stop all music.
