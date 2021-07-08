@@ -10,6 +10,7 @@ numberofframesdeathtiles=5
 outputshiftX=-8
 outputshiftY=-8
 animationstep=6
+points=100
 
 [options]
 lives=2

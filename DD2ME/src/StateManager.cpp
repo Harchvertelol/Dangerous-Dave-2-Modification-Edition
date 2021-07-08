@@ -63,74 +63,108 @@ LRESULT StateManager::s3(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     switch (uMsg) //рассматриваем ИМЯ сообщения
     {
         case WM_KEYDOWN: //сообщение WM_KEYDOWN - пользователь нажал какую-то клавишу
-                if(wParam == s_GameClass->s_GameInfo->s_KeySkip) //в параметре wParam код клавишы. Рассматриваем код
+            if(wParam == s_GameClass->s_GameInfo->s_KeySkip) //в параметре wParam код клавишы. Рассматриваем код
+            {
+                switchState(0);
+                if(s_GameClass->s_GameInfo->s_CurrentLives <= 0)
                 {
-                    switchState(0);
-                    if(s_GameClass->s_GameInfo->s_CurrentLives <= 0)
-                    {
-                        s_GameClass->s_GameInfo->s_CurrentLives = GC_START_LIVES_NUMBER;
-                        if(s_GameClass->s_GameInfo->s_CurrentLevel > 1) s_GameClass->s_GameInfo->s_CurrentLevel--;
-                    }
+                    s_GameClass->s_GameInfo->s_CurrentLives = GC_START_LIVES_NUMBER;
+                    if(s_GameClass->s_GameInfo->s_CurrentLevel > 1) s_GameClass->s_GameInfo->s_CurrentLevel--;
                 }
-                else if(wParam == s_GameClass->s_GameInfo->s_KeyConsole)
+            }
+            else if(wParam == s_GameClass->s_GameInfo->s_KeyConsole)
+            {
+                if(s_GameClass->s_IniFile->getValue("system", "consolemode") == "true")
                 {
-                    if(s_GameClass->s_IniFile->getValue("system", "consolemode") == "true")
+                    cout<<"console> ";
+                    char buf[5000];
+                    cin.getline(buf, 5000);
+                    str = buf;
+                    if(str.find("level ") == 0)
                     {
-                        cout<<"console> ";
-                        char buf[5000];
-                        cin.getline(buf, 5000);
-                        str = buf;
-                        if(str.find("level ") == 0)
+                        s_GameClass->changeLevel(atoi( str.substr(str.find(" ") + 1).c_str()));
+                    }
+                    if(str.find("god ") == 0)
+                    {
+                        if(str.substr(str.find(" ") + 1) == "on")
                         {
-                            s_GameClass->changeLevel(atoi( str.substr(str.find(" ") + 1).c_str()));
+                            s_GameClass->s_GameInfo->s_CheatGod = true;
+                            cout << "God on." << endl;
                         }
-                        if(str.find("god ") == 0)
+                        else if(str.substr(str.find(" ") + 1) == "off")
                         {
-                            if(str.substr(str.find(" ") + 1) == "on")
-                            {
-                                s_GameClass->s_GameInfo->s_CheatGod = true;
-                                cout << "God on." << endl;
-                            }
-                            else if(str.substr(str.find(" ") + 1) == "off")
-                            {
-                                s_GameClass->s_GameInfo->s_CheatGod = false;
-                                cout << "God off." << endl;
-                            }
-                        }
-                        if(str.find("AI ") == 0)
-                        {
-                            if(str.substr(str.find(" ") + 1) == "on")
-                            {
-                                s_GameClass->s_GameInfo->s_IsAIOn = true;
-                                cout << "AI on." << endl;
-                            }
-                            else if(str.substr(str.find(" ") + 1) == "off")
-                            {
-                                s_GameClass->s_GameInfo->s_IsAIOn = false;
-                                cout << "AI off." << endl;
-                            }
-                            else if(str.substr(str.find(" ") + 1) == "reload")
-                            {
-                                s_GameClass->s_GameInfo->s_FactoryMonsters->reloadAIAll();
-                                cout << "Reload AI completed." << endl;
-                            }
-                        }
-                        if(str.find("ghost ") == 0)
-                        {
-                            if(str.substr(str.find(" ") + 1) == "on")
-                            {
-                                s_GameClass->s_GameInfo->s_IsGhostOn = true;
-                                cout << "Ghost on." << endl;
-                            }
-                            else if(str.substr(str.find(" ") + 1) == "off")
-                            {
-                                s_GameClass->s_GameInfo->s_IsGhostOn = false;
-                                cout << "Ghost off." << endl;
-                            }
+                            s_GameClass->s_GameInfo->s_CheatGod = false;
+                            cout << "God off." << endl;
                         }
                     }
+                    if(str.find("AI ") == 0)
+                    {
+                        if(str.substr(str.find(" ") + 1) == "on")
+                        {
+                            s_GameClass->s_GameInfo->s_IsAIOn = true;
+                            cout << "AI on." << endl;
+                        }
+                        else if(str.substr(str.find(" ") + 1) == "off")
+                        {
+                            s_GameClass->s_GameInfo->s_IsAIOn = false;
+                            cout << "AI off." << endl;
+                        }
+                        else if(str.substr(str.find(" ") + 1) == "reload")
+                        {
+                            s_GameClass->s_GameInfo->s_FactoryMonsters->reloadAIAll();
+                            cout << "Reload AI completed." << endl;
+                        }
+                    }
+                    if(str.find("add ") == 0)
+                    {
+                        if(str.substr(str.find(" ") + 1).find("points ") == 0)
+                        {
+                            str = str.substr(str.find(" ") + 1);
+                            str = str.substr(str.find(" ") + 1);
+                            s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints += atoi(str.c_str());
+                            cout << "Added " << str << " points." << endl;
+                        }
+                    }
+                    if(str.find("ghost ") == 0)
+                    {
+                        if(str.substr(str.find(" ") + 1) == "on")
+                        {
+                            s_GameClass->s_GameInfo->s_IsGhostOn = true;
+                            cout << "Ghost on." << endl;
+                        }
+                        else if(str.substr(str.find(" ") + 1) == "off")
+                        {
+                            s_GameClass->s_GameInfo->s_IsGhostOn = false;
+                            cout << "Ghost off." << endl;
+                        }
+                    }
                 }
-                break;
+            }
+            break;
+        /*case WM_LBUTTONDOWN:
+            int x, y;
+            x = LOWORD(lParam) / atoi( s_GameClass->s_IniFile->getValue("video", "scale").c_str() );
+            y = HIWORD(lParam) / atoi( s_GameClass->s_IniFile->getValue("video", "scale").c_str() );
+            x = x + s_GameClass->s_GameInfo->s_ScreenCoordX;
+            y = y + s_GameClass->s_GameInfo->s_ScreenCoordY;
+            x = (x - x % 16) / 16;
+            y = (y - y % 16) / 16;
+            s_GameClass->s_Data->s_Level->setTileID(x, y, 48);
+            break;
+        case WM_MOUSEMOVE:
+            if(wParam == MK_LBUTTON)
+            {
+                int x, y;
+                x = LOWORD(lParam) / atoi( s_GameClass->s_IniFile->getValue("video", "scale").c_str() );
+                y = HIWORD(lParam) / atoi( s_GameClass->s_IniFile->getValue("video", "scale").c_str() );
+                x = x + s_GameClass->s_GameInfo->s_ScreenCoordX;
+                y = y + s_GameClass->s_GameInfo->s_ScreenCoordY;
+                x = (x - x % 16) / 16;
+                y = (y - y % 16) / 16;
+                s_GameClass->s_Data->s_Level->setTileID(x, y, 48);
+            }
+            break;*/
+
     }
     return DefWindowProc(hwnd, uMsg, wParam, lParam); //все остальные сообщения идут сюда. Лучше не трогать =)
 }

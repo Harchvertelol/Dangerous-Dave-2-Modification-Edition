@@ -634,33 +634,63 @@ void CreatureDave::testGetBonuses()
             {
                 CrPoints = s_CurrentPoints;
                 s_GameClass->s_Data->s_Level->s_Fields["FieldBonuses"][ TileCoordY[i]*SizeXLev/16 + TileCoordX[i]/16 ] = 0;
-                s_CurrentPoints += atoi( s_GameClass->s_Data->s_Bonuses->s_BonusesInfo[bonus-1]->getValue("info", "point").c_str() );
+                int numb_points = atoi( s_GameClass->s_Data->s_Bonuses->s_BonusesInfo[bonus-1]->getValue("info", "point").c_str() );
+                s_CurrentPoints += numb_points;
                 int numb_ups = atoi( s_GameClass->s_Data->s_Bonuses->s_BonusesInfo[bonus-1]->getValue("info", "up").c_str() );
                 if(numb_ups > 0)
                 {
                     s_GameClass->s_GameInfo->s_CurrentLives += numb_ups;
                     s_GameClass->s_Data->s_Sounds->play("1up");
+                    addPointsEffect("up", TileCoordX[i] + s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus].s_XL, TileCoordY[i] + s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus].s_YL);
                 }
                 else if( !s_GameClass->s_Data->s_Sounds->play("bonus_" + WorkFunctions::ConvertFunctions::itos(bonus)) ) s_GameClass->s_Data->s_Sounds->play("bonus_1");
-                s_GameClass->s_FactoryTmpImgs->addImage(s_GameClass->s_Data->s_Bonuses->s_BonusesBitmaps[bonus-1][numberofframes+1],
-                                                        s_GameClass->s_Data->s_Bonuses->s_BonusesCache[bonus-1][numberofframes+1],
-                                                        TileCoordX[i] + s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus].s_XL,
-                                                        TileCoordY[i] + s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus].s_YL,
-                                                        atoi(s_GameClass->s_IniFile->getValue("effects","timelivepointseffect").c_str() ),
-                                                        atoi(s_GameClass->s_IniFile->getValue("effects","changeXpointseffect").c_str() ),
-                                                        atoi(s_GameClass->s_IniFile->getValue("effects","changeYpointseffect").c_str() ),
-                                                        "points");
-                for(int i = s_CurrentPoints; i > CrPoints; i--)
-                {
-                    if(i% atoi( s_GameClass->s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("info", "pointforup").c_str() ) == 0)
-                    {
-                        s_GameClass->s_GameInfo->s_CurrentLives++;
-                        s_GameClass->s_Data->s_Sounds->play("1up");
-                    }
-                }
+                addPointsEffect(WorkFunctions::ConvertFunctions::itos(numb_points), TileCoordX[i] + s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus].s_XL, TileCoordY[i] + s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus].s_YL);
+                addAdditionalUpsFromPoints(CrPoints, TileCoordX[i] + s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus].s_XL, TileCoordY[i] + s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus].s_YL);
             }
         }
     }
+}
+
+void CreatureDave::addAdditionalUpsFromPoints(int CrPoints, int coordXP, int coordYP)
+{
+    bool anim_on = false;
+    if(s_GameClass->s_IniFile->getValue("video", "animation") == "true") anim_on = true;
+    for(int i = s_CurrentPoints; i > CrPoints; i--)
+    {
+        if(i% atoi( s_GameClass->s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("info", "pointforup").c_str() ) == 0)
+        {
+            s_GameClass->s_GameInfo->s_CurrentLives++;
+            s_GameClass->s_Data->s_Sounds->play("1up");
+            if(s_GameClass->s_Data->s_Bonuses->s_PointsBitmaps.find("up") != s_GameClass->s_Data->s_Bonuses->s_PointsBitmaps.end())
+                            s_GameClass->s_FactoryTmpImgs->addImage(0,
+                            &s_GameClass->s_Data->s_Bonuses->s_PointsBitmaps["up"],
+                            coordXP,
+                            coordYP,
+                            atoi(s_GameClass->s_IniFile->getValue("effects","timelivepointseffect").c_str() ),
+                            atoi(s_GameClass->s_IniFile->getValue("effects","changeXpointseffect").c_str() ),
+                            atoi(s_GameClass->s_IniFile->getValue("effects","changeYpointseffect").c_str() ),
+                            1,
+                            "points",
+                            anim_on);
+        }
+    }
+}
+
+void CreatureDave::addPointsEffect(string name, int coordXP, int coordYP)
+{
+    bool anim_on = false;
+    if(s_GameClass->s_IniFile->getValue("video", "animation") == "true") anim_on = true;
+    if(s_GameClass->s_Data->s_Bonuses->s_PointsBitmaps.find(name) != s_GameClass->s_Data->s_Bonuses->s_PointsBitmaps.end())
+        s_GameClass->s_FactoryTmpImgs->addImage(0,
+        &s_GameClass->s_Data->s_Bonuses->s_PointsBitmaps[name],
+        coordXP,
+        coordYP,
+        atoi(s_GameClass->s_IniFile->getValue("effects","timelivepointseffect").c_str() ),
+        atoi(s_GameClass->s_IniFile->getValue("effects","changeXpointseffect").c_str() ),
+        atoi(s_GameClass->s_IniFile->getValue("effects","changeYpointseffect").c_str() ),
+        1,
+        "points",
+        anim_on);
 }
 
 void CreatureDave::step(string direction)
@@ -839,7 +869,19 @@ void CreatureDave::testShoot()
                                     s_GameClass->s_AI->runSpecialFunction(iter->second, TSF_ON_DAMAGE, infofsf);
                                     if(iter->second->s_CurrentLives < 0) iter->second->s_CurrentLives = 0;
                                 }
-                                if(iter->second->s_CurrentLives == 0) iter->second->kill(0);
+                                if(iter->second->s_CurrentLives == 0)
+                                {
+                                    iter->second->kill(0);
+                                    if(iter->second->s_AIMonsterValues.find("GS_no_points") == iter->second->s_AIMonsterValues.end() || iter->second->s_AIMonsterValues["GS_no_points"] != "true" )
+                                    {
+                                        string str_pnt = "0";
+                                        if(s_GameClass->s_Data->s_Monsters->s_MonstersInfo[iter->second->s_Number - 1]->isExists("other", "points")) str_pnt = s_GameClass->s_Data->s_Monsters->s_MonstersInfo[iter->second->s_Number - 1]->getValue("other", "points");
+                                        int CrPoints = s_CurrentPoints;
+                                        s_CurrentPoints += atoi(str_pnt.c_str());
+                                        addPointsEffect(str_pnt, iter->second->s_CoordX, iter->second->s_CoordY);
+                                        addAdditionalUpsFromPoints(CrPoints, iter->second->s_CoordX, iter->second->s_CoordY - (s_GameClass->s_Data->s_Monsters->s_Collisions[iter->second->s_Number - 1][iter->second->s_State][iter->second->getFrame()].s_YR - s_GameClass->s_Data->s_Monsters->s_Collisions[iter->second->s_Number - 1][iter->second->s_State][iter->second->getFrame()].s_YL) / 2);
+                                    }
+                                }
                                 statedave = "traceshoot";
                                 s_GameClass->s_FactoryTmpImgs->addImage(s_GameClass->s_Data->s_Dave->s_Bitmaps[statedave][getFrame(statedave)],
                                                         s_GameClass->s_Data->s_Dave->s_CacheImages[statedave][getFrame(statedave)],

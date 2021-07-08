@@ -100,7 +100,7 @@ bool Monsters::loadMonster(string PathToMonster, int number)
             collisionAnalyze(number,state,i);
         }
     }
-    numberofframes = atoi( s_MonstersInfo[number]->getValue("other","numberofframesdeathtiles").c_str() );
+    numberofframes = atoi( s_MonstersInfo[number]->getValue("other", "numberofframesdeathtiles").c_str() );
     for(int i = 0; i < numberofframes; i++)
     {
         s_Bitmaps[number]["deathtiles"][i] = new Bitmap(PathToMonster + "DeathTiles/" + itos(i+1) + ".bmp");
@@ -114,7 +114,7 @@ bool Monsters::createCache()
     cout<<"Creating monsters cache..."<<endl;
     int numberofframes, xSize, ySize;
     string state;
-    int numberofmonsters = atoi( s_GlobMonstersInfo->getValue("info","numberofmonsters").c_str() );
+    int numberofmonsters = atoi( s_GlobMonstersInfo->getValue("info", "numberofmonsters").c_str() );
     for(int number = 0; number < numberofmonsters; number++)
     {
         map<string, string>::iterator iter;

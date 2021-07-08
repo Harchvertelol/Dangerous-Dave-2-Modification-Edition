@@ -10,6 +10,7 @@ outputshiftX=0
 outputshiftY=0
 animationstep=8
 animationstepstar=3
+points=1600
 
 [options]
 lives=16

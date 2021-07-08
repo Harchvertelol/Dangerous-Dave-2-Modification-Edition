@@ -331,33 +331,38 @@ killMonster (id, type) - kill a monster.
 	type - type of monster kill
 	Example: killMonster (-1, 0) - killed.
 
-addDuplicateMonster (id, coordX, coordY, state, numberofaction, additionalnumberofaction, lives = -1, params = "") - create a duplicate of the monster (copy).
-	id - monster id, if -1, then the current monster
-	coordX - the coordinates of the new monster in X
-	coordY - the coordinates of the new monster in Y
-	state - state of the new monster
-	numberofaction - animation counter of the new monster
-	additionalnumberofaction - additional animation counter of the new monster
-	lives - the number of lives, an optional parameter, by default it is infinite, taking into account collisions (-1)
-	params - parameters that you set to the created monster (analogue of setMonsterValue), format: "test1=34;name=DaveKiller;gun=super;". It is very important to put a semicolon
-	at the end, otherwise the last parameter will not be processed.
-	Returns the identifier of the created monster.
-	Examples: addDuplicateMonster (-1, 0, 0, "leftstrike", 0, 0, -2, "direction=left;timelife=10;") - created a copy of the zombie in a "hit", transparent and with infinite lives and with parameters ,
-	which can be obtained through getMonsterValue ().
+addDuplicateMonster (id, coordX, coordY, state, numberofaction, additionalnumberofaction, lives = -1, params = "") - create a duplicate monster (copy).
+	id - monster identifier, if -1, then the current monster
+	coordX - X coordinates of the new monster
+	coordY - Y coordinates of the new monster
+	state - the state of the new monster
+	numberofaction - new monster animation counter
+	additionalnumberofaction - additional counter for the animation of the new monster
+	lives - number of lives, optional, defaults to infinite, counting collisions (-1)
+	params - parameters that you set to the created monster (analogous to setMonsterValue), format: "test1 = 34; name = DaveKiller; gun = super;". It is very important to put a semicolon
+	at the end, otherwise the last parameter will not be processed. It is not recommended to make names of variables with the GS_ prefix (these are Game Service variables, more details in a separate block).
+	Returns the id of the created monster.
+	Examples: addDuplicateMonster (-1, 0, 0, "leftstrike", 0, 0, -2, "direction = left; timelife = 10; GS_no_points = true;") - created a copy of the zombie in "hit", transparent and with infinite lives and parameters,
+	which can be obtained via getMonsterValue (). Death points are not awarded.
 
-setMonsterValue (id, nameofvalue, valueofvalue) - set the current monster to a value that will not be erased after the end of the script loop. All values are of type string.
-						If you need numbers, then you need to convert back and forth.
-	id - monster id, if -1, then the current monster
-	nameofvalue - value name
-	valueofvalue - value value
+setMonsterValue (id, nameofvalue, valueofvalue) - set the current monster to a value that will not be erased after the end of the script cycle. All values are of type "string".
+	If numbers are needed, then it is necessary to convert back and forth.
+	id - monster identifier, if -1, then the current monster
+	nameofvalue is the name of the value. It is not recommended to make variable names with the GS_ prefix (these are Game Service variables, more details in a separate block)
+	valueofvalue - the value of the value
 	Examples: setMonsterValue (-1, "test", "value") - set the variable test == "value".
 
-getMonsterValue (id, nameofvalue) - get the value from the current monster that will not be erased after the end of the script loop. All values are of type string.
-					If you need numbers, then you need to convert back and forth.
-	id - monster id, if -1, then the current monster
-	nameofvalue - value name
+getMonsterValue (id, nameofvalue) - get a value from the current monster that will not be erased after the end of the script cycle. All values are of type "string".
+	If numbers are needed, then it is necessary to convert back and forth.
+	id - monster identifier, if -1, then the current monster
+	nameofvalue is the name of the value. It is not recommended to make variable names with the GS_ prefix (these are Game Service variables, more details in a separate block)
 	Returns the "value" of the requested value.
-	Examples: myvaluetest = getMonsterValue (-1, "test") - received a variable.
+	Examples: myvaluetest = getMonsterValue (-1, "test") - got a variable.
+
+GameService variables. Variables starting with GS_:
+	Available:
+		GS_no_points - if it is true, then after the death of the monster, no points are given. Useful if it's part of the boss.
+
 setGlobalValue (id, nameofvalue, valueofvalue) - set the global value that is available to all monsters. All values are of type string.
 						If you need numbers, then you need to convert back and forth.
 	id - monster id, if -1, then the current monster

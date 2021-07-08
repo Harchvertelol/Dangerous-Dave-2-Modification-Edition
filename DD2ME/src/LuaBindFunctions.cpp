@@ -1967,5 +1967,5 @@ void LuaBindFunctions::registerFunctionsAll(lua_State* s_Lua)
     lua_register(s_Lua, "playMusic", &__playMusic);
     lua_register(s_Lua, "stopMusic", &__stopMusic);
     lua_register(s_Lua, "pauseMusic", &__pauseMusic);
-    lua_register(s_Lua, "pauseMusic", &__stopAllMusic);
+    lua_register(s_Lua, "stopAllMusic", &__stopAllMusic);
 }

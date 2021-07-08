@@ -44,6 +44,8 @@ class CreatureDave
         bool correctionPhys(int,int);
         void step(std::string);
         void testGetBonuses();
+        void addAdditionalUpsFromPoints(int, int, int);
+        void addPointsEffect(std::string, int, int);
         int testDeath();
         bool testChangeLevel();
         bool testOpenDoor();

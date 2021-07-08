@@ -170,10 +170,10 @@ function mainFunc()
 			local curstate = getState(-1)
 			local params = string.format("timer=13;freeze=15;nv=%s;imb=%s;", getNV(), tostring(getMonsterID()))
 			if string.find(curstate, "left") ~= nil then
-				addDuplicateMonster(-1, getCoordMonsterX(-1) + 10, getCoordMonsterY(-1) + 15, "star", 0, 0, 1, string.format("%s;dir=3;", params))
+				addDuplicateMonster(-1, getCoordMonsterX(-1) + 10, getCoordMonsterY(-1) + 15, "star", 0, 0, 1, string.format("%s;dir=3;GS_no_points=true;", params))
 			else
 				if string.find(curstate, "right") ~= nil then
-					addDuplicateMonster(-1, getCoordMonsterX(-1) + 30, getCoordMonsterY(-1) + 15, "star", 0, 0, 1, string.format("%s;dir=2;", params))
+					addDuplicateMonster(-1, getCoordMonsterX(-1) + 30, getCoordMonsterY(-1) + 15, "star", 0, 0, 1, string.format("%s;dir=2;GS_no_points=true;", params))
 				end
 			end
 			setMonsterValue(-1, "freeze", "8")

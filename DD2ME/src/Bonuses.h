@@ -16,6 +16,7 @@ class Bonuses
         IniParser::PostParsingStruct* s_GlobBonusesInfo;
         std::map<int, IniParser::PostParsingStruct*> s_BonusesInfo;
         std::map<int, std::map<int, Bitmap* > > s_BonusesBitmaps;
+        std::map<std::string, std::map<int, Bitmap* > > s_PointsBitmaps;
         std::map<int, std::map<int, Bitmap* > > s_BonusesCache;
         std::map<int, std::map<int, Square> > s_Collisions;
         bool s_CacheCreated;

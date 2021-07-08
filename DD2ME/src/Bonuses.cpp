@@ -51,6 +51,17 @@ void Bonuses::deleteAllGDIObjects()
         }
         ++iter__;
     }
+    map<string, map<int, Bitmap* > >::iterator iter___, iter2___;
+    for (iter___ = s_PointsBitmaps.begin(), iter2___ = s_PointsBitmaps.end(); iter___ != iter2___;)
+    {
+        map<int, Bitmap* >::iterator _iter_, _iter2_;
+        for (_iter_ = iter___->second.begin(), _iter2_ = iter___->second.end(); _iter_ != _iter2_;)
+        {
+            if(_iter_->second != 0) delete _iter_->second;
+            ++_iter_;
+        }
+        ++iter___;
+    }
 }
 
 bool Bonuses::load(string PathToBonusPack)
@@ -71,8 +82,23 @@ bool Bonuses::load(string PathToBonusPack)
             s_BonusesBitmaps[i][j+1] = new Bitmap(PathToBonusPack + WorkFunctions::ConvertFunctions::itos(i+1) + "_" + WorkFunctions::ConvertFunctions::itos(j+1) + ".bmp");
             collisionAnalyze(i, j+1);
         }
-        s_BonusesBitmaps[i][numberofframes + 1] = new Bitmap(PathToBonusPack + WorkFunctions::ConvertFunctions::itos(i+1) + "_p.bmp");
-        collisionAnalyze(i, numberofframes + 1);
+        /*s_BonusesBitmaps[i][numberofframes + 1] = new Bitmap(PathToBonusPack + WorkFunctions::ConvertFunctions::itos(i+1) + "_p.bmp");
+        collisionAnalyze(i, numberofframes + 1);*/
+    }
+    map<string, string> tmpmappoints = s_GlobBonusesInfo->getMapVariables()["points"];
+    map<string, string>::iterator tmpiter1, tmpiter2;
+    for (tmpiter1 = tmpmappoints.begin(), tmpiter2 = tmpmappoints.end(); tmpiter1 != tmpiter2;)
+    {
+        string name = tmpiter1->first;
+        string value = tmpiter1->second;
+        s_PointsBitmaps[name][0] = new Bitmap(PathToBonusPack + value);
+        //collisionAnalyze(i, numberofframes + 1);
+        int xSize = s_PointsBitmaps[name][0]->width()/2;
+        int ySize = s_PointsBitmaps[name][0]->height();
+        Bitmap* tmpbmp = new Bitmap( (*s_PointsBitmaps[name][0]), 0, 0, xSize, ySize);
+        delete s_PointsBitmaps[name][0];
+        s_PointsBitmaps[name][0] = tmpbmp;
+        ++tmpiter1;
     }
     return true;
 }
@@ -125,9 +151,9 @@ bool Bonuses::createCache()
             ySize = s_BonusesBitmaps[i][j+1]->height();
             s_BonusesCache[i][j+1] = new Bitmap( (*s_BonusesBitmaps[i][j+1]), 0, 0, xSize, ySize);
         }
-        xSize = s_BonusesBitmaps[i][numberofframes + 1]->width()/2;
+        /*xSize = s_BonusesBitmaps[i][numberofframes + 1]->width()/2;
         ySize = s_BonusesBitmaps[i][numberofframes + 1]->height();
-        s_BonusesCache[i][numberofframes + 1] = new Bitmap( (*s_BonusesBitmaps[i][numberofframes + 1]), 0, 0, xSize, ySize);
+        s_BonusesCache[i][numberofframes + 1] = new Bitmap( (*s_BonusesBitmaps[i][numberofframes + 1]), 0, 0, xSize, ySize);*/
     }
     s_CacheCreated = true;
     cout<<"Bonuses cache created."<<endl;
@@ -157,5 +183,16 @@ void Bonuses::createMaskTransparent(int r, int g, int b)
             ++_iter_;
         }
         ++iter__;
+    }
+    map<string, map<int, Bitmap* > >::iterator iter___, iter2___;
+    for (iter___ = s_PointsBitmaps.begin(), iter2___ = s_PointsBitmaps.end(); iter___ != iter2___;)
+    {
+        map<int, Bitmap* >::iterator _iter_, _iter2_;
+        for (_iter_ = iter___->second.begin(), _iter2_ = iter___->second.end(); _iter_ != _iter2_;)
+        {
+            if(_iter_->second != 0) _iter_->second->create_mask(r, g, b);
+            ++_iter_;
+        }
+        ++iter___;
     }
 }
