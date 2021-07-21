@@ -24,6 +24,11 @@ function onKill(type)
 				setNumberOfLives(idMainBoss, lives)
 			end
 		end
+		return
+	end
+	if type == 0 then
+		lux, luy, rdx, rdy = getMonsterCollision(-1)
+		addMonster(getMonsterOption(-1, "other", "numberscriptclumps"), getCoordMonsterX(-1), getCoordMonsterY(-1), "init", 0, 0, -2, string.format("clumps=%s;phys_box_LU_X=%d;phys_box_LU_Y=%d;phys_box_RD_X=%d;phys_box_RD_Y=%d;", getMonsterOption(-1, "other", "clumps"), lux, luy, rdx, rdy))
 	end
 	setGlobalValue(-1, getNV(), "1")
 end
@@ -34,6 +39,7 @@ function calculateStar()
 	local testdeath = getGlobalValue(-1, nv)
 	if testdeath ~= "" then
 		killMonster(-1, 1)
+		return
 	end
 	nextAdditionalNumberOfAction(-1)
 	if getAdditionalNumberOfAction(-1) % getMonsterOption(-1, "other", "animationstepstar") == 0 then

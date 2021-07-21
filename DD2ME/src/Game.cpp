@@ -181,6 +181,8 @@ bool Game::changeLevel(int number, bool switchstate, bool playmusic)
         iter->second->s_State = "rightstand";
         iter->second->s_ShootNow = 0;
         iter->second->s_Cartridges = iter->second->s_MaxCartridges;
+        iter->second->s_ScreenCoordX = 0;
+        iter->second->s_ScreenCoordY = 0;
     }
     //...
     s_GameInfo->s_MyDave->s_State = "rightstand";
@@ -189,6 +191,8 @@ bool Game::changeLevel(int number, bool switchstate, bool playmusic)
     s_GameInfo->s_ForcedChangeLevel = false;
     s_GameInfo->s_Stop = false;
     s_GameInfo->s_MyDave->s_Cartridges = s_GameInfo->s_MyDave->s_MaxCartridges;
+    s_GameInfo->s_MyDave->s_ScreenCoordX = 0;
+    s_GameInfo->s_MyDave->s_ScreenCoordY = 0;
     s_Data->s_Music->stopAllMusic();
     if(switchstate == true) s_StateManager->switchState(2, false);
     if(playmusic)
@@ -307,12 +311,12 @@ void Game::onTimer(unsigned int timer_id)
             for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)
             {
                 iter->second->s_NumberOfAction++;
-                if(iter->second->s_State == "doorexit") iter->second->s_NumberOfAction--;
+                if(iter->second->s_State == "doorexit" || iter->second->s_State == "recharge") iter->second->s_NumberOfAction--;
                 if(iter->second->s_NumberOfAction > MAXIMAL_UNSIGNED_NUMBER) iter->second->s_NumberOfAction = 0;
             }
             //...
             s_GameInfo->s_MyDave->s_NumberOfAction++;
-            if(s_GameInfo->s_MyDave->s_State == "doorexit") s_GameInfo->s_MyDave->s_NumberOfAction--;
+            if(s_GameInfo->s_MyDave->s_State == "doorexit" || s_GameInfo->s_MyDave->s_State == "recharge") s_GameInfo->s_MyDave->s_NumberOfAction--;
             if(s_GameInfo->s_MyDave->s_NumberOfAction > MAXIMAL_UNSIGNED_NUMBER) s_GameInfo->s_MyDave->s_NumberOfAction = 0;
         }
     }

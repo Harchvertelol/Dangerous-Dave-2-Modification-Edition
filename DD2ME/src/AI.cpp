@@ -30,7 +30,7 @@ void AI::createOptions(CreatureMonster* monster, int number, bool getstate)
     }
     s_LuaBindFunctions->prepareAIRun();
     lua_settop(monster->s_AILuaState, 0);
-    monster->s_CurrentLives = atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[number - 1]->getValue("options","lives").c_str() );
+    monster->s_CurrentLives = atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[number - 1]->getValue("options", "lives").c_str() );
     if(!preLuaRun(monster, false)) return;
     if(!loadAI(monster)) return;
     if(getstate == false) return;

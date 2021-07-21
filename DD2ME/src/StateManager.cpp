@@ -279,7 +279,7 @@ void StateManager::doState(int state)
     if(state == 1)
     {
         s_MainscreenPar->s_Fix--;
-        if(s_MainscreenPar->s_Fix == 0)
+        if(s_MainscreenPar->s_Fix == 0 && atoi( s_GameClass->s_Data->s_Screens->s_MainScreenInfo->getValue("info", "numberofscreens").c_str() ) > 1)
         {
             s_MainscreenPar->s_StateMove = true;
         }

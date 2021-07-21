@@ -38,12 +38,12 @@
 	<stdio.h>
 	"lua.h"
 
-1623941559 e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.h
+1625350237 e:\github\dangerous-dave-2-modification-edition\dd2me\src\luabindfunctions.h
 	"lua/lua.hpp"
 	<math.h>
 	"CreatureMonster.h"
 
-1622678535 e:\github\dangerous-dave-2-modification-edition\dd2me\src\game.h
+1625350419 e:\github\dangerous-dave-2-modification-edition\dd2me\src\game.h
 	"DisplayStruct.h"
 	"IniParser/PostParsingStruct.h"
 	"GameData.h"
@@ -72,12 +72,12 @@
 	"Sounds.h"
 	"Music.h"
 
-1589320124 e:\github\dangerous-dave-2-modification-edition\dd2me\src\level.h
+1625346821 e:\github\dangerous-dave-2-modification-edition\dd2me\src\level.h
 	<map>
 	<cstring>
 	"IniParser/PostParsingStruct.h"
 
-1589019720 e:\github\dangerous-dave-2-modification-edition\dd2me\src\textures.h
+1625347929 e:\github\dangerous-dave-2-modification-edition\dd2me\src\textures.h
 	"IniParser/PostParsingStruct.h"
 	"canvas.hpp"
 
@@ -94,7 +94,7 @@
 	<iostream>
 	<iostream>
 
-1589019769 e:\github\dangerous-dave-2-modification-edition\dd2me\src\bonuses.h
+1625617701 e:\github\dangerous-dave-2-modification-edition\dd2me\src\bonuses.h
 	<map>
 	"canvas.hpp"
 	"IniParser/PostParsingStruct.h"
@@ -125,7 +125,7 @@
 	"CreatureDave.h"
 	"FactoryMonsters.h"
 
-1589019677 e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturedave.h
+1625623625 e:\github\dangerous-dave-2-modification-edition\dd2me\src\creaturedave.h
 	<iostream>
 	"IniParser/PostParsingStruct.h"
 
@@ -135,7 +135,7 @@
 	<vector>
 	"CreatureMonster.h"
 
-1589394958 e:\github\dangerous-dave-2-modification-edition\dd2me\src\statemanager.h
+1625352389 e:\github\dangerous-dave-2-modification-edition\dd2me\src\statemanager.h
 	"windows.h"
 	<iostream>
 

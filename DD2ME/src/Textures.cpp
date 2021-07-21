@@ -109,7 +109,7 @@ bool Textures::load(string PathToTexturePack)
             }
         }
 
-    int numberofanimations = atoi( s_TilesInfo->getValue("info", "numberofaniomations").c_str() );
+    int numberofanimations = atoi( s_TilesInfo->getValue("info", "numberofanimations").c_str() );
     for(int i = 0; i < numberofanimations; i++)
     {
         int numberofframestile = atoi( s_TilesInfo->getValue("animation_" + WorkFunctions::ConvertFunctions::itos(i + 1), "numberofframes").c_str() );

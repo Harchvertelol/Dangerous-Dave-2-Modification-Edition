@@ -129,3 +129,8 @@ void CreatureMonster::kill(int type)
     s_GameClass->s_AI->runSpecialFunction(this, TSF_ON_KILL, infofsf);
     s_DeleteNow = true;
 }
+
+Square CreatureMonster::getCollision()
+{
+    return s_GameClass->s_Data->s_Monsters->s_Collisions[s_Number - 1][s_State][getFrame()];
+}

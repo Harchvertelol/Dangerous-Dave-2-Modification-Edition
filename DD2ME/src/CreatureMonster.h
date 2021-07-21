@@ -3,6 +3,8 @@
 #include <iostream>
 #include <map>
 
+#include "Square.h"
+
 #include "lua/lua.hpp"
 
 class Game;
@@ -31,6 +33,7 @@ class CreatureMonster
         bool correctionPhys(int,int, bool ladder = false);
         void draw();
         int getFrame();
+        Square getCollision();
         void kill(int);
 };
 #endif

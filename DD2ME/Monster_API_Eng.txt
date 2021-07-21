@@ -120,7 +120,7 @@ goLeft (id, move, isCorrect, isCorrectStand = 0, isOnCeil = 0) - Move the monste
 	isCorrect - Do physics corrections (collisions with solid tiles)
 	isCorrectStand - Whether to correct the monster as "standing" on its feet. Those. if in that direction the end of the "floor"
 			then the monster will not go through the void. The default is false (i.e. 0 by lua).
-	isOnCeil - Whether we are on the ceiling (inverting the definition of "gender") only works with isCorrectTrue == 1. The default is 0.
+	isOnCeil - Whether we are on the ceiling (inverting the definition of "gender") only works with isCorrectStand == 1. The default is 0.
 	Returns 0 if physics correction has not been performed, and 1 if it has been performed.
 	Examples: goLeft (-1, 2) - shifted to the left by 2 pixels, not paying attention to anything.
 		goLeft (-1, 2, 1) - shifted to the left by 2 pixels, not allowing to pass through solid tiles.
@@ -134,7 +134,7 @@ goRight (id, move, isCorrect, isCorrectStand = 0, isOnCeil = 0) - Move the monst
 	isCorrect - Do physics corrections (collisions with solid tiles)
 	isCorrectStand - Whether to correct the monster as "standing" on its feet. Those. if in that direction the end of the "floor"
 			then the monster will not go through the void. The default is false (i.e. 0 by lua).
-	isOnCeil - Whether we are on the ceiling (inverting the definition of "gender") only works with isCorrectTrue == 1. The default is 0.
+	isOnCeil - Whether we are on the ceiling (inverting the definition of "gender") only works with isCorrectStand == 1. The default is 0.
 	Returns 0 if physics correction has not been performed, and 1 if it has been performed.
 	Examples: goRight (-1, 2) - shifted to the right by 2 pixels, not paying attention to anything.
 		goRight (-1, 2, 1) - shifted to the right by 2 pixels, not allowing to pass through solid tiles.
@@ -331,7 +331,7 @@ killMonster (id, type) - kill a monster.
 	type - type of monster kill
 	Example: killMonster (-1, 0) - killed.
 
-addDuplicateMonster (id, coordX, coordY, state, numberofaction, additionalnumberofaction, lives = -1, params = "") - create a duplicate monster (copy).
+addDuplicateMonster (id, coordX, coordY, state, numberofaction, additionalnumberofaction, lives = -1, params = "") - create a duplicate of current monster (copy).
 	id - monster identifier, if -1, then the current monster
 	coordX - X coordinates of the new monster
 	coordY - Y coordinates of the new monster
@@ -343,6 +343,20 @@ addDuplicateMonster (id, coordX, coordY, state, numberofaction, additionalnumber
 	at the end, otherwise the last parameter will not be processed. It is not recommended to make names of variables with the GS_ prefix (these are Game Service variables, more details in a separate block).
 	Returns the id of the created monster.
 	Examples: addDuplicateMonster (-1, 0, 0, "leftstrike", 0, 0, -2, "direction = left; timelife = 10; GS_no_points = true;") - created a copy of the zombie in "hit", transparent and with infinite lives and parameters,
+	which can be obtained via getMonsterValue (). Death points are not awarded.
+
+addDuplicateMonster (number, coordX, coordY, state, numberofaction, additionalnumberofaction, lives = -1, params = "") - create a monster by its number.
+	number - the number of the monster from the monsterpack
+	coordX - X coordinates of the new monster
+	coordY - Y coordinates of the new monster
+	state - the state of the new monster
+	numberofaction - new monster animation counter
+	additionalnumberofaction - additional counter for the animation of the new monster
+	lives - number of lives, optional, defaults to infinite, counting collisions (-1)
+	params - parameters that you set to the created monster (analogous to setMonsterValue), format: "test1 = 34; name = DaveKiller; gun = super;". It is very important to put a semicolon
+	at the end, otherwise the last parameter will not be processed. It is not recommended to make names of variables with the GS_ prefix (these are Game Service variables, more details in a separate block).
+	Returns the id of the created monster.
+	Examples: addMonster (1, 0, 0, "leftstrike", 0, 0, -2, "direction = left; timelife = 10; GS_no_points = true;") - created zombies in "hit", transparent and with infinite lives and with parameters,
 	which can be obtained via getMonsterValue (). Death points are not awarded.
 
 setMonsterValue (id, nameofvalue, valueofvalue) - set the current monster to a value that will not be erased after the end of the script cycle. All values are of type "string".

@@ -3,7 +3,7 @@ sizeX=13
 sizeY=66
 numberoftilesets=1
 numberofdoors=3
-numberofaniomations=0
+numberofanimations=0
 
 [animation_1]
 numberofframes=3

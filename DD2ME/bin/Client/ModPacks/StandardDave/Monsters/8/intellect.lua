@@ -9,6 +9,14 @@ function setFirstState()
 	return "invis"
 end
 
+function onKill(type)
+	if type == 0 then
+		lux, luy, rdx, rdy = getMonsterCollision(-1)
+		addMonster(getMonsterOption(-1, "other", "numberscriptclumps"), getCoordMonsterX(-1), getCoordMonsterY(-1), "init", 0, 0, -2, string.format("clumps=%s;phys_box_LU_X=%d;phys_box_LU_Y=%d;phys_box_RD_X=%d;phys_box_RD_Y=%d;", getMonsterOption(-1, "other", "clumps"), lux, luy, rdx, rdy))
+		return
+	end
+end
+
 function mainFunc()
 	local oldCoordDaveX = tonumber(getMonsterValue(-1, "oldCoordDaveX"))
 	if oldCoordDaveX < 0 then

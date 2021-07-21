@@ -11,6 +11,8 @@ outputshiftY=0
 animationstep=8
 animationstepstar=3
 points=1600
+clumps=12
+numberscriptclumps=12
 
 [options]
 lives=16

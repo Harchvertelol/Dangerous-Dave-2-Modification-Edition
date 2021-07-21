@@ -1168,6 +1168,53 @@ int LuaBindFunctions::addDuplicateMonster(lua_State* s_Lua)
     return 1;
 }
 
+static int __addMonster(lua_State* s_Lua)
+{
+    return s_LBF->addMonster(s_Lua);
+}
+
+int LuaBindFunctions::addMonster(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n != 6 && n != 7 && n != 8)
+    {
+        cout<<"Error! Number of arguments of function \"addMonster\" is incorrect!"<<endl;
+        return 0;
+    }
+    int numberMonster = lua_tonumber(s_Lua, 1);
+    CreatureMonster* curmonst = s_CurrentMonster;
+    int coordX = lua_tonumber(s_Lua, 2);
+    int coordY = lua_tonumber(s_Lua, 3);
+    string state = lua_tostring(s_Lua, 4);
+    int numberofaction = lua_tonumber(s_Lua, 5);
+    int additionalnumberofaction = lua_tonumber(s_Lua, 6);
+    int lives = -1;
+    string parameters = "";
+    if(n >= 7) lives = lua_tonumber(s_Lua, 7);
+    if(n >= 8) parameters = lua_tostring(s_Lua, 8);
+    CreatureMonster* newMonster = s_GameClass->s_GameInfo->s_FactoryMonsters->addMonster(numberMonster, coordX, coordY, false);
+    newMonster->s_Activated = true;
+    newMonster->s_State = state;
+    newMonster->s_NumberOfAction = numberofaction;
+    newMonster->s_AdditionalNumberOfAction = additionalnumberofaction;
+    if(lives != 0) newMonster->s_CurrentLives = lives;
+    if(parameters != "")
+    {
+        parameters = "[mnst];" + parameters;
+        IniParser::ParserInfoFile prs;
+        IniParser::PostParsingStruct* pps = prs.getParsedFromString(parameters, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+        map<string, string>::iterator iter1;
+        for( iter1 = pps->getMapVariables()["mnst"].begin(); iter1 != pps->getMapVariables()["mnst"].end(); iter1++)
+        {
+            newMonster->s_AIMonsterValues[iter1->first] = iter1->second;
+        }
+        delete pps;
+    }
+    lua_pushnumber(s_Lua, newMonster->s_ID);
+    s_CurrentMonster = curmonst;
+    return 1;
+}
+
 static int __setMonsterValue(lua_State* s_Lua)
 {
     return s_LBF->setMonsterValue(s_Lua);
@@ -1663,6 +1710,31 @@ int LuaBindFunctions::getMonsterID(lua_State* s_Lua)
     return 1;
 }
 
+static int __getMonsterCollision(lua_State* s_Lua)
+{
+    return s_LBF->getMonsterCollision(s_Lua);
+}
+
+int LuaBindFunctions::getMonsterCollision(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n != 1)
+    {
+        cout<<"Error! Number of arguments of function \"getMonsterCollision\" is incorrect!"<<endl;
+        return 0;
+    }
+    int keyMonster = lua_tonumber(s_Lua, 1);
+    CreatureMonster* mnst;
+    if(keyMonster == -1) mnst = s_CurrentMonster;
+    else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
+    Square tmpCol = mnst->getCollision();
+    lua_pushnumber(s_Lua, tmpCol.s_XL);
+    lua_pushnumber(s_Lua, tmpCol.s_YL);
+    lua_pushnumber(s_Lua, tmpCol.s_XR);
+    lua_pushnumber(s_Lua, tmpCol.s_YR);
+    return 4;
+}
+
 void LuaBindFunctions::prepareAIRun()
 {
     s_LBF = this;
@@ -1705,6 +1777,7 @@ void LuaBindFunctions::registerFunctionsMonster(lua_State* s_Lua)
     lua_register(s_Lua, "killDave", &__killDave);
     lua_register(s_Lua, "killMonster", &__killMonster);
     lua_register(s_Lua, "addDuplicateMonster", &__addDuplicateMonster);
+    lua_register(s_Lua, "addMonster", &__addMonster);
     lua_register(s_Lua, "setMonsterValue", &__setMonsterValue);
     lua_register(s_Lua, "getMonsterValue", &__getMonsterValue);
     lua_register(s_Lua, "setGlobalValue", &__setGlobalValue);
@@ -1722,6 +1795,7 @@ void LuaBindFunctions::registerFunctionsMonster(lua_State* s_Lua)
     lua_register(s_Lua, "getStateDave", &__getStateDave);
     lua_register(s_Lua, "getNumberOfLives", &__getNumberOfLives);
     lua_register(s_Lua, "setNumberOfLives", &__setNumberOfLives);
+    lua_register(s_Lua, "getMonsterCollision", &__getMonsterCollision);
 }
 
 static int __addPackImagesToFactoryTemporaryImage(lua_State* s_Lua)

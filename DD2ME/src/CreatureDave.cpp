@@ -290,6 +290,7 @@ void CreatureDave::live(bool doKey)
     }
     if(testSetStates("recharge"))
     {
+        s_NumberOfAction++;
         if(s_OldNumberOfAction < s_NumberOfAction)
         {
             s_NumberOfAction--;

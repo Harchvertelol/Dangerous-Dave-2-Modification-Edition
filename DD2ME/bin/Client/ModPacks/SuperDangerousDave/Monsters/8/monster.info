@@ -1,0 +1,17 @@
+[info]
+numberofframesleftrun=1
+numberofframesrightrun=1
+numberofframesinvisoff=5
+numberofframesinvis=1
+
+[other]
+numberofframesdeathtiles=5
+outputshiftX=0
+outputshiftY=0
+animationstepghost=1
+animationstepinvisoff=14
+points=200
+
+[options]
+lives=-2
+type=standard

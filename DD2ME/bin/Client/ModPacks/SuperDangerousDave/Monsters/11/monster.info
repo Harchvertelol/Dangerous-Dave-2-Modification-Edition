@@ -1,0 +1,14 @@
+[info]
+numberofframeshanging=1
+numberofframesbreak=3
+
+[other]
+numberofframesdeathtiles=5
+outputshiftX=0
+outputshiftY=0
+animationstep=8
+
+[options]
+lives=-1
+speedFall=8
+type=boss
