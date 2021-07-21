@@ -441,6 +441,11 @@ setNumberOfLives (id, lives) - set the number of lives of the monster. If set to
 getMonsterID () - get the monster ID at the level (not type! even the same monsters have a unique ID at each level).
 	Examples: getMonsterID () - got the ID.
 
+getMonsterCollision (id) - Get the collision rectangle from the monster.
+	id - monster identifier, if -1, then the current monster
+	Returns four numbers - the monster collision rectangle. First X and Y of the upper left corner, then X and Y of the lower right corner
+	Example: x1, y1, x2, y2 = getMonsterCollision (-1) - got.
+
 addImageToFactoryTemporaryImage (pack, number, state, numberofframe, coordX, coordY, timeLive, changeX, changeY, type) - add an image to the temporary image factory.
 	pack - the name of the image pack, only "monsters" is supported
 	number - monster number
