@@ -326,9 +326,11 @@ killDave(id) - убить Дейва монстром.
 	id - идентификатор монстра, если -1, то текущий монстр
 	Пример: killDave(-1) - убили.
 
-killMonster(id, type) - убить монстра.
+killMonster(id, type, addPoints = 0, idDave = -1) - убить монстра.
 	id - идентификатор монстра, если -1, то текущий монстр
 	type - тип убийства монстра
+	addPoints - добавлять ли очки от убийства монстра (имеет приоритет над параметром GS_no_points, если равно 1), по умолчанию 0 (нет)
+	idDave - от имени кого убить монстра (id Дейва). По умолчанию -1, то есть от имени главного Дейва.
 	Пример: killMonster(-1, 0) - убили.
 
 addDuplicateMonster(id, coordX, coordY, state, numberofaction, additionalnumberofaction, lives = -1, params = "") - создать дубликат текущего монстра (копию).

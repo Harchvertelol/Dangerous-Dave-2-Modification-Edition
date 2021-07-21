@@ -1104,7 +1104,7 @@ static int __killMonster(lua_State* s_Lua)
 int LuaBindFunctions::killMonster(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
-    if(n != 2)
+    if(n != 2 && n != 3 && n != 4)
     {
         cout<<"Error! Number of arguments of function \"killMonster\" is incorrect!"<<endl;
         return 0;
@@ -1114,7 +1114,22 @@ int LuaBindFunctions::killMonster(lua_State* s_Lua)
     if(keyMonster == -1) mnst = s_CurrentMonster;
     else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
     int type = lua_tonumber(s_Lua, 2);
+    int points_add = 0;
+    if(n > 2) points_add = lua_tonumber(s_Lua, 3);
+    int keyDave = -1;
+    if(n > 3) keyDave = lua_tonumber(s_Lua, 4);
     mnst->kill(type);
+    if(points_add == 1)
+    {
+        string str_pnt = "0";
+        if(s_GameClass->s_Data->s_Monsters->s_MonstersInfo[mnst->s_Number - 1]->isExists("other", "points")) str_pnt = s_GameClass->s_Data->s_Monsters->s_MonstersInfo[mnst->s_Number - 1]->getValue("other", "points");
+        CreatureDave* dv = s_GameClass->s_GameInfo->s_MyDave;
+        if(keyDave != -1) dv = s_GameClass->s_GameInfo->s_Daves[keyDave];
+        int CrPoints = dv->s_CurrentPoints;
+        dv->s_CurrentPoints += atoi(str_pnt.c_str());
+        dv->addPointsEffect(str_pnt, mnst->s_CoordX, mnst->s_CoordY);
+        dv->addAdditionalUpsFromPoints(CrPoints, mnst->s_CoordX, mnst->s_CoordY - (s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number - 1][mnst->s_State][mnst->getFrame()].s_YR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number - 1][mnst->s_State][mnst->getFrame()].s_YL) / 2);
+    }
     return 0;
 }
 

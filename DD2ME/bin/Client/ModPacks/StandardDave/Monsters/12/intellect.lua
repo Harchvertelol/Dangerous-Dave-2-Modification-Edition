@@ -64,7 +64,16 @@ function mainFunc()
 		setMonsterValue(-1, "curShift", shift)
 	end
 	shift = tonumber(shift)
-	correctStandDown = getMonsterOption(-1, "other", "correctstanddown")
+	correctStandDown = tonumber(getMonsterOption(-1, "other", "correctstanddown"))
+	if getMonsterValue(-1, "correctionUp") == "" then
+		x1, x2, y1, y2 = getMonsterCollision(-1)
+		correctTmp = correctStandDown - (y2 - y1)
+		if correctTmp > 0 and getCoordMonsterY(-1) % 16 ~= 0 then
+			goUp(-1, correctTmp, 0)
+			goDown(-1, correctTmp, 1)
+		end
+		setMonsterValue(-1, "correctionUp", "1")
+	end
 	if string.find(curStateMnst, "up") ~= nil then
 		timeup = tonumber(getMonsterValue(-1, "timeup"))
 		timeup = timeup - 1

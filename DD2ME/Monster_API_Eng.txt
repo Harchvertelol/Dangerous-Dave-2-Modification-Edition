@@ -326,9 +326,11 @@ killDave (id) - kill Dave with a monster.
 	id - monster id, if -1, then the current monster
 	Example: killDave (-1) - killed.
 
-killMonster (id, type) - kill a monster.
-	id - monster id, if -1, then the current monster
-	type - type of monster kill
+killMonster (id, type, addPoints = 0, idDave = -1) - kill a monster.
+	id - monster identifier, if -1, then the current monster
+	type - the type of killing the monster
+	addPoints - whether to add points from killing a monster (takes precedence over the GS_no_points parameter, if equal to 1), by default 0 (no)
+	idDave - on behalf of whom to kill the monster (Dave's id). The default is -1, that is, on behalf of the main Dave.
 	Example: killMonster (-1, 0) - killed.
 
 addDuplicateMonster (id, coordX, coordY, state, numberofaction, additionalnumberofaction, lives = -1, params = "") - create a duplicate of current monster (copy).
