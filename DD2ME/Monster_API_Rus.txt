@@ -347,7 +347,7 @@ addDuplicateMonster(id, coordX, coordY, state, numberofaction, additionalnumbero
 	Примеры: addDuplicateMonster(-1, 0, 0, "leftstrike", 0, 0, -2, "direction=left;timelife=10;GS_no_points=true;") - создали копию зомби в "ударе", прозрачного и с бесконечными жизнями и с параметрами,
 	которые можно получить через getMonsterValue(). Очки за смерть не даются.
 
-addDuplicateMonster(number, coordX, coordY, state, numberofaction, additionalnumberofaction, lives = -1, params = "") - создать монстра по его номеру.
+addMonster(number, coordX, coordY, state, numberofaction, additionalnumberofaction, lives = -1, params = "") - создать монстра по его номеру.
 	number - номер монстра из монстрпака
 	coordX - координаты нового монстра по X
 	coordY - координаты нового монстра по Y

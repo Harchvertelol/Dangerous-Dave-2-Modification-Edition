@@ -341,13 +341,13 @@ addDuplicateMonster (id, coordX, coordY, state, numberofaction, additionalnumber
 	numberofaction - new monster animation counter
 	additionalnumberofaction - additional counter for the animation of the new monster
 	lives - number of lives, optional, defaults to infinite, counting collisions (-1)
-	params - parameters that you set to the created monster (analogous to setMonsterValue), format: "test1 = 34; name = DaveKiller; gun = super;". It is very important to put a semicolon
+	params - parameters that you set to the created monster (analogous to setMonsterValue), format: "test1=34;name=DaveKiller;gun=super;". It is very important to put a semicolon
 	at the end, otherwise the last parameter will not be processed. It is not recommended to make names of variables with the GS_ prefix (these are Game Service variables, more details in a separate block).
 	Returns the id of the created monster.
-	Examples: addDuplicateMonster (-1, 0, 0, "leftstrike", 0, 0, -2, "direction = left; timelife = 10; GS_no_points = true;") - created a copy of the zombie in "hit", transparent and with infinite lives and parameters,
+	Examples: addDuplicateMonster (-1, 0, 0, "leftstrike", 0, 0, -2, "direction=left;timelife=10;GS_no_points=true;") - created a copy of the zombie in "hit", transparent and with infinite lives and parameters,
 	which can be obtained via getMonsterValue (). Death points are not awarded.
 
-addDuplicateMonster (number, coordX, coordY, state, numberofaction, additionalnumberofaction, lives = -1, params = "") - create a monster by its number.
+addMonster (number, coordX, coordY, state, numberofaction, additionalnumberofaction, lives = -1, params = "") - create a monster by its number.
 	number - the number of the monster from the monsterpack
 	coordX - X coordinates of the new monster
 	coordY - Y coordinates of the new monster
@@ -355,10 +355,10 @@ addDuplicateMonster (number, coordX, coordY, state, numberofaction, additionalnu
 	numberofaction - new monster animation counter
 	additionalnumberofaction - additional counter for the animation of the new monster
 	lives - number of lives, optional, defaults to infinite, counting collisions (-1)
-	params - parameters that you set to the created monster (analogous to setMonsterValue), format: "test1 = 34; name = DaveKiller; gun = super;". It is very important to put a semicolon
+	params - parameters that you set to the created monster (analogous to setMonsterValue), format: "test1=34;name=DaveKiller;gun=super;". It is very important to put a semicolon
 	at the end, otherwise the last parameter will not be processed. It is not recommended to make names of variables with the GS_ prefix (these are Game Service variables, more details in a separate block).
 	Returns the id of the created monster.
-	Examples: addMonster (1, 0, 0, "leftstrike", 0, 0, -2, "direction = left; timelife = 10; GS_no_points = true;") - created zombies in "hit", transparent and with infinite lives and with parameters,
+	Examples: addMonster (1, 0, 0, "leftstrike", 0, 0, -2, "direction=left;timelife=10;GS_no_points=true;") - created zombies in "hit", transparent and with infinite lives and with parameters,
 	which can be obtained via getMonsterValue (). Death points are not awarded.
 
 setMonsterValue (id, nameofvalue, valueofvalue) - set the current monster to a value that will not be erased after the end of the script cycle. All values are of type "string".
