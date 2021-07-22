@@ -1,4 +1,69 @@
 -------------------------------------------------------------------------------------
+Changes in version 0.8 pre-beta: (23 July 2021)
+
+- This is a pre-beta version of Dangerous Dave 2: Modification Edition.
+  While there is an active search for bugs and their fixes.
+  
+- Changes:
+  
+  1) Added sounds.
+  2) Unlike the original Dave, his bug is fixed: it is possible to put a separate sound of hitting the wall.
+  3) Now the modpack ini-file is "rolled" over the original one, and not replaced. That is, only matching parameters are replaced.
+  4) Added a function to get the API version of the script in which the monster code is written to the lua-API.
+  5) Fixed screen following the player, now it is like in the original game. Settings in DD2.ini.
+  6) Added background music and music packs.
+  7) Added API for background music.
+  8) Added the ability to customize your music at each level in the music pack.
+  9) Added the ability to insert your own sound for each bonus in the sound pack.
+  10) Made normal animation in the texture pack. You can now manage delays.
+  11) Added a function to the API that stops all music.
+  12) Changed the logic of the main screens.
+  13) Added flying glasses from the monster.
+  14) Added a new parameter to monster packs - glasses from a monster. It is optional. If it is not there, no points will be issued.
+  15) Added service variables to the parameters of the monster. GS_ prefix. If the GS_no_points variable is set to true, then no points will be given for the death of a monster. Useful if the monster is part of the boss.
+  16) The structure of bonuses has been changed, now points are a separate part of the bonus pack.
+  17) Added the addMonster function to the API, which creates a monster by its number.
+  18) Added meat from monsters.
+  19) The getMonsterCollision function has been added to the API, which returns the monster collision rectangle.
+  20) Added new parameters to the killMonster function.
+  21) Added flying particles from the stars of the first boss.
+
+- Fixed bugs:
+  
+  1) Fixed a bug with negative lives and no level rollback when changing state.
+  2) Fixed a bug in the system of collisions with monsters.
+  3) Fixed a bug: the screen follows the player too clearly. Not so in the original.
+  4) Fixed a bug with the animation of leaving the door under some conditions.
+  5) There are no glasses from the monster (and animation, and the glasses themselves).
+  6) There is no animation of getting a new life.
+  7) Fixed a bug of screen correction.
+  8) Fixed reload animation bug.
+  9) Fixed a crash on the main screen if it is set alone.
+  10) Minor changes in the intelligence of the first boss: fixed bugs with unnecessary global variables.
+    
+- Found bugs:
+
+  1) Will not fall from solid tiles from recoil when shooting to the left. If you shoot up or down, it does not fall from solid tiles (it was found that in the original
+     Dave the same, it was decided not to fix it yet).
+  2) When caching is off, the transparency mask does not work. The cause is known and has not yet been corrected.
+  3) There is no illumination of the monster when it hits.
+  4) Fast switching Dave to reload (it is planned to fix it when transferring Dave's mechanics to lua).
+  5) Dave is not going down the stairs as fast as in the original (planned to be fixed when translating Dave's mechanics to lua).
+  6) There is no animation in flight. Wrong jump animation (must move with legs). Should hang at the top longer (it is planned to fix it when translating Dave's mechanics to lua).
+  7) The animation of running should stop when you hit the wall (it is planned to fix it when translating Dave's mechanics into lua).
+  8) Fix API. The functions goUp / goDown (add wall walking) and testTileDown (and the rest of them, figure out how they should work).
+  9) The animation counter is not reset when the state of the monster changes. Thought: add a global parameter for each monster, allowing you to either manually control it yourself, or let the program automatically reset.
+  10) Bonuses in the original flash chaotically, and not harmoniously with each other.
+  11) In the original, the zombie hits unevenly: first, a swing with a delay, and then a quick blow. In the remake, he hits evenly.
+  12) Bug voice acting reload (extra sounds).
+
+- Minuses:
+
+  1) Bugs, bugs, bugs (less than before, but still).
+  2) ALL settings are in the .ini file.
+  3) The opening screen is not the same as in the original Dave.
+
+-------------------------------------------------------------------------------------
 Changes in version 0.7 pre-beta: (03 June, 2021)
 
 - This is a pre-beta version of Dangerous Dave 2: Modification Edition.
