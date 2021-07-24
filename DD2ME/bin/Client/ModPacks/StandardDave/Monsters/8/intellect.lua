@@ -18,7 +18,12 @@ function onKill(type)
 end
 
 function mainFunc()
-	local oldCoordDaveX = tonumber(getMonsterValue(-1, "oldCoordDaveX"))
+	local oldCoordDaveX = getMonsterValue(-1, "oldCoordDaveX")
+	if oldCoordDaveX == "" then
+		oldCoordDaveX = 0
+	else
+		oldCoordDaveX = tonumber(oldCoordDaveX)
+	end
 	if oldCoordDaveX < 0 then
 		oldCoordDaveX = getCoordDaveX()
 		setMonsterValue(-1, "oldCoordDaveX", tostring(cdx))
