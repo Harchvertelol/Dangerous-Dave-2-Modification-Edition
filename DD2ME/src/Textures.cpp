@@ -157,6 +157,7 @@ int Textures::getFrame(int tile)
 
 void Textures::drawTile(int tile, int x, int y)
 {
+    if(tile < 0) return;
     int sizeXTiles = atoi( s_TilesInfo->getValue("info", "sizeX").c_str() );
     int sizeYTiles = atoi( s_TilesInfo->getValue("info", "sizeY").c_str() );
     int numberoftiles = sizeXTiles * sizeYTiles;

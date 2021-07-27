@@ -959,7 +959,7 @@ int LuaBindFunctions::testTileTypeDown(lua_State* s_Lua)
             if(typeTest == 0 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][SizeYMonster - 1]/16, TileCoordY[i][SizeYMonster - 1]/16 + numberOfLabel) != testTileType) testTrue = false;
             else if(typeTest == 1 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][SizeYMonster - 1]/16, TileCoordY[i][SizeYMonster - 1]/16 + numberOfLabel) == testTileType) testTrue = true;
         }
-        //s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(TileCoordY[i][SizeYMonster - 1]/16 + numberOfLabel)*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) + TileCoordX[i][SizeYMonster - 1]/16] = 0;
+        //s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(TileCoordY[i][SizeYMonster - 1]/16 + numberOfLabel)*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) + TileCoordX[i][SizeYMonster - 1]/16] = 0;
     }
     for(int i = 0; i < SizeXMonster; i++)
     {
@@ -1344,7 +1344,7 @@ int LuaBindFunctions::testTileTypeRight(lua_State* s_Lua)
             if(typeTest == 0 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[SizeXMonster - 1][i]/16 + numberOfLabel, TileCoordY[SizeXMonster - 1][i]/16) != testTileType) testTrue = false;
             else if(typeTest == 1 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[SizeXMonster - 1][i]/16 + numberOfLabel, TileCoordY[SizeXMonster - 1][i]/16) == testTileType) testTrue = true;
         }
-        //s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(TileCoordY[SizeXMonster - 1][i]/16)*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) + TileCoordX[SizeXMonster - 1][i]/16 + numberOfLabel] = 0;
+        //s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(TileCoordY[SizeXMonster - 1][i]/16)*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) + TileCoordX[SizeXMonster - 1][i]/16 + numberOfLabel] = 0;
     }
     for(int i = 0; i < SizeXMonster; i++)
     {

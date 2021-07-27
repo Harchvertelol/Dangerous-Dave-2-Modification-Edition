@@ -47,6 +47,11 @@ map<string, map<string, string> >& IniParser::PostParsingStruct::getMapVariables
     return s_Variables;
 }
 
+map<string, string>& IniParser::PostParsingStruct::getMapVariables(string A)
+{
+    return s_Variables[A];
+}
+
 void IniParser::PostParsingStruct::addPostParsingStruct(PostParsingStruct* pps)
 {
     map<string, map<string, string> > ppsvariables = pps->getMapVariables();
@@ -61,18 +66,28 @@ void IniParser::PostParsingStruct::addPostParsingStruct(PostParsingStruct* pps)
     }
 }
 
-bool IniParser::PostParsingStruct::isExists(std::string A)
+bool IniParser::PostParsingStruct::isExists(string A)
 {
     map<string, map<string, string> >::iterator I = s_Variables.find(A);
     if ( I == s_Variables.end() ) return false;
     return true;
 }
 
-bool IniParser::PostParsingStruct::isExists(std::string A, std::string B)
+bool IniParser::PostParsingStruct::isExists(string A, string B)
 {
     map<string, map<string, string> >::iterator I = s_Variables.find(A);
     if ( I == s_Variables.end() ) return false;
     map<string, string>::iterator II = s_Variables[A].find(B);
     if ( II == s_Variables[A].end() ) return false;
     return true;
+}
+
+void IniParser::PostParsingStruct::remove(string A, string B)
+{
+    s_Variables[A].erase(B);
+}
+
+void IniParser::PostParsingStruct::remove(string A)
+{
+    s_Variables.erase(A);
 }

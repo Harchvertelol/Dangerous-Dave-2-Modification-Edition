@@ -33,6 +33,11 @@ namespace IniParser
             /*! \return Возвращает map, содержащий все переменные.
             */
             std::map<std::string, std::map<std::string, std::string> >& getMapVariables();
+            //! Получение всех переменных из блока.
+            /*! \param A Значение блока.
+            \return Возвращает map, содержащий все переменные из блока.
+            */
+            std::map<std::string, std::string>& getMapVariables(std::string A);
             //! Добавляет все значения из указанного контейнера в текущий.
             /*! \param pps Откуда добавить все значения.
             */
@@ -46,6 +51,15 @@ namespace IniParser
             \param B Название переменной.
             */
             bool isExists(std::string A, std::string B);
+            //! Удаляет переменную.
+            /*! \param A Название блока.
+            \param B Название переменной.
+            */
+            void remove(std::string A, std::string B);
+            //! Удаляет блок.
+            /*! \param A Название блока.
+            */
+            void remove(std::string A);
         private:
             std::map<std::string, std::map<std::string, std::string> > s_Variables;
     };

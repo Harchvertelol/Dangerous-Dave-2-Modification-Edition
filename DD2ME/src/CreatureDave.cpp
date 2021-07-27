@@ -193,7 +193,7 @@ void CreatureDave::live(bool doKey)
                 s_GameClass->s_Data->s_Level->s_Fields["FieldExitLevelDoors"][s_CoordY/16*SizeXLev + s_CoordX/16] = s_GameClass->s_Data->s_Level->s_Fields["FieldExitLevelDoors"][s_CoordY/16*SizeXLev + s_CoordX/16]*(-1);
                 typeexit = "exit";
             }
-            TileDoor = s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][s_CoordY/16*SizeXLev + s_CoordX/16];
+            TileDoor = s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][s_CoordY/16*SizeXLev + s_CoordX/16];
             numberofdoors = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("info","numberofdoors").c_str() );
             for(int i = 0; i < numberofdoors; i++)
             {
@@ -202,12 +202,12 @@ void CreatureDave::live(bool doKey)
                 {
                     if( typeexit == s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"type") && atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"handletile" + itos(j+1) ).c_str() ) == TileDoor)
                     {
-                        s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() );
-                        s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() );
-                        s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(s_CoordY)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() );
-                        s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(s_CoordY)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() );
-                        s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() );
-                        s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() );
+                        s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() );
+                        s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() );
+                        s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() );
+                        s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() );
+                        s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() );
+                        s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() );
                         break;
                         break;
                     }
@@ -237,7 +237,7 @@ void CreatureDave::live(bool doKey)
                 y = 16*((s_GameClass->s_Data->s_Level->s_Fields["FieldDoors"][s_CoordY/16*SizeXLev + s_CoordX/16] - s_GameClass->s_Data->s_Level->s_Fields["FieldDoors"][s_CoordX/16*SizeXLev + s_CoordY/16]%SizeXLev)/SizeXLev + 1);
                 s_CoordX = x;
                 s_CoordY = y;
-                TileDoor = s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][s_CoordY/16*SizeXLev + s_CoordX/16];
+                TileDoor = s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][s_CoordY/16*SizeXLev + s_CoordX/16];
                 numberofdoors = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("info","numberofdoors").c_str() );
                 s_GameClass->s_Data->s_Level->s_Fields["FieldDoors"][s_CoordY/16*SizeXLev + s_CoordX/16] = abs(s_GameClass->s_Data->s_Level->s_Fields["FieldDoors"][s_CoordY/16*SizeXLev + s_CoordX/16]);
                 typeexit = "exit";
@@ -248,12 +248,12 @@ void CreatureDave::live(bool doKey)
                     {
                         if( typeexit == s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"type") && atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"handletile" + itos(j+1) ).c_str() ) == TileDoor)
                         {
-                            s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() );
-                            s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() );
-                            s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(s_CoordY)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() );
-                            s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(s_CoordY)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() );
-                            s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() );
-                            s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() );
+                            s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() );
+                            s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() );
+                            s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() );
+                            s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() );
+                            s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() );
+                            s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() );
                             break;
                             break;
                         }
@@ -831,7 +831,7 @@ void CreatureDave::testShoot()
         if(s_GameClass->s_Data->s_Level->getTileType(tileX, tileY) == IMPASSABLE)
         {
             //int SizeXLev = atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() );
-            //s_GameClass->s_Data->s_Level->s_Fields["FieldTiles"][tileY*SizeXLev + tileX] = 0;
+            //s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][tileY*SizeXLev + tileX] = 0;
             statedave = "traceshoot";
             int tt;
             for(tt = t; testCollision(xcc, ycc, tileX*16, tileY*16, s_GameClass->s_Data->s_Dave->s_Collisions[statedave][getFrame(statedave)], Square(0,0,15,15)); tt--)

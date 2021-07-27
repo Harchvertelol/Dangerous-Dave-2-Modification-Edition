@@ -27,7 +27,7 @@ Level::~Level()
 
 bool Level::loadLevel(string file_name)
 {
-    map<int, int>* field;
+    /*map<int, int>* field;
     ParserInfoFile prs;
     s_Params = prs.getParsedFromFile(file_name + ".info");
     if(!s_Params) return false;
@@ -72,7 +72,66 @@ bool Level::loadLevel(string file_name)
     CreatureDave* s_Dave = s_GameClass->s_GameInfo->s_MyDave;
     s_Dave->s_CoordX = 16*atoi( s_Params->getValue("daves", "dave1X").c_str() );
     s_Dave->s_CoordY = 16*atoi( s_Params->getValue("daves", "dave1Y").c_str() );
-    return true;
+    return true;*/
+
+    //new format read
+    map<int, int>* field;
+    ParserInfoFile prs;
+    s_Params = prs.getParsedFromFile(file_name + ".lev");
+    if(!s_Params)
+    {
+        cerr<<"Error: Level: "<<file_name<<". Load file level."<<endl;
+        return false;
+    }
+    string str, NameField, nameblock, name, value;
+    int size_x = atoi( s_Params->getValue("info", "sizeX").c_str() );
+    int size_y = atoi( s_Params->getValue("info", "sizeY").c_str() );
+
+    map<string, map<string, string> > tmpMap = s_Params->getMapVariables();
+
+    map<string, map<string, string> >::iterator tmpiter1, tmpiter2;
+    for (tmpiter1 = tmpMap.begin(), tmpiter2 = tmpMap.end(); tmpiter1 != tmpiter2;)
+    {
+        nameblock = tmpiter1->first;
+        if(nameblock.find("Field_") == 0)
+        {
+            NameField = nameblock.substr(6);
+            field = &s_Fields[NameField];
+            for(int i = 0, sch = 1; i < size_y*size_x; i++, sch++)
+            {
+                str = tmpiter1->second["l" + ConvertFunctions::itos(sch)];
+                i = WorkFunctions::ParserFunctions::splitMass(field, size_y*size_x, i, str, " ") - 1;
+            }
+            tmpMap.erase(tmpiter1++);
+        }
+        else ++tmpiter1;
+    }
+    map<string, string> tmpMap_subbl;
+    map<string, string>::iterator tmpiter1_, tmpiter2_;
+
+    s_Fields.erase("FieldBonuses");
+    tmpMap_subbl = s_Params->getMapVariables("Bonuses");
+    for (tmpiter1_ = tmpMap_subbl.begin(), tmpiter2_ = tmpMap_subbl.end(); tmpiter1_ != tmpiter2_;)
+    {
+        name = tmpiter1_->first;
+        value = tmpiter1_->second;
+        map<int, int> tmp_coord;
+        ParserFunctions::splitMass(&tmp_coord, 2, 0, name, ";");
+        s_Fields["FieldBonuses"][tmp_coord[0] + tmp_coord[1] * size_x] = atoi( value.c_str() );
+        ++tmpiter1_;
+    }
+    s_Params->remove("Bonuses");
+
+    for(int i = 0; i < size_y; i++)
+        for(int j = 0; j < size_x; j++)
+            if(s_Fields["FieldMonsters"][i*size_x + j] != 0)
+                s_GameClass->s_GameInfo->s_FactoryMonsters->addMonsterImmediately(s_Fields["FieldMonsters"][i*size_x + j], 16*j + atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Fields["FieldMonsters"][i*size_x + j] - 1]->getValue("other","outputshiftX").c_str() ), 16*i +  + atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Fields["FieldMonsters"][i*size_x + j] - 1]->getValue("other","outputshiftY").c_str() ));
+    CreatureDave* s_Dave = s_GameClass->s_GameInfo->s_MyDave;
+    string dave_coords = s_Params->getValue("Players", "player1");
+    map<int, int> tmp_spl;
+    ParserFunctions::splitMass(&tmp_spl, 2, 0, dave_coords, ";");
+    s_Dave->s_CoordX = tmp_spl[0];
+    s_Dave->s_CoordY = tmp_spl[1];
 }
 
 void Level::draw()
@@ -100,7 +159,7 @@ void Level::draw()
     for(int i = DrawLevLY; i < DrawLevRY; i++)
         for(int j = DrawLevLX; j < DrawLevRX; j++)
         {
-            s_GameClass->s_Data->s_Textures->drawTile(s_Fields["FieldTiles"][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
+            s_GameClass->s_Data->s_Textures->drawTile(s_Fields["Tiles1"][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
             s_GameClass->s_Data->s_Bonuses->drawBonus(s_Fields["FieldBonuses"][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
         }
 }
@@ -123,7 +182,7 @@ int Level::getTileID(int x, int y)
         cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x << ", Y = " << y << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
         return -1;
     }
-    return s_Fields["FieldTiles"][y*SizeXLev + x];
+    return s_Fields["Tiles1"][y*SizeXLev + x];
 }
 
 bool Level::setTileID(int x, int y, int tileid)
@@ -136,6 +195,6 @@ bool Level::setTileID(int x, int y, int tileid)
         cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x << ", Y = " << y << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
         return false;
     }
-    s_Fields["FieldTiles"][y*SizeXLev + x] = tileid;
+    s_Fields["Tiles1"][y*SizeXLev + x] = tileid;
     return true;
 }
