@@ -109,7 +109,7 @@ bool Level::loadLevel(string file_name)
     map<string, string> tmpMap_subbl;
     map<string, string>::iterator tmpiter1_, tmpiter2_;
 
-    s_Fields.erase("FieldBonuses");
+    s_Fields.erase(STRING_CONSTANTS::NAME_FIELD_BONUSES);
     tmpMap_subbl = s_Params->getMapVariables("Bonuses");
     for (tmpiter1_ = tmpMap_subbl.begin(), tmpiter2_ = tmpMap_subbl.end(); tmpiter1_ != tmpiter2_;)
     {
@@ -117,21 +117,139 @@ bool Level::loadLevel(string file_name)
         value = tmpiter1_->second;
         map<int, int> tmp_coord;
         ParserFunctions::splitMass(&tmp_coord, 2, 0, name, ";");
-        s_Fields["FieldBonuses"][tmp_coord[0] + tmp_coord[1] * size_x] = atoi( value.c_str() );
+        s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][tmp_coord[0] + tmp_coord[1] * size_x] = atoi( value.c_str() );
         ++tmpiter1_;
     }
     s_Params->remove("Bonuses");
 
-    for(int i = 0; i < size_y; i++)
-        for(int j = 0; j < size_x; j++)
-            if(s_Fields["FieldMonsters"][i*size_x + j] != 0)
-                s_GameClass->s_GameInfo->s_FactoryMonsters->addMonsterImmediately(s_Fields["FieldMonsters"][i*size_x + j], 16*j + atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Fields["FieldMonsters"][i*size_x + j] - 1]->getValue("other","outputshiftX").c_str() ), 16*i +  + atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Fields["FieldMonsters"][i*size_x + j] - 1]->getValue("other","outputshiftY").c_str() ));
+    s_Fields.erase(STRING_CONSTANTS::NAME_FIELD_BONUSDOORS);
+    tmpMap_subbl = s_Params->getMapVariables("BonusDoors");
+    for (tmpiter1_ = tmpMap_subbl.begin(), tmpiter2_ = tmpMap_subbl.end(); tmpiter1_ != tmpiter2_;)
+    {
+        name = tmpiter1_->first;
+        value = tmpiter1_->second;
+        map<int, int> tmp_coord;
+        ParserFunctions::splitMass(&tmp_coord, 2, 0, name, ";");
+        s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][tmp_coord[0] + tmp_coord[1] * size_x] = atoi( value.c_str() );
+        ++tmpiter1_;
+    }
+    s_Params->remove("BonusDoors");
+
+    s_Fields.erase(STRING_CONSTANTS::NAME_FIELD_DOORS);
+    tmpMap_subbl = s_Params->getMapVariables("Doors");
+    for (tmpiter1_ = tmpMap_subbl.begin(), tmpiter2_ = tmpMap_subbl.end(); tmpiter1_ != tmpiter2_;)
+    {
+        name = tmpiter1_->first;
+        value = tmpiter1_->second;
+        map<int, int> tmp_coord;
+        map<int, int> tmp_value;
+        ParserFunctions::splitMass(&tmp_coord, 2, 0, name, ";");
+        ParserFunctions::splitMass(&tmp_value, 3, 0, value, ";");
+        s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][tmp_coord[0] + tmp_coord[1] * size_x] = tmp_value[0] * (tmp_value[1] + tmp_value[2] * size_x);
+        ++tmpiter1_;
+    }
+    s_Params->remove("Doors");
+
+    s_Fields.erase(STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS);
+    tmpMap_subbl = s_Params->getMapVariables("ExitLevelDoors");
+    for (tmpiter1_ = tmpMap_subbl.begin(), tmpiter2_ = tmpMap_subbl.end(); tmpiter1_ != tmpiter2_;)
+    {
+        name = tmpiter1_->first;
+        value = tmpiter1_->second;
+        map<int, int> tmp_coord;
+        ParserFunctions::splitMass(&tmp_coord, 2, 0, name, ";");
+        s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][tmp_coord[0] + tmp_coord[1] * size_x] = atoi( value.c_str() );
+        ++tmpiter1_;
+    }
+    s_Params->remove("ExitLevelDoors");
+
+    string Tname, Tvalue;
+
+    tmpMap_subbl = s_Params->getMapVariables("Monsters");
+    for (tmpiter1_ = tmpMap_subbl.begin(), tmpiter2_ = tmpMap_subbl.end(); tmpiter1_ != tmpiter2_;)
+    {
+        value = tmpiter1_->second;
+        map<int, string> tmp_first_split;
+        ParserFunctions::splitMassString(&tmp_first_split, 2, 0, value, "{");
+        tmp_first_split[1] = tmp_first_split[1].substr(0, tmp_first_split[1].size() - 2);
+
+        map<int, string> tmp_mnst_params;
+        int tmp_size_mas_mnst_params = ParserFunctions::splitMassString(&tmp_mnst_params, -1, 0, tmp_first_split[1], ";");
+
+        map<int, int> tmp_gen;
+        ParserFunctions::splitMass(&tmp_gen, 3, 0, tmp_first_split[0], ";");
+
+        int tmp_mnst_id = s_GameClass->s_GameInfo->s_FactoryMonsters->addMonsterImmediately(tmp_gen[0],
+            tmp_gen[1] + atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[tmp_gen[0] - 1]->getValue("other","outputshiftX").c_str() ),
+            tmp_gen[2] + atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[tmp_gen[0] - 1]->getValue("other","outputshiftY").c_str() ));
+
+        for(int ii = 0; ii < tmp_size_mas_mnst_params; ii++)
+        {
+            Tname = ParserFunctions::getNameSecondaryVariable(tmp_mnst_params[ii]);
+            Tvalue = ParserFunctions::getValueSecondaryVariable(tmp_mnst_params[ii]);
+            if(Tname != "")
+            {
+                if(Tname == "GS_lives") s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[tmp_mnst_id]->s_CurrentLives = atoi( Tvalue.c_str() );
+                else s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[tmp_mnst_id]->s_AIMonsterValues[Tname] = Tvalue;
+            }
+        }
+
+        ++tmpiter1_;
+    }
+    s_Params->remove("Monsters");
+
+    s_TilesParams.clear();
+    tmpMap_subbl = s_Params->getMapVariables("TilesParams");
+    for (tmpiter1_ = tmpMap_subbl.begin(), tmpiter2_ = tmpMap_subbl.end(); tmpiter1_ != tmpiter2_;)
+    {
+        name = tmpiter1_->first;
+        value = tmpiter1_->second;
+        map<int, string> tmp_params;
+        int tmp_mas_size_params = ParserFunctions::splitMassString(&tmp_params, -1, 0, value, ";");
+        map<int, int> tmp_coord;
+        ParserFunctions::splitMass(&tmp_coord, 2, 0, name, ";");
+        for(int ii = 0; ii < tmp_mas_size_params; ii++)
+        {
+            Tname = ParserFunctions::getNameSecondaryVariable(tmp_params[ii]);
+            Tvalue = ParserFunctions::getValueSecondaryVariable(tmp_params[ii]);
+            if(Tname != "") setTileParameter(tmp_coord[0], tmp_coord[1], Tname, Tvalue);
+        }
+        ++tmpiter1_;
+    }
+    s_Params->remove("TilesParams");
+
     CreatureDave* s_Dave = s_GameClass->s_GameInfo->s_MyDave;
     string dave_coords = s_Params->getValue("Players", "player1");
     map<int, int> tmp_spl;
     ParserFunctions::splitMass(&tmp_spl, 2, 0, dave_coords, ";");
     s_Dave->s_CoordX = tmp_spl[0];
     s_Dave->s_CoordY = tmp_spl[1];
+}
+
+string Level::getTileParameter(int x_tile, int y_tile, string name)
+{
+    int SizeXLev = atoi( ( s_Params->getValue("info", "sizeX") ).c_str() );
+    int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
+    if(y_tile >= SizeYLev || x_tile >= SizeXLev)
+    {
+        cout << "Error get tile parameter! X or Y higher level." << endl;
+        cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x_tile << ", Y = " << y_tile << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
+        return "";
+    }
+    return s_TilesParams[x_tile + y_tile * SizeXLev][name];
+}
+
+bool Level::setTileParameter(int x_tile, int y_tile, string name, string value)
+{
+    int SizeXLev = atoi( ( s_Params->getValue("info", "sizeX") ).c_str() );
+    int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
+    if(y_tile >= SizeYLev || x_tile >= SizeXLev)
+    {
+        cout << "Error set tile parameter! X or Y higher level." << endl;
+        cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x_tile << ", Y = " << y_tile << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
+        return false;
+    }
+    s_TilesParams[x_tile + y_tile * SizeXLev][name] = value;
 }
 
 void Level::draw()
@@ -159,8 +277,8 @@ void Level::draw()
     for(int i = DrawLevLY; i < DrawLevRY; i++)
         for(int j = DrawLevLX; j < DrawLevRX; j++)
         {
-            s_GameClass->s_Data->s_Textures->drawTile(s_Fields["Tiles1"][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
-            s_GameClass->s_Data->s_Bonuses->drawBonus(s_Fields["FieldBonuses"][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
+            s_GameClass->s_Data->s_Textures->drawTile(s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
+            s_GameClass->s_Data->s_Bonuses->drawBonus(s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
         }
 }
 
@@ -182,7 +300,7 @@ int Level::getTileID(int x, int y)
         cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x << ", Y = " << y << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
         return -1;
     }
-    return s_Fields["Tiles1"][y*SizeXLev + x];
+    return s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][y*SizeXLev + x];
 }
 
 bool Level::setTileID(int x, int y, int tileid)
@@ -195,6 +313,6 @@ bool Level::setTileID(int x, int y, int tileid)
         cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x << ", Y = " << y << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
         return false;
     }
-    s_Fields["Tiles1"][y*SizeXLev + x] = tileid;
+    s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][y*SizeXLev + x] = tileid;
     return true;
 }

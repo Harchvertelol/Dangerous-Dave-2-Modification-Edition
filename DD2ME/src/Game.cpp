@@ -425,24 +425,24 @@ PostParsingStruct* Game::getObjects()
     int size_y_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeY").c_str() );
     for(int i = 0; i < size_x_level*size_y_level; i++)
     {
-        if(s_Data->s_Level->s_Fields["FieldBonuses"][i] != 0)
+        if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i] != 0)
         {
-            cpps->setValue("bonuse_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields["FieldBonuses"][i]));
+            cpps->setValue("bonuse_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i]));
             cpps->setValue("bonuse_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
         }
-        if(s_Data->s_Level->s_Fields["FieldBonusDoors"][i] != 0)
+        if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][i] != 0)
         {
-            cpps->setValue("bonusdoor_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields["FieldBonusDoors"][i]));
+            cpps->setValue("bonusdoor_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][i]));
             cpps->setValue("bonusdoor_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
         }
-        if(s_Data->s_Level->s_Fields["FieldDoors"][i] != 0)
+        if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][i] != 0)
         {
-            cpps->setValue("door_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields["FieldDoors"][i]));
+            cpps->setValue("door_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][i]));
             cpps->setValue("door_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
         }
-        if(s_Data->s_Level->s_Fields["FieldExitLevelDoors"][i] != 0)
+        if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][i] != 0)
         {
-            cpps->setValue("exitleveldoor_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields["FieldExitLevelDoors"][i]));
+            cpps->setValue("exitleveldoor_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][i]));
             cpps->setValue("exitleveldoor_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
         }
     }
@@ -473,10 +473,10 @@ void Game::setObjects(PostParsingStruct* cpps)
     int size_y_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeY").c_str() );
     for(int i = 0; i < size_x_level*size_y_level; i++)
     {
-        s_Data->s_Level->s_Fields["FieldBonuses"][i] = 0;
-        s_Data->s_Level->s_Fields["FieldBonusDoors"][i] = 0;
-        s_Data->s_Level->s_Fields["FieldDoors"][i] = 0;
-        s_Data->s_Level->s_Fields["FieldExitLevelDoors"][i] = 0;
+        s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i] = 0;
+        s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][i] = 0;
+        s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][i] = 0;
+        s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][i] = 0;
     }
     string monsterid = "";
     map<string, map<string, string> >::iterator iter;
@@ -529,25 +529,25 @@ void Game::setObjects(PostParsingStruct* cpps)
         {
             string bonuseid = cpps->getValue(iter->first, "id");
             int key = atoi( bonuseid.c_str() );
-            s_Data->s_Level->s_Fields["FieldBonuses"][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
+            s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
         }
         else if(iter->first.find("bonusdoor_") == 0)
         {
             string bonuseid = cpps->getValue(iter->first, "id");
             int key = atoi( bonuseid.c_str() );
-            s_Data->s_Level->s_Fields["FieldBonusDoors"][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
+            s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
         }
         else if(iter->first.find("door_") == 0)
         {
             string bonuseid = cpps->getValue(iter->first, "id");
             int key = atoi( bonuseid.c_str() );
-            s_Data->s_Level->s_Fields["FieldDoors"][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
+            s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
         }
         else if(iter->first.find("exitleveldoor_") == 0)
         {
             string bonuseid = cpps->getValue(iter->first, "id");
             int key = atoi( bonuseid.c_str() );
-            s_Data->s_Level->s_Fields["FieldExitLevelDoors"][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
+            s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
         }
 }
 

@@ -14,8 +14,8 @@ function onKill(type)
 		return
 	end
 	if getState(-1) == "star" then
-		addDuplicateMonster(-1, getCoordMonsterX(-1) + 8, getCoordMonsterY(-1) + 8, "starclump", 0, 0, -2, string.format("dir=1;timelive=%s;", getMonsterOption(-1, "other", "timelivestarclump")))
-		addDuplicateMonster(-1, getCoordMonsterX(-1) + 8, getCoordMonsterY(-1) + 8, "starclump", 0, 0, -2, string.format("dir=2;timelive=%s;", getMonsterOption(-1, "other", "timelivestarclump")))
+		addDuplicateMonster(-1, getCoordMonsterX(-1) + 8, getCoordMonsterY(-1) + 8, "starclump", 0, 0, -2, string.format("dir=1;timelive=%s;GS_type=standard;", getMonsterOption(-1, "other", "timelivestarclump")))
+		addDuplicateMonster(-1, getCoordMonsterX(-1) + 8, getCoordMonsterY(-1) + 8, "starclump", 0, 0, -2, string.format("dir=2;timelive=%s;GS_type=standard;", getMonsterOption(-1, "other", "timelivestarclump")))
 		local idMainBoss = tonumber(getMonsterValue(-1, "imb"))
 		local lives = tonumber(getNumberOfLives(idMainBoss))
 		if lives > 0 then
@@ -237,10 +237,10 @@ function mainFunc()
 			local curstate = getState(-1)
 			local params = string.format("timer=13;freeze=15;nv=%s;imb=%s;", getNV(), tostring(getMonsterID()))
 			if string.find(curstate, "left") ~= nil then
-				addDuplicateMonster(-1, getCoordMonsterX(-1) + 10, getCoordMonsterY(-1) + 15, "star", 0, 0, 1, string.format("%sdir=3;GS_no_points=true;", params))
+				addDuplicateMonster(-1, getCoordMonsterX(-1) + 10, getCoordMonsterY(-1) + 15, "star", 0, 0, 1, string.format("%sdir=3;GS_no_points=true;GS_type=standard;", params))
 			else
 				if string.find(curstate, "right") ~= nil then
-					addDuplicateMonster(-1, getCoordMonsterX(-1) + 30, getCoordMonsterY(-1) + 15, "star", 0, 0, 1, string.format("%sdir=2;GS_no_points=true;", params))
+					addDuplicateMonster(-1, getCoordMonsterX(-1) + 30, getCoordMonsterY(-1) + 15, "star", 0, 0, 1, string.format("%sdir=2;GS_no_points=true;GS_type=standard;", params))
 				end
 			end
 			setMonsterValue(-1, "freeze", "8")

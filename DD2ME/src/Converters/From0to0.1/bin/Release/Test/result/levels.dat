@@ -1,0 +1,6 @@
+[info]
+numberoflevels=1
+
+[options]
+distancelivemonstersX=8
+distancelivemonstersY=8

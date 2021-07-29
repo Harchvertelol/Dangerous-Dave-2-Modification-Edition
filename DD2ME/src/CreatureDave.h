@@ -47,7 +47,7 @@ class CreatureDave
         void addAdditionalUpsFromPoints(int, int, int);
         void addPointsEffect(std::string, int, int);
         int testDeath();
-        bool testChangeLevel();
+        int testChangeLevel();
         bool testOpenDoor();
         bool testSetStates(std::string);
         void testSmallPassage(int);

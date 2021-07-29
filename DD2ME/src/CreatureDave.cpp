@@ -44,12 +44,6 @@ CreatureDave::CreatureDave(Game* gameclass):
     s_NickName("")
 {
     s_KeysState = new KeysState;
-    s_KeysState->s_KeyDown = false;
-    s_KeysState->s_KeyUp = false;
-    s_KeysState->s_KeyLeft = false;
-    s_KeysState->s_KeyRight = false;
-    s_KeysState->s_KeyShoot = false;
-    s_KeysState->s_KeyJump = false;
 }
 
 CreatureDave::~CreatureDave()
@@ -179,21 +173,21 @@ void CreatureDave::live(bool doKey)
             s_State = s_StateBeforeOpenDoor;
             if(s_HowDoorOpen == "bonus")
             {
-                s_GameClass->s_Data->s_Level->s_Fields["FieldBonuses"][(s_CoordY - 1)/16*SizeXLev + s_CoordX/16] = s_GameClass->s_Data->s_Level->s_Fields["FieldBonusDoors"][s_CoordY/16*SizeXLev + s_CoordX/16];
-                s_GameClass->s_Data->s_Level->s_Fields["FieldBonusDoors"][s_CoordY/16*SizeXLev + s_CoordX/16] = 0;
+                s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][(s_CoordY - 1)/16*SizeXLev + s_CoordX/16] = s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][s_CoordY/16*SizeXLev + s_CoordX/16];
+                s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][s_CoordY/16*SizeXLev + s_CoordX/16] = 0;
                 typeexit = "bonus";
             }
             else if(s_HowDoorOpen == "exit")
             {
-                s_GameClass->s_Data->s_Level->s_Fields["FieldDoors"][s_CoordY/16*SizeXLev + s_CoordX/16] = s_GameClass->s_Data->s_Level->s_Fields["FieldDoors"][s_CoordY/16*SizeXLev + s_CoordX/16]*(-1);
+                s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordY/16*SizeXLev + s_CoordX/16] = s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordY/16*SizeXLev + s_CoordX/16]*(-1);
                 typeexit = "exit";
             }
             else if(s_HowDoorOpen == "exitlevel")
             {
-                s_GameClass->s_Data->s_Level->s_Fields["FieldExitLevelDoors"][s_CoordY/16*SizeXLev + s_CoordX/16] = s_GameClass->s_Data->s_Level->s_Fields["FieldExitLevelDoors"][s_CoordY/16*SizeXLev + s_CoordX/16]*(-1);
+                s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][s_CoordY/16*SizeXLev + s_CoordX/16] = s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][s_CoordY/16*SizeXLev + s_CoordX/16]*(-1);
                 typeexit = "exit";
             }
-            TileDoor = s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][s_CoordY/16*SizeXLev + s_CoordX/16];
+            TileDoor = s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][s_CoordY/16*SizeXLev + s_CoordX/16];
             numberofdoors = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("info","numberofdoors").c_str() );
             for(int i = 0; i < numberofdoors; i++)
             {
@@ -202,12 +196,12 @@ void CreatureDave::live(bool doKey)
                 {
                     if( typeexit == s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"type") && atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"handletile" + itos(j+1) ).c_str() ) == TileDoor)
                     {
-                        s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() );
-                        s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() );
-                        s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() );
-                        s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() );
-                        s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() );
-                        s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() );
+                        s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() );
+                        s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() );
+                        s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() );
+                        s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() );
+                        s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() );
+                        s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() );
                         break;
                         break;
                     }
@@ -233,13 +227,13 @@ void CreatureDave::live(bool doKey)
             s_State = s_StateBeforeOpenDoor;
             if(s_HowDoorOpen == "exit")
             {
-                x = 16*(s_GameClass->s_Data->s_Level->s_Fields["FieldDoors"][s_CoordY/16*SizeXLev + s_CoordX/16]%SizeXLev + 1);
-                y = 16*((s_GameClass->s_Data->s_Level->s_Fields["FieldDoors"][s_CoordY/16*SizeXLev + s_CoordX/16] - s_GameClass->s_Data->s_Level->s_Fields["FieldDoors"][s_CoordX/16*SizeXLev + s_CoordY/16]%SizeXLev)/SizeXLev + 1);
+                x = 16*(s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordY/16*SizeXLev + s_CoordX/16]%SizeXLev + 1);
+                y = 16*((s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordY/16*SizeXLev + s_CoordX/16] - s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordX/16*SizeXLev + s_CoordY/16]%SizeXLev)/SizeXLev + 1);
                 s_CoordX = x;
                 s_CoordY = y;
-                TileDoor = s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][s_CoordY/16*SizeXLev + s_CoordX/16];
+                TileDoor = s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][s_CoordY/16*SizeXLev + s_CoordX/16];
                 numberofdoors = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("info","numberofdoors").c_str() );
-                s_GameClass->s_Data->s_Level->s_Fields["FieldDoors"][s_CoordY/16*SizeXLev + s_CoordX/16] = abs(s_GameClass->s_Data->s_Level->s_Fields["FieldDoors"][s_CoordY/16*SizeXLev + s_CoordX/16]);
+                s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordY/16*SizeXLev + s_CoordX/16] = abs(s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordY/16*SizeXLev + s_CoordX/16]);
                 typeexit = "exit";
                 for(int i = 0; i < numberofdoors; i++)
                 {
@@ -248,12 +242,12 @@ void CreatureDave::live(bool doKey)
                     {
                         if( typeexit == s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"type") && atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"handletile" + itos(j+1) ).c_str() ) == TileDoor)
                         {
-                            s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() );
-                            s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() );
-                            s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() );
-                            s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() );
-                            s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() );
-                            s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() );
+                            s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() );
+                            s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() );
+                            s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() );
+                            s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() );
+                            s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() );
+                            s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() );
                             break;
                             break;
                         }
@@ -267,7 +261,7 @@ void CreatureDave::live(bool doKey)
                 s_AdditionalNumberOfAction = 0;
                 s_OldAnSt = 0;
                 s_OldNumberOfAction = 0;
-                s_GameClass->changeLevel(s_GameClass->s_Data->s_Level->s_Fields["FieldExitLevelDoors"][s_CoordY/16*SizeXLev + s_CoordX/16]);
+                s_GameClass->changeLevel(s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][s_CoordY/16*SizeXLev + s_CoordX/16]);
             }
         }
     }
@@ -354,7 +348,8 @@ void CreatureDave::live(bool doKey)
         correctionPhys(s_CoordY - 8, 1);
     }
     testGetBonuses();
-    if(testChangeLevel()) s_GameClass->changeNextLevel();
+    int toLevel = testChangeLevel();
+    if(toLevel > 0) s_GameClass->changeLevel(toLevel);
     int DeathType = testDeath();
     s_GameClass->s_GameInfo->deathDave(DeathType);
     if(s_State.find("recharge") == string::npos) s_GameClass->s_Data->s_Sounds->stop("ammo");
@@ -444,7 +439,7 @@ bool CreatureDave::testOpenDoor()
     int frame = s_NumberOfAction%numberofframes;
     int SizeXLev = atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() );
     s_StateBeforeOpenDoor = s_State;
-    if( s_GameClass->s_Data->s_Level->s_Fields["FieldBonusDoors"][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] != 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] != 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[0];
         s_CoordY = TileCoordY[0];
@@ -453,7 +448,7 @@ bool CreatureDave::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields["FieldBonusDoors"][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] != 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] != 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[1];
         s_CoordY = TileCoordY[1];
@@ -462,7 +457,7 @@ bool CreatureDave::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields["FieldDoors"][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[0];
         s_CoordY = TileCoordY[0];
@@ -471,7 +466,7 @@ bool CreatureDave::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields["FieldDoors"][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[1];
         s_CoordY = TileCoordY[1];
@@ -480,7 +475,7 @@ bool CreatureDave::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields["FieldExitLevelDoors"][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[0];
         s_CoordY = TileCoordY[0];
@@ -489,7 +484,7 @@ bool CreatureDave::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields["FieldExitLevelDoors"][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[1];
         s_CoordY = TileCoordY[1];
@@ -498,7 +493,7 @@ bool CreatureDave::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields["FieldDoors"][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[0] - 10;
         s_CoordY = TileCoordY[0];
@@ -510,7 +505,7 @@ bool CreatureDave::testOpenDoor()
         s_OldAnSt = s_GameClass->s_AnimationStep;
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields["FieldDoors"][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[1] - 10;
         s_CoordY = TileCoordY[1];
@@ -522,7 +517,7 @@ bool CreatureDave::testOpenDoor()
         s_OldAnSt = s_GameClass->s_AnimationStep;
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields["FieldExitLevelDoors"][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[0] - 10;
         s_CoordY = TileCoordY[0];
@@ -534,7 +529,7 @@ bool CreatureDave::testOpenDoor()
         s_OldAnSt = s_GameClass->s_AnimationStep;
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields["FieldExitLevelDoors"][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[1] - 10;
         s_CoordY = TileCoordY[1];
@@ -549,7 +544,7 @@ bool CreatureDave::testOpenDoor()
     return false;
 }
 
-bool CreatureDave::testChangeLevel()
+int CreatureDave::testChangeLevel()
 {
     int TileCoordX[6];
     int TileCoordY[6];
@@ -571,9 +566,27 @@ bool CreatureDave::testChangeLevel()
     for(int i = 0; i < 6; i++)
     {
         TileType = s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i]/16, TileCoordY[i]/16);
-        if( TileType == EXITLEVEL && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) ) return true;
+        if( TileType == EXITLEVEL && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+        {
+            int toLevel = s_GameClass->s_GameInfo->s_CurrentLevel + 1;
+            string toLevel_str = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_to_level");
+            if(toLevel_str != "") toLevel = atoi(toLevel_str.c_str());
+            else
+            {
+                string isTp = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_teleport");
+                if(isTp != "")
+                {
+                    toLevel = 0;
+                    map<int, int> tmp_coords_tp;
+                    ParserFunctions::splitMass(&tmp_coords_tp, 2, 0, isTp, ",");
+                    s_CoordX = tmp_coords_tp[0];
+                    s_CoordY = tmp_coords_tp[1];
+                }
+            }
+            return toLevel;
+        }
     }
-    return false;
+    return 0;
 }
 
 int CreatureDave::testDeath()
@@ -626,7 +639,7 @@ void CreatureDave::testGetBonuses()
     int SizeXLev = atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() );
     for(int i = 0; i < 6; i++)
     {
-        bonus = s_GameClass->s_Data->s_Level->s_Fields["FieldBonuses"][ TileCoordY[i]*SizeXLev/16 + TileCoordX[i]/16 ];
+        bonus = s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][ TileCoordY[i]*SizeXLev/16 + TileCoordX[i]/16 ];
         if(bonus != 0)
         {
             numberofframes = atoi ( s_GameClass->s_Data->s_Bonuses->s_BonusesInfo[bonus-1]->getValue("info", "numberofframes").c_str() );
@@ -634,7 +647,7 @@ void CreatureDave::testGetBonuses()
             if(testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus] ) )
             {
                 CrPoints = s_CurrentPoints;
-                s_GameClass->s_Data->s_Level->s_Fields["FieldBonuses"][ TileCoordY[i]*SizeXLev/16 + TileCoordX[i]/16 ] = 0;
+                s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][ TileCoordY[i]*SizeXLev/16 + TileCoordX[i]/16 ] = 0;
                 int numb_points = atoi( s_GameClass->s_Data->s_Bonuses->s_BonusesInfo[bonus-1]->getValue("info", "point").c_str() );
                 s_CurrentPoints += numb_points;
                 int numb_ups = atoi( s_GameClass->s_Data->s_Bonuses->s_BonusesInfo[bonus-1]->getValue("info", "up").c_str() );
@@ -831,7 +844,7 @@ void CreatureDave::testShoot()
         if(s_GameClass->s_Data->s_Level->getTileType(tileX, tileY) == IMPASSABLE)
         {
             //int SizeXLev = atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() );
-            //s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][tileY*SizeXLev + tileX] = 0;
+            //s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][tileY*SizeXLev + tileX] = 0;
             statedave = "traceshoot";
             int tt;
             for(tt = t; testCollision(xcc, ycc, tileX*16, tileY*16, s_GameClass->s_Data->s_Dave->s_Collisions[statedave][getFrame(statedave)], Square(0,0,15,15)); tt--)

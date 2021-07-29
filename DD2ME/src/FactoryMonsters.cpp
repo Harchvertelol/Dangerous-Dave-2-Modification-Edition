@@ -110,13 +110,15 @@ void FactoryMonsters::live()
        iter->second->s_IsAlwaysLiveInStep = false;
        if(iter->second->s_DeleteNow == true)
        {
-           if(s_GameClass->s_Data->s_Monsters->s_MonstersInfo[iter->second->s_Number - 1]->getValue("options", "type") == "boss") testChangeLevel = true;
+           if(iter->second->s_AIMonsterValues["GS_type"] == "boss") testChangeLevel = true;
+           else if(iter->second->s_AIMonsterValues["GS_type"] == "" && s_GameClass->s_Data->s_Monsters->s_MonstersInfo[iter->second->s_Number - 1]->getValue("options", "type") == "boss") testChangeLevel = true;
            delete iter->second;
            s_Monsters.erase(iter++);
        }
        else
        {
-           if(s_GameClass->s_Data->s_Monsters->s_MonstersInfo[iter->second->s_Number - 1]->getValue("options", "type") == "boss") testNoChangeLevel = true;
+           if(iter->second->s_AIMonsterValues["GS_type"] == "boss") testNoChangeLevel = true;
+           else if(iter->second->s_AIMonsterValues["GS_type"] == "" && s_GameClass->s_Data->s_Monsters->s_MonstersInfo[iter->second->s_Number - 1]->getValue("options", "type") == "boss") testNoChangeLevel = true;
            ++iter;
        }
     }

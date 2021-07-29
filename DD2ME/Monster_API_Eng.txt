@@ -375,10 +375,6 @@ getMonsterValue (id, nameofvalue) - get a value from the current monster that wi
 	Returns the "value" of the requested value.
 	Examples: myvaluetest = getMonsterValue (-1, "test") - got a variable.
 
-GameService variables. Variables starting with GS_:
-	Available:
-		GS_no_points - if it is true, then after the death of the monster, no points are given. Useful if it's part of the boss.
-
 setGlobalValue (id, nameofvalue, valueofvalue) - set the global value that is available to all monsters. All values are of type string.
 						If you need numbers, then you need to convert back and forth.
 	id - monster id, if -1, then the current monster
@@ -516,3 +512,16 @@ pauseMusic (soundname) - pause music playing.
 
 stopAllMusic() - stop playing all music.
 	Example: stopAllMusic() - stop all music.
+
+-------------------------------------------------------------------------
+
+GameService variables. Variables starting with GS_:
+	For monsters:
+		GS_no_points - if it is true, then after the death of the monster, no points are given. Useful if it's part of the boss.
+		GS_type - standard or boss. Overrides the standard type.
+	Level format:
+		GS_lives - the number of lives of the installed monster. It can be read from the intelligence file, but the change will do nothing. Use the setNumberOfLives (id, lives) function to change the life of the monster from the intel file.
+			Example: 1=6;176;480;{super=false;GS_lives=6;GS_type=standard;};
+			Here the monster will have 6 lives, it will not be the boss (although in the original number 6 is of the boss type), and the super variable can be read with getMonsterValue() (it will be equals "false")
+		GS_to_level - EXITLEVEL tile variable. Indicates which level to go to.
+		GS_teleport - EXITLEVEL tile variable. teleport the player to the coordinates specified with a comma. Example: 12;12=GS_teleport=123,142;

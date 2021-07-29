@@ -92,7 +92,7 @@ void GameInfo::playDeath()
     if(type < 0)
     {
         type = type*(-1);
-        numberofframes = atoi( s_GameClass->s_Data->s_Textures->s_DeathTilesInfo[s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][type]]->getValue("info", "numberofframes").c_str() );
+        numberofframes = atoi( s_GameClass->s_Data->s_Textures->s_DeathTilesInfo[s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][type]]->getValue("info", "numberofframes").c_str() );
         if(frame == numberofframes + 1)
         {
             s_Stop = false;
@@ -109,7 +109,7 @@ void GameInfo::playDeath()
             return;
         }
         if(frame >= numberofframes) frame = numberofframes - 1;
-        drawDeathFrame(&s_GameClass->s_Data->s_Textures->s_DeathTiles[s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][type]],&s_GameClass->s_Data->s_Textures->s_CacheDeathTiles[s_GameClass->s_Data->s_Level->s_Fields["Tiles1"][type]],frame);
+        drawDeathFrame(&s_GameClass->s_Data->s_Textures->s_DeathTiles[s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][type]],&s_GameClass->s_Data->s_Textures->s_CacheDeathTiles[s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][type]],frame);
     }
     else
     {
