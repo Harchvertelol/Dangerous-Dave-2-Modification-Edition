@@ -33,7 +33,5 @@
 
 # Windows special file
 Thumbs.db
-DD2ME/src/DD2Client.layout
-DD2ME/src/DD2Server.layout
-DD2ME/src/DD2Client.depend
+*.depend
 *.layout
