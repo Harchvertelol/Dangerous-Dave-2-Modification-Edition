@@ -3,7 +3,6 @@
 #include "ParserInfoFile.h"
 #include "PostParsingStruct.h"
 #include "../WorkFunctions.h"
-#include "../Defines.h"
 using namespace std;
 using namespace WorkFunctions;
 using namespace ParserFunctions;
@@ -39,7 +38,7 @@ bool IniParser::ParserInfoFile::writeParsedToFile(PostParsingStruct* pps, string
 
 PostParsingStruct* IniParser::ParserInfoFile::getParsedFromFile(string s_FileName, PostParsingStruct* prs, bool log)
 {
-    char buf[FILE_READ_SIZE_STR];
+    //char buf[FILE_READ_SIZE_STR];
     string str;
     string NameMainVariable;
     string NameSecondaryVariable;
@@ -55,15 +54,17 @@ PostParsingStruct* IniParser::ParserInfoFile::getParsedFromFile(string s_FileNam
         FileInfo.close();
         return 0;
     }
-    FileInfo.getline(buf, FILE_READ_SIZE_STR);
-    str = buf;
+    //FileInfo.getline(buf, FILE_READ_SIZE_STR);
+    //str = buf;
+    getline(FileInfo, str);
     NameMainVariable = getNameMainVariable(str);
     while(FileInfo)
     {
         if(NameMainVariable != "")
         {
-            FileInfo.getline(buf, FILE_READ_SIZE_STR);
-            str = buf;
+            //FileInfo.getline(buf, FILE_READ_SIZE_STR);
+            //str = buf;
+            getline(FileInfo, str);
             while(FileInfo && getNameMainVariable(str) == "")
             {
                 NameSecondaryVariable = getNameSecondaryVariable(str);
@@ -72,14 +73,16 @@ PostParsingStruct* IniParser::ParserInfoFile::getParsedFromFile(string s_FileNam
                 {
                     (*s_Variables)[NameMainVariable][NameSecondaryVariable] = ValueSecondaryVariable;
                 }
-                FileInfo.getline(buf, FILE_READ_SIZE_STR);
-                str = buf;
+                //FileInfo.getline(buf, FILE_READ_SIZE_STR);
+                //str = buf;
+                getline(FileInfo, str);
             }
         }
         else
         {
-            FileInfo.getline(buf, FILE_READ_SIZE_STR);
-            str = buf;
+            //FileInfo.getline(buf, FILE_READ_SIZE_STR);
+            //str = buf;
+            getline(FileInfo, str);
         }
         NameMainVariable = getNameMainVariable(str);
     }
