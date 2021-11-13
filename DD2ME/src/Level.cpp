@@ -83,6 +83,7 @@ bool Level::loadLevel(string file_name)
         cerr<<"Error: Level: "<<file_name<<". Load file level."<<endl;
         return false;
     }
+    if(!s_Params->isExists("info", "levelformat") || atof(s_Params->getValue("info", "levelformat").c_str()) - NUMBER_CONSTANTS::NC_LEVEL_FORMAT_VERSION > NUMBER_CONSTANTS::NC_EPS) cout << "Warning: incorrect level format version!" << endl;
     string str, NameField, nameblock, name, value;
     int size_x = atoi( s_Params->getValue("info", "sizeX").c_str() );
     int size_y = atoi( s_Params->getValue("info", "sizeY").c_str() );

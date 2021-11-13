@@ -1,0 +1,131 @@
+# depslib dependency file v1.0
+1363272861 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\from0to0.1\square.cpp
+	"Square.h"
+
+1363272848 e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\from0to0.1\square.h
+
+1589022484 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\from0to0.1\workfunctions.cpp
+	"WorkFunctions.h"
+	<cstdlib>
+	<sys/io.h>
+	<unistd.h>
+	<sys/stat.h>
+	<io.h>
+	<direct.h>
+
+1589022356 e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\from0to0.1\workfunctions.h
+	<iostream>
+	<sstream>
+	<map>
+	"Defines.h"
+	"Square.h"
+
+1627417053 e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\from0to0.1\defines.h
+	<string>
+
+1627516519 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\from0to0.1\from0to0.1.cpp
+	<iostream>
+	<cstdlib>
+	"IniParser/ParserInfoFile.h"
+	"Level.h"
+	"WorkFunctions.h"
+
+1627513723 e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\from0to0.1\level.h
+	<map>
+	<cstring>
+	"IniParser/PostParsingStruct.h"
+
+1627415699 e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\from0to0.1\iniparser\postparsingstruct.h
+	<map>
+	<string>
+
+1627516487 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\from0to0.1\level.cpp
+	"Level.h"
+	"IniParser/ParserInfoFile.h"
+	"WorkFunctions.h"
+	"Defines.h"
+	<fstream>
+	<iostream>
+	<stdlib.h>
+
+1623930423 e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\from0to0.1\iniparser\parserinfofile.h
+	<string>
+	"PostParsingStruct.h"
+
+1623930175 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\from0to0.1\iniparser\parserinfofile.cpp
+	<fstream>
+	<iostream>
+	"ParserInfoFile.h"
+	"PostParsingStruct.h"
+	"../WorkFunctions.h"
+	"../Defines.h"
+
+1627415740 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\from0to0.1\iniparser\postparsingstruct.cpp
+	"PostParsingStruct.h"
+	<iostream>
+
+1623930175 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\iniparser\parserinfofile.cpp
+	<fstream>
+	<iostream>
+	"ParserInfoFile.h"
+	"PostParsingStruct.h"
+	"../WorkFunctions.h"
+	"../Defines.h"
+
+1623930423 e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\iniparser\parserinfofile.h
+	<string>
+	"PostParsingStruct.h"
+
+1627415699 e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\iniparser\postparsingstruct.h
+	<map>
+	<string>
+
+1589022356 e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\workfunctions.h
+	<iostream>
+	<sstream>
+	<map>
+	"Defines.h"
+	"Square.h"
+
+1627417053 e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\defines.h
+	<string>
+
+1363272848 e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\square.h
+
+1627415740 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\iniparser\postparsingstruct.cpp
+	"PostParsingStruct.h"
+	<iostream>
+
+1627517223 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\level.cpp
+	"Level.h"
+	"IniParser/ParserInfoFile.h"
+	"WorkFunctions.h"
+	"Defines.h"
+	<fstream>
+	<iostream>
+	<stdlib.h>
+
+1627513723 e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\level.h
+	<map>
+	<cstring>
+	"IniParser/PostParsingStruct.h"
+
+1363272861 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\square.cpp
+	"Square.h"
+
+1589022484 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\workfunctions.cpp
+	"WorkFunctions.h"
+	<cstdlib>
+	<sys/io.h>
+	<unistd.h>
+	<sys/stat.h>
+	<io.h>
+	<direct.h>
+
+1636761396 source:e:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\from0to0.1.cpp
+	<iostream>
+	<cstdlib>
+	"IniParser/ParserInfoFile.h"
+	"Level.h"
+	"WorkFunctions.h"
+

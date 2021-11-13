@@ -4,8 +4,15 @@
 #include <map>
 #include <vector>
 #include "CreatureMonster.h"
+#include "CreatureDave.h"
 
 class Game;
+
+enum MONSTER_DAVE_RADIUS_TYPE
+{
+    MDRT_LIVE = 0,
+    MDRT_ACTIVATE
+};
 
 class FactoryMonsters
 {
@@ -19,6 +26,7 @@ class FactoryMonsters
         int s_MaxIndex;
         CreatureMonster* addMonster(int, int, int, bool getstate = true);
         int addMonsterImmediately(int, int, int, bool getstate = true);
+        bool isMonsterInDaveRadius(CreatureDave*, CreatureMonster*, MONSTER_DAVE_RADIUS_TYPE);
         void removeMonster(int);
         void addMonstersFromQueue();
         void live();

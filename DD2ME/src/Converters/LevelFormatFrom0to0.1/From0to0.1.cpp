@@ -19,7 +19,9 @@ int main()
         Level q;
         q.convertLevel(itos(i));
     }
-    system("copy levels.dat result/levels.dat");
+    levelsInf->setValue("info", "levelsformat", "0.1");
+    //system("copy levels.dat result/levels.dat");
+    prs.writeParsedToFile(levelsInf, "result/levels.dat");
     system("pause");
     return 0;
 }

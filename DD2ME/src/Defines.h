@@ -27,8 +27,10 @@ namespace STRING_CONSTANTS
 
 namespace NUMBER_CONSTANTS
 {
+    const float NC_EPS = 0.0000001;
     const float NC_GAME_VERSION = 0.9;
     const float NC_API_VERSION = 0.1;
+    const float NC_LEVEL_FORMAT_VERSION = 0.1;
 }
 
 enum TILEMASK

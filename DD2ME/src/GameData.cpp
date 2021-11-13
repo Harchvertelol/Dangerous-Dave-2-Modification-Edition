@@ -135,6 +135,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     }
     s_LevelsInfo = prs.getParsedFromFile(PathToLevelPack + "levels.dat");
     if(!s_LevelsInfo) return false;
+    if(!s_LevelsInfo->isExists("info", "levelsformat") || atof(s_LevelsInfo->getValue("info", "levelsformat").c_str()) - NUMBER_CONSTANTS::NC_LEVEL_FORMAT_VERSION > NUMBER_CONSTANTS::NC_EPS) cout << "Warning: incorrect levelpack format version!" << endl;
     if( !s_Bonuses->load(PathToBonusPack) ) return false;
     if( !s_Screens->load(PathToScreenPack) ) return false;
     if( !s_Textures->load(PathToTexturePack) ) return false;

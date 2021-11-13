@@ -3,6 +3,8 @@
 #include <iostream>
 #include "IniParser/PostParsingStruct.h"
 
+#include "Square.h"
+
 class Game;
 
 class KeysState;
@@ -56,6 +58,7 @@ class CreatureDave
         void draw();
         void testShoot();
         void calculateDoKey();
+        Square getCollision();
         IniParser::PostParsingStruct* getKeys(std::string, IniParser::PostParsingStruct* cpps = 0);
         void setKeys(IniParser::PostParsingStruct*, std::string);
         void mergeDave(CreatureDave*);
