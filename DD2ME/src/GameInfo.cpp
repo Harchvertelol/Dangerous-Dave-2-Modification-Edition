@@ -64,21 +64,23 @@ void GameInfo::live()
         iter->second->live(false);
     }
     //...
-    s_MyDave->live();
+    if(!s_Stop) s_MyDave->live();
 }
 
-void GameInfo::deathDave(int type)
+bool GameInfo::deathDave(int type)
 {
-    if(type == 0) return;
-    if(s_CheatGod == true) return;
-    if(s_MyDave->s_State == "doorexit") return;
-    if(s_Stop) return;
+    if(type == 0) return false;
+    if(s_CheatGod == true) return false;
+    if(s_MyDave->s_State == "doorexit") return false;
+    if(s_Stop) return false;
     s_Stop = true;
     s_DeathType = type;
     s_OldAnSt = s_GameClass->s_AnimationStep;
     s_DopFrame = -1;
     s_CurrentLives--;
+    s_GameClass->s_Data->s_Sounds->stop("ammo");
     s_GameClass->s_Data->s_Sounds->play("death");
+    return true;
 }
 
 void GameInfo::playDeath()

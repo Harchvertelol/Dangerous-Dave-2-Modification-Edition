@@ -88,7 +88,7 @@ int Sounds::play(string name, bool new_sound, bool restart, bool is_loop, int of
 
 bool Sounds::stop(string name)
 {
-    if(s_SoundsList.find(name) == s_SoundsList.end()) return false;
+    if(s_SoundsList.find(name) == s_SoundsList.end() || s_SoundsList[name].getStatus() == sf::SoundSource::Status::Stopped) return false;
     s_SoundsList[name].stop();
     return true;
 }
