@@ -51,6 +51,7 @@ class GameInfo
         bool s_IsGhostOn;
         void live();
         bool deathDave(int);
+        void doChangeLevelOnGameOver();
         void playDeath();
         void drawDeathFrame(std::map<int, Bitmap* >*, std::map<int, Bitmap* >*, int);
         void correctionScreen(CreatureDave*);

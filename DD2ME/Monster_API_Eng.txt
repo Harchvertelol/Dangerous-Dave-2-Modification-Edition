@@ -77,6 +77,9 @@ The following functions must be described:
 function setFirstState ()
 	return "rightrun"
 end
+Attention! If you are going to do any operations in this function, then keep in mind that at the time of calling the function, the monster
+status NOT INSTALLED! So if you want to do something in a stateful manner, set it by calling setState (-1, STATE).
+This does not negate the need to return a state that should eventually be set!
 2) mainFunc (), returns nothing, is the main intelligence function, each rendering cycle is called if
 if you don’t describe it, then it will be generated automatically, but empty. The render loop is called once every milliseconds,
 specified in DD2.ini in the [video] block in the drawstep variable.

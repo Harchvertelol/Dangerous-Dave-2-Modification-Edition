@@ -83,6 +83,22 @@ bool GameInfo::deathDave(int type)
     return true;
 }
 
+void GameInfo::doChangeLevelOnGameOver()
+{
+    s_CurrentLives = GC_START_LIVES_NUMBER;
+    if(s_GameClass->s_Data->s_Level->s_Params->isExists("options", "changelevelongameover"))
+    {
+        string change_level_to = s_GameClass->s_Data->s_Level->s_Params->getValue("options", "changelevelongameover");
+        int lev_tmp = atoi(change_level_to.c_str());
+        if(change_level_to.find("+") != string::npos || change_level_to.find("-") != string::npos) s_CurrentLevel += lev_tmp;
+        else s_CurrentLevel = lev_tmp;
+        if(s_CurrentLevel <= 0) s_CurrentLevel = 1;
+        else if(s_CurrentLevel > atoi(s_GameClass->s_Data->s_LevelsInfo->getValue("info", "numberoflevels").c_str())) s_CurrentLevel = atoi(s_GameClass->s_Data->s_LevelsInfo->getValue("info", "numberoflevels").c_str());
+    }
+    else if(s_CurrentLevel > 1) s_CurrentLevel--;
+    s_GameClass->s_Data->s_Sounds->play("gameover");
+}
+
 void GameInfo::playDeath()
 {
     int type = s_DeathType;
@@ -101,12 +117,7 @@ void GameInfo::playDeath()
             s_DopFrame = -1;
             s_DeathType = 0;
             s_OldAnSt = s_GameClass->s_AnimationStep;
-            if(s_CurrentLives <= 0)
-            {
-                s_CurrentLives = GC_START_LIVES_NUMBER;
-                if(s_CurrentLevel > 1) s_CurrentLevel--;
-                s_GameClass->s_Data->s_Sounds->play("gameover");
-            }
+            if(s_CurrentLives <= 0) doChangeLevelOnGameOver();
             s_GameClass->changeLevel(s_CurrentLevel, true, false);
             return;
         }
@@ -123,12 +134,7 @@ void GameInfo::playDeath()
             s_DopFrame = -1;
             s_DeathType = 0;
             s_OldAnSt = s_GameClass->s_AnimationStep;
-            if(s_CurrentLives <= 0)
-            {
-                s_CurrentLives = GC_START_LIVES_NUMBER;
-                if(s_CurrentLevel > 1) s_CurrentLevel--;
-                s_GameClass->s_Data->s_Sounds->play("gameover");
-            }
+            if(s_CurrentLives <= 0) doChangeLevelOnGameOver();
             s_GameClass->changeLevel(s_CurrentLevel, true, false);
             return;
         }

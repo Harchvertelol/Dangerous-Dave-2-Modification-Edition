@@ -66,11 +66,7 @@ LRESULT StateManager::s3(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             if(wParam == s_GameClass->s_GameInfo->s_KeySkip) //в параметре wParam код клавишы. Рассматриваем код
             {
                 switchState(0);
-                if(s_GameClass->s_GameInfo->s_CurrentLives <= 0)
-                {
-                    s_GameClass->s_GameInfo->s_CurrentLives = GC_START_LIVES_NUMBER;
-                    if(s_GameClass->s_GameInfo->s_CurrentLevel > 1) s_GameClass->s_GameInfo->s_CurrentLevel--;
-                }
+                if(s_GameClass->s_GameInfo->s_CurrentLives <= 0) s_GameClass->s_GameInfo->doChangeLevelOnGameOver();
             }
             else if(wParam == s_GameClass->s_GameInfo->s_KeyConsole)
             {

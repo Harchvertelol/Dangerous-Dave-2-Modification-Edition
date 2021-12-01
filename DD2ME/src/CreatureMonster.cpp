@@ -12,10 +12,10 @@ using namespace MathFunctions;
 using namespace GameFunctions;
 using namespace ConvertFunctions;
 
-CreatureMonster::CreatureMonster(Game* gameclass, int number, int id, bool getstate):
+CreatureMonster::CreatureMonster(Game* gameclass, int number, int id, int x, int y, bool getstate):
     s_GameClass(gameclass),
-    s_CoordX(0),
-    s_CoordY(0),
+    s_CoordX(x),
+    s_CoordY(y),
     s_CurrentLives(0),
     s_ID(id),
     s_DeleteNow(false),
@@ -118,6 +118,7 @@ void CreatureMonster::draw()
 
 int CreatureMonster::getFrame()
 {
+    if(!s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Number - 1]->isExists("info", "numberofframes" + s_State)) cout << "numberofframes" + s_State << endl;
     int numberofframes = atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Number - 1]->getValue("info", "numberofframes" + s_State).c_str() );
     return s_NumberOfAction%numberofframes;
 }

@@ -1,4 +1,22 @@
 function setFirstState()
+	setState(-1, "leftrunceiling")
+	testgo = goRight(-1, 1, 1)
+	if testgo == 0 then
+		goLeft(-1, 1, 0)
+	end
+	testgo = goUp(-1, 1, 1)
+	if testgo == 0 then
+		goDown(-1, 1, 0)
+		setState(-1, "leftrunfloor")
+		goDown(-1, 8, 1)
+		testgo = goDown(-1, 1, 1)
+		if testgo == 0 then
+			goUp(-1, 1, 0)
+			goUp(-1, 8, 0)
+			return "leftdownrun"
+		end
+		return "leftrunfloor"
+	end
 	return "leftrunceiling"
 end
 

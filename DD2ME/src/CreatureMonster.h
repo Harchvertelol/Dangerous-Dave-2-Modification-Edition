@@ -12,7 +12,7 @@ class Game;
 class CreatureMonster
 {
     public:
-        CreatureMonster(Game*, int, int, bool getstate = true);
+        CreatureMonster(Game*, int, int, int, int, bool getstate = true);
         ~CreatureMonster();
         Game* s_GameClass;
         int s_CoordX;

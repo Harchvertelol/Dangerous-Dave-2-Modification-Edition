@@ -32,18 +32,14 @@ void FactoryMonsters::removeMonster(int key)
 
 int FactoryMonsters::addMonsterImmediately(int number, int x, int y, bool getstate)
 {
-    s_Monsters[s_MaxIndex] = new CreatureMonster(s_GameClass, number, s_MaxIndex, getstate);
-    s_Monsters[s_MaxIndex]->s_CoordX = x;
-    s_Monsters[s_MaxIndex]->s_CoordY = y;
+    s_Monsters[s_MaxIndex] = new CreatureMonster(s_GameClass, number, s_MaxIndex, x, y, getstate);
     s_MaxIndex++;
     return s_MaxIndex - 1;
 }
 
 CreatureMonster* FactoryMonsters::addMonster(int number, int x, int y, bool getstate)
 {
-    CreatureMonster* newMonster = new CreatureMonster(s_GameClass, number, s_MaxIndex + s_QueueForAddingMonsters.size(), getstate);
-    newMonster->s_CoordX = x;
-    newMonster->s_CoordY = y;
+    CreatureMonster* newMonster = new CreatureMonster(s_GameClass, number, s_MaxIndex + s_QueueForAddingMonsters.size(), x, y, getstate);
     s_QueueForAddingMonsters.push_back(newMonster);
     return newMonster;
 }
