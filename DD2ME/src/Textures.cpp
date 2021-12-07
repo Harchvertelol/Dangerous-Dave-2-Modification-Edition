@@ -144,6 +144,12 @@ int Textures::getTileIDByFrame(int tile, int frame)
 int Textures::getFrame(int tile, int x, int y)
 {
     if(s_TilesAnimationInfo[0].find(tile) == s_TilesAnimationInfo[0].end() || s_GameClass->s_IniFile->getValue("video", "tileanimation") != "true") return 0;
+    string anim_frame_lock = s_GameClass->s_Data->s_Level->getTileParameter(x, y, "GS_animation_frame_lock");
+    if(anim_frame_lock != "")
+    {
+        int ret_frame = atoi(anim_frame_lock.c_str());
+        return ret_frame % s_TilesAnimationInfo[0][tile].s_TileFrames.size();
+    }
     string animation_shift_str = s_GameClass->s_Data->s_Level->getTileParameter(x, y, "GS_animation_shift");
     int animation_shift = 0;
     if(animation_shift_str != "") animation_shift = atoi(animation_shift_str.c_str());
