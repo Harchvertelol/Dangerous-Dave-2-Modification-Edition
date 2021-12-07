@@ -130,9 +130,9 @@ bool Textures::load(string PathToTexturePack)
     return true;
 }
 
-int Textures::getCurrentAnimationTileID(int tile)
+int Textures::getCurrentAnimationTileID(int tile, int x, int y)
 {
-    return getTileIDByFrame(tile, getFrame(tile));
+    return getTileIDByFrame(tile, getFrame(tile, x, y));
 }
 
 int Textures::getTileIDByFrame(int tile, int frame)
@@ -141,10 +141,13 @@ int Textures::getTileIDByFrame(int tile, int frame)
     return s_TilesAnimationInfo[0][tile].s_TileFrames[frame].s_TileID;
 }
 
-int Textures::getFrame(int tile)
+int Textures::getFrame(int tile, int x, int y)
 {
     if(s_TilesAnimationInfo[0].find(tile) == s_TilesAnimationInfo[0].end() || s_GameClass->s_IniFile->getValue("video", "tileanimation") != "true") return 0;
-    int tmpframe = s_GameClass->s_TileAnimationStep%s_TilesAnimationInfo[0][tile].s_GeneralAnimationSteps;
+    string animation_shift_str = s_GameClass->s_Data->s_Level->getTileParameter(x, y, "GS_animation_shift");
+    int animation_shift = 0;
+    if(animation_shift_str != "") animation_shift = atoi(animation_shift_str.c_str());
+    int tmpframe = (s_GameClass->s_TileAnimationStep + animation_shift) % s_TilesAnimationInfo[0][tile].s_GeneralAnimationSteps;
     int tmpschframe = 0;
     int sch = 0;
     for(sch = 0; sch < s_TilesAnimationInfo[0][tile].s_TileFrames.size(); sch++)
@@ -155,14 +158,14 @@ int Textures::getFrame(int tile)
     return sch;
 }
 
-void Textures::drawTile(int tile, int x, int y)
+void Textures::drawTile(int tile, int x, int y, int x_tile, int y_tile)
 {
     if(tile < 0) return;
     int sizeXTiles = atoi( s_TilesInfo->getValue("info", "sizeX").c_str() );
     int sizeYTiles = atoi( s_TilesInfo->getValue("info", "sizeY").c_str() );
     int numberoftiles = sizeXTiles * sizeYTiles;
     if(tile >= numberoftiles) return;
-    int frame = getFrame(tile);
+    int frame = getFrame(tile, x_tile, y_tile);
     tile = getTileIDByFrame(tile, frame);
     if(tile >= numberoftiles) return;
     int NumberDrawTileX = tile % sizeXTiles;

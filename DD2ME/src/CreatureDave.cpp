@@ -566,14 +566,15 @@ int CreatureDave::testChangeLevel()
     for(int i = 0; i < 6; i++)
     {
         TileType = s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i]/16, TileCoordY[i]/16);
-        if( TileType == EXITLEVEL && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+        if(testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)))
         {
-            int toLevel = s_GameClass->s_GameInfo->s_CurrentLevel + 1;
             string toLevel_str = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_to_level");
+            string isTp = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_teleport");
+            int toLevel = -1;
+            if(TileType == EXITLEVEL) toLevel = s_GameClass->s_GameInfo->s_CurrentLevel + 1;
             if(toLevel_str != "") toLevel = atoi(toLevel_str.c_str());
             else
             {
-                string isTp = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_teleport");
                 if(isTp != "")
                 {
                     toLevel = 0;

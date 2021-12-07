@@ -35,10 +35,10 @@ class Textures
         bool s_CacheCreated;
         bool load(std::string);
         bool createCache();
-        void drawTile(int, int, int);
-        int getFrame(int);
+        void drawTile(int, int, int, int, int);
+        int getFrame(int, int, int);
         int getTileIDByFrame(int, int);
-        int getCurrentAnimationTileID(int);
+        int getCurrentAnimationTileID(int, int, int);
         void deleteAllGDIObjects();
         void createMaskTransparent(int, int, int);
 };

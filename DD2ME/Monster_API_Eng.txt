@@ -526,5 +526,6 @@ GameService variables. Variables starting with GS_:
 		GS_lives - the number of lives of the installed monster. It can be read from the intelligence file, but the change will do nothing. Use the setNumberOfLives (id, lives) function to change the life of the monster from the intel file.
 			Example: 1=6;176;480;{super=false;GS_lives=6;GS_type=standard;};
 			Here the monster will have 6 lives, it will not be the boss (although in the original number 6 is of the boss type), and the super variable can be read with getMonsterValue() (it will be equals "false")
-		GS_to_level - EXITLEVEL tile variable. Indicates which level to go to.
-		GS_teleport - EXITLEVEL tile variable. teleport the player to the coordinates specified with a comma. Example: 12;12=GS_teleport=123,142;
+		GS_to_level is a tile variable (does not depend on the EXITLEVEL type). Indicates which level to go to.
+		GS_teleport is a tile variable (does not depend on the EXITLEVEL type). Teleport the player to the coordinates specified with a comma. Example: 12; 12 = GS_teleport = 123.142;
+		GS_animation_shift - how many milliseconds to shift the animation of this tile.

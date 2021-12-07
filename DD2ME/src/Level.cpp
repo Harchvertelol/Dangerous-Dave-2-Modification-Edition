@@ -278,7 +278,7 @@ void Level::draw()
     for(int i = DrawLevLY; i < DrawLevRY; i++)
         for(int j = DrawLevLX; j < DrawLevRX; j++)
         {
-            s_GameClass->s_Data->s_Textures->drawTile(s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
+            s_GameClass->s_Data->s_Textures->drawTile(s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16, j, i);
             s_GameClass->s_Data->s_Bonuses->drawBonus(s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
         }
 }
@@ -287,7 +287,7 @@ int Level::getTileType(int x, int y)
 {
     int tileid = getTileID(x, y);
     if(tileid == -1) return IMPASSABLE;
-    int curtileid = s_GameClass->s_Data->s_Textures->getCurrentAnimationTileID(tileid);
+    int curtileid = s_GameClass->s_Data->s_Textures->getCurrentAnimationTileID(tileid, x, y);
     return s_GameClass->s_Data->s_Textures->s_MaskTiles[0][curtileid];
 }
 
