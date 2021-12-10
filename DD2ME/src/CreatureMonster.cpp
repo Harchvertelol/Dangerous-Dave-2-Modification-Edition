@@ -76,7 +76,7 @@ bool CreatureMonster::correctionPhys(int coord, int what, bool ladder)
         for(int j = 0; j < SizeYMonster; j++)
             for(int i = 0; i < SizeXMonster; i++)
             {
-                TileType = s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i]/16, TileCoordY[j]/16);
+                TileType = s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i]/16, TileCoordY[j]/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
                 if( TileType == IMPASSABLE && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[j], s_GameClass->s_Data->s_Monsters->s_Collisions[s_Number - 1][s_State][frame], Square(0,0,15,15)) ) col = true;
                 if(true)
                 {

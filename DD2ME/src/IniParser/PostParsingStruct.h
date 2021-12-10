@@ -60,6 +60,8 @@ namespace IniParser
             /*! \param A Название блока.
             */
             void remove(std::string A);
+            //! Очищает все переменные.
+            void clear();
         private:
             std::map<std::string, std::map<std::string, std::string> > s_Variables;
     };

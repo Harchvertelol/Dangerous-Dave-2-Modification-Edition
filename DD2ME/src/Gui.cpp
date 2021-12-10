@@ -71,6 +71,9 @@ void Gui::drawGuiState2(int screennumber)
     int levelnamecoordX = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "levelnamecoordX").c_str());
     int levelnamecoordY = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "levelnamecoordY").c_str());
     int levelnamesize = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "levelnamesize").c_str());
+    int secretscoordX = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "secretscoordX").c_str());
+    int secretscoordY = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "secretscoordY").c_str());
+    int secretssize = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "secretssize").c_str());
     int scorecoordX = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "scorecoordX").c_str());
     int scorecoordY = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "scorecoordY").c_str());
     int scoresize = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "scoresize").c_str());
@@ -86,6 +89,7 @@ void Gui::drawGuiState2(int screennumber)
     if(s_GameClass->s_Data->s_Level->s_Params->isExists("info", "name")) levelname = s_GameClass->s_Data->s_Level->s_Params->getValue("info", "name");
     if(levelname == "") s_GameClass->s_Window->draw(Label("Level " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel), levelnamecoordX, levelnamecoordY, levelnamesize), Pen(0, 0, 0));
     else s_GameClass->s_Window->draw(Label(levelname, levelnamecoordX, levelnamecoordY, levelnamesize), Pen(0, 0, 0));
+    s_GameClass->s_Window->draw(Label("Secrets: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_Data->s_Level->s_Params->getMapVariables()["Secrets"].size()), secretscoordX, secretscoordY, secretssize), Pen(0, 0, 0));
     s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints), scorecoordX, scorecoordY, scoresize), Pen(0, 0, 0));
     s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(0), highscorecoordX, highscorecoordY, highscoresize), Pen(0, 0, 0));
     for(int i = 0; i < s_GameClass->s_GameInfo->s_CurrentLives - 1 && i < livesmaxobject; i++)

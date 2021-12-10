@@ -42,6 +42,7 @@ class CreatureDave
         int s_ScreenCoordX;
         int s_ScreenCoordY;
         std::string s_NickName;
+        IniParser::PostParsingStruct s_VisitedSecrets;
         void live(bool doKey = true);
         bool correctionPhys(int,int);
         void step(std::string);

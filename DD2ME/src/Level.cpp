@@ -84,6 +84,7 @@ bool Level::loadLevel(string file_name)
         return false;
     }
     if(!s_Params->isExists("info", "levelformat") || atof(s_Params->getValue("info", "levelformat").c_str()) - NUMBER_CONSTANTS::NC_LEVEL_FORMAT_VERSION > NUMBER_CONSTANTS::NC_EPS) cout << "Warning: incorrect level format version!" << endl;
+    if(!s_Params->isExists("options", "numberphysictilesfield")) s_Params->setValue("options", "numberphysictilesfield", "1");
     string str, NameField, nameblock, name, value;
     int size_x = atoi( s_Params->getValue("info", "sizeX").c_str() );
     int size_y = atoi( s_Params->getValue("info", "sizeY").c_str() );
@@ -227,6 +228,11 @@ bool Level::loadLevel(string file_name)
     s_Dave->s_CoordY = tmp_spl[1];
 }
 
+string Level::getNamePhysicTilesField()
+{
+    return STRING_CONSTANTS::PREFIX_NAME_FIELD_TILES + s_Params->getValue("options", "numberphysictilesfield");
+}
+
 string Level::getTileParameter(int x_tile, int y_tile, string name)
 {
     int SizeXLev = atoi( ( s_Params->getValue("info", "sizeX") ).c_str() );
@@ -253,7 +259,7 @@ bool Level::setTileParameter(int x_tile, int y_tile, string name, string value)
     s_TilesParams[x_tile + y_tile * SizeXLev][name] = value;
 }
 
-void Level::draw()
+void Level::draw(bool before_physic_field)
 {
     int ScrLX = s_GameClass->s_GameInfo->s_ScreenCoordX;
     int ScrLY = s_GameClass->s_GameInfo->s_ScreenCoordY;
@@ -275,23 +281,49 @@ void Level::draw()
     if(DrawLevLY > SizeYLev) DrawLevLY = SizeYLev;
     if(DrawLevRY > SizeYLev) DrawLevRY = SizeYLev;
 
-    for(int i = DrawLevLY; i < DrawLevRY; i++)
-        for(int j = DrawLevLX; j < DrawLevRX; j++)
-        {
-            s_GameClass->s_Data->s_Textures->drawTile(s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16, j, i);
-            s_GameClass->s_Data->s_Bonuses->drawBonus(s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
-        }
+    string namefield, namephysicfield = getNamePhysicTilesField();
+    int numberoftilefields = getNumberTilesFields();
+
+    int startI = 0, endI = numberoftilefields;
+    if(before_physic_field) endI = getNumberPhysicTilesField();
+    else startI = getNumberPhysicTilesField();
+
+    for(int i = startI; i < endI; i++)
+    {
+        namefield = getNameTilesField(i + 1);
+        for(int i = DrawLevLY; i < DrawLevRY; i++)
+            for(int j = DrawLevLX; j < DrawLevRX; j++)
+            {
+                s_GameClass->s_Data->s_Textures->drawTile(s_Fields[namefield][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16, j, i);
+                if(namefield == namephysicfield) s_GameClass->s_Data->s_Bonuses->drawBonus(s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
+            }
+    }
 }
 
-int Level::getTileType(int x, int y)
+int Level::getNumberPhysicTilesField()
 {
-    int tileid = getTileID(x, y);
-    if(tileid == -1) return IMPASSABLE;
+    return atoi(s_Params->getValue("options", "numberphysictilesfield").c_str());
+}
+
+string Level::getNameTilesField(int number)
+{
+    return STRING_CONSTANTS::PREFIX_NAME_FIELD_TILES + WorkFunctions::ConvertFunctions::itos(number);
+}
+
+int Level::getNumberTilesFields()
+{
+    return atoi(s_Params->getValue("info", "numberoftilesfields").c_str());
+}
+
+int Level::getTileType(int x, int y, int numberfield)
+{
+    int tileid = getTileID(x, y, numberfield);
+    if(tileid == -1) return EMPTY;
     int curtileid = s_GameClass->s_Data->s_Textures->getCurrentAnimationTileID(tileid, x, y);
     return s_GameClass->s_Data->s_Textures->s_MaskTiles[0][curtileid];
 }
 
-int Level::getTileID(int x, int y)
+int Level::getTileID(int x, int y, int numberfield)
 {
     int SizeXLev = atoi( ( s_Params->getValue("info", "sizeX") ).c_str() );
     int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
@@ -301,10 +333,10 @@ int Level::getTileID(int x, int y)
         cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x << ", Y = " << y << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
         return -1;
     }
-    return s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][y*SizeXLev + x];
+    return s_Fields[getNameTilesField(numberfield)][y*SizeXLev + x];
 }
 
-bool Level::setTileID(int x, int y, int tileid)
+bool Level::setTileID(int x, int y, int numberfield, int tileid)
 {
     int SizeXLev = atoi( ( s_Params->getValue("info", "sizeX") ).c_str() );
     int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
@@ -314,6 +346,6 @@ bool Level::setTileID(int x, int y, int tileid)
         cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x << ", Y = " << y << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
         return false;
     }
-    s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][y*SizeXLev + x] = tileid;
+    s_Fields[getNameTilesField(numberfield)][y*SizeXLev + x] = tileid;
     return true;
 }

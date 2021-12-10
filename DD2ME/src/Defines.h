@@ -17,7 +17,7 @@ namespace STRING_CONSTANTS
     const std::string SC_GAME_VERSION = "pre-beta v0.9";
     const std::string DEFAULT_FOLDER_SPLITTER = "/";
 
-    const std::string NAME_FIELD_TILES = "Tiles1";
+    const std::string PREFIX_NAME_FIELD_TILES = "Tiles";
     const std::string NAME_FIELD_BONUSES = "FieldBonuses";
     const std::string NAME_FIELD_BONUSDOORS = "FieldBonusDoors";
     const std::string NAME_FIELD_DOORS = "FieldDoors";

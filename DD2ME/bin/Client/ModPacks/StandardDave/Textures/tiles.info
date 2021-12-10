@@ -5,6 +5,11 @@ numberoftilesets=1
 numberofdoors=3
 numberofanimations=0
 
+[draw]
+transparentmaskR=204
+transparentmaskG=255
+transparentmaskB=204
+
 [animation_1]
 numberofframes=3
 frame1=0

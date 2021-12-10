@@ -447,7 +447,7 @@ getMonsterCollision(id) - получить прямоугольник столкновений у монстра.
 	Возвращает четыре числа - прямоугольник коллизий монстра. Сначала X и Y верхнего левого угла, потом X и Y правого нижнего угла
 	Пример: x1, y1, x2, y2 = getMonsterCollision(-1) - получили.
 
-addImageToFactoryTemporaryImage(pack, number, state, numberofframe, coordX, coordY, timeLive, changeX, changeY, type) - добавить в фабрику временных изображений изображение.
+addImageToFactoryTemporaryImage(pack, number, state, numberofframe, coordX, coordY, timeLive, changeX, changeY, type, onTop = 0) - добавить в фабрику временных изображений изображение.
 	pack - название пака изображений, поддерживается только "monsters".
 	number - номер монстра.
 	state - состояние монстра.
@@ -458,9 +458,10 @@ addImageToFactoryTemporaryImage(pack, number, state, numberofframe, coordX, coor
 	changeX - скорость изменения координаты X изображения в пикселях в цикл отрисовки.
 	changeY - скорость изменения координаты Y изображения в пикселях в цикл отрисовки.
 	type - тип изображения, пока ни на что не влияет.
+	onTop - если 1, то рисует изображения поверх всех слоёв текстур, иначе на уровне Дейва и монстров. По умолчанию 0.
 	Пример: addImageToFactoryTemporaryImage("monsters", 4, "web", 1, getCoordMonsterX(-1) + 4, getCoordMonsterY(-1) + 0, 2*(16*6/speedattack - noa) + 4, 0, 0, "web")
 
-addPackImagesToFactoryTemporaryImage(pack, number, state, coordX, coordY, timeLive, changeX, changeY, numberofframes, type, isAnimated) - добавить в фабрику временных изображений пакет изображений.
+addPackImagesToFactoryTemporaryImage(pack, number, state, coordX, coordY, timeLive, changeX, changeY, numberofframes, type, isAnimated, onTop = 0) - добавить в фабрику временных изображений пакет изображений.
 	pack - название пака изображений, поддерживается только "monsters".
 	number - номер монстра.
 	state - состояние монстра.
@@ -469,13 +470,14 @@ addPackImagesToFactoryTemporaryImage(pack, number, state, coordX, coordY, timeLi
 	timeLive - время жизни изображения в циклах отрисовки.
 	changeX - скорость изменения координаты X изображения в пикселях в цикл отрисовки.
 	changeY - скорость изменения координаты Y изображения в пикселях в цикл отрисовки.
-	numberofframes - количество фреймов для анимации
+	numberofframes - количество фреймов для анимации.
 	type - тип изображения, пока ни на что не влияет.
 	isAnimated - анимировать ли созданное изображение.
+	onTop - если 1, то рисует изображения поверх всех слоёв текстур, иначе на уровне Дейва и монстров. По умолчанию 0.
 
 changeNextLevel() - сменить уровень на следующий.
 
-playSound(soundname, new_sound = true, restart = false, is_loop = false, offset_ms = 0) - начать играть звук.
+playSound(soundname, new_sound = 1, restart = 0, is_loop = 0, offset_ms = 0) - начать играть звук.
 	soundname - название звука.
 	new_sound - сделать ли звук новым (если нет, то если он играет, он либо начнётся заново в зависимости
 			от параметра restart, либо ничего не произойдёт).

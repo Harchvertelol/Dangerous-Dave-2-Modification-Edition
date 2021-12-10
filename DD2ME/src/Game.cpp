@@ -213,11 +213,11 @@ void Game::startGame(int idgameclass)
     if(s_IniFile->getValue("video", "usemonstercache") == "true") s_Data->s_Monsters->createCache();
     if(s_IniFile->getValue("video", "usetransparentmask") == "true")
     {
-        //s_Data->s_Textures->createMaskTransparent(204, 255, 204);
-        s_Data->s_Bonuses->createMaskTransparent(atoi(s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("draw", "transparentmaskR").c_str()), atoi(s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("draw", "transparentmaskG").c_str()), atoi(s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("draw", "transparentmaskB").c_str()));
-        s_Data->s_Screens->createMaskTransparent(atoi(s_Data->s_Screens->s_ScreensInfo->getValue("draw", "transparentmaskR").c_str()), atoi(s_Data->s_Screens->s_ScreensInfo->getValue("draw", "transparentmaskG").c_str()), atoi(s_Data->s_Screens->s_ScreensInfo->getValue("draw", "transparentmaskB").c_str()));
-        s_Data->s_Dave->createMaskTransparent(atoi(s_Data->s_Dave->s_DaveInfo->getValue("draw", "transparentmaskR").c_str()), atoi(s_Data->s_Dave->s_DaveInfo->getValue("draw", "transparentmaskG").c_str()), atoi(s_Data->s_Dave->s_DaveInfo->getValue("draw", "transparentmaskB").c_str()));
-        s_Data->s_Monsters->createMaskTransparent(atoi(s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "transparentmaskR").c_str()), atoi(s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "transparentmaskG").c_str()), atoi(s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "transparentmaskB").c_str()));
+        if(s_Data->s_Textures->s_TilesInfo->getValue("draw", "transparentmaskR") != "-1" && s_Data->s_Textures->s_TilesInfo->getValue("draw", "transparentmaskG") != "-1" && s_Data->s_Textures->s_TilesInfo->getValue("draw", "transparentmaskB") != "-1") s_Data->s_Textures->createMaskTransparent(atoi(s_Data->s_Textures->s_TilesInfo->getValue("draw", "transparentmaskR").c_str()), atoi(s_Data->s_Textures->s_TilesInfo->getValue("draw", "transparentmaskG").c_str()), atoi(s_Data->s_Textures->s_TilesInfo->getValue("draw", "transparentmaskB").c_str()));
+        if(s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("draw", "transparentmaskR") != "-1" && s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("draw", "transparentmaskG") != "-1" && s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("draw", "transparentmaskB") != "-1") s_Data->s_Bonuses->createMaskTransparent(atoi(s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("draw", "transparentmaskR").c_str()), atoi(s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("draw", "transparentmaskG").c_str()), atoi(s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("draw", "transparentmaskB").c_str()));
+        if(s_Data->s_Screens->s_ScreensInfo->getValue("draw", "transparentmaskR") != "-1" && s_Data->s_Screens->s_ScreensInfo->getValue("draw", "transparentmaskG") != "-1" && s_Data->s_Screens->s_ScreensInfo->getValue("draw", "transparentmaskB") != "-1") s_Data->s_Screens->createMaskTransparent(atoi(s_Data->s_Screens->s_ScreensInfo->getValue("draw", "transparentmaskR").c_str()), atoi(s_Data->s_Screens->s_ScreensInfo->getValue("draw", "transparentmaskG").c_str()), atoi(s_Data->s_Screens->s_ScreensInfo->getValue("draw", "transparentmaskB").c_str()));
+        if(s_Data->s_Dave->s_DaveInfo->getValue("draw", "transparentmaskR") != "-1" && s_Data->s_Dave->s_DaveInfo->getValue("draw", "transparentmaskG") != "-1" && s_Data->s_Dave->s_DaveInfo->getValue("draw", "transparentmaskB") != "-1") s_Data->s_Dave->createMaskTransparent(atoi(s_Data->s_Dave->s_DaveInfo->getValue("draw", "transparentmaskR").c_str()), atoi(s_Data->s_Dave->s_DaveInfo->getValue("draw", "transparentmaskG").c_str()), atoi(s_Data->s_Dave->s_DaveInfo->getValue("draw", "transparentmaskB").c_str()));
+        if(s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "transparentmaskR") != "-1" && s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "transparentmaskG") != "-1" && s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "transparentmaskB") != "-1") s_Data->s_Monsters->createMaskTransparent(atoi(s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "transparentmaskR").c_str()), atoi(s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "transparentmaskG").c_str()), atoi(s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "transparentmaskB").c_str()));
     }
     s_StateManager->switchState(0);
     configureForGame();
@@ -359,8 +359,8 @@ void Game::drawAll()
     if(s_GameInfo->s_GameState == 2) s_Data->drawScreenState2();
     if(s_GameInfo->s_GameState == 3)
     {
-        s_Data->s_Level->draw();
-        s_FactoryTmpImgs->drawAll();
+        s_Data->s_Level->draw(true);
+        s_FactoryTmpImgs->drawAll(false);
         s_GameInfo->s_FactoryMonsters->drawAll();
         map<int, CreatureDave*>::iterator iter;
         for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)
@@ -369,6 +369,8 @@ void Game::drawAll()
         }
         s_GameInfo->s_MyDave->draw();
         s_Data->drawScreenState3();
+        s_Data->s_Level->draw(false);
+        s_FactoryTmpImgs->drawAll(true);
         if(s_GameInfo->s_Stop == true && s_GameInfo->s_DeathType != 0) s_GameInfo->playDeath();
     }
     s_Window->paint();

@@ -16,11 +16,11 @@ class FactoryTemporaryImages
         Game* s_GameClass;
         map<int, TemporaryImageInfo> s_Info;
         int s_MaxIndex;
-        void addImage(Bitmap*,Bitmap*,int,int,int,int,int,string);
-        void addImage(map<int, Bitmap*>*,map<int, Bitmap*>*,int,int,int,int,int,int,string,bool);
+        void addImage(Bitmap*,Bitmap*, int, int, int, int, int, string, bool onTop = false);
+        void addImage(map<int, Bitmap*>*, map<int, Bitmap*>*, int, int, int, int, int, int, string, bool, bool onTop = false);
         void removeImage(int);
         void live();
-        void drawAll();
+        void drawAll(bool);
         void clear();
 };
 #endif

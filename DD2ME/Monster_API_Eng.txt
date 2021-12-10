@@ -447,7 +447,7 @@ getMonsterCollision (id) - Get the collision rectangle from the monster.
 	Returns four numbers - the monster collision rectangle. First X and Y of the upper left corner, then X and Y of the lower right corner
 	Example: x1, y1, x2, y2 = getMonsterCollision (-1) - got.
 
-addImageToFactoryTemporaryImage (pack, number, state, numberofframe, coordX, coordY, timeLive, changeX, changeY, type) - add an image to the temporary image factory.
+addImageToFactoryTemporaryImage (pack, number, state, numberofframe, coordX, coordY, timeLive, changeX, changeY, type, onTop = 0) - add an image to the temporary image factory.
 	pack - the name of the image pack, only "monsters" is supported
 	number - monster number
 	state - monster state
@@ -458,9 +458,10 @@ addImageToFactoryTemporaryImage (pack, number, state, numberofframe, coordX, coo
 	changeX - rate of change of the X coordinate of the image in pixels in the rendering cycle
 	changeY - rate of change of the Y coordinate of the image in pixels in the rendering cycle
 	type - image type, so far does not affect anything.
+	onTop - if 1, then draws images on top of all texture layers, otherwise at the level of Dave and monsters. The default is 0.
 	Example: addImageToFactoryTemporaryImage ("monsters", 4, "web", 1, getCoordMonsterX (-1) + 4, getCoordMonsterY (-1) + 0, 2 * (16 * 6 / speedattack - noa) + 4, 0, 0, "web")
 
-addPackImagesToFactoryTemporaryImage (pack, number, state, coordX, coordY, timeLive, changeX, changeY, numberofframes, type, isAnimated) - add a package of images to the temporary image factory.
+addPackImagesToFactoryTemporaryImage (pack, number, state, coordX, coordY, timeLive, changeX, changeY, numberofframes, type, isAnimated, onTop = 0) - add a package of images to the temporary image factory.
 	pack - the name of the image pack, only "monsters" is supported
 	number - monster number
 	state - monster state
@@ -471,11 +472,12 @@ addPackImagesToFactoryTemporaryImage (pack, number, state, coordX, coordY, timeL
 	changeY - rate of change of the Y coordinate of the image in pixels in the rendering cycle
 	numberofframes - number of frames for animation
 	type - image type, so far does not affect anything.
+	onTop - if 1, then draws images on top of all texture layers, otherwise at the level of Dave and monsters. The default is 0.
 	isAnimated - whether to animate the created image
 
 changeNextLevel () - change the level to the next.
 
-playSound (soundname, new_sound = true, restart = false, is_loop = false, offset_ms = 0) - start playing sound.
+playSound (soundname, new_sound = 1, restart = 0, is_loop = 0, offset_ms = 0) - start playing sound.
 	soundname - the name of the sound.
 	new_sound - whether to make the sound new (if not, then if it plays, it will either start over depending on
 	from the restart parameter, or nothing happens).

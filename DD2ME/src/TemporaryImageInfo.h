@@ -29,5 +29,6 @@ class TemporaryImageInfo
         Game* s_GameClass;
         void draw();
         void live();
+        bool onTop;
 };
 #endif

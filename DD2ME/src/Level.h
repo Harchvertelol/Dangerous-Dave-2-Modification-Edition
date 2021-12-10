@@ -16,10 +16,14 @@ class Level
         std::map<int, std::map<std::string, std::string> > s_TilesParams;
         std::map<std::string, std::map<int, int> > s_Fields;
         bool loadLevel(std::string);
-        void draw();
-        int getTileType(int, int);
-        int getTileID(int, int);
-        bool setTileID(int, int, int);
+        void draw(bool);
+        std::string getNameTilesField(int);
+        std::string getNamePhysicTilesField();
+        int getNumberTilesFields();
+        int getNumberPhysicTilesField();
+        int getTileType(int, int, int);
+        int getTileID(int, int, int);
+        bool setTileID(int, int, int, int);
         std::string getTileParameter(int, int, std::string);
         bool setTileParameter(int, int, std::string, std::string);
 };

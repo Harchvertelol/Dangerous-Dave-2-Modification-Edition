@@ -143,15 +143,15 @@ int LuaBindFunctions::goLeft(lua_State* s_Lua)
             for(int i = 0; (i < SizeXMonster) && (TileCoordX[i][NumberLabel] <= OldCoordXLeftTile); i++)
                 if(WorkFunctions::GameFunctions::testCollision(mnst->s_CoordX, mnst->s_CoordY, TileCoordX[i][NumberLabel], TileCoordY[SizeXMonster - 1][NumberLabel] + MoveCalc*16, s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number - 1][mnst->s_State][mnst->getFrame()], Square(0,0,15,15), true, where_col_stand))
                 {
-                    if(s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == EMPTY
-                       || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == DEATH
-                       || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == EXITLEVEL)
+                    if(s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) == EMPTY
+                       || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) == DEATH
+                       || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) == EXITLEVEL)
                     {
                         mnst->s_CoordX += shf;
                         isCorrect = true;
                         typeCorrect = 2;
                     }
-                    else if(onCeil == true && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == LADDER)
+                    else if(onCeil == true && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) == LADDER)
                     {
                         mnst->s_CoordX += shf;
                         isCorrect = true;
@@ -245,15 +245,15 @@ int LuaBindFunctions::goRight(lua_State* s_Lua)
             for(int i = SizeXMonster - 1; i >= 0&& TileCoordX[i][NumberLabel] >= OldCoordXRightTile; i--)
                 if(WorkFunctions::GameFunctions::testCollision(mnst->s_CoordX, mnst->s_CoordY, TileCoordX[i][NumberLabel], TileCoordY[SizeXMonster - 1][NumberLabel] + MoveCalc*16, s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number - 1][mnst->s_State][mnst->getFrame()], Square(0,0,15,15), true, where_col_stand))
                 {
-                    if(s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == EMPTY
-                       || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == DEATH
-                       || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == EXITLEVEL)
+                    if(s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) == EMPTY
+                       || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) == DEATH
+                       || s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) == EXITLEVEL)
                     {
                         mnst->s_CoordX -= shf;
                         isCorrect = true;
                         typeCorrect = 2;
                     }
-                    else if(onCeil == true && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc) == LADDER)
+                    else if(onCeil == true && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][NumberLabel]/16, TileCoordY[SizeXMonster - 1][NumberLabel]/16 + MoveCalc, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) == LADDER)
                     {
                         mnst->s_CoordX -= shf;
                         isCorrect = true;
@@ -956,8 +956,8 @@ int LuaBindFunctions::testTileTypeDown(lua_State* s_Lua)
     {
         if(WorkFunctions::GameFunctions::testCollision(mnst->s_CoordX, mnst->s_CoordY, TileCoordX[i][SizeYMonster - 1], TileCoordY[i][SizeYMonster - 1], s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number - 1][mnst->s_State][mnst->getFrame()], Square(0,0,15,15), true))
         {
-            if(typeTest == 0 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][SizeYMonster - 1]/16, TileCoordY[i][SizeYMonster - 1]/16 + numberOfLabel) != testTileType) testTrue = false;
-            else if(typeTest == 1 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][SizeYMonster - 1]/16, TileCoordY[i][SizeYMonster - 1]/16 + numberOfLabel) == testTileType) testTrue = true;
+            if(typeTest == 0 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][SizeYMonster - 1]/16, TileCoordY[i][SizeYMonster - 1]/16 + numberOfLabel, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) != testTileType) testTrue = false;
+            else if(typeTest == 1 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][SizeYMonster - 1]/16, TileCoordY[i][SizeYMonster - 1]/16 + numberOfLabel, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) == testTileType) testTrue = true;
         }
         //s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(TileCoordY[i][SizeYMonster - 1]/16 + numberOfLabel)*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) + TileCoordX[i][SizeYMonster - 1]/16] = 0;
     }
@@ -1341,8 +1341,8 @@ int LuaBindFunctions::testTileTypeRight(lua_State* s_Lua)
     {
         if(WorkFunctions::GameFunctions::testCollision(mnst->s_CoordX, mnst->s_CoordY, TileCoordX[i][SizeYMonster - 1], TileCoordY[i][SizeYMonster - 1], s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number - 1][mnst->s_State][mnst->getFrame()], Square(0,0,15,15), true, "left"))
         {
-            if(typeTest == 0 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[SizeXMonster - 1][i]/16 + numberOfLabel, TileCoordY[SizeXMonster - 1][i]/16) != testTileType) testTrue = false;
-            else if(typeTest == 1 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[SizeXMonster - 1][i]/16 + numberOfLabel, TileCoordY[SizeXMonster - 1][i]/16) == testTileType) testTrue = true;
+            if(typeTest == 0 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[SizeXMonster - 1][i]/16 + numberOfLabel, TileCoordY[SizeXMonster - 1][i]/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) != testTileType) testTrue = false;
+            else if(typeTest == 1 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[SizeXMonster - 1][i]/16 + numberOfLabel, TileCoordY[SizeXMonster - 1][i]/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) == testTileType) testTrue = true;
         }
         //s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(TileCoordY[SizeXMonster - 1][i]/16)*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) + TileCoordX[SizeXMonster - 1][i]/16 + numberOfLabel] = 0;
     }
@@ -1404,8 +1404,8 @@ int LuaBindFunctions::testTileTypeLeft(lua_State* s_Lua)
             TileCoordY[i][j] = WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordY,16,-1) + j*16;
         }
     for(int i = 0; i < SizeYMonster; i++)
-        if(typeTest == 0 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[0][i]/16 - numberOfLabel, TileCoordY[SizeXMonster - 1][i]/16) != testTileType) testTrue = false;
-        else if(typeTest == 1 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[0][i]/16 - numberOfLabel, TileCoordY[SizeXMonster - 1][i]/16) == testTileType) testTrue = true;
+        if(typeTest == 0 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[0][i]/16 - numberOfLabel, TileCoordY[SizeXMonster - 1][i]/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) != testTileType) testTrue = false;
+        else if(typeTest == 1 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[0][i]/16 - numberOfLabel, TileCoordY[SizeXMonster - 1][i]/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) == testTileType) testTrue = true;
     for(int i = 0; i < SizeXMonster; i++)
     {
         delete[] TileCoordX[i];
@@ -1464,8 +1464,8 @@ int LuaBindFunctions::testTileTypeUp(lua_State* s_Lua)
             TileCoordY[i][j] = WorkFunctions::MathFunctions::roundNumber(mnst->s_CoordY,16,-1) + j*16;
         }
     for(int i = 0; i < SizeXMonster; i++)
-        if(typeTest == 0 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][0]/16, TileCoordY[i][0]/16 - numberOfLabel) != testTileType) testTrue = false;
-        else if(typeTest == 1 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][0]/16, TileCoordY[i][0]/16 - numberOfLabel) == testTileType) testTrue = true;
+        if(typeTest == 0 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][0]/16, TileCoordY[i][0]/16 - numberOfLabel, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) != testTileType) testTrue = false;
+        else if(typeTest == 1 && s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i][0]/16, TileCoordY[i][0]/16 - numberOfLabel, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField()) == testTileType) testTrue = true;
     for(int i = 0; i < SizeXMonster; i++)
     {
         delete[] TileCoordX[i];
@@ -1821,7 +1821,7 @@ static int __addPackImagesToFactoryTemporaryImage(lua_State* s_Lua)
 int LuaBindFunctions::addPackImagesToFactoryTemporaryImage(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
-    if(n != 11)
+    if(n != 11 && n != 12)
     {
         cout<<"Error! Number of arguments of function \"addPackImagesToFactoryTemporaryImage\" is incorrect!"<<endl;
         return 0;
@@ -1837,6 +1837,8 @@ int LuaBindFunctions::addPackImagesToFactoryTemporaryImage(lua_State* s_Lua)
     int numberofframes = lua_tonumber(s_Lua, 9);
     string type = lua_tostring(s_Lua, 10);
     bool animated = (bool)lua_tonumber(s_Lua, 11);
+    bool onTop = false;
+    if(n >= 12) onTop = (bool)lua_tonumber(s_Lua, 12);
     map<int, Bitmap*>* bmp = 0;
     map<int, Bitmap*>* cachebmp = 0;
     if(pack == "monsters")
@@ -1844,7 +1846,7 @@ int LuaBindFunctions::addPackImagesToFactoryTemporaryImage(lua_State* s_Lua)
         bmp = &s_GameClass->s_Data->s_Monsters->s_Bitmaps[number][state];
         cachebmp = &s_GameClass->s_Data->s_Monsters->s_CacheImages[number][state];
     }
-    s_GameClass->s_FactoryTmpImgs->addImage(bmp, cachebmp, coordX, coordY, timeLive, changeX, changeY, numberofframes, type, animated);
+    s_GameClass->s_FactoryTmpImgs->addImage(bmp, cachebmp, coordX, coordY, timeLive, changeX, changeY, numberofframes, type, animated, onTop);
     return 0;
 }
 
@@ -1856,7 +1858,7 @@ static int __addImageToFactoryTemporaryImage(lua_State* s_Lua)
 int LuaBindFunctions::addImageToFactoryTemporaryImage(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
-    if(n != 10)
+    if(n != 10 && n != 11)
     {
         cout<<"Error! Number of arguments of function \"addImageToFactoryTemporaryImage\" is incorrect!"<<endl;
         return 0;
@@ -1871,6 +1873,8 @@ int LuaBindFunctions::addImageToFactoryTemporaryImage(lua_State* s_Lua)
     int changeX = lua_tonumber(s_Lua, 8);
     int changeY = lua_tonumber(s_Lua, 9);
     string type = lua_tostring(s_Lua, 10);
+    bool onTop = false;
+    if(n >= 11) onTop = (bool)lua_tonumber(s_Lua, 11);
     Bitmap* bmp = 0;
     Bitmap* cachebmp = 0;
     if(pack == "monsters")
@@ -1878,7 +1882,7 @@ int LuaBindFunctions::addImageToFactoryTemporaryImage(lua_State* s_Lua)
         bmp = s_GameClass->s_Data->s_Monsters->s_Bitmaps[number][state][numberofframe];
         cachebmp = s_GameClass->s_Data->s_Monsters->s_CacheImages[number][state][numberofframe];
     }
-    s_GameClass->s_FactoryTmpImgs->addImage(bmp, cachebmp, coordX, coordY, timeLive, changeX, changeY, type);
+    s_GameClass->s_FactoryTmpImgs->addImage(bmp, cachebmp, coordX, coordY, timeLive, changeX, changeY, type, onTop);
     return 0;
 }
 

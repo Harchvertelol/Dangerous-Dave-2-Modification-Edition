@@ -14,7 +14,7 @@ FactoryTemporaryImages::~FactoryTemporaryImages()
     //...
 }
 
-void FactoryTemporaryImages::addImage(map<int, Bitmap*>* bmp, map<int, Bitmap*>* img, int coordX, int coordY, int timeLive, int changeX, int changeY, int numberofframes, string type, bool animated)
+void FactoryTemporaryImages::addImage(map<int, Bitmap*>* bmp, map<int, Bitmap*>* img, int coordX, int coordY, int timeLive, int changeX, int changeY, int numberofframes, string type, bool animated, bool onTop)
 {
     s_Info[s_MaxIndex].s_GameClass = s_GameClass;
     s_Info[s_MaxIndex].s_ManyFrames = true;
@@ -29,10 +29,11 @@ void FactoryTemporaryImages::addImage(map<int, Bitmap*>* bmp, map<int, Bitmap*>*
     s_Info[s_MaxIndex].s_ChangeY = changeY;
     s_Info[s_MaxIndex].s_Type = type;
     s_Info[s_MaxIndex].s_Animated = animated;
+    s_Info[s_MaxIndex].onTop = onTop;
     s_MaxIndex++;
 }
 
-void FactoryTemporaryImages::addImage(Bitmap* bmp, Bitmap* img, int coordX, int coordY, int timeLive, int changeX, int changeY, string type)
+void FactoryTemporaryImages::addImage(Bitmap* bmp, Bitmap* img, int coordX, int coordY, int timeLive, int changeX, int changeY, string type, bool onTop)
 {
     s_Info[s_MaxIndex].s_GameClass = s_GameClass;
     s_Info[s_MaxIndex].s_ManyFrames = false;
@@ -45,6 +46,7 @@ void FactoryTemporaryImages::addImage(Bitmap* bmp, Bitmap* img, int coordX, int 
     s_Info[s_MaxIndex].s_ChangeX = changeX;
     s_Info[s_MaxIndex].s_ChangeY = changeY;
     s_Info[s_MaxIndex].s_Type = type;
+    s_Info[s_MaxIndex].onTop = onTop;
     s_MaxIndex++;
 }
 
@@ -70,10 +72,12 @@ void FactoryTemporaryImages::live()
     }
 }
 
-void FactoryTemporaryImages::drawAll()
+void FactoryTemporaryImages::drawAll(bool isOnTop)
 {
     map<int, TemporaryImageInfo>::iterator iter;
-    for ( iter = s_Info.begin(); iter != s_Info.end(); iter++ ) iter->second.draw();
+    for ( iter = s_Info.begin(); iter != s_Info.end(); iter++ )
+        if(iter->second.onTop == isOnTop)
+            iter->second.draw();
 }
 
 void FactoryTemporaryImages::clear()

@@ -91,3 +91,8 @@ void IniParser::PostParsingStruct::remove(string A)
 {
     s_Variables.erase(A);
 }
+
+void IniParser::PostParsingStruct::clear()
+{
+    s_Variables.clear();
+}
