@@ -33,17 +33,6 @@ Bonuses::~Bonuses()
 
 void Bonuses::deleteAllGDIObjects()
 {
-    map<int, map<int, Texture* > >::iterator iter_, iter2_;
-    for (iter_ = s_BonusesBitmaps.begin(), iter2_ = s_BonusesBitmaps.end(); iter_ != iter2_;)
-    {
-        map<int, Texture* >::iterator _iter_, _iter2_;
-        for (_iter_ = iter_->second.begin(), _iter2_ = iter_->second.end(); _iter_ != _iter2_;)
-        {
-            if(_iter_->second != 0) delete _iter_->second;
-            ++_iter_;
-        }
-        ++iter_;
-    }
     map<int, map<int, Sprite* > >::iterator iter__, iter2__;
     for (iter__ = s_BonusesCache.begin(), iter2__ = s_BonusesCache.end(); iter__ != iter2__;)
     {
@@ -66,6 +55,17 @@ void Bonuses::deleteAllGDIObjects()
         }
         ++iter___;
     }
+    map<int, map<int, Texture* > >::iterator iter_, iter2_;
+    for (iter_ = s_BonusesBitmaps.begin(), iter2_ = s_BonusesBitmaps.end(); iter_ != iter2_;)
+    {
+        map<int, Texture* >::iterator _iter_, _iter2_;
+        for (_iter_ = iter_->second.begin(), _iter2_ = iter_->second.end(); _iter_ != _iter2_;)
+        {
+            if(_iter_->second != 0) delete _iter_->second;
+            ++_iter_;
+        }
+        ++iter_;
+    }
     map<string, map<int, Texture* > >::iterator iter____, iter2____;
     for (iter____ = s_PointsBitmapsTextures.begin(), iter2____ = s_PointsBitmapsTextures.end(); iter____ != iter2____;)
     {
@@ -75,7 +75,7 @@ void Bonuses::deleteAllGDIObjects()
             if(_iter_->second != 0) delete _iter_->second;
             ++_iter_;
         }
-        ++iter___;
+        ++iter____;
     }
 }
 

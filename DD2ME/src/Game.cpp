@@ -93,16 +93,16 @@ Game::Game():
 
 Game::~Game()
 {
-    if(s_RenderTexture != 0) delete s_RenderTexture;
     if(s_GameInfo != 0) delete s_GameInfo;
     if(s_DisplayStruct != 0) delete s_DisplayStruct;
     if(s_IniFile != 0) delete s_IniFile;
-    if(s_Data != 0) delete s_Data;
-    if(s_StateManager != 0) delete s_StateManager;;
-    if(s_FactoryTmpImgs != 0) delete s_FactoryTmpImgs;
+    if(s_StateManager != 0) delete s_StateManager;
     if(s_AI != 0) delete s_AI;
-    if(s_RenderWindow != 0) { s_RenderWindow->close(); delete s_RenderWindow; }
     if(s_Gui != 0) delete s_Gui;
+    if(s_FactoryTmpImgs != 0) delete s_FactoryTmpImgs;
+    if(s_Data != 0) delete s_Data;
+    if(s_RenderTexture != 0) delete s_RenderTexture;
+    if(s_RenderWindow != 0) { s_RenderWindow->close(); delete s_RenderWindow; }
 }
 
 void Game::deleteAllGDIObjects()
