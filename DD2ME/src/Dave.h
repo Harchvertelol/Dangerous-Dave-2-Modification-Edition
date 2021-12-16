@@ -1,9 +1,9 @@
 #ifndef DAVE_H
 #define DAVE_H
 #include <map>
-#include "canvas.hpp"
 #include "Square.h"
 #include "IniParser/PostParsingStruct.h"
+#include <SFML/Graphics.hpp>
 
 class Game;
 
@@ -14,8 +14,8 @@ class Dave
         ~Dave();
         Game* s_GameClass;
         IniParser::PostParsingStruct* s_DaveInfo;
-        std::map<std::string, std::map<int, Bitmap*> > s_Bitmaps;
-        std::map<std::string, std::map<int, Bitmap*> > s_CacheImages;
+        std::map<std::string, std::map<int, sf::Texture*> > s_Bitmaps;
+        std::map<std::string, std::map<int, sf::Sprite*> > s_CacheImages;
         std::map<std::string, std::map<int, Square> > s_Collisions;
         bool s_CacheCreated;
         bool load(std::string);

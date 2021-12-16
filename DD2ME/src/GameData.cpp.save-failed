@@ -93,8 +93,8 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             if(!s_GameClass->s_IniFile) return false;
             s_IniFile = s_GameClass->s_IniFile;
             //...
-            s_GameClass->s_DisplayStruct->s_ResolutionX = atoi( (s_GameClass->s_IniFile->getValue("video", "resolutionX") ).c_str() );
-            s_GameClass->s_DisplayStruct->s_ResolutionY = atoi( (s_GameClass->s_IniFile->getValue("video", "resolutionY") ).c_str() );
+            s_GameClass->s_DisplayStruct->s_ResolutionX = atoi( (s_GameClass->s_IniFile->getValue("video","resolutionX") ).c_str() );
+            s_GameClass->s_DisplayStruct->s_ResolutionY = atoi( (s_GameClass->s_IniFile->getValue("video","resolutionY") ).c_str() );
             s_GameClass->s_GameInfo->s_KeyDown = atoi( s_GameClass->s_IniFile->getValue("keys","down").c_str() );
             s_GameClass->s_GameInfo->s_KeyUp = atoi( s_GameClass->s_IniFile->getValue("keys","up").c_str() );
             s_GameClass->s_GameInfo->s_KeyRight = atoi( s_GameClass->s_IniFile->getValue("keys","right").c_str() );

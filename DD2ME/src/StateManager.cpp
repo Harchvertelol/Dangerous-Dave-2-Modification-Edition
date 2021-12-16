@@ -6,6 +6,10 @@
 
 #include "Game.h"
 
+using namespace std;
+
+using namespace sf;
+
 StateManager::StateManager(Game* gameclass):
     s_MaxState(3)
 {
@@ -18,57 +22,58 @@ StateManager::~StateManager()
     if(s_MainscreenPar != 0) delete s_MainscreenPar;
 }
 
-LRESULT StateManager::s0(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+//LRESULT StateManager::s0(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+void StateManager::s0(Event event)
 {
-    switch (uMsg) //рассматриваем ИМЯ сообщения
+    switch (event.type)
     {
-        case WM_KEYDOWN: //сообщение WM_KEYDOWN - пользователь нажал какую-то клавишу
-                if(wParam == s_GameClass->s_GameInfo->s_KeySkip) //в параметре wParam код клавишы. Рассматриваем код
+        case Event::KeyPressed:
+                if(event.key.code == s_GameClass->s_GameInfo->s_KeySkip)
                 {
                     switchState(1);
                 }
                 break;
     }
-    return DefWindowProc(hwnd, uMsg, wParam, lParam); //все остальные сообщения идут сюда. Лучше не трогать =)
 }
-LRESULT StateManager::s1(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+//LRESULT StateManager::s1(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+void StateManager::s1(Event event)
 {
-    switch (uMsg) //рассматриваем ИМЯ сообщения
+    switch (event.type)
     {
-        case WM_KEYDOWN: //сообщение WM_KEYDOWN - пользователь нажал какую-то клавишу
-                if(wParam == s_GameClass->s_GameInfo->s_KeySkip) //в параметре wParam код клавишы. Рассматриваем код
+        case Event::KeyPressed:
+                if(event.key.code == s_GameClass->s_GameInfo->s_KeySkip)
                 {
                     switchState(2);
                 }
                 break;
     }
-    return DefWindowProc(hwnd, uMsg, wParam, lParam); //все остальные сообщения идут сюда. Лучше не трогать =)
 }
-LRESULT StateManager::s2(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+//LRESULT StateManager::s2(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+void StateManager::s2(Event event)
 {
-    switch (uMsg) //рассматриваем ИМЯ сообщения
+    switch (event.type)
     {
-        case WM_KEYDOWN: //сообщение WM_KEYDOWN - пользователь нажал какую-то клавишу
-                if(wParam == s_GameClass->s_GameInfo->s_KeySkip) //в параметре wParam код клавишы. Рассматриваем код
+        case Event::KeyPressed:
+                if(event.key.code == s_GameClass->s_GameInfo->s_KeySkip) //в параметре wParam код клавишы. Рассматриваем код
                 {
                     switchState(3);
                 }
                 break;
     }
-    return DefWindowProc(hwnd, uMsg, wParam, lParam); //все остальные сообщения идут сюда. Лучше не трогать =)
 }
-LRESULT StateManager::s3(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+//LRESULT StateManager::s3(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+void StateManager::s3(Event event)
 {
     string str;
-    switch (uMsg) //рассматриваем ИМЯ сообщения
+    switch (event.type)
     {
-        case WM_KEYDOWN: //сообщение WM_KEYDOWN - пользователь нажал какую-то клавишу
-            if(wParam == s_GameClass->s_GameInfo->s_KeySkip) //в параметре wParam код клавишы. Рассматриваем код
+        case Event::KeyPressed:
+            if(event.key.code == s_GameClass->s_GameInfo->s_KeySkip) //в параметре wParam код клавишы. Рассматриваем код
             {
                 switchState(0);
                 if(s_GameClass->s_GameInfo->s_CurrentLives <= 0) s_GameClass->s_GameInfo->doChangeLevelOnGameOver();
             }
-            else if(wParam == s_GameClass->s_GameInfo->s_KeyConsole)
+            else if(event.key.code == s_GameClass->s_GameInfo->s_KeyConsole)
             {
                 if(s_GameClass->s_IniFile->getValue("system", "consolemode") == "true")
                 {
@@ -137,32 +142,7 @@ LRESULT StateManager::s3(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 }
             }
             break;
-        /*case WM_LBUTTONDOWN:
-            int x, y;
-            x = LOWORD(lParam) / atoi( s_GameClass->s_IniFile->getValue("video", "scale").c_str() );
-            y = HIWORD(lParam) / atoi( s_GameClass->s_IniFile->getValue("video", "scale").c_str() );
-            x = x + s_GameClass->s_GameInfo->s_ScreenCoordX;
-            y = y + s_GameClass->s_GameInfo->s_ScreenCoordY;
-            x = (x - x % 16) / 16;
-            y = (y - y % 16) / 16;
-            s_GameClass->s_Data->s_Level->setTileID(x, y, 48);
-            break;
-        case WM_MOUSEMOVE:
-            if(wParam == MK_LBUTTON)
-            {
-                int x, y;
-                x = LOWORD(lParam) / atoi( s_GameClass->s_IniFile->getValue("video", "scale").c_str() );
-                y = HIWORD(lParam) / atoi( s_GameClass->s_IniFile->getValue("video", "scale").c_str() );
-                x = x + s_GameClass->s_GameInfo->s_ScreenCoordX;
-                y = y + s_GameClass->s_GameInfo->s_ScreenCoordY;
-                x = (x - x % 16) / 16;
-                y = (y - y % 16) / 16;
-                s_GameClass->s_Data->s_Level->setTileID(x, y, 48);
-            }
-            break;*/
-
     }
-    return DefWindowProc(hwnd, uMsg, wParam, lParam); //все остальные сообщения идут сюда. Лучше не трогать =)
 }
 
 void StateManager::s0I()
@@ -184,35 +164,35 @@ void StateManager::s3I()
 {
     if(s_GameClass->s_NetClient->s_NetInfo->getValue("settings", "keysaction") == "false") return;
 
-    if(!(GetKeyState(s_GameClass->s_GameInfo->s_KeyLeft) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeft = false;
-    if((GetKeyState(s_GameClass->s_GameInfo->s_KeyLeft) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeft = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeft))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeft = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeft))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeft = true;
 
-    if(!(GetKeyState(s_GameClass->s_GameInfo->s_KeyRight) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRight = false;
-    if((GetKeyState(s_GameClass->s_GameInfo->s_KeyRight) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRight = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRight))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRight = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRight))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRight = true;
 
-    if(!(GetKeyState(s_GameClass->s_GameInfo->s_KeyUp) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyUp = false;
-    if((GetKeyState(s_GameClass->s_GameInfo->s_KeyUp) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyUp = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyUp))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyUp = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyUp))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyUp = true;
 
-    if(!(GetKeyState(s_GameClass->s_GameInfo->s_KeyDown) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyDown = false;
-    if((GetKeyState(s_GameClass->s_GameInfo->s_KeyDown) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyDown = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyDown))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyDown = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyDown))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyDown = true;
 
-    if(!(GetKeyState(s_GameClass->s_GameInfo->s_KeyJump) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyJump = false;
-    if((GetKeyState(s_GameClass->s_GameInfo->s_KeyJump) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyJump = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyJump))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyJump = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyJump))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyJump = true;
 
-    if(!(GetKeyState(s_GameClass->s_GameInfo->s_KeyShoot) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyShoot = false;
-    if((GetKeyState(s_GameClass->s_GameInfo->s_KeyShoot) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyShoot = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyShoot))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyShoot = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyShoot))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyShoot = true;
 
-    if(!(GetKeyState(s_GameClass->s_GameInfo->s_KeyLeftDown) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftDown = false;
-    if((GetKeyState(s_GameClass->s_GameInfo->s_KeyLeftDown) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftDown = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeftDown))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftDown = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeftDown))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftDown = true;
 
-    if(!(GetKeyState(s_GameClass->s_GameInfo->s_KeyLeftUp) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftUp = false;
-    if((GetKeyState(s_GameClass->s_GameInfo->s_KeyLeftUp) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftUp = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeftUp))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftUp = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeftUp))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftUp = true;
 
-    if(!(GetKeyState(s_GameClass->s_GameInfo->s_KeyRightDown) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightDown = false;
-    if((GetKeyState(s_GameClass->s_GameInfo->s_KeyRightDown) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightDown = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRightDown))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightDown = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRightDown))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightDown = true;
 
-    if(!(GetKeyState(s_GameClass->s_GameInfo->s_KeyRightUp) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightUp = false;
-    if((GetKeyState(s_GameClass->s_GameInfo->s_KeyRightUp) & 0x80)) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightUp = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRightUp))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightUp = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRightUp))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightUp = true;
 }
 
 bool StateManager::switchState(int state, bool callstartstate)
@@ -299,10 +279,10 @@ void StateManager::doState(int state)
 bool StateManager::getKeyPressed(string type)
 {
     if(type == "right")
-        if((GetKeyState(s_GameClass->s_GameInfo->s_KeyRight) & 0x80))
+        if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRight)))
             return true;
     if(type == "left")
-        if((GetKeyState(s_GameClass->s_GameInfo->s_KeyLeft) & 0x80))
+        if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeft)))
             return true;
     return false;
 }

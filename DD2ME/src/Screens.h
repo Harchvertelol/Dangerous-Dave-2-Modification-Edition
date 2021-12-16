@@ -1,12 +1,9 @@
 #ifndef SCREENS_H
 #define SCREENS_H
 #include <map>
-#include "canvas.hpp"
+#include <SFML/Graphics.hpp>
 
 #include "IniParser/PostParsingStruct.h"
-
-using namespace std;
-using namespace cnv;
 
 class Game;
 
@@ -19,15 +16,15 @@ class Screens
         IniParser::PostParsingStruct* s_ScreensInfo;
         IniParser::PostParsingStruct* s_ChangeLevelInfo;
         IniParser::PostParsingStruct* s_MainScreenInfo;
-        map<string, Bitmap*> s_StandardScreens;
-        map<string, map<int, Bitmap*> > s_MCScreens;
+        std::map<std::string, sf::Texture*> s_StandardScreens;
+        std::map<std::string, std::map<int, sf::Texture*> > s_MCScreens;
         bool s_CacheCreated;
-        map<string, Bitmap*> s_CacheStandardScreens;
-        map<string, map<int, Bitmap*> > s_CacheMCScreens;
-        bool load(string);
+        std::map<std::string, sf::Sprite*> s_CacheStandardScreens;
+        std::map<std::string, std::map<int, sf::Sprite*> > s_CacheMCScreens;
+        bool load(std::string);
         bool createCache();
-        void drawScreen(string name, int x, int y, int number = 0);
+        void drawScreen(std::string name, int x, int y, int number = 0);
         void deleteAllGDIObjects();
-        void createMaskTransparent(int,int,int);
+        void createMaskTransparent(int, int, int);
 };
 #endif

@@ -1,9 +1,9 @@
 #ifndef MONSTER_H
 #define MONSTER_H
 #include <map>
-#include "canvas.hpp"
 #include "Square.h"
 #include "IniParser/PostParsingStruct.h"
+#include <SFML/Graphics.hpp>
 
 class Game;
 
@@ -15,8 +15,8 @@ class Monsters
         Game* s_GameClass;
         IniParser::PostParsingStruct* s_GlobMonstersInfo;
         std::map<int, IniParser::PostParsingStruct*> s_MonstersInfo;
-        std::map<int, std::map<std::string, std::map<int, Bitmap*> > > s_Bitmaps;
-        std::map<int, std::map<std::string, std::map<int, Bitmap*> > > s_CacheImages;
+        std::map<int, std::map<std::string, std::map<int, sf::Texture*> > > s_Bitmaps;
+        std::map<int, std::map<std::string, std::map<int, sf::Sprite*> > > s_CacheImages;
         std::map<int, std::map<std::string, std::map<int, Square> > > s_Collisions;
         bool s_CacheCreated;
         bool load(std::string);

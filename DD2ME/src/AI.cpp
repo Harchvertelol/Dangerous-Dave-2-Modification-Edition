@@ -10,6 +10,8 @@ using namespace MathFunctions;
 using namespace GameFunctions;
 using namespace ConvertFunctions;
 
+using namespace std;
+
 AI::AI(Game* gameclass):
     s_GameClass(gameclass)
 {

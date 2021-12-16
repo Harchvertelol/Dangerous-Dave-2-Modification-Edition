@@ -9,6 +9,8 @@
 #include <iostream>
 #include <stdlib.h>
 
+using namespace std;
+
 using namespace WorkFunctions;
 using namespace ParserFunctions;
 using namespace MathFunctions;

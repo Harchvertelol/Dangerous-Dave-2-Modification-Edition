@@ -8,28 +8,26 @@
 
 #include "Square.h"
 
-using namespace std;
-
 namespace WorkFunctions
 {
     namespace WordFunctions
     {
-        string FirstWord(string);
-        string RemoveFirstWord(string);
+        std::string FirstWord(std::string);
+        std::string RemoveFirstWord(std::string);
     };
     namespace ParserFunctions
     {
-        string getNameMainVariable(string);
-        string getNameSecondaryVariable(string);
-        string getValueSecondaryVariable(string);
-        int splitMass(map<int,int>*,int,int,string,string);
-        int splitMassString(map<int,string>*,int,int,string,string);
-        string addMainVariableString(string,string,string);
-        string addSecondaryVariableString(string,string,string,string);
+        std::string getNameMainVariable(std::string);
+        std::string getNameSecondaryVariable(std::string);
+        std::string getValueSecondaryVariable(std::string);
+        int splitMass(std::map<int,int>*, int, int, std::string, std::string);
+        int splitMassString(std::map<int, std::string>*, int, int, std::string, std::string);
+        std::string addMainVariableString(std::string, std::string, std::string);
+        std::string addSecondaryVariableString(std::string, std::string, std::string, std::string);
     };
     namespace ConvertFunctions
     {
-        string itos(int);
+        std::string itos(int);
         std::string ftos(float number);
     };
     namespace MathFunctions
@@ -44,7 +42,7 @@ namespace WorkFunctions
     };
     namespace GameFunctions
     {
-        bool testCollision(int,int,int,int,Square,Square,bool stand = false, string where = "up");
+        bool testCollision(int,int,int,int,Square,Square,bool stand = false, std::string where = "up");
     };
 };
 #endif

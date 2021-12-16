@@ -62,8 +62,8 @@ bool MainServer::load()
             {
                 return false;
             }
-            gm->s_DisplayStruct->s_ResolutionX = atoi( (gm->s_IniFile->getValue("video","resolutionX") ).c_str() );
-            gm->s_DisplayStruct->s_ResolutionY = atoi( (gm->s_IniFile->getValue("video","resolutionY") ).c_str() );
+            gm->s_DisplayStruct->s_ResolutionX = atoi( (gm->s_IniFile->getValue("video","gameresolutionX") ).c_str() );
+            gm->s_DisplayStruct->s_ResolutionY = atoi( (gm->s_IniFile->getValue("video","gameresolutionY") ).c_str() );
             gm->s_GameInfo->s_KeyDown = atoi( gm->s_IniFile->getValue("keys","down").c_str() );
             gm->s_GameInfo->s_KeyUp = atoi( gm->s_IniFile->getValue("keys","up").c_str() );
             gm->s_GameInfo->s_KeyRight = atoi( gm->s_IniFile->getValue("keys","right").c_str() );
@@ -77,7 +77,7 @@ bool MainServer::load()
             }
             //gm->s_Window = new Window("DD2 Remake: ME v0.2 pre-beta", gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, atoi( (gm->s_IniFile->getValue("video","scale") ).c_str() ));
             gm->s_Window = new Window(nostart);
-            gm->s_Window->geometry(gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, atoi( (gm->s_IniFile->getValue("video","scale") ).c_str() ));
+            gm->s_Window->geometry(gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, atoi( (gm->s_IniFile->getValue("video", "gamescale") ).c_str() ));
             gm->s_Window->title(STRING_CONSTANTS::SC_TITLE_WINDOW);
             //...
             string modpack = s_ServerList->getValue(iter->first, "modpack");
@@ -123,8 +123,8 @@ bool MainServer::load()
             gm->s_StateManager->switchState(3);
             gm->s_GameInfo->s_MyDave->s_CoordX = -1000;
             gm->s_GameInfo->s_MyDave->s_CoordY = -1000;
-            gm->s_GameInfo->s_ScreenCoordX = -1*atoi( gm->s_IniFile->getValue("video", "resolutionX").c_str() ) - atoi( gm->s_IniFile->getValue("settings", "distancelivemonstersX").c_str() ) - 1000;
-            gm->s_GameInfo->s_ScreenCoordY = -1*atoi( gm->s_IniFile->getValue("video", "resolutionY").c_str() ) - atoi( gm->s_IniFile->getValue("settings", "distancelivemonstersY").c_str() ) - 1000;
+            gm->s_GameInfo->s_ScreenCoordX = -1*atoi( gm->s_IniFile->getValue("video", "gameresolutionX").c_str() ) - atoi( gm->s_IniFile->getValue("settings", "distancelivemonstersX").c_str() ) - 1000;
+            gm->s_GameInfo->s_ScreenCoordY = -1*atoi( gm->s_IniFile->getValue("video", "gameresolutionY").c_str() ) - atoi( gm->s_IniFile->getValue("settings", "distancelivemonstersY").c_str() ) - 1000;
         }
     }
     return true;

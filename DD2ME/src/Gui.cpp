@@ -4,6 +4,8 @@
 
 #include "WorkFunctions.h"
 
+using namespace std;
+
 Gui::Gui(Game* gameclass):
     s_GameClass(gameclass)
 {
@@ -25,42 +27,42 @@ void Gui::drawFPS()
     {
         s.str("");
         s<<"FPS game draw: "<<s_GameClass->s_GameDrawFPS<<endl;
-        s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
+        //s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
         k += shift;
     }
     if(s_GameClass->s_IniFile->getValue("FPS", "ShowFPSGameDrawMaximal") == "true")
     {
         s.str("");
         s<<"FPS game draw maximal: "<<s_GameClass->s_GameDrawFPSMaximal<<endl;
-        s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
+        //s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
         k += shift;
     }
     if(s_GameClass->s_IniFile->getValue("FPS", "ShowFPSGameDrawMinimal") == "true")
     {
         s.str("");
         s<<"FPS game draw minimal: "<<s_GameClass->s_GameDrawFPSMinimal<<endl;
-        s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
+        //s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
         k += shift;
     }
     if(s_GameClass->s_IniFile->getValue("FPS", "ShowFPSTechnical") == "true")
     {
         s.str("");
         s<<"FPS technical: "<<s_GameClass->s_TechnicalFPS<<endl;
-        s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
+        //s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
         k += shift;
     }
     if(s_GameClass->s_IniFile->getValue("FPS", "ShowFPSTechnicalMaximal") == "true")
     {
         s.str("");
         s<<"FPS technical maximal: "<<s_GameClass->s_TechnicalFPSMaximal<<endl;
-        s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
+        //s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
         k += shift;
     }
     if(s_GameClass->s_IniFile->getValue("FPS", "ShowFPSTechnicalMinimal") == "true")
     {
         s.str("");
         s<<"FPS technical minimal: "<<s_GameClass->s_TechnicalFPSMinimal<<endl;
-        s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
+        //s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
         k += shift;
     }
 }
@@ -87,11 +89,11 @@ void Gui::drawGuiState2(int screennumber)
     int livesframedavestate = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "livesframedavestate").c_str());
     string levelname = "";
     if(s_GameClass->s_Data->s_Level->s_Params->isExists("info", "name")) levelname = s_GameClass->s_Data->s_Level->s_Params->getValue("info", "name");
-    if(levelname == "") s_GameClass->s_Window->draw(Label("Level " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel), levelnamecoordX, levelnamecoordY, levelnamesize), Pen(0, 0, 0));
+    /*if(levelname == "") s_GameClass->s_Window->draw(Label("Level " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel), levelnamecoordX, levelnamecoordY, levelnamesize), Pen(0, 0, 0));
     else s_GameClass->s_Window->draw(Label(levelname, levelnamecoordX, levelnamecoordY, levelnamesize), Pen(0, 0, 0));
     s_GameClass->s_Window->draw(Label("Secrets: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_Data->s_Level->s_Params->getMapVariables()["Secrets"].size()), secretscoordX, secretscoordY, secretssize), Pen(0, 0, 0));
     s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints), scorecoordX, scorecoordY, scoresize), Pen(0, 0, 0));
-    s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(0), highscorecoordX, highscorecoordY, highscoresize), Pen(0, 0, 0));
+    s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(0), highscorecoordX, highscorecoordY, highscoresize), Pen(0, 0, 0));*/
     for(int i = 0; i < s_GameClass->s_GameInfo->s_CurrentLives - 1 && i < livesmaxobject; i++)
     {
         s_GameClass->s_Data->s_Dave->drawDave(livesnamedavestate, livesframedavestate, livescoordX + i * 16, livescoordY);
@@ -107,7 +109,7 @@ void Gui::drawGuiState3()
         if(iter->second->s_NickName != "")
         {
             shiftX = 8-(iter->second->s_NickName.size())*atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namelettersizeX").c_str() )/2;
-            s_GameClass->s_Window->draw(CnvRectangle(shiftX + iter->second->s_CoordX - s_GameClass->s_GameInfo->s_ScreenCoordX +
+            /*s_GameClass->s_Window->draw(CnvRectangle(shiftX + iter->second->s_CoordX - s_GameClass->s_GameInfo->s_ScreenCoordX +
                                                  atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namecoordX").c_str() ),
                                                  iter->second->s_CoordY - s_GameClass->s_GameInfo->s_ScreenCoordY +
                                                  atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namecoordY").c_str() ),
@@ -137,14 +139,14 @@ void Gui::drawGuiState3()
                                                  Pen(PS_SOLID, atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "sizelineletter").c_str() ),
                                                     atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "lettercolorcomponentR").c_str() ),
                                                     atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "lettercolorcomponentG").c_str() ),
-                                                    atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "lettercolorcomponentB").c_str() )));
+                                                    atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "lettercolorcomponentB").c_str() )));*/
         }
     }
     //...
     if(s_GameClass->s_GameInfo->s_MyDave->s_NickName != "")
     {
         shiftX = 8-(s_GameClass->s_GameInfo->s_MyDave->s_NickName.size())*atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namelettersizeX").c_str() )/2;
-        s_GameClass->s_Window->draw(CnvRectangle(shiftX + s_GameClass->s_GameInfo->s_MyDave->s_CoordX - s_GameClass->s_GameInfo->s_ScreenCoordX +
+        /*s_GameClass->s_Window->draw(CnvRectangle(shiftX + s_GameClass->s_GameInfo->s_MyDave->s_CoordX - s_GameClass->s_GameInfo->s_ScreenCoordX +
                                                  atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namecoordX").c_str() ),
                                                  s_GameClass->s_GameInfo->s_MyDave->s_CoordY - s_GameClass->s_GameInfo->s_ScreenCoordY +
                                                  atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namecoordY").c_str() ),
@@ -174,7 +176,7 @@ void Gui::drawGuiState3()
                                              Pen(PS_SOLID, atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "sizelineletter").c_str() ),
                                                 atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "lettercolorcomponentR").c_str() ),
                                                 atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "lettercolorcomponentG").c_str() ),
-                                                atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "lettercolorcomponentB").c_str() )));
+                                                atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "lettercolorcomponentB").c_str() )));*/
     }
     s_GameClass->s_Data->s_Dave->drawBandolier(s_GameClass->s_GameInfo->s_MyDave->s_Cartridges, 8, 8);
     drawFPS();

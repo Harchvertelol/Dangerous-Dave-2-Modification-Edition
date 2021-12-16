@@ -2,6 +2,10 @@
 
 #include "Game.h"
 
+using namespace std;
+
+using namespace sf;
+
 FactoryTemporaryImages::FactoryTemporaryImages(Game* gameclass):
     s_GameClass(gameclass),
     s_MaxIndex(0)
@@ -14,7 +18,7 @@ FactoryTemporaryImages::~FactoryTemporaryImages()
     //...
 }
 
-void FactoryTemporaryImages::addImage(map<int, Bitmap*>* bmp, map<int, Bitmap*>* img, int coordX, int coordY, int timeLive, int changeX, int changeY, int numberofframes, string type, bool animated, bool onTop)
+void FactoryTemporaryImages::addImage(map<int, Texture*>* bmp, map<int, Sprite*>* img, int coordX, int coordY, int timeLive, int changeX, int changeY, int numberofframes, string type, bool animated, bool onTop)
 {
     s_Info[s_MaxIndex].s_GameClass = s_GameClass;
     s_Info[s_MaxIndex].s_ManyFrames = true;
@@ -33,7 +37,7 @@ void FactoryTemporaryImages::addImage(map<int, Bitmap*>* bmp, map<int, Bitmap*>*
     s_MaxIndex++;
 }
 
-void FactoryTemporaryImages::addImage(Bitmap* bmp, Bitmap* img, int coordX, int coordY, int timeLive, int changeX, int changeY, string type, bool onTop)
+void FactoryTemporaryImages::addImage(Texture* bmp, Sprite* img, int coordX, int coordY, int timeLive, int changeX, int changeY, string type, bool onTop)
 {
     s_Info[s_MaxIndex].s_GameClass = s_GameClass;
     s_Info[s_MaxIndex].s_ManyFrames = false;

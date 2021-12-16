@@ -14,6 +14,8 @@ using namespace ConvertFunctions;
 
 using namespace IniParser;
 
+using namespace std;
+
 CreatureDave::CreatureDave(Game* gameclass):
     s_GameClass(gameclass),
     s_CurrentPoints(0),

@@ -10,14 +10,16 @@
 #include "AI.h"
 #include "Gui.h"
 #include "KeysState.h"
-#include "canvas.hpp"
+#include "Timers.h"
+#include <SFML/Graphics.hpp>
 
 class Game
 {
     public:
         Game();
         ~Game();
-        Window* s_Window;
+        sf::RenderWindow* s_RenderWindow;
+        sf::RenderTexture* s_RenderTexture;
         GameInfo* s_GameInfo;
         DisplayStruct* s_DisplayStruct;
         IniParser::PostParsingStruct* s_IniFile;
@@ -27,6 +29,8 @@ class Game
         AI* s_AI;
         Gui* s_Gui;
         NetClient* s_NetClient;
+        Timers s_Timers;
+        float s_GameRenderScale;
         unsigned int s_AnimationStep;
         unsigned int s_TileAnimationStep;
         unsigned int s_IdGameClass;
@@ -67,5 +71,6 @@ class Game
         bool insertDave(int, int, std::string);
         bool removeDave(int);
         void deleteAllGDIObjects();
+        void createWindow();
 };
 #endif

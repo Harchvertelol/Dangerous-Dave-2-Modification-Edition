@@ -8,17 +8,30 @@
 
 using namespace IniParser;
 
+using namespace std;
+
+using namespace sf;
+
 namespace
 {
     static Game* ourInst = 0;
 
-    static LRESULT CALLBACK MyWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+    //static LRESULT CALLBACK MyWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+    static void MyWndProc(Event event)
     {
+        if(ourInst->s_NetClient->s_NetInfo->getValue("settings", "keysaction") == "false") return;
+        switch(event.type)
+        {
+            case Event::Closed:
+                ourInst->s_NetClient->s_NetInfoStruct->s_goGameOnServer = false;
+                ourInst->s_RenderWindow->close();
+                break;
 
+            default:
+                break;
+        }
 
-        if(ourInst->s_NetClient->s_NetInfo->getValue("settings", "keysaction") == "false") return DefWindowProc(hwnd, uMsg, wParam, lParam);
-
-        switch (uMsg) //рассматриваем »ћя сообщени€
+        /*switch (uMsg) //рассматриваем »ћя сообщени€
         {
             case WM_PAINT: //сообщение WM_PAINT - требуетс€ перерисовать окно
                 ourInst->s_Window->paint(); //просим Canvas перерисоватьс€
@@ -28,23 +41,27 @@ namespace
                 ourInst->s_NetClient->s_NetInfoStruct->s_goGameOnServer = false;
                 PostQuitMessage(0); //говорим операционной системе, что она может закрыть нашу программу
                 break;
-        }
-        if(wParam==SC_KEYMENU && (lParam>>16)<=0) return 0;
-        if(GetForegroundWindow() != hwnd) return DefWindowProc(hwnd, uMsg, wParam, lParam);
+        }*/
+        //if(wParam==SC_KEYMENU && (lParam>>16)<=0) return 0;
+        if(!ourInst->s_RenderWindow->hasFocus()) return;
         int gameState = ourInst->s_GameInfo->s_GameState;
-        if(gameState == 0) return ourInst->s_StateManager->s0(hwnd, uMsg, wParam, lParam);
+        /*if(gameState == 0) return ourInst->s_StateManager->s0(hwnd, uMsg, wParam, lParam);
         if(gameState == 1) return ourInst->s_StateManager->s1(hwnd, uMsg, wParam, lParam);
         if(gameState == 2) return ourInst->s_StateManager->s2(hwnd, uMsg, wParam, lParam);
-        if(gameState == 3) return ourInst->s_StateManager->s3(hwnd, uMsg, wParam, lParam);
-        return DefWindowProc(hwnd, uMsg, wParam, lParam);
+        if(gameState == 3) return ourInst->s_StateManager->s3(hwnd, uMsg, wParam, lParam);*/
+        if(gameState == 0) return ourInst->s_StateManager->s0(event);
+        if(gameState == 1) return ourInst->s_StateManager->s1(event);
+        if(gameState == 2) return ourInst->s_StateManager->s2(event);
+        if(gameState == 3) return ourInst->s_StateManager->s3(event);
     }
 
 }
 
 Game::Game():
-    s_Window(0),
+    s_RenderWindow(0),
     s_IniFile(0),
     s_NetClient(0),
+    s_GameRenderScale(1),
     s_AnimationStep(0),
     s_TileAnimationStep(0),
     s_IdGameClass(0),
@@ -64,6 +81,7 @@ Game::Game():
     s_TechnicalFPSCalc(0),
     s_TimeStartTechnicalFPS(0)
 {
+    s_RenderTexture = new RenderTexture;
     s_GameInfo = new GameInfo(this);
     s_DisplayStruct = new DisplayStruct;
     s_Data = new GameData(this);
@@ -75,6 +93,7 @@ Game::Game():
 
 Game::~Game()
 {
+    if(s_RenderTexture != 0) delete s_RenderTexture;
     if(s_GameInfo != 0) delete s_GameInfo;
     if(s_DisplayStruct != 0) delete s_DisplayStruct;
     if(s_IniFile != 0) delete s_IniFile;
@@ -82,7 +101,7 @@ Game::~Game()
     if(s_StateManager != 0) delete s_StateManager;;
     if(s_FactoryTmpImgs != 0) delete s_FactoryTmpImgs;
     if(s_AI != 0) delete s_AI;
-    if(s_Window != 0) delete s_Window;
+    if(s_RenderWindow != 0) { s_RenderWindow->close(); delete s_RenderWindow; }
     if(s_Gui != 0) delete s_Gui;
 }
 
@@ -223,13 +242,26 @@ void Game::startGame(int idgameclass)
     configureForGame();
 }
 
+void Game::createWindow()
+{
+    if(s_RenderWindow)
+    {
+        s_RenderWindow->close();
+        delete s_RenderWindow;
+    }
+    s_RenderTexture->create(s_DisplayStruct->s_ResolutionX, s_DisplayStruct->s_ResolutionY, true);
+    float window_scale = atof( (s_IniFile->getValue("video", "gamescale") ).c_str() );
+    s_RenderWindow = new RenderWindow( VideoMode(s_DisplayStruct->s_ResolutionX * window_scale, s_DisplayStruct->s_ResolutionY * window_scale), STRING_CONSTANTS::SC_TITLE_WINDOW);
+    s_GameRenderScale = window_scale;
+}
+
 void Game::configureForGame()
 {
     ourInst = this;
     if(s_NetClient->s_NetInfo->getValue("video", "graphicmodegame") == "true")
     {
-        s_Window->start(MyWndProc);
-        s_Window->enable_frame_buffer();
+        //s_Window->start(MyWndProc);
+        //s_Window->enable_frame_buffer();
     }
     else deleteAllGDIObjects();
 
@@ -240,11 +272,17 @@ void Game::configureForGame()
     //SetTimer(s_Window->hwnd(), 7, atoi( s_IniFile->getValue("video", "drawstep").c_str() ), 0);
     //это таймер с ID = 7, тикающий каждые 100 миллисекунд. по идее wparam будет равен 7, если событие - таймер.
 
-    s_IdTimerAnimationStep = set_timer(atoi( s_IniFile->getValue("video", "animationstep").c_str() ));
+    /*s_IdTimerAnimationStep = set_timer(atoi( s_IniFile->getValue("video", "animationstep").c_str() ));
     s_IdTimerCreaturesAnimationStep = set_timer(atoi( s_IniFile->getValue("video", "creaturesanimationstep").c_str() ));
     s_IdTimerDrawStep = set_timer(atoi( s_IniFile->getValue("video", "drawstep").c_str() ));
     s_IdTimerTilesAnimationStep = set_timer(atoi( s_IniFile->getValue("video", "tilesanimationstep").c_str() ));
-    s_IdTimerAIRunStep = set_timer(atoi( s_IniFile->getValue("video", "AIrunstep").c_str() ));
+    s_IdTimerAIRunStep = set_timer(atoi( s_IniFile->getValue("video", "AIrunstep").c_str() ));*/
+
+    s_IdTimerAnimationStep = s_Timers.setTimer(atoi( s_IniFile->getValue("video", "animationstep").c_str() ));
+    s_IdTimerCreaturesAnimationStep = s_Timers.setTimer(atoi( s_IniFile->getValue("video", "creaturesanimationstep").c_str() ));
+    s_IdTimerDrawStep = s_Timers.setTimer(atoi( s_IniFile->getValue("video", "drawstep").c_str() ));
+    s_IdTimerTilesAnimationStep = s_Timers.setTimer(atoi( s_IniFile->getValue("video", "tilesanimationstep").c_str() ));
+    s_IdTimerAIRunStep = s_Timers.setTimer(atoi( s_IniFile->getValue("video", "AIrunstep").c_str() ));
 }
 
 void Game::play()
@@ -256,26 +294,41 @@ void Game::play()
     {
         if(m.is_timer()) cout << m.timer_id() << endl; // можно сравнить с id1, id2
     }*/
-    MSG msg;
+
+    while(s_RenderWindow->isOpen())
+    {
+        Event event;
+        while(s_RenderWindow->pollEvent(event))
+        {
+            calculateTechnicalFPS();
+            MyWndProc(event);
+        }
+        vector<int> timers_ticks = s_Timers.getTimersTicks();
+        for(int i = 0; i < timers_ticks.size(); i++) onTimer(timers_ticks[i]);
+    }
+
+    /*MSG msg;
     while (GetMessage(&msg, NULL, 0, 0))
     {
         calculateTechnicalFPS();
         if(msg.message == WM_TIMER) onTimer(msg.wParam);
         TranslateMessage(&msg);
         DispatchMessage(&msg);
-    }
+    }*/
 }
 
 void Game::processAllEvents(int maxEvents)
 {
-    Message m;
+    vector<int> timers_ticks = s_Timers.getTimersTicks();
+    for(int i = 0; i < timers_ticks.size(); i++) onTimer(timers_ticks[i]);
+    /*Message m;
     for(int i = 0; i < maxEvents && m.peek() == true; i++)
     {
         if(m.is_timer())
         {
             onTimer(m.timer_id());
         }
-    }
+    }*/
 }
 
 void Game::onTimer(unsigned int timer_id)
@@ -284,7 +337,8 @@ void Game::onTimer(unsigned int timer_id)
     {
         s_Data->s_Sounds->clearInactiveTempSounds();
         calculateGameDrawFPS();
-        if(s_Window != 0 && GetForegroundWindow() == s_Window->hwnd() )
+        //if(s_Window != 0 && GetForegroundWindow() == s_Window->hwnd() )
+        if(s_RenderWindow != 0 && s_RenderWindow->hasFocus() )
         {
             if(s_GameInfo->s_GameState == 0 && s_GameInfo->s_Stop == false) s_StateManager->s0I();
             if(s_GameInfo->s_GameState == 1 && s_GameInfo->s_Stop == false) s_StateManager->s1I();
@@ -353,7 +407,9 @@ void Game::drawAll()
         correctionAllScreens();
     }
     if(s_NetClient->s_NetInfo->getValue("video", "graphicmodegame") == "false") return;
-    s_Window->clear();
+    if(!s_RenderWindow->isOpen()) return;
+    //s_Window->clear();
+    s_RenderTexture->clear(Color(0, 0, 0, 255));
     if(s_GameInfo->s_GameState == 0) s_Data->drawScreenState0();
     if(s_GameInfo->s_GameState == 1) s_Data->drawScreenState1();
     if(s_GameInfo->s_GameState == 2) s_Data->drawScreenState2();
@@ -373,7 +429,13 @@ void Game::drawAll()
         s_FactoryTmpImgs->drawAll(true);
         if(s_GameInfo->s_Stop == true && s_GameInfo->s_DeathType != 0) s_GameInfo->playDeath();
     }
-    s_Window->paint();
+    s_RenderTexture->display();
+    const Texture& txture = s_RenderTexture->getTexture();
+    Sprite renderSprite(txture);
+    renderSprite.setScale(s_GameRenderScale, s_GameRenderScale);
+    renderSprite.setPosition(Vector2f(0, 0));
+    s_RenderWindow->draw(renderSprite);
+    s_RenderWindow->display();
 }
 
 PostParsingStruct* Game::getObjects()

@@ -1,9 +1,9 @@
 #ifndef BONUSES_H
 #define BONUSES_H
 #include <map>
-#include "canvas.hpp"
 #include "IniParser/PostParsingStruct.h"
 #include "Square.h"
+#include <SFML/Graphics.hpp>
 
 class Game;
 
@@ -15,9 +15,10 @@ class Bonuses
         Game* s_GameClass;
         IniParser::PostParsingStruct* s_GlobBonusesInfo;
         std::map<int, IniParser::PostParsingStruct*> s_BonusesInfo;
-        std::map<int, std::map<int, Bitmap* > > s_BonusesBitmaps;
-        std::map<std::string, std::map<int, Bitmap* > > s_PointsBitmaps;
-        std::map<int, std::map<int, Bitmap* > > s_BonusesCache;
+        std::map<int, std::map<int, sf::Texture* > > s_BonusesBitmaps;
+        std::map<std::string, std::map<int, sf::Texture* > > s_PointsBitmapsTextures;
+        std::map<std::string, std::map<int, sf::Sprite* > > s_PointsBitmaps;
+        std::map<int, std::map<int, sf::Sprite* > > s_BonusesCache;
         std::map<int, std::map<int, Square> > s_Collisions;
         bool s_CacheCreated;
         bool load(std::string);

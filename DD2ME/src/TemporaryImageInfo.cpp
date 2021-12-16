@@ -2,6 +2,8 @@
 
 #include "Game.h"
 
+using namespace sf;
+
 TemporaryImageInfo::TemporaryImageInfo():
     s_CoordX(0),
     s_CoordY(0),
@@ -30,19 +32,43 @@ TemporaryImageInfo::~TemporaryImageInfo()
 void TemporaryImageInfo::draw()
 {
     int frame;
-    if(s_Animated == true) frame = s_GameClass->s_AnimationStep%s_NumberOfFrames;
+    if(s_Animated == true) frame = s_GameClass->s_AnimationStep % s_NumberOfFrames;
     else frame = 0;
     int x = s_CoordX - s_GameClass->s_GameInfo->s_ScreenCoordX;
     int y = s_CoordY - s_GameClass->s_GameInfo->s_ScreenCoordY;
     if(s_CacheCreated == false)
     {
-        if(s_ManyFrames == true) s_GameClass->s_Window->draw(Image(Bitmap( (*(*s_Bitmaps)[frame]), 0, 0, (*s_Bitmaps)[frame]->width()/2, (*s_Bitmaps)[frame]->height()), x, y));
-        else s_GameClass->s_Window->draw(Image(Bitmap( (*s_Bitmap), 0, 0, s_Bitmap->width()/2, s_Bitmap->height()), x, y));
+        if(s_ManyFrames == true)
+        {
+            //s_GameClass->s_Window->draw(Image(Bitmap( (*(*s_Bitmaps)[frame]), 0, 0, (*s_Bitmaps)[frame]->width()/2, (*s_Bitmaps)[frame]->height()), x, y));
+            Sprite spr( *(*s_Bitmaps)[frame] );
+            spr.setTextureRect(IntRect(0, 0, (*s_Bitmaps)[frame]->getSize().x / 2, (*s_Bitmaps)[frame]->getSize().y));
+            spr.setPosition(x, y);
+            s_GameClass->s_RenderTexture->draw(spr);
+        }
+        else
+        {
+            //s_GameClass->s_Window->draw(Image(Bitmap( (*s_Bitmap), 0, 0, s_Bitmap->width()/2, s_Bitmap->height()), x, y));
+            Sprite spr( *s_Bitmap );
+            spr.setTextureRect(IntRect(0, 0, s_Bitmap->getSize().x / 2, s_Bitmap->getSize().y));
+            spr.setPosition(x, y);
+            s_GameClass->s_RenderTexture->draw(spr);
+        }
     }
     else
     {
-        if(s_ManyFrames == true) s_GameClass->s_Window->draw( Image( (*(*s_CacheBitmaps)[frame]), x, y));
-        else s_GameClass->s_Window->draw( Image( (*s_Cache), x, y));
+        if(s_ManyFrames == true)
+        {
+            //s_GameClass->s_Window->draw( Image( (*(*s_CacheBitmaps)[frame]), x, y));
+            (*s_CacheBitmaps)[frame]->setPosition(x, y);
+            s_GameClass->s_RenderTexture->draw((*(*s_CacheBitmaps)[frame]));
+        }
+        else
+        {
+            //s_GameClass->s_Window->draw( Image( (*s_Cache), x, y));
+            s_Cache->setPosition(x, y);
+            s_GameClass->s_RenderTexture->draw(*s_Cache);
+        }
     }
 }
 

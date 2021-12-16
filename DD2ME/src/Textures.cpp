@@ -12,6 +12,8 @@ using namespace IniParser;
 
 using namespace std;
 
+using namespace sf;
+
 Textures::Textures(Game* gameclass):
     s_GameClass(gameclass),
     s_TilesInfo(0),
@@ -34,16 +36,16 @@ Textures::~Textures()
 
 void Textures::deleteAllGDIObjects()
 {
-    map<int, Bitmap*>::iterator iter__, iter2__;
+    map<int, Texture*>::iterator iter__, iter2__;
     for (iter__ = s_Tiles.begin(), iter2__ = s_Tiles.end(); iter__ != iter2__;)
     {
         if(iter__->second != 0) delete iter__->second;
         ++iter__;
     }
-    map<int, map<int, Bitmap*> >::iterator iter_, iter2_;
+    map<int, map<int, Texture*> >::iterator iter_, iter2_;
     for (iter_ = s_DeathTiles.begin(), iter2_ = s_DeathTiles.end(); iter_ != iter2_;)
     {
-        map<int, Bitmap* >::iterator _iter_, _iter2_;
+        map<int, Texture* >::iterator _iter_, _iter2_;
         for (_iter_ = iter_->second.begin(), _iter2_ = iter_->second.end(); _iter_ != _iter2_;)
         {
             if(_iter_->second != 0) delete _iter_->second;
@@ -51,10 +53,10 @@ void Textures::deleteAllGDIObjects()
         }
         ++iter_;
     }
-    map<int, map<int, Bitmap*> >::iterator iter___, iter2___;
+    map<int, map<int, Sprite*> >::iterator iter___, iter2___;
     for (iter___ = s_CacheTiles.begin(), iter2___ = s_CacheTiles.end(); iter___ != iter2___;)
     {
-        map<int, Bitmap* >::iterator _iter_, _iter2_;
+        map<int, Sprite* >::iterator _iter_, _iter2_;
         for (_iter_ = iter___->second.begin(), _iter2_ = iter___->second.end(); _iter_ != _iter2_;)
         {
             if(_iter_->second != 0) delete _iter_->second;
@@ -64,7 +66,7 @@ void Textures::deleteAllGDIObjects()
     }
     for (iter___ = s_CacheDeathTiles.begin(), iter2___ = s_CacheDeathTiles.end(); iter___ != iter2___;)
     {
-        map<int, Bitmap* >::iterator _iter_, _iter2_;
+        map<int, Sprite* >::iterator _iter_, _iter2_;
         for (_iter_ = iter___->second.begin(), _iter2_ = iter___->second.end(); _iter_ != _iter2_;)
         {
             if(_iter_->second != 0) delete _iter_->second;
@@ -80,7 +82,12 @@ bool Textures::load(string PathToTexturePack)
     s_TilesInfo = prs.getParsedFromFile(PathToTexturePack + "tiles.info");
     if(!s_TilesInfo) return false;
     int numberoftilesets = atoi( s_TilesInfo->getValue("info", "numberoftilesets").c_str() );
-    for(int i = 0; i < numberoftilesets; i++) s_Tiles[i] = new Bitmap(PathToTexturePack + "tiles_" + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp");
+    for(int i = 0; i < numberoftilesets; i++)
+    {
+        //s_Tiles[i] = new Bitmap(PathToTexturePack + "tiles_" + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp");
+        s_Tiles[i] = new Texture;
+        if(!s_Tiles[i] || !s_Tiles[i]->loadFromFile(PathToTexturePack + "tiles_" + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp")) return false;
+    }
     int sizeXTiles = atoi( s_TilesInfo->getValue("info", "sizeX").c_str() );
     int sizeYTiles = atoi( s_TilesInfo->getValue("info", "sizeY").c_str() );
     int numberoftiles = sizeXTiles * sizeYTiles;
@@ -105,7 +112,12 @@ bool Textures::load(string PathToTexturePack)
                 if(!s_DeathTilesInfo[i]) return false;
                 numberofdeathframes = atoi( s_DeathTilesInfo[i]->getValue("info", "numberofframes").c_str() );
                 for(int q = 0; q < numberofdeathframes; q++)
-                    if(!s_DeathTiles[i][q]) s_DeathTiles[i][q] = new Bitmap(PathToTexturePack + "DeathTiles/" + WorkFunctions::ConvertFunctions::itos(j + 1) + "/" + WorkFunctions::ConvertFunctions::itos(i) + "/" + WorkFunctions::ConvertFunctions::itos(q+1) + ".bmp");
+                    if(!s_DeathTiles[i][q])
+                    {
+                        //s_DeathTiles[i][q] = new Bitmap(PathToTexturePack + "DeathTiles/" + WorkFunctions::ConvertFunctions::itos(j + 1) + "/" + WorkFunctions::ConvertFunctions::itos(i) + "/" + WorkFunctions::ConvertFunctions::itos(q+1) + ".bmp");
+                        s_DeathTiles[i][q] = new Texture;
+                        if(!s_DeathTiles[i][q] || !s_DeathTiles[i][q]->loadFromFile(PathToTexturePack + "DeathTiles/" + WorkFunctions::ConvertFunctions::itos(j + 1) + "/" + WorkFunctions::ConvertFunctions::itos(i) + "/" + WorkFunctions::ConvertFunctions::itos(q+1) + ".bmp")) return false;
+                    }
             }
         }
 
@@ -177,8 +189,20 @@ void Textures::drawTile(int tile, int x, int y, int x_tile, int y_tile)
     int NumberDrawTileX = tile % sizeXTiles;
     int NumberDrawTileY = ( tile - ( tile % sizeXTiles ) ) / sizeXTiles;
     int tileset = 0;
-    if(s_CacheCreated == false) s_GameClass->s_Window->draw(Image(Bitmap( (*s_Tiles[tileset]), NumberDrawTileX*16, NumberDrawTileY*16, 16, 16), x, y));
-    else s_GameClass->s_Window->draw(Image((*s_CacheTiles[tileset][tile]), x, y));
+    if(s_CacheCreated == false)
+    {
+        //s_GameClass->s_Window->draw(Image(Bitmap( (*s_Tiles[tileset]), NumberDrawTileX*16, NumberDrawTileY*16, 16, 16), x, y));
+        Sprite spr(*s_Tiles[tileset]);
+        spr.setTextureRect(IntRect(NumberDrawTileX*16, NumberDrawTileY*16, 16, 16));
+        spr.setPosition(x, y);
+        s_GameClass->s_RenderTexture->draw(spr);
+    }
+    else
+    {
+        //s_GameClass->s_Window->draw(Image((*s_CacheTiles[tileset][tile]), x, y));
+        s_CacheTiles[tileset][tile]->setPosition(x, y);
+        s_GameClass->s_RenderTexture->draw(*s_CacheTiles[tileset][tile]);
+    }
 }
 
 bool Textures::createCache()
@@ -195,13 +219,20 @@ bool Textures::createCache()
         {
             NumberDrawTileX = i % sizeXTiles;
             NumberDrawTileY = ( i - ( i % sizeXTiles ) ) / sizeXTiles;
-            s_CacheTiles[j][i] = new Bitmap( (*s_Tiles[j]), NumberDrawTileX*16, NumberDrawTileY*16, 16, 16 );
+            //s_CacheTiles[j][i] = new Bitmap( (*s_Tiles[j]), NumberDrawTileX*16, NumberDrawTileY*16, 16, 16 );
+            s_CacheTiles[j][i] = new Sprite(*s_Tiles[j]);
+            s_CacheTiles[j][i]->setTextureRect(IntRect(NumberDrawTileX*16, NumberDrawTileY*16, 16, 16));
         }
 
-    map<int, map<int, Bitmap*> >::iterator iter;
-    map<int, Bitmap*>::iterator iter1;
+    map<int, map<int, Texture*> >::iterator iter;
+    map<int, Texture*>::iterator iter1;
     for ( iter = s_DeathTiles.begin(); iter != s_DeathTiles.end(); iter++ )
-        for( iter1 = iter->second.begin(); iter1 != iter->second.end(); iter1++ ) s_CacheDeathTiles[iter->first][iter1->first] = new Bitmap( (*iter1->second), 0, 0, iter1->second->width(), iter1->second->height() );
+        for( iter1 = iter->second.begin(); iter1 != iter->second.end(); iter1++ )
+        {
+            //s_CacheDeathTiles[iter->first][iter1->first] = new Bitmap( (*iter1->second), 0, 0, iter1->second->width(), iter1->second->height() );
+            s_CacheDeathTiles[iter->first][iter1->first] = new Sprite(*iter1->second);
+            s_CacheDeathTiles[iter->first][iter1->first]->setTextureRect(IntRect(0, 0, iter1->second->getSize().x, iter1->second->getSize().y));
+        }
 
     s_CacheCreated = true;
     cout<<"Textures cache created."<<endl;
@@ -210,42 +241,33 @@ bool Textures::createCache()
 
 void Textures::createMaskTransparent(int r, int g, int b)
 {
-    map<int, Bitmap*>::iterator iter__, iter2__;
+    map<int, Texture*>::iterator iter__, iter2__;
     for (iter__ = s_Tiles.begin(), iter2__ = s_Tiles.end(); iter__ != iter2__;)
     {
-        if(iter__->second != 0) iter__->second->create_mask(r, g, b);
+        if(iter__->second != 0)
+        {
+            //iter__->second->create_mask(r, g, b);
+            sf::Image tmp_img = iter__->second->copyToImage();
+            tmp_img.createMaskFromColor(Color(r, g, b));
+            iter__->second->loadFromImage(tmp_img);
+        }
         ++iter__;
     }
-    map<int, map<int, Bitmap*> >::iterator iter_, iter2_;
+    map<int, map<int, Texture*> >::iterator iter_, iter2_;
     for (iter_ = s_DeathTiles.begin(), iter2_ = s_DeathTiles.end(); iter_ != iter2_;)
     {
-        map<int, Bitmap* >::iterator _iter_, _iter2_;
+        map<int, Texture* >::iterator _iter_, _iter2_;
         for (_iter_ = iter_->second.begin(), _iter2_ = iter_->second.end(); _iter_ != _iter2_;)
         {
-            if(_iter_->second != 0) _iter_->second->create_mask(r, g, b);
+            if(_iter_->second != 0)
+            {
+                //iter__->second->create_mask(r, g, b);
+                sf::Image tmp_img = _iter_->second->copyToImage();
+                tmp_img.createMaskFromColor(Color(r, g, b));
+                _iter_->second->loadFromImage(tmp_img);
+            }
             ++_iter_;
         }
         ++iter_;
-    }
-    map<int, map<int, Bitmap*> >::iterator iter___, iter2___;
-    for (iter___ = s_CacheTiles.begin(), iter2___ = s_CacheTiles.end(); iter___ != iter2___;)
-    {
-        map<int, Bitmap* >::iterator _iter_, _iter2_;
-        for (_iter_ = iter___->second.begin(), _iter2_ = iter___->second.end(); _iter_ != _iter2_;)
-        {
-            if(_iter_->second != 0) _iter_->second->create_mask(r, g, b);
-            ++_iter_;
-        }
-        ++iter___;
-    }
-    for (iter___ = s_CacheDeathTiles.begin(), iter2___ = s_CacheDeathTiles.end(); iter___ != iter2___;)
-    {
-        map<int, Bitmap* >::iterator _iter_, _iter2_;
-        for (_iter_ = iter___->second.begin(), _iter2_ = iter___->second.end(); _iter_ != _iter2_;)
-        {
-            if(_iter_->second != 0) _iter_->second->create_mask(r, g, b);
-            ++_iter_;
-        }
-        ++iter___;
     }
 }

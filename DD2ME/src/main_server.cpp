@@ -2,7 +2,6 @@
 #include <ctime>
 
 #include "canvas.hpp"
-using namespace cnv;
 
 #include "MainServer.h"
 

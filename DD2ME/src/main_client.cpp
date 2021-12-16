@@ -1,7 +1,5 @@
 #include <ctime>
 
-#include "canvas.hpp"
-
 #include "Game.h"
 
 #include "IniParser/ParserInfoFile.h"
@@ -14,7 +12,9 @@
 
 using namespace IniParser;
 
-using namespace cnv;
+using namespace std;
+
+using namespace sf;
 
 int main(int argc, char** argv)
 {
@@ -22,7 +22,7 @@ int main(int argc, char** argv)
     Game* gm = new Game;
     if(!gm)
     {
-        cout<<"Error creating GameClass!"<<endl;
+        cout << "Error creating GameClass!" << endl;
         return 0;
     }
     NetClient* nc = new NetClient(gm);
@@ -97,13 +97,22 @@ int main(int argc, char** argv)
             return 0;
         }
         //gm->s_Window = new Window("DD2 Remake: ME v0.2 pre-beta", gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, atoi( (gm->s_IniFile->getValue("video","scale") ).c_str() ));
-        gm->s_Window = new Window(nostart);
-        gm->s_Window->geometry(gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, atoi( (gm->s_IniFile->getValue("video","scale") ).c_str() ));
-        gm->s_Window->title(STRING_CONSTANTS::SC_TITLE_WINDOW);
+        /*gm->s_Window = new Window(nostart);
+        gm->s_Window->geometry(gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, );
+        gm->s_Window->title(STRING_CONSTANTS::SC_TITLE_WINDOW);*/
+
+        /*gm->s_RenderTexture->create(gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, true);
+        float window_scale = atof( (gm->s_IniFile->getValue("video","scale") ).c_str() );
+        gm->s_RenderWindow = new RenderWindow( VideoMode(gm->s_DisplayStruct->s_ResolutionX * window_scale, gm->s_DisplayStruct->s_ResolutionY * window_scale), STRING_CONSTANTS::SC_TITLE_WINDOW);
+        gm->s_GameRenderScale = window_scale;*/
+
+        gm->createWindow();
+
         //...
         if(!gm->loadPack())
         {
             cout<<"Error: Load game pack."<<endl;
+            delete gm;
             system("pause");
             return 0;
         }

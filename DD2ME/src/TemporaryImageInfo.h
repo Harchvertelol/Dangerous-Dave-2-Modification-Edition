@@ -1,9 +1,7 @@
 #ifndef TEMPORARYIMAGEINFO_H
 #define TEMPORARYIMAGEINFO_H
 #include <iostream>
-#include "canvas.hpp"
-using namespace std;
-using namespace cnv;
+#include <SFML/Graphics.hpp>
 
 class Game;
 
@@ -17,12 +15,12 @@ class TemporaryImageInfo
         int s_TimeLive;
         int s_ChangeX;
         int s_ChangeY;
-        map<int, Bitmap*>* s_Bitmaps;
-        map<int, Bitmap*>* s_CacheBitmaps;
-        Bitmap* s_Bitmap;
-        Bitmap* s_Cache;
+        std::map<int, sf::Texture*>* s_Bitmaps;
+        std::map<int, sf::Sprite*>* s_CacheBitmaps;
+        sf::Texture* s_Bitmap;
+        sf::Sprite* s_Cache;
         int s_NumberOfFrames;
-        string s_Type;
+        std::string s_Type;
         bool s_Animated;
         bool s_CacheCreated;
         bool s_ManyFrames;

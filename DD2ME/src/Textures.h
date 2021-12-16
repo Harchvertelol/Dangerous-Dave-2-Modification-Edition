@@ -1,8 +1,10 @@
 #ifndef TEXTURES_H
 #define TEXTURES_H
+#include <vector>
+
 #include "IniParser/PostParsingStruct.h"
-#include "canvas.hpp"
-using namespace cnv;
+
+#include <SFML/Graphics.hpp>
 
 class Game;
 
@@ -26,12 +28,12 @@ class Textures
         Game* s_GameClass;
         IniParser::PostParsingStruct* s_TilesInfo;
         std::map<int, std::map<int, TileAnimationInfo> > s_TilesAnimationInfo;
-        std::map<int, Bitmap*> s_Tiles;
+        std::map<int, sf::Texture*> s_Tiles;
         std::map<int, std::map<int,int> > s_MaskTiles;
-        std::map<int, std::map<int, Bitmap*> > s_CacheTiles;
+        std::map<int, std::map<int, sf::Sprite*> > s_CacheTiles;
         std::map<int, IniParser::PostParsingStruct*> s_DeathTilesInfo;
-        std::map<int, std::map<int, Bitmap*> > s_DeathTiles;
-        std::map<int, std::map<int, Bitmap*> > s_CacheDeathTiles;
+        std::map<int, std::map<int, sf::Texture*> > s_DeathTiles;
+        std::map<int, std::map<int, sf::Sprite*> > s_CacheDeathTiles;
         bool s_CacheCreated;
         bool load(std::string);
         bool createCache();

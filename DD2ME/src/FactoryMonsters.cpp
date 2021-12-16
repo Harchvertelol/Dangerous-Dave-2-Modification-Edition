@@ -12,6 +12,8 @@ using namespace MathFunctions;
 using namespace GameFunctions;
 using namespace ConvertFunctions;
 
+using namespace std;
+
 FactoryMonsters::FactoryMonsters(Game* gameclass):
     s_GameClass(gameclass),
     s_MaxIndex(0)

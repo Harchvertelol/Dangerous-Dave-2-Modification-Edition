@@ -98,6 +98,8 @@
 		<Unit filename="TemporaryImageInfo.h" />
 		<Unit filename="Textures.cpp" />
 		<Unit filename="Textures.h" />
+		<Unit filename="Timers.cpp" />
+		<Unit filename="Timers.h" />
 		<Unit filename="UserData.cpp" />
 		<Unit filename="UserData.h" />
 		<Unit filename="Version.h" />

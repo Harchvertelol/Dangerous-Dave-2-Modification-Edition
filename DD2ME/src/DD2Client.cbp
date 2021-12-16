@@ -17,6 +17,8 @@
 				</Compiler>
 				<Linker>
 					<Add library="../../Engines/SFML/lib/libsfml-audio-d.a" />
+					<Add library="../../Engines/SFML/lib/libsfml-graphics-d.a" />
+					<Add library="../../Engines/SFML/lib/libsfml-window-d.a" />
 					<Add library="../../Engines/SFML/lib/libsfml-system-d.a" />
 				</Linker>
 			</Target>
@@ -32,6 +34,8 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="../../Engines/SFML/lib/libsfml-audio.a" />
+					<Add library="../../Engines/SFML/lib/libsfml-graphics.a" />
+					<Add library="../../Engines/SFML/lib/libsfml-window.a" />
 					<Add library="../../Engines/SFML/lib/libsfml-system.a" />
 				</Linker>
 			</Target>
@@ -43,7 +47,6 @@
 			<Add directory="../../Engines/SFML/include" />
 		</Compiler>
 		<Linker>
-			<Add library="gdi32" />
 			<Add library="C:/Program Files (x86)/CodeBlocks/MinGW/lib/libws2_32.a" />
 			<Add directory="../../Engines/SFML/lib" />
 		</Linker>
@@ -103,6 +106,8 @@
 		<Unit filename="Textures.h" />
 		<Unit filename="Thread/Thread.cpp" />
 		<Unit filename="Thread/Thread.h" />
+		<Unit filename="Timers.cpp" />
+		<Unit filename="Timers.h" />
 		<Unit filename="Version.h" />
 		<Unit filename="WorkFunctions.cpp" />
 		<Unit filename="WorkFunctions.h" />

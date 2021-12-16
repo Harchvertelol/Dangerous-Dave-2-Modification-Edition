@@ -8,6 +8,7 @@
 #include "Monsters.h"
 #include "Sounds.h"
 #include "Music.h"
+#include "Fonts.h"
 
 class Game;
 
@@ -26,6 +27,7 @@ class GameData
         std::string PathToMusicPack;
         std::string PathToLevelPack;
         std::string PathToDavePack;
+        std::string PathToFontsPack;
         IniParser::PostParsingStruct* s_ModInfo;
         IniParser::PostParsingStruct* s_ModSettings;
         IniParser::PostParsingStruct* s_LevelsInfo;
@@ -37,6 +39,7 @@ class GameData
         Monsters* s_Monsters;
         Sounds* s_Sounds;
         Music* s_Music;
+        Fonts* s_Fonts;
         Game* s_GameClass;
         bool loadData(IniParser::PostParsingStruct*);
         bool drawScreenState0();

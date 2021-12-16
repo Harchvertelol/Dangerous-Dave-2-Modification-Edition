@@ -6,6 +6,11 @@
 #include "Defines.h"
 
 #include "IniParser/ParserInfoFile.h"
+#include <SFML/Graphics.hpp>
+
+using namespace std;
+
+using namespace sf;
 
 LuaBindFunctions::LuaBindFunctions(Game* gameclass):
     s_GameClass(gameclass),
@@ -1839,8 +1844,8 @@ int LuaBindFunctions::addPackImagesToFactoryTemporaryImage(lua_State* s_Lua)
     bool animated = (bool)lua_tonumber(s_Lua, 11);
     bool onTop = false;
     if(n >= 12) onTop = (bool)lua_tonumber(s_Lua, 12);
-    map<int, Bitmap*>* bmp = 0;
-    map<int, Bitmap*>* cachebmp = 0;
+    map<int, Texture*>* bmp = 0;
+    map<int, Sprite*>* cachebmp = 0;
     if(pack == "monsters")
     {
         bmp = &s_GameClass->s_Data->s_Monsters->s_Bitmaps[number][state];
@@ -1875,8 +1880,8 @@ int LuaBindFunctions::addImageToFactoryTemporaryImage(lua_State* s_Lua)
     string type = lua_tostring(s_Lua, 10);
     bool onTop = false;
     if(n >= 11) onTop = (bool)lua_tonumber(s_Lua, 11);
-    Bitmap* bmp = 0;
-    Bitmap* cachebmp = 0;
+    Texture* bmp = 0;
+    Sprite* cachebmp = 0;
     if(pack == "monsters")
     {
         bmp = s_GameClass->s_Data->s_Monsters->s_Bitmaps[number][state][numberofframe];

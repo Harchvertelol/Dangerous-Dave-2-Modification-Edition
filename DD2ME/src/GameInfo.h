@@ -1,11 +1,9 @@
 #ifndef GAMEINFO_H
 #define GAMEINFO_H
 #include <map>
-#include "canvas.hpp"
 #include "CreatureDave.h"
 #include "FactoryMonsters.h"
-
-using namespace cnv;
+#include <SFML/Graphics.hpp>
 
 class Game;
 
@@ -53,7 +51,7 @@ class GameInfo
         bool deathDave(int);
         void doChangeLevelOnGameOver();
         void playDeath();
-        void drawDeathFrame(std::map<int, Bitmap* >*, std::map<int, Bitmap* >*, int);
+        void drawDeathFrame(std::map<int, sf::Texture* >*, std::map<int, sf::Sprite* >*, int);
         void correctionScreen(CreatureDave*);
 };
 #endif

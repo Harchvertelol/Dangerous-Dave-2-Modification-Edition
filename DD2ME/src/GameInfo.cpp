@@ -4,6 +4,10 @@
 
 #include "Game.h"
 
+using namespace std;
+
+using namespace sf;
+
 GameInfo::GameInfo(Game* gameclass):
     s_GameClass(gameclass),
     s_CurrentLevel(1),
@@ -122,7 +126,7 @@ void GameInfo::playDeath()
             return;
         }
         if(frame >= numberofframes) frame = numberofframes - 1;
-        drawDeathFrame(&s_GameClass->s_Data->s_Textures->s_DeathTiles[s_GameClass->s_Data->s_Level->s_Fields[s_GameClass->s_Data->s_Level->getNamePhysicTilesField()][type]],&s_GameClass->s_Data->s_Textures->s_CacheDeathTiles[s_GameClass->s_Data->s_Level->s_Fields[s_GameClass->s_Data->s_Level->getNamePhysicTilesField()][type]],frame);
+        drawDeathFrame(&s_GameClass->s_Data->s_Textures->s_DeathTiles[s_GameClass->s_Data->s_Level->s_Fields[s_GameClass->s_Data->s_Level->getNamePhysicTilesField()][type]], &s_GameClass->s_Data->s_Textures->s_CacheDeathTiles[s_GameClass->s_Data->s_Level->s_Fields[s_GameClass->s_Data->s_Level->getNamePhysicTilesField()][type]], frame);
     }
     else
     {
@@ -139,7 +143,7 @@ void GameInfo::playDeath()
             return;
         }
         if(frame >= numberofframes) frame = numberofframes - 1;
-        drawDeathFrame(&s_GameClass->s_Data->s_Monsters->s_Bitmaps[type]["deathtiles"],&s_GameClass->s_Data->s_Monsters->s_CacheImages[type]["deathtiles"],frame);
+        drawDeathFrame(&s_GameClass->s_Data->s_Monsters->s_Bitmaps[type]["deathtiles"], &s_GameClass->s_Data->s_Monsters->s_CacheImages[type]["deathtiles"], frame);
     }
     if(s_GameClass->s_AnimationStep != s_OldAnSt)
     {
@@ -148,14 +152,26 @@ void GameInfo::playDeath()
     }
 }
 
-void GameInfo::drawDeathFrame(map<int, Bitmap*>* bt, map<int, Bitmap*>* img, int frame)
+void GameInfo::drawDeathFrame(map<int, Texture*>* bt, map<int, Sprite*>* img, int frame)
 {
     bool CacheCreated = false;
     if((*img)[0] != 0) CacheCreated = true;
-    int x = s_MyDave->s_CoordX + 8 - (*bt)[frame]->width()/2 - s_ScreenCoordX;
-    int y = s_MyDave->s_CoordY + 16 - (*bt)[frame]->height()/2 - s_ScreenCoordY;
-    if(CacheCreated == false) s_GameClass->s_Window->draw(Image(Bitmap( (*(*bt)[frame]), 0, 0, (*bt)[frame]->width(), (*bt)[frame]->height()), x, y));
-    else s_GameClass->s_Window->draw(Image((*(*img)[frame]), x, y));
+    int x = s_MyDave->s_CoordX + 8 - (*bt)[frame]->getSize().x / 2 - s_ScreenCoordX;
+    int y = s_MyDave->s_CoordY + 16 - (*bt)[frame]->getSize().y / 2 - s_ScreenCoordY;
+    if(CacheCreated == false)
+    {
+        //s_GameClass->s_Window->draw(Image(Bitmap( (*(*bt)[frame]), 0, 0, (*bt)[frame]->width(), (*bt)[frame]->height()), x, y));
+        Sprite spr((*(*bt)[frame]));
+        spr.setTextureRect(IntRect(0, 0, (*bt)[frame]->getSize().x, (*bt)[frame]->getSize().y));
+        spr.setPosition(x, y);
+        s_GameClass->s_RenderTexture->draw(spr);
+    }
+    else
+    {
+        //s_GameClass->s_Window->draw(Image((*(*img)[frame]), x, y));
+        (*img)[frame]->setPosition(x, y);
+        s_GameClass->s_RenderTexture->draw((*(*img)[frame]));
+    }
 }
 
 void GameInfo::correctionScreen(CreatureDave* dave)
