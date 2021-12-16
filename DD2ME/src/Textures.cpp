@@ -81,12 +81,13 @@ bool Textures::load(string PathToTexturePack)
     ParserInfoFile prs;
     s_TilesInfo = prs.getParsedFromFile(PathToTexturePack + "tiles.info");
     if(!s_TilesInfo) return false;
+    string tmp_ext = "." + s_TilesInfo->getValue("info", "extensions");
     int numberoftilesets = atoi( s_TilesInfo->getValue("info", "numberoftilesets").c_str() );
     for(int i = 0; i < numberoftilesets; i++)
     {
         //s_Tiles[i] = new Bitmap(PathToTexturePack + "tiles_" + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp");
         s_Tiles[i] = new Texture;
-        if(!s_Tiles[i] || !s_Tiles[i]->loadFromFile(PathToTexturePack + "tiles_" + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp")) return false;
+        if(!s_Tiles[i] || !s_Tiles[i]->loadFromFile(PathToTexturePack + "tiles_" + WorkFunctions::ConvertFunctions::itos(i+1) + tmp_ext)) return false;
     }
     int sizeXTiles = atoi( s_TilesInfo->getValue("info", "sizeX").c_str() );
     int sizeYTiles = atoi( s_TilesInfo->getValue("info", "sizeY").c_str() );
@@ -116,7 +117,7 @@ bool Textures::load(string PathToTexturePack)
                     {
                         //s_DeathTiles[i][q] = new Bitmap(PathToTexturePack + "DeathTiles/" + WorkFunctions::ConvertFunctions::itos(j + 1) + "/" + WorkFunctions::ConvertFunctions::itos(i) + "/" + WorkFunctions::ConvertFunctions::itos(q+1) + ".bmp");
                         s_DeathTiles[i][q] = new Texture;
-                        if(!s_DeathTiles[i][q] || !s_DeathTiles[i][q]->loadFromFile(PathToTexturePack + "DeathTiles/" + WorkFunctions::ConvertFunctions::itos(j + 1) + "/" + WorkFunctions::ConvertFunctions::itos(i) + "/" + WorkFunctions::ConvertFunctions::itos(q+1) + ".bmp")) return false;
+                        if(!s_DeathTiles[i][q] || !s_DeathTiles[i][q]->loadFromFile(PathToTexturePack + "DeathTiles/" + WorkFunctions::ConvertFunctions::itos(j + 1) + "/" + WorkFunctions::ConvertFunctions::itos(i) + "/" + WorkFunctions::ConvertFunctions::itos(q+1) + tmp_ext)) return false;
                     }
             }
         }

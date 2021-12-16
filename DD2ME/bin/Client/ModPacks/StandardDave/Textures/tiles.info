@@ -4,6 +4,7 @@ sizeY=66
 numberoftilesets=1
 numberofdoors=3
 numberofanimations=0
+extensions=bmp
 
 [draw]
 transparentmaskR=204

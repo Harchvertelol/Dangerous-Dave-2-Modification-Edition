@@ -1,6 +1,7 @@
 [info]
 numberofbonuses=6
 pointforup=10000
+extensions=bmp
 
 [settings]
 speedflypoint=4

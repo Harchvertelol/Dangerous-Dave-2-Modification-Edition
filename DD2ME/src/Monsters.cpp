@@ -92,6 +92,7 @@ bool Monsters::loadMonster(string PathToMonster, int number)
     ParserInfoFile prs;
     s_MonstersInfo[number] = prs.getParsedFromFile(PathToMonster + "monster.info");
     if(!s_MonstersInfo[number]) return false;
+    string tmp_ext = "." + s_MonstersInfo[number]->getValue("other", "extensions");
     map<string, string>::iterator iter;
     for ( iter = s_MonstersInfo[number]->getMapVariables()["info"].begin(); iter != s_MonstersInfo[number]->getMapVariables()["info"].end(); iter++ )
     {
@@ -102,7 +103,7 @@ bool Monsters::loadMonster(string PathToMonster, int number)
             //s_Bitmaps[number][state][i] = new Bitmap(PathToMonster + state + "_" + itos(i+1) + ".bmp");
             //if(s_Bitmaps[number][state][i]->empty()) return false;
             s_Bitmaps[number][state][i] = new Texture;
-            if(!s_Bitmaps[number][state][i] || !s_Bitmaps[number][state][i]->loadFromFile(PathToMonster + state + "_" + itos(i+1) + ".bmp")) return false;
+            if(!s_Bitmaps[number][state][i] || !s_Bitmaps[number][state][i]->loadFromFile(PathToMonster + state + "_" + itos(i+1) + tmp_ext)) return false;
             collisionAnalyze(number, state, i);
         }
     }
@@ -112,7 +113,7 @@ bool Monsters::loadMonster(string PathToMonster, int number)
         //s_Bitmaps[number]["deathtiles"][i] = new Bitmap(PathToMonster + "DeathTiles/" + itos(i+1) + ".bmp");
         //if(s_Bitmaps[number]["deathtiles"][i]->empty()) return false;
         s_Bitmaps[number]["deathtiles"][i] = new Texture;
-        if(!s_Bitmaps[number]["deathtiles"][i] || !s_Bitmaps[number]["deathtiles"][i]->loadFromFile(PathToMonster + "DeathTiles/" + itos(i+1) + ".bmp")) return false;
+        if(!s_Bitmaps[number]["deathtiles"][i] || !s_Bitmaps[number]["deathtiles"][i]->loadFromFile(PathToMonster + "DeathTiles/" + itos(i+1) + tmp_ext)) return false;
     }
     return true;
 }

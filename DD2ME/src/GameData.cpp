@@ -49,6 +49,7 @@ GameData::~GameData()
     if(s_Monsters != 0) delete s_Monsters;
     if(s_Sounds != 0) delete s_Sounds;
     if(s_Music != 0) delete s_Music;
+    if(s_Fonts != 0) delete s_Fonts;
 }
 
 void GameData::deleteAllGDIObjects()
@@ -71,6 +72,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     PathToMusicPack = "PacksData/MusicPacks/" + s_IniFile->getValue("resources", "musicpack") + "/";
     PathToLevelPack = "PacksData/LevelPacks/" + s_IniFile->getValue("resources", "levelpack") + "/";
     PathToDavePack = "PacksData/DavePacks/" + s_IniFile->getValue("resources", "davepack") + "/";
+    PathToFontsPack = "PacksData/FontsPacks/" + s_IniFile->getValue("resources", "fontspack") + "/";
     if( s_IniFile->getValue("resources", "standard") == "true" ) s_IniFile->getMapVariables()["resources"]["modpack"] = "StandardDave";
     if( s_IniFile->getValue("resources", "modpack") != "")
     {
@@ -125,6 +127,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             PathToMusicPack = "ModPacks/" + s_NameMod + "/Music/";
             PathToLevelPack = "ModPacks/" + s_NameMod + "/Levels/";
             PathToDavePack = "ModPacks/" + s_NameMod + "/Dave/";
+            PathToFontsPack = "ModPacks/" + s_NameMod + "/Fonts/";
         }
         else
         {
@@ -136,6 +139,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             if(s_IniFile->getValue("resources", "musicpack") == "") PathToMusicPack = "ModPacks/" + s_NameMod + "/Music/";
             if(s_IniFile->getValue("resources", "levelpack") == "") PathToLevelPack = "ModPacks/" + s_NameMod + "/Levels/";
             if(s_IniFile->getValue("resources", "davepack") == "") PathToDavePack = "ModPacks/" + s_NameMod + "/Dave/";
+            if(s_IniFile->getValue("resources", "fontspack") == "") PathToFontsPack = "ModPacks/" + s_NameMod + "/Fonts/";
         }
     }
     cout << "Loading levels information..." << endl;
@@ -164,6 +168,9 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     cout << "Loading music..." << endl;
     if( !s_Music->load(PathToMusicPack) ) return false;
     cout << "Music is loaded." << endl;
+    cout << "Loading fonts..." << endl;
+    if( !s_Fonts->load(PathToFontsPack) ) return false;
+    cout << "Fonts is loaded." << endl;
     return true;
 }
 

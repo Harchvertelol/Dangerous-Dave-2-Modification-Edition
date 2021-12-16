@@ -86,19 +86,20 @@ bool Bonuses::load(string PathToBonusPack)
     s_GlobBonusesInfo = prs.getParsedFromFile(PathToBonusPack + "bonuses.dat");
     if(!s_GlobBonusesInfo) return false;
     int numberofbonuses = atoi( s_GlobBonusesInfo->getValue("info", "numberofbonuses").c_str() );
+    string tmp_ext = "." + s_GlobBonusesInfo->getValue("info", "extensions");
     for(int i = 0; i < numberofbonuses; i++)
     {
         s_BonusesInfo[i] = prs.getParsedFromFile(PathToBonusPack + WorkFunctions::ConvertFunctions::itos(i+1) + ".info");
         if(!s_BonusesInfo[i]) return false;
         //s_BonusesBitmaps[i][0] = new Bitmap(PathToBonusPack + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp");
         s_BonusesBitmaps[i][0] = new Texture;
-        if(!s_BonusesBitmaps[i][0] || !s_BonusesBitmaps[i][0]->loadFromFile(PathToBonusPack + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp")) return false;
+        if(!s_BonusesBitmaps[i][0] || !s_BonusesBitmaps[i][0]->loadFromFile(PathToBonusPack + WorkFunctions::ConvertFunctions::itos(i+1) + tmp_ext)) return false;
         numberofframes = atoi ( s_BonusesInfo[i]->getValue("info", "numberofframes").c_str() );
         for(int j = 0; j < numberofframes; j++)
         {
             //s_BonusesBitmaps[i][j+1] = new Bitmap(PathToBonusPack + WorkFunctions::ConvertFunctions::itos(i+1) + "_" + WorkFunctions::ConvertFunctions::itos(j+1) + ".bmp");
             s_BonusesBitmaps[i][j+1] = new Texture;
-            if(!s_BonusesBitmaps[i][j+1] || !s_BonusesBitmaps[i][j+1]->loadFromFile(PathToBonusPack + WorkFunctions::ConvertFunctions::itos(i+1) + "_" + WorkFunctions::ConvertFunctions::itos(j+1) + ".bmp")) return false;
+            if(!s_BonusesBitmaps[i][j+1] || !s_BonusesBitmaps[i][j+1]->loadFromFile(PathToBonusPack + WorkFunctions::ConvertFunctions::itos(i+1) + "_" + WorkFunctions::ConvertFunctions::itos(j+1) + tmp_ext)) return false;
             collisionAnalyze(i, j+1);
         }
         /*s_BonusesBitmaps[i][numberofframes + 1] = new Bitmap(PathToBonusPack + WorkFunctions::ConvertFunctions::itos(i+1) + "_p.bmp");

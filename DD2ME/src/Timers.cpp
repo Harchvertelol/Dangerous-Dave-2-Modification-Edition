@@ -28,7 +28,7 @@ vector<int> Timers::getTimersTicks()
     vector<int> ret_vect;
     for(int i = 0; i < s_Timers.size(); i++)
     {
-        if(s_Timers[i].s_Timer.getElapsedTime().asMilliseconds() >= s_Timers[i].s_TimerTick)
+        if(s_Timers[i].s_Timer.getElapsedTime().asMilliseconds() > s_Timers[i].s_TimerTick)
         {
             ret_vect.push_back(i);
             s_Timers[i].s_Timer.restart();

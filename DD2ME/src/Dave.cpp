@@ -61,6 +61,7 @@ bool Dave::load(string PathToDavePack)
     ParserInfoFile prs;
     s_DaveInfo = prs.getParsedFromFile(PathToDavePack + "dave.dat");
     if(!s_DaveInfo) return false;
+    string tmp_ext = "." + s_DaveInfo->getValue("other", "extensions");
     map<string, string>::iterator iter;
     for ( iter = s_DaveInfo->getMapVariables()["info"].begin(); iter != s_DaveInfo->getMapVariables()["info"].end(); iter++ )
     {
@@ -70,7 +71,7 @@ bool Dave::load(string PathToDavePack)
         {
             //s_Bitmaps[state][i] = new Bitmap(PathToDavePack + state + "_" + itos(i+1) + ".bmp");
             s_Bitmaps[state][i] = new Texture;
-            if(!s_Bitmaps[state][i] || !s_Bitmaps[state][i]->loadFromFile(PathToDavePack + state + "_" + itos(i+1) + ".bmp")) return false;
+            if(!s_Bitmaps[state][i] || !s_Bitmaps[state][i]->loadFromFile(PathToDavePack + state + "_" + itos(i+1) + tmp_ext)) return false;
             collisionAnalyze(state,i);
         }
     }
@@ -78,7 +79,7 @@ bool Dave::load(string PathToDavePack)
     {
         //s_Bitmaps["bandolier"][i] = new Bitmap(PathToDavePack + "bandolier_" + itos(i) + ".bmp");
         s_Bitmaps["bandolier"][i] = new Texture;
-        if(!s_Bitmaps["bandolier"][i] || !s_Bitmaps["bandolier"][i]->loadFromFile(PathToDavePack + "bandolier_" + itos(i) + ".bmp")) return false;
+        if(!s_Bitmaps["bandolier"][i] || !s_Bitmaps["bandolier"][i]->loadFromFile(PathToDavePack + "bandolier_" + itos(i) + tmp_ext)) return false;
     }
     return true;
 }

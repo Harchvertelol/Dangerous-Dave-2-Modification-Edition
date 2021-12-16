@@ -1,10 +1,14 @@
 #include "Gui.h"
 
+#include <SFML/Graphics.hpp>
+
 #include "Game.h"
 
 #include "WorkFunctions.h"
 
 using namespace std;
+
+using namespace sf;
 
 Gui::Gui(Game* gameclass):
     s_GameClass(gameclass)
@@ -20,13 +24,23 @@ Gui::~Gui()
 void Gui::drawFPS()
 {
     if(s_GameClass->s_IniFile->getValue("FPS", "ShowFPS") != "true" || s_GameClass->s_IniFile->getValue("FPS", "ShowFPSMode") != "graphic") return;
+    Font main_fnt = s_GameClass->s_Data->s_Fonts->getFont("main");
     stringstream s;
     int k = 0;
     int shift = 15;
+    int fps_chr_size = 10;
+    Color fps_chr_color = Color(0, 0, 0, 255);
+    Text txt;
+    txt.setFont(main_fnt);
+    txt.setColor(fps_chr_color);
+    txt.setCharacterSize(fps_chr_size);
     if(s_GameClass->s_IniFile->getValue("FPS", "ShowFPSGameDraw") == "true")
     {
         s.str("");
         s<<"FPS game draw: "<<s_GameClass->s_GameDrawFPS<<endl;
+        txt.setString(s.str());
+        txt.setPosition(Vector2f(0, k));
+        s_GameClass->s_RenderTexture->draw(txt);
         //s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
         k += shift;
     }
@@ -34,6 +48,9 @@ void Gui::drawFPS()
     {
         s.str("");
         s<<"FPS game draw maximal: "<<s_GameClass->s_GameDrawFPSMaximal<<endl;
+        txt.setString(s.str());
+        txt.setPosition(Vector2f(0, k));
+        s_GameClass->s_RenderTexture->draw(txt);
         //s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
         k += shift;
     }
@@ -41,6 +58,9 @@ void Gui::drawFPS()
     {
         s.str("");
         s<<"FPS game draw minimal: "<<s_GameClass->s_GameDrawFPSMinimal<<endl;
+        txt.setString(s.str());
+        txt.setPosition(Vector2f(0, k));
+        s_GameClass->s_RenderTexture->draw(txt);
         //s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
         k += shift;
     }
@@ -48,6 +68,9 @@ void Gui::drawFPS()
     {
         s.str("");
         s<<"FPS technical: "<<s_GameClass->s_TechnicalFPS<<endl;
+        txt.setString(s.str());
+        txt.setPosition(Vector2f(0, k));
+        s_GameClass->s_RenderTexture->draw(txt);
         //s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
         k += shift;
     }
@@ -55,6 +78,9 @@ void Gui::drawFPS()
     {
         s.str("");
         s<<"FPS technical maximal: "<<s_GameClass->s_TechnicalFPSMaximal<<endl;
+        txt.setString(s.str());
+        txt.setPosition(Vector2f(0, k));
+        s_GameClass->s_RenderTexture->draw(txt);
         //s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
         k += shift;
     }
@@ -62,6 +88,9 @@ void Gui::drawFPS()
     {
         s.str("");
         s<<"FPS technical minimal: "<<s_GameClass->s_TechnicalFPSMinimal<<endl;
+        txt.setString(s.str());
+        txt.setPosition(Vector2f(0, k));
+        s_GameClass->s_RenderTexture->draw(txt);
         //s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
         k += shift;
     }
@@ -94,6 +123,40 @@ void Gui::drawGuiState2(int screennumber)
     s_GameClass->s_Window->draw(Label("Secrets: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_Data->s_Level->s_Params->getMapVariables()["Secrets"].size()), secretscoordX, secretscoordY, secretssize), Pen(0, 0, 0));
     s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints), scorecoordX, scorecoordY, scoresize), Pen(0, 0, 0));
     s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(0), highscorecoordX, highscorecoordY, highscoresize), Pen(0, 0, 0));*/
+    Font main_fnt = s_GameClass->s_Data->s_Fonts->getFont("main");
+    Text txt;
+    txt.setFont(main_fnt);
+
+    txt.setColor(Color(0, 0, 0, 255));
+    txt.setCharacterSize(levelnamesize);
+    txt.setPosition(Vector2f(levelnamecoordX, levelnamecoordY));
+    string level_str = "Level " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel);
+    if(levelname != "") level_str = levelname;
+    txt.setString(level_str);
+    s_GameClass->s_RenderTexture->draw(txt);
+
+    string secrets_text = "Secrets: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_Data->s_Level->s_Params->getMapVariables()["Secrets"].size());
+    txt.setColor(Color(0, 0, 0, 255));
+    txt.setCharacterSize(secretssize);
+    txt.setPosition(Vector2f(secretscoordX, secretscoordY));
+    txt.setString(secrets_text);
+    s_GameClass->s_RenderTexture->draw(txt);
+
+    string score_text = WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints);
+    txt.setColor(Color(0, 0, 0, 255));
+    txt.setCharacterSize(scoresize);
+    txt.setPosition(Vector2f(scorecoordX, scorecoordY));
+    txt.setString(score_text);
+    s_GameClass->s_RenderTexture->draw(txt);
+
+
+    string highscore_text = WorkFunctions::ConvertFunctions::itos(0);
+    txt.setColor(Color(0, 0, 0, 255));
+    txt.setCharacterSize(highscoresize);
+    txt.setPosition(Vector2f(highscorecoordX, highscorecoordY));
+    txt.setString(highscore_text);
+    s_GameClass->s_RenderTexture->draw(txt);
+
     for(int i = 0; i < s_GameClass->s_GameInfo->s_CurrentLives - 1 && i < livesmaxobject; i++)
     {
         s_GameClass->s_Data->s_Dave->drawDave(livesnamedavestate, livesframedavestate, livescoordX + i * 16, livescoordY);

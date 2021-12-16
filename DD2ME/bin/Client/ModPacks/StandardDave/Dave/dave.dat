@@ -45,6 +45,7 @@ numberofframessmokeshootrightdown=1
 
 [other]
 rechargeframe=2
+extensions=bmp
 
 [shoot]
 coordfireleftdownX=-6

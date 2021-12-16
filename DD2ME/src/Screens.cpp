@@ -77,6 +77,7 @@ bool Screens::load(string PathToScreenPack)
     if(!s_ChangeLevelInfo) return false;
     s_MainScreenInfo = prs.getParsedFromFile(PathToScreenPack + "mainscreen.info");
     if(!s_MainScreenInfo) return false;
+    string tmp_ext = "." + s_ScreensInfo->getValue("info", "extensions");
     string flylogo = s_ScreensInfo->getValue("info","flylogo");
     string flybackground = s_ScreensInfo->getValue("info","flybackground");
     string endscreen = s_ScreensInfo->getValue("info","endscreen");
@@ -86,24 +87,24 @@ bool Screens::load(string PathToScreenPack)
     s_StandardScreens["flybackground"] = new Bitmap(PathToScreenPack + flybackground + ".bmp");
     s_StandardScreens["endscreen"] = new Bitmap(PathToScreenPack + endscreen + ".bmp");*/
     s_StandardScreens["flylogo"] = new Texture;
-    if(!s_StandardScreens["flylogo"] || !s_StandardScreens["flylogo"]->loadFromFile(PathToScreenPack + flylogo + ".bmp")) return false;
+    if(!s_StandardScreens["flylogo"] || !s_StandardScreens["flylogo"]->loadFromFile(PathToScreenPack + flylogo + tmp_ext)) return false;
     s_StandardScreens["flybackground"] = new Texture;
-    if(!s_StandardScreens["flybackground"] || !s_StandardScreens["flybackground"]->loadFromFile(PathToScreenPack + flybackground + ".bmp")) return false;
+    if(!s_StandardScreens["flybackground"] || !s_StandardScreens["flybackground"]->loadFromFile(PathToScreenPack + flybackground + tmp_ext)) return false;
     s_StandardScreens["endscreen"] = new Texture;
-    if(!s_StandardScreens["endscreen"] || !s_StandardScreens["endscreen"]->loadFromFile(PathToScreenPack + endscreen + ".bmp")) return false;
+    if(!s_StandardScreens["endscreen"] || !s_StandardScreens["endscreen"]->loadFromFile(PathToScreenPack + endscreen + tmp_ext)) return false;
     numberofscreens = atoi( s_MainScreenInfo->getValue("info", "numberofscreens").c_str() );
     for(int i = 0; i < numberofscreens; i++)
     {
         //s_MCScreens["mainscreen"][i] = new Bitmap(PathToScreenPack + mainscreenprefix + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp");
         s_MCScreens["mainscreen"][i] = new Texture;
-        if(!s_MCScreens["mainscreen"][i] || !s_MCScreens["mainscreen"][i]->loadFromFile(PathToScreenPack + mainscreenprefix + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp")) return false;
+        if(!s_MCScreens["mainscreen"][i] || !s_MCScreens["mainscreen"][i]->loadFromFile(PathToScreenPack + mainscreenprefix + WorkFunctions::ConvertFunctions::itos(i+1) + tmp_ext)) return false;
     }
     numberofscreens = atoi( s_ChangeLevelInfo->getValue("info", "numberofscreens").c_str() );
     for(int i = 0; i < numberofscreens; i++)
     {
         //s_MCScreens["changelevelscreen"][i] = new Bitmap(PathToScreenPack + changelevelprefix + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp");
         s_MCScreens["changelevelscreen"][i] = new Texture;
-        if(!s_MCScreens["changelevelscreen"][i] || !s_MCScreens["changelevelscreen"][i]->loadFromFile(PathToScreenPack + changelevelprefix + WorkFunctions::ConvertFunctions::itos(i+1) + ".bmp")) return false;
+        if(!s_MCScreens["changelevelscreen"][i] || !s_MCScreens["changelevelscreen"][i]->loadFromFile(PathToScreenPack + changelevelprefix + WorkFunctions::ConvertFunctions::itos(i+1) + tmp_ext)) return false;
     }
     return true;
 }

@@ -9,6 +9,7 @@ numberofframestraceshoot=1
 
 [other]
 numberofframesdeathtiles=5
+extensions=bmp
 outputshiftX=0
 outputshiftY=8
 animationstep=3

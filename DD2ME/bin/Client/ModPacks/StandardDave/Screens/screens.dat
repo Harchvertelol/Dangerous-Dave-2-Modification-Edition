@@ -4,6 +4,7 @@ flybackground=flybackground
 changelevelprefix=changelevel_
 mainscreenprefix=mainscreen_
 endscreen=endscreen
+extensions=bmp
 
 [draw]
 transparentmaskR=0
