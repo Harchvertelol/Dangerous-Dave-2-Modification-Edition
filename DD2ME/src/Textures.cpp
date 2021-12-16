@@ -222,7 +222,7 @@ void Textures::createMaskTransparent(int r, int g, int b)
         map<int, Bitmap* >::iterator _iter_, _iter2_;
         for (_iter_ = iter_->second.begin(), _iter2_ = iter_->second.end(); _iter_ != _iter2_;)
         {
-            if(_iter_->second != 0) _iter_->second->create_mask(r, g, b);;
+            if(_iter_->second != 0) _iter_->second->create_mask(r, g, b);
             ++_iter_;
         }
         ++iter_;
@@ -233,7 +233,7 @@ void Textures::createMaskTransparent(int r, int g, int b)
         map<int, Bitmap* >::iterator _iter_, _iter2_;
         for (_iter_ = iter___->second.begin(), _iter2_ = iter___->second.end(); _iter_ != _iter2_;)
         {
-            if(_iter_->second != 0) _iter_->second->create_mask(r, g, b);;
+            if(_iter_->second != 0) _iter_->second->create_mask(r, g, b);
             ++_iter_;
         }
         ++iter___;
@@ -243,7 +243,7 @@ void Textures::createMaskTransparent(int r, int g, int b)
         map<int, Bitmap* >::iterator _iter_, _iter2_;
         for (_iter_ = iter___->second.begin(), _iter2_ = iter___->second.end(); _iter_ != _iter2_;)
         {
-            if(_iter_->second != 0) _iter_->second->create_mask(r, g, b);;
+            if(_iter_->second != 0) _iter_->second->create_mask(r, g, b);
             ++_iter_;
         }
         ++iter___;
