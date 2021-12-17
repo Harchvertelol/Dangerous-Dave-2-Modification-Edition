@@ -24,7 +24,7 @@ Gui::~Gui()
 void Gui::drawFPS()
 {
     if(s_GameClass->s_IniFile->getValue("FPS", "ShowFPS") != "true" || s_GameClass->s_IniFile->getValue("FPS", "ShowFPSMode") != "graphic") return;
-    Font main_fnt = s_GameClass->s_Data->s_Fonts->getFont("main");
+    Font main_fnt = s_GameClass->s_Data->s_GuiData->getFont("main");
     stringstream s;
     int k = 0;
     int shift = 15;
@@ -32,7 +32,7 @@ void Gui::drawFPS()
     Color fps_chr_color = Color(0, 0, 0, 255);
     Text txt;
     txt.setFont(main_fnt);
-    txt.setColor(fps_chr_color);
+    txt.setFillColor(fps_chr_color);
     txt.setCharacterSize(fps_chr_size);
     if(s_GameClass->s_IniFile->getValue("FPS", "ShowFPSGameDraw") == "true")
     {
@@ -123,11 +123,11 @@ void Gui::drawGuiState2(int screennumber)
     s_GameClass->s_Window->draw(Label("Secrets: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_Data->s_Level->s_Params->getMapVariables()["Secrets"].size()), secretscoordX, secretscoordY, secretssize), Pen(0, 0, 0));
     s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints), scorecoordX, scorecoordY, scoresize), Pen(0, 0, 0));
     s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(0), highscorecoordX, highscorecoordY, highscoresize), Pen(0, 0, 0));*/
-    Font main_fnt = s_GameClass->s_Data->s_Fonts->getFont("main");
+    Font main_fnt = s_GameClass->s_Data->s_GuiData->getFont("main");
     Text txt;
     txt.setFont(main_fnt);
 
-    txt.setColor(Color(0, 0, 0, 255));
+    txt.setFillColor(Color(0, 0, 0, 255));
     txt.setCharacterSize(levelnamesize);
     txt.setPosition(Vector2f(levelnamecoordX, levelnamecoordY));
     string level_str = "Level " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel);
@@ -136,14 +136,14 @@ void Gui::drawGuiState2(int screennumber)
     s_GameClass->s_RenderTexture->draw(txt);
 
     string secrets_text = "Secrets: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_Data->s_Level->s_Params->getMapVariables()["Secrets"].size());
-    txt.setColor(Color(0, 0, 0, 255));
+    txt.setFillColor(Color(0, 0, 0, 255));
     txt.setCharacterSize(secretssize);
     txt.setPosition(Vector2f(secretscoordX, secretscoordY));
     txt.setString(secrets_text);
     s_GameClass->s_RenderTexture->draw(txt);
 
     string score_text = WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints);
-    txt.setColor(Color(0, 0, 0, 255));
+    txt.setFillColor(Color(0, 0, 0, 255));
     txt.setCharacterSize(scoresize);
     txt.setPosition(Vector2f(scorecoordX, scorecoordY));
     txt.setString(score_text);
@@ -151,7 +151,7 @@ void Gui::drawGuiState2(int screennumber)
 
 
     string highscore_text = WorkFunctions::ConvertFunctions::itos(0);
-    txt.setColor(Color(0, 0, 0, 255));
+    txt.setFillColor(Color(0, 0, 0, 255));
     txt.setCharacterSize(highscoresize);
     txt.setPosition(Vector2f(highscorecoordX, highscorecoordY));
     txt.setString(highscore_text);

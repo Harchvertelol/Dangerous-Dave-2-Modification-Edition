@@ -1,4 +1,4 @@
-#include "Fonts.h"
+#include "GuiData.h"
 
 #include <iostream>
 
@@ -10,20 +10,20 @@ using namespace sf;
 
 using namespace IniParser;
 
-Fonts::Fonts()
+GuiData::GuiData()
 {
     s_FontsInfo = new PostParsingStruct;
 }
 
-Fonts::~Fonts()
+GuiData::~GuiData()
 {
     if(s_FontsInfo != 0) delete s_FontsInfo;
 }
 
-bool Fonts::load(string PathToFontsPack)
+bool GuiData::load(string PathToGuiPack)
 {
     ParserInfoFile prs;
-    s_FontsInfo = prs.getParsedFromFile(PathToFontsPack + "fonts.info");
+    s_FontsInfo = prs.getParsedFromFile(PathToGuiPack + "gui.info");
     if(!s_FontsInfo) return false;
     map<string, map<string, string> > list_all_vars_fonts = s_FontsInfo->getMapVariables();
     map<string, string> list_all_fonts = list_all_vars_fonts["fonts"];
@@ -33,14 +33,14 @@ bool Fonts::load(string PathToFontsPack)
     {
         if(iter1->second != "" && s_Fonts.find(iter1->second) == s_Fonts.end())
         {
-            if(!s_Fonts[iter1->first].loadFromFile(PathToFontsPack + iter1->second)) cout << "Error loading " << iter1->first << " with file " << iter1->second << endl;
+            if(!s_Fonts[iter1->first].loadFromFile(PathToGuiPack + iter1->second)) cout << "Error loading " << iter1->first << " with file " << iter1->second << endl;
         }
         iter1++;
     }
     return true;
 }
 
-Font Fonts::getFont(string fnt_name)
+Font GuiData::getFont(string fnt_name)
 {
     return s_Fonts[fnt_name];
 }

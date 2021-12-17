@@ -1,5 +1,5 @@
-#ifndef FONTS_H
-#define FONTS_H
+#ifndef GUIDATA_H
+#define GUIDATA_H
 #include <map>
 #include <SFML/Graphics.hpp>
 
@@ -7,11 +7,11 @@
 
 class Game;
 
-class Fonts
+class GuiData
 {
     public:
-        Fonts();
-        ~Fonts();
+        GuiData();
+        ~GuiData();
         IniParser::PostParsingStruct* s_FontsInfo;
         std::map<std::string, sf::Font> s_Fonts;
         bool load(std::string);
