@@ -25,13 +25,13 @@ string IniParser::PostParsingStruct::getValue(string A, string B)
     map<string, map<string, string> >::iterator I = s_Variables.find(A);
     if ( I == s_Variables.end() )
     {
-        cout<<"Error: First value no setted. ( "<<A<<" )"<<endl;
+        cout<<"Error: First value not setted. ( "<<A<<" )"<<endl;
         return "";
     }
     map<string, string>::iterator II = s_Variables[A].find(B);
     if ( II == s_Variables[A].end() )
     {
-        cout<<"Error: Second value no setted. ( "<<A<<", "<<B<<" )"<<endl;
+        cout<<"Error: Second value not setted. ( "<<A<<", "<<B<<" )"<<endl;
         return "";
     }
     return s_Variables[A][B];

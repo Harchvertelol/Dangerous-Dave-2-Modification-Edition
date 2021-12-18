@@ -249,9 +249,9 @@ void Game::createWindow()
         s_RenderWindow->close();
         delete s_RenderWindow;
     }
-    s_RenderTexture->create(s_DisplayStruct->s_ResolutionX, s_DisplayStruct->s_ResolutionY, true);
+    s_RenderTexture->create(s_DisplayStruct->s_GameResolutionX, s_DisplayStruct->s_GameResolutionY, true);
+    s_RenderWindow = new RenderWindow( VideoMode(s_DisplayStruct->s_WindowResolutionX, s_DisplayStruct->s_WindowResolutionY), STRING_CONSTANTS::SC_TITLE_WINDOW);
     float window_scale = atof( (s_IniFile->getValue("video", "gamescale") ).c_str() );
-    s_RenderWindow = new RenderWindow( VideoMode(s_DisplayStruct->s_ResolutionX * window_scale, s_DisplayStruct->s_ResolutionY * window_scale), STRING_CONSTANTS::SC_TITLE_WINDOW);
     s_GameRenderScale = window_scale;
 }
 

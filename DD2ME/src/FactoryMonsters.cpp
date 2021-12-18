@@ -72,12 +72,12 @@ bool FactoryMonsters::isMonsterInDaveRadius(CreatureDave* dave, CreatureMonster*
         radiusX = s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersX;
         radiusX = s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersY;
     }
-    /*if(mnst->s_CoordX <= s_GameClass->s_DisplayStruct->s_ResolutionX + dave->s_ScreenCoordX + 16 * radiusX &&
+    /*if(mnst->s_CoordX <= s_GameClass->s_DisplayStruct->s_GameResolutionX + dave->s_ScreenCoordX + 16 * radiusX &&
         mnst->s_CoordX >= dave->s_ScreenCoordX - 16 * radiusX &&
-        mnst->s_CoordY <= s_GameClass->s_DisplayStruct->s_ResolutionY + dave->s_ScreenCoordY + 16 * radiusY &&
+        mnst->s_CoordY <= s_GameClass->s_DisplayStruct->s_GameResolutionY + dave->s_ScreenCoordY + 16 * radiusY &&
         mnst->s_CoordY >= dave->s_ScreenCoordY - 16 * radiusY)
             return true;*/
-    if(testCollision(dave->s_ScreenCoordX - 16 * radiusX, dave->s_ScreenCoordY - 16 * radiusY, mnst->s_CoordX, mnst->s_CoordY, Square(0, 0, s_GameClass->s_DisplayStruct->s_ResolutionX + 2 * 16 * radiusX, s_GameClass->s_DisplayStruct->s_ResolutionY + 2 * 16 * radiusY), mnst->getCollision())) return true;
+    if(testCollision(dave->s_ScreenCoordX - 16 * radiusX, dave->s_ScreenCoordY - 16 * radiusY, mnst->s_CoordX, mnst->s_CoordY, Square(0, 0, s_GameClass->s_DisplayStruct->s_GameResolutionX + 2 * 16 * radiusX, s_GameClass->s_DisplayStruct->s_GameResolutionY + 2 * 16 * radiusY), mnst->getCollision())) return true;
     return false;
 }
 
@@ -86,16 +86,16 @@ void FactoryMonsters::live()
     bool testChangeLevel = false, testNoChangeLevel = false;
     map<int, CreatureMonster*>::iterator iter, iter2;
     for ( iter = s_Monsters.begin(); iter != s_Monsters.end(); iter++)
-        /*if(iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_ResolutionX + s_GameClass->s_GameInfo->s_ScreenCoordX + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
+        /*if(iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_GameResolutionX + s_GameClass->s_GameInfo->s_ScreenCoordX + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
             iter->second->s_CoordX >= s_GameClass->s_GameInfo->s_ScreenCoordX - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
-            iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_ResolutionY + s_GameClass->s_GameInfo->s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY &&
+            iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_GameResolutionY + s_GameClass->s_GameInfo->s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY &&
             iter->second->s_CoordY >= s_GameClass->s_GameInfo->s_ScreenCoordY - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY)*/
         if(isMonsterInDaveRadius(s_GameClass->s_GameInfo->s_MyDave, iter->second, MDRT_LIVE))
                 if(iter->second->s_DeleteNow == false && iter->second->s_IsAlwaysLiveInStep == false)
                 {
-                    /*if(iter->second->s_Activated == false && iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_ResolutionX + s_GameClass->s_GameInfo->s_ScreenCoordX + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersX &&
+                    /*if(iter->second->s_Activated == false && iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_GameResolutionX + s_GameClass->s_GameInfo->s_ScreenCoordX + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersX &&
                         iter->second->s_CoordX >= s_GameClass->s_GameInfo->s_ScreenCoordX - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersX &&
-                        iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_ResolutionY + s_GameClass->s_GameInfo->s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersY &&
+                        iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_GameResolutionY + s_GameClass->s_GameInfo->s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersY &&
                         iter->second->s_CoordY >= s_GameClass->s_GameInfo->s_ScreenCoordY - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersY)*/
                     if(iter->second->s_Activated == false && isMonsterInDaveRadius(s_GameClass->s_GameInfo->s_MyDave, iter->second, MDRT_ACTIVATE))
                         iter->second->s_Activated = true;
@@ -109,16 +109,16 @@ void FactoryMonsters::live()
     for(iter1 = s_GameClass->s_GameInfo->s_Daves.begin(); iter1 != s_GameClass->s_GameInfo->s_Daves.end(); iter1++)
     {
         for ( iter = s_Monsters.begin(); iter != s_Monsters.end(); iter++)
-            /*if(iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_ResolutionX + iter1->second->s_ScreenCoordX + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
+            /*if(iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_GameResolutionX + iter1->second->s_ScreenCoordX + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
                 iter->second->s_CoordX >= iter1->second->s_ScreenCoordX - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
-                iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_ResolutionY + iter1->second->s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY &&
+                iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_GameResolutionY + iter1->second->s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY &&
                 iter->second->s_CoordY >= iter1->second->s_ScreenCoordY - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY)*/
             if(isMonsterInDaveRadius(iter1->second, iter->second, MDRT_LIVE))
                     if(iter->second->s_DeleteNow == false && iter->second->s_IsAlwaysLiveInStep == false)
                     {
-                        /*if(iter->second->s_Activated == false && iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_ResolutionX + iter1->second->s_ScreenCoordX + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersX &&
+                        /*if(iter->second->s_Activated == false && iter->second->s_CoordX <= s_GameClass->s_DisplayStruct->s_GameResolutionX + iter1->second->s_ScreenCoordX + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersX &&
                             iter->second->s_CoordX >= iter1->second->s_ScreenCoordX - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersX &&
-                            iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_ResolutionY + iter1->second->s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersY &&
+                            iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_GameResolutionY + iter1->second->s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersY &&
                             iter->second->s_CoordY >= iter1->second->s_ScreenCoordY - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersY)*/
                         if(iter->second->s_Activated == false && isMonsterInDaveRadius(iter1->second, iter->second, MDRT_ACTIVATE))
                             iter->second->s_Activated = true;

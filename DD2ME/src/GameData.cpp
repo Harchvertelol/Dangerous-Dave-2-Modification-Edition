@@ -95,23 +95,25 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             if(!s_GameClass->s_IniFile) return false;
             s_IniFile = s_GameClass->s_IniFile;
             //...
-            s_GameClass->s_DisplayStruct->s_ResolutionX = atoi( (s_GameClass->s_IniFile->getValue("video", "resolutionX") ).c_str() );
-            s_GameClass->s_DisplayStruct->s_ResolutionY = atoi( (s_GameClass->s_IniFile->getValue("video", "resolutionY") ).c_str() );
+            s_GameClass->s_DisplayStruct->s_GameResolutionX = atoi( (s_GameClass->s_IniFile->getValue("video", "resolutionX") ).c_str() );
+            s_GameClass->s_DisplayStruct->s_GameResolutionY = atoi( (s_GameClass->s_IniFile->getValue("video", "resolutionY") ).c_str() );
+            s_GameClass->s_DisplayStruct->s_WindowResolutionX = atoi( (s_GameClass->s_IniFile->getValue("video", "windowresolutionX") ).c_str() );
+            s_GameClass->s_DisplayStruct->s_WindowResolutionY = atoi( (s_GameClass->s_IniFile->getValue("video", "windowresolutionY") ).c_str() );
             s_GameClass->s_GameInfo->s_KeyDown = atoi( s_GameClass->s_IniFile->getValue("keys","down").c_str() );
             s_GameClass->s_GameInfo->s_KeyUp = atoi( s_GameClass->s_IniFile->getValue("keys","up").c_str() );
             s_GameClass->s_GameInfo->s_KeyRight = atoi( s_GameClass->s_IniFile->getValue("keys","right").c_str() );
             s_GameClass->s_GameInfo->s_KeyLeft = atoi( s_GameClass->s_IniFile->getValue("keys","left").c_str() );
             s_GameClass->s_GameInfo->s_KeyShoot = atoi( s_GameClass->s_IniFile->getValue("keys","shoot").c_str() );
             s_GameClass->s_GameInfo->s_KeyJump = atoi( s_GameClass->s_IniFile->getValue("keys","jump").c_str() );
-            if(s_GameClass->s_DisplayStruct->s_ResolutionY <= 0 || s_GameClass->s_DisplayStruct->s_ResolutionX <= 0)
+            if(s_GameClass->s_DisplayStruct->s_GameResolutionY <= 0 || s_GameClass->s_DisplayStruct->s_GameResolutionX <= 0)
             {
                 cout<<"Error: Display resolution."<<endl;
                 return false;
             }
             //delete s_GameClass->s_Window;
-            //s_GameClass->s_Window = new Window("DD2 Remake: ME v0.1pre-beta", s_GameClass->s_DisplayStruct->s_ResolutionX, s_GameClass->s_DisplayStruct->s_ResolutionY, atoi( (s_GameClass->s_IniFile->getValue("video","scale") ).c_str() ));
+            //s_GameClass->s_Window = new Window("DD2 Remake: ME v0.1pre-beta", s_GameClass->s_DisplayStruct->s_GameResolutionX, s_GameClass->s_DisplayStruct->s_GameResolutionY, atoi( (s_GameClass->s_IniFile->getValue("video","scale") ).c_str() ));
             //s_GameClass->s_Window = new Window(nostart);
-            //s_GameClass->s_Window->geometry(s_GameClass->s_DisplayStruct->s_ResolutionX, s_GameClass->s_DisplayStruct->s_ResolutionY, atoi( (s_GameClass->s_IniFile->getValue("video","scale") ).c_str() ));
+            //s_GameClass->s_Window->geometry(s_GameClass->s_DisplayStruct->s_GameResolutionX, s_GameClass->s_DisplayStruct->s_GameResolutionY, atoi( (s_GameClass->s_IniFile->getValue("video","scale") ).c_str() ));
             //s_GameClass->s_Window->title(STRING_CONSTANTS::SC_TITLE_WINDOW);
             s_GameClass->createWindow();
             //...
@@ -185,7 +187,7 @@ bool GameData::drawScreenState1()
 {
     int newX = s_GameClass->s_GameInfo->s_DopScreenCoordX;
     int coordY = s_GameClass->s_GameInfo->s_DopScreenCoordY;
-    int dispX = s_GameClass->s_DisplayStruct->s_ResolutionX;
+    int dispX = s_GameClass->s_DisplayStruct->s_GameResolutionX;
     int number = 0;
     while(newX < 0)
     {
@@ -224,11 +226,11 @@ bool GameData::drawScreenState3()
 {
     if(s_GameClass->s_GameInfo->s_Stop == true && s_GameClass->s_GameInfo->s_DeathType == 0)
     {
-        s_Screens->drawScreen("endscreen", s_GameClass->s_DisplayStruct->s_ResolutionX/2 - s_Screens->s_StandardScreens["endscreen"]->getSize().x / 2, s_GameClass->s_DisplayStruct->s_ResolutionY/2 - s_Screens->s_StandardScreens["endscreen"]->getSize().y / 2, 0);
-        /*s_GameClass->s_Window->draw(Label("Thank you for playing in DD2:ME", s_GameClass->s_DisplayStruct->s_ResolutionX/2 - 110, s_GameClass->s_DisplayStruct->s_ResolutionY/2 - 30, 20), Pen(0, 255, 0));
-        s_GameClass->s_Window->draw(Label("" + STRING_CONSTANTS::SC_GAME_VERSION + "!", s_GameClass->s_DisplayStruct->s_ResolutionX/2 - 40, s_GameClass->s_DisplayStruct->s_ResolutionY/2, 20), Pen(0, 255, 0));
-        s_GameClass->s_Window->draw(Label("You win!", s_GameClass->s_DisplayStruct->s_ResolutionX/2 - 20, s_GameClass->s_DisplayStruct->s_ResolutionY/2 + 30, 20), Pen(0, 255, 0));
-        s_GameClass->s_Window->draw(Label("", s_GameClass->s_DisplayStruct->s_ResolutionX/2 - 20, s_GameClass->s_DisplayStruct->s_ResolutionY/2 + 30), Pen(0, 0, 0));*/
+        s_Screens->drawScreen("endscreen", s_GameClass->s_DisplayStruct->s_GameResolutionX/2 - s_Screens->s_StandardScreens["endscreen"]->getSize().x / 2, s_GameClass->s_DisplayStruct->s_GameResolutionY/2 - s_Screens->s_StandardScreens["endscreen"]->getSize().y / 2, 0);
+        /*s_GameClass->s_Window->draw(Label("Thank you for playing in DD2:ME", s_GameClass->s_DisplayStruct->s_GameResolutionX/2 - 110, s_GameClass->s_DisplayStruct->s_GameResolutionY/2 - 30, 20), Pen(0, 255, 0));
+        s_GameClass->s_Window->draw(Label("" + STRING_CONSTANTS::SC_GAME_VERSION + "!", s_GameClass->s_DisplayStruct->s_GameResolutionX/2 - 40, s_GameClass->s_DisplayStruct->s_GameResolutionY/2, 20), Pen(0, 255, 0));
+        s_GameClass->s_Window->draw(Label("You win!", s_GameClass->s_DisplayStruct->s_GameResolutionX/2 - 20, s_GameClass->s_DisplayStruct->s_GameResolutionY/2 + 30, 20), Pen(0, 255, 0));
+        s_GameClass->s_Window->draw(Label("", s_GameClass->s_DisplayStruct->s_GameResolutionX/2 - 20, s_GameClass->s_DisplayStruct->s_GameResolutionY/2 + 30), Pen(0, 0, 0));*/
     }
     s_GameClass->s_Gui->drawGuiState3();
     return true;

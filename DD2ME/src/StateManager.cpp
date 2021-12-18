@@ -215,7 +215,7 @@ void StateManager::startState(int state)
             s_GameClass->s_GameInfo->s_Stop = false;
         }
         s_GameClass->s_GameInfo->s_DopScreenCoordX = 0;
-        s_GameClass->s_GameInfo->s_DopScreenCoordY = s_GameClass->s_DisplayStruct->s_ResolutionY;
+        s_GameClass->s_GameInfo->s_DopScreenCoordY = s_GameClass->s_DisplayStruct->s_GameResolutionY;
 
     }
     if(state == 1)
@@ -263,7 +263,7 @@ void StateManager::doState(int state)
         if(s_MainscreenPar->s_StateMove == true)
         {
             s_GameClass->s_GameInfo->s_DopScreenCoordX = s_GameClass->s_GameInfo->s_DopScreenCoordX - 4*s_MainscreenPar->s_Direction;
-            if(s_GameClass->s_GameInfo->s_DopScreenCoordX%s_GameClass->s_DisplayStruct->s_ResolutionX == 0)
+            if(s_GameClass->s_GameInfo->s_DopScreenCoordX%s_GameClass->s_DisplayStruct->s_GameResolutionX == 0)
             {
                 s_MainscreenPar->s_StateMove = false;
                 s_MainscreenPar->s_Fix = atoi ( s_GameClass->s_IniFile->getValue("video", "mainscreentimefreeze").c_str() );

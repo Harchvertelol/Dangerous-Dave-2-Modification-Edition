@@ -265,8 +265,8 @@ void Level::draw(bool before_physic_field)
 {
     int ScrLX = s_GameClass->s_GameInfo->s_ScreenCoordX;
     int ScrLY = s_GameClass->s_GameInfo->s_ScreenCoordY;
-    int ScrRX = ScrLX + s_GameClass->s_DisplayStruct->s_ResolutionX;
-    int ScrRY = ScrLY + s_GameClass->s_DisplayStruct->s_ResolutionY;
+    int ScrRX = ScrLX + s_GameClass->s_DisplayStruct->s_GameResolutionX;
+    int ScrRY = ScrLY + s_GameClass->s_DisplayStruct->s_GameResolutionY;
     int DrawLevLX = roundNumber(ScrLX,16,-1)/16;
     int DrawLevLY = roundNumber(ScrLY,16,-1)/16;
     int DrawLevRX = roundNumber(ScrRX,16,1)/16;

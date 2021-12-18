@@ -176,17 +176,17 @@ void GameInfo::drawDeathFrame(map<int, Texture*>* bt, map<int, Sprite*>* img, in
 
 void GameInfo::correctionScreen(CreatureDave* dave)
 {
-    //dave->s_ScreenCoordX = dave->s_CoordX - s_GameClass->s_DisplayStruct->s_ResolutionX/2;
-    //dave->s_ScreenCoordY = dave->s_CoordY - s_GameClass->s_DisplayStruct->s_ResolutionY/2;
+    //dave->s_ScreenCoordX = dave->s_CoordX - s_GameClass->s_DisplayStruct->s_GameResolutionX/2;
+    //dave->s_ScreenCoordY = dave->s_CoordY - s_GameClass->s_DisplayStruct->s_GameResolutionY/2;
 
     if(dave->s_CoordX - dave->s_ScreenCoordX < atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXleft").c_str()) * 16) dave->s_ScreenCoordX = dave->s_CoordX - atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXleft").c_str()) * 16;
-    else if( (dave->s_ScreenCoordX + s_GameClass->s_DisplayStruct->s_ResolutionX) - dave->s_CoordX < (atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXright").c_str()) - 1) * 16) dave->s_ScreenCoordX = dave->s_CoordX + (atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXright").c_str()) - 1) * 16 - s_GameClass->s_DisplayStruct->s_ResolutionX;
+    else if( (dave->s_ScreenCoordX + s_GameClass->s_DisplayStruct->s_GameResolutionX) - dave->s_CoordX < (atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXright").c_str()) - 1) * 16) dave->s_ScreenCoordX = dave->s_CoordX + (atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXright").c_str()) - 1) * 16 - s_GameClass->s_DisplayStruct->s_GameResolutionX;
 
     if(dave->s_CoordY - dave->s_ScreenCoordY < atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYup").c_str()) * 16) dave->s_ScreenCoordY = dave->s_CoordY - atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYup").c_str()) * 16;
-    else if( (dave->s_ScreenCoordY + s_GameClass->s_DisplayStruct->s_ResolutionY) - dave->s_CoordY < (2 + atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYdown").c_str())) * 16) dave->s_ScreenCoordY = dave->s_CoordY + (2 + atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYdown").c_str())) * 16 - s_GameClass->s_DisplayStruct->s_ResolutionY;
+    else if( (dave->s_ScreenCoordY + s_GameClass->s_DisplayStruct->s_GameResolutionY) - dave->s_CoordY < (2 + atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYdown").c_str())) * 16) dave->s_ScreenCoordY = dave->s_CoordY + (2 + atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYdown").c_str())) * 16 - s_GameClass->s_DisplayStruct->s_GameResolutionY;
 
-    if(dave->s_ScreenCoordX + s_GameClass->s_DisplayStruct->s_ResolutionX > 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) - 32) dave->s_ScreenCoordX = 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) - s_GameClass->s_DisplayStruct->s_ResolutionX - 32;
+    if(dave->s_ScreenCoordX + s_GameClass->s_DisplayStruct->s_GameResolutionX > 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) - 32) dave->s_ScreenCoordX = 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) - s_GameClass->s_DisplayStruct->s_GameResolutionX - 32;
     if(dave->s_ScreenCoordX < 32) dave->s_ScreenCoordX = 32;
-    if(dave->s_ScreenCoordY + s_GameClass->s_DisplayStruct->s_ResolutionY > 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeY") ).c_str() ) - 32) dave->s_ScreenCoordY = 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeY") ).c_str() ) - s_GameClass->s_DisplayStruct->s_ResolutionY - 32;
+    if(dave->s_ScreenCoordY + s_GameClass->s_DisplayStruct->s_GameResolutionY > 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeY") ).c_str() ) - 32) dave->s_ScreenCoordY = 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeY") ).c_str() ) - s_GameClass->s_DisplayStruct->s_GameResolutionY - 32;
     if(dave->s_ScreenCoordY < 32) dave->s_ScreenCoordY = 32;
 }

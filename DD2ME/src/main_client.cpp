@@ -88,22 +88,24 @@ int main(int argc, char** argv)
         gm->s_GameInfo->s_KeyJump = atoi( gm->s_IniFile->getValue("keys","jump").c_str() );
         gm->s_GameInfo->s_KeyConsole = atoi( gm->s_IniFile->getValue("keys","console").c_str() );
         gm->s_GameInfo->s_KeySkip = atoi( gm->s_IniFile->getValue("keys","skip").c_str() );
-        gm->s_DisplayStruct->s_ResolutionX = atoi( (gm->s_IniFile->getValue("video","resolutionX") ).c_str() );
-        gm->s_DisplayStruct->s_ResolutionY = atoi( (gm->s_IniFile->getValue("video","resolutionY") ).c_str() );
-        if(gm->s_DisplayStruct->s_ResolutionY <= 0 || gm->s_DisplayStruct->s_ResolutionX <= 0)
+        gm->s_DisplayStruct->s_GameResolutionX = atoi( (gm->s_IniFile->getValue("video","resolutionX") ).c_str() );
+        gm->s_DisplayStruct->s_GameResolutionY = atoi( (gm->s_IniFile->getValue("video","resolutionY") ).c_str() );
+        gm->s_DisplayStruct->s_WindowResolutionX = atoi( (gm->s_IniFile->getValue("video", "windowresolutionX") ).c_str() );
+        gm->s_DisplayStruct->s_WindowResolutionY = atoi( (gm->s_IniFile->getValue("video", "windowresolutionY") ).c_str() );
+        if(gm->s_DisplayStruct->s_GameResolutionY <= 0 || gm->s_DisplayStruct->s_GameResolutionX <= 0)
         {
             cout<<"Error: Display resolution."<<endl;
             system("pause");
             return 0;
         }
-        //gm->s_Window = new Window("DD2 Remake: ME v0.2 pre-beta", gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, atoi( (gm->s_IniFile->getValue("video","scale") ).c_str() ));
+        //gm->s_Window = new Window("DD2 Remake: ME v0.2 pre-beta", gm->s_DisplayStruct->s_GameResolutionX, gm->s_DisplayStruct->s_GameResolutionY, atoi( (gm->s_IniFile->getValue("video","scale") ).c_str() ));
         /*gm->s_Window = new Window(nostart);
-        gm->s_Window->geometry(gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, );
+        gm->s_Window->geometry(gm->s_DisplayStruct->s_GameResolutionX, gm->s_DisplayStruct->s_GameResolutionY, );
         gm->s_Window->title(STRING_CONSTANTS::SC_TITLE_WINDOW);*/
 
-        /*gm->s_RenderTexture->create(gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, true);
+        /*gm->s_RenderTexture->create(gm->s_DisplayStruct->s_GameResolutionX, gm->s_DisplayStruct->s_GameResolutionY, true);
         float window_scale = atof( (gm->s_IniFile->getValue("video","scale") ).c_str() );
-        gm->s_RenderWindow = new RenderWindow( VideoMode(gm->s_DisplayStruct->s_ResolutionX * window_scale, gm->s_DisplayStruct->s_ResolutionY * window_scale), STRING_CONSTANTS::SC_TITLE_WINDOW);
+        gm->s_RenderWindow = new RenderWindow( VideoMode(gm->s_DisplayStruct->s_GameResolutionX * window_scale, gm->s_DisplayStruct->s_GameResolutionY * window_scale), STRING_CONSTANTS::SC_TITLE_WINDOW);
         gm->s_GameRenderScale = window_scale;*/
 
         gm->createWindow();
