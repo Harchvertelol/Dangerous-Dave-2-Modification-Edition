@@ -45,7 +45,11 @@ PostParsingStruct* IniParser::ParserInfoFile::getParsedFromFile(string s_FileNam
     string ValueSecondaryVariable;
     PostParsingStruct* s_PrsStr = 0;
     if(prs) s_PrsStr = prs;
-    else s_PrsStr = new PostParsingStruct;
+    else
+    {
+        s_PrsStr = new PostParsingStruct;
+        s_PrsStr->setFileName(s_FileName);
+    }
     map<string, map<string, string> >* s_Variables = &s_PrsStr->getMapVariables();
     ifstream FileInfo(s_FileName.c_str());
     if(!FileInfo)

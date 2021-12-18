@@ -44,13 +44,19 @@ namespace IniParser
             void addPostParsingStruct(PostParsingStruct* pps);
             //! Проверяет существование блока.
             /*! \param A Название блока.
+            \return Возвращает true, если существует, иначе false.
             */
             bool isExists(std::string A);
             //! Проверяет существование переменной.
             /*! \param A Название блока.
             \param B Название переменной.
+            \return Возвращает true, если существует, иначе false.
             */
             bool isExists(std::string A, std::string B);
+            //! Установить имя прочитанного файла для логгера.
+            /*! \param A Имя файла.
+            */
+            void setFileName(std::string A);
             //! Удаляет переменную.
             /*! \param A Название блока.
             \param B Название переменной.
@@ -64,6 +70,7 @@ namespace IniParser
             void clear();
         private:
             std::map<std::string, std::map<std::string, std::string> > s_Variables;
+            std::string s_FileName;
     };
 };
 #endif
