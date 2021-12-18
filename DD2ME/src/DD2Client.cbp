@@ -47,7 +47,7 @@
 			<Add directory="../../Engines/SFML/include" />
 		</Compiler>
 		<Linker>
-			<Add library="C:/Program Files (x86)/CodeBlocks/MinGW/lib/libws2_32.a" />
+			<Add library="libws2_32.a" />
 			<Add directory="../../Engines/SFML/lib" />
 		</Linker>
 		<Unit filename="AI.cpp" />
