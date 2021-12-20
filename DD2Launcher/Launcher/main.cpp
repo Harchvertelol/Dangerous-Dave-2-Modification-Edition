@@ -21,6 +21,7 @@ void fix(sf::Sprite& sprite, tgui::Gui& gui, sf::RenderWindow& window)
     //sf::View view{sf::FloatRect(-possp.x, -possp.y, 1.f / scalesp.x * window.getSize().x, 1.f / scalesp.y * window.getSize().y)};
     //gui.setView(view);
     gui.setAbsoluteView(tgui::FloatRect(-possp.x, -possp.y, 1.f / scalesp.x * window.getSize().x, 1.f / scalesp.y * window.getSize().y));
+    //gui.setRelativeView(tgui::FloatRect(-possp.x, -possp.y, 1.f / scalesp.x * window.getSize().x, 1.f / scalesp.y * window.getSize().y));
 }
 
 vector<string> getDirs(string path, string filetest)
@@ -365,6 +366,8 @@ int main()
         cout << "Error creating!" << endl;
     }
 
+    //tgui::Theme::setDefault("Launcher/themes/Black.txt");
+
 
     Launcher ln;
 
@@ -404,6 +407,8 @@ int main()
                 window.setView(sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(event.size.width), static_cast<float>(event.size.height))));
                 //ln.s_TGUI.setView(window.getView());
                 ln.s_TGUI.setAbsoluteView(tgui::FloatRect(0.f, 0.f, static_cast<float>(event.size.width), static_cast<float>(event.size.height)));
+                //const float windowHeight = ln.s_TGUI.getView().getRect().height;
+                //ln.s_TGUI.setTextSize(static_cast<unsigned int>(0.07f * windowHeight));
             }
 
             ln.s_TGUI.handleEvent(event); // Pass the event to the widgets
@@ -418,7 +423,7 @@ int main()
         // draw it to the window
         sf::Sprite guisprite(guitexture);
 
-        //fix(posguisprite, gui, window);
+        //fix(posguisprite, ln.s_TGUI, window);
 
         window.clear();
         window.draw(guisprite);
