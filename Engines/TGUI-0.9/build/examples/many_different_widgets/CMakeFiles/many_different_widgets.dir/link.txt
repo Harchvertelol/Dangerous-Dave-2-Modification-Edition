@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\many_different_widgets.dir/objects.a
+C:\PROGRA~2\CODEBL~1\MinGW\bin\ar.exe qc CMakeFiles\many_different_widgets.dir/objects.a @CMakeFiles\many_different_widgets.dir\objects1.rsp
+C:\PROGRA~2\CODEBL~1\MinGW\bin\G__~1.EXE -O3 -DNDEBUG -mwindows -Wl,--whole-archive CMakeFiles\many_different_widgets.dir/objects.a -Wl,--no-whole-archive -o many_different_widgets.exe -Wl,--out-implib,libmany_different_widgets.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\many_different_widgets.dir\linklibs.rsp

@@ -13,6 +13,8 @@
 #include <direct.h>
 #endif
 
+using namespace std;
+
 string WorkFunctions::WordFunctions::FirstWord(string str)
 {
     if(str == "" || str.find(" ") == string::npos) return str;

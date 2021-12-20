@@ -1,3 +1,0 @@
-FormSize = (1920, 1080);
-RecentFiles = ["form.txt"];
-Themes = ["themes/BabyBlue.txt", "themes/BabyBlue.txt", "themes/Black.txt", "themes/TransparentGrey.txt"];

@@ -1,0 +1,1 @@
+ D:/github/Dangerous-Dave-2-Modification-Edition/Engines/SFML/lib/libsfml-graphics.a -shared-libgcc -shared-libstdc++ D:/github/Dangerous-Dave-2-Modification-Edition/Engines/SFML/lib/libsfml-window.a D:/github/Dangerous-Dave-2-Modification-Edition/Engines/SFML/lib/libsfml-system.a -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

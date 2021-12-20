@@ -18,8 +18,9 @@ void fix(sf::Sprite& sprite, tgui::Gui& gui, sf::RenderWindow& window)
 {
     sf::Vector2f scalesp = sprite.getScale();
     sf::Vector2f possp = sprite.getPosition();
-    sf::View view{sf::FloatRect(-possp.x, -possp.y, 1.f / scalesp.x * window.getSize().x, 1.f / scalesp.y * window.getSize().y)};
-    gui.setView(view);
+    //sf::View view{sf::FloatRect(-possp.x, -possp.y, 1.f / scalesp.x * window.getSize().x, 1.f / scalesp.y * window.getSize().y)};
+    //gui.setView(view);
+    gui.setAbsoluteView(tgui::FloatRect(-possp.x, -possp.y, 1.f / scalesp.x * window.getSize().x, 1.f / scalesp.y * window.getSize().y));
 }
 
 vector<string> getDirs(string path, string filetest)
@@ -86,27 +87,27 @@ class Launcher
             else s_DD2Ini->setValue("resources", "pooling", "false");
 
             tgui::ComboBox::Ptr modpack = s_TGUI.get<tgui::ComboBox>("Modpack");
-            s_DD2Ini->setValue("resources", "modpack", modpack->getSelectedItem());
+            s_DD2Ini->setValue("resources", "modpack", modpack->getSelectedItem().toStdString() );
 
             tgui::ComboBox::Ptr levelpack = s_TGUI.get<tgui::ComboBox>("Levelpack");
-            s_DD2Ini->setValue("resources", "levelpack", levelpack->getSelectedItem());
+            s_DD2Ini->setValue("resources", "levelpack", levelpack->getSelectedItem().toStdString() );
 
             tgui::ComboBox::Ptr texturepack = s_TGUI.get<tgui::ComboBox>("Texturepack");
-            s_DD2Ini->setValue("resources", "texturepack", texturepack->getSelectedItem());
+            s_DD2Ini->setValue("resources", "texturepack", texturepack->getSelectedItem().toStdString() );
 
             tgui::ComboBox::Ptr monsterpack = s_TGUI.get<tgui::ComboBox>("Monsterpack");
-            s_DD2Ini->setValue("resources", "monsterpack", monsterpack->getSelectedItem());
+            s_DD2Ini->setValue("resources", "monsterpack", monsterpack->getSelectedItem().toStdString() );
 
             tgui::ComboBox::Ptr bonuspack = s_TGUI.get<tgui::ComboBox>("Bonuspack");
-            s_DD2Ini->setValue("resources", "bonuspack", bonuspack->getSelectedItem());
+            s_DD2Ini->setValue("resources", "bonuspack", bonuspack->getSelectedItem().toStdString() );
 
             tgui::ComboBox::Ptr screenpack = s_TGUI.get<tgui::ComboBox>("Screenpack");
-            s_DD2Ini->setValue("resources", "screenpack", screenpack->getSelectedItem());
+            s_DD2Ini->setValue("resources", "screenpack", screenpack->getSelectedItem().toStdString() );
 
             // SoundPacks
 
             tgui::ComboBox::Ptr davepack = s_TGUI.get<tgui::ComboBox>("Davepack");
-            s_DD2Ini->setValue("resources", "davepack", davepack->getSelectedItem());
+            s_DD2Ini->setValue("resources", "davepack", (sf::String)davepack->getSelectedItem());
 
             prs.writeParsedToFile(s_DD2Ini, "DD2.ini");
         }
@@ -182,7 +183,8 @@ class Launcher
             button->setPosition("85%", "12%");
             button->setText("Close");
             button->setSize("10%", "5%");
-            button->connect("pressed", [=](){ s_TGUI.remove(child); });
+            //button->connect("pressed", [=](){ s_TGUI.remove(child); });
+            button->onPress([=](){ s_TGUI.remove(child); });
             child->add(button);
         }
         void loadWidgets()
@@ -191,21 +193,26 @@ class Launcher
             s_TGUI.loadWidgetsFromFile(s_GuiFile);
 
             tgui::Button::Ptr resetdefault = s_TGUI.get<tgui::Button>("ResetToDefault");
-            resetdefault->connect("pressed", Launcher::resetToDefault, this);
+            //resetdefault->connect("pressed", Launcher::resetToDefault, this);
+            resetdefault->onPress(Launcher::resetToDefault, this);
 
             tgui::Button::Ptr saveconfig = s_TGUI.get<tgui::Button>("SaveConfig");
-            saveconfig->connect("pressed", Launcher::saveConfig, this);
+            //saveconfig->connect("pressed", Launcher::saveConfig, this);
+            saveconfig->onPress(Launcher::saveConfig, this);
 
             tgui::Button::Ptr savelaunchgame = s_TGUI.get<tgui::Button>("SaveLaunchGame");
-            savelaunchgame->connect("pressed", Launcher::saveLaunchGame, this);
+            //savelaunchgame->connect("pressed", Launcher::saveLaunchGame, this);
+            savelaunchgame->onPress(Launcher::saveLaunchGame, this);
 
             tgui::Button::Ptr exitbutton = s_TGUI.get<tgui::Button>("Exit");
-            exitbutton->connect("pressed", [=](){ s_Window->close(); });
+            //exitbutton->connect("pressed", [=](){ s_Window->close(); });
+            exitbutton->onPress([=](){ s_Window->close(); });
 
             tgui::Button::Ptr EdAllVar = s_TGUI.get<tgui::Button>("EdAllVar");
-            EdAllVar->connect("pressed", Launcher::editAllVariables, this);
+            //EdAllVar->connect("pressed", Launcher::editAllVariables, this);
+            EdAllVar->onPress(Launcher::editAllVariables, this);
         }
-        void setDifficulty(const sf::String& difvalue)
+        void setDifficulty(const tgui::String& difvalue)
         {
             map<string, string> textsdif;
             textsdif["Baby"] = "You have infinite lives. You have health points (you will withstand several blows before death). The level at your death does restart.";
@@ -227,7 +234,7 @@ class Launcher
             {
                 customdiffield->setVisible(false);
                 textdif->setVisible(true);
-                textdif->setText(textsdif[difvalue]);
+                textdif->setText(textsdif[difvalue.toStdString()]);
             }
         }
         void loadData()
@@ -301,7 +308,8 @@ class Launcher
 
             tgui::Tabs::Ptr dif = s_TGUI.get<tgui::Tabs>("Difficulty");
             setDifficulty("Normal");
-            dif->connect("TabSelected", Launcher::setDifficulty, this);
+            //dif->connect("TabSelected", Launcher::setDifficulty, this);
+            dif->onTabSelect(Launcher::setDifficulty, this);
         }
         void saveLaunchGame()
         {
@@ -326,7 +334,8 @@ class Launcher
                 button->setPosition("35%", "70%");
                 button->setText("Ok");
                 button->setSize("30%", "20%");
-                button->connect("pressed", [=](){ s_TGUI.remove(child); });
+                //button->connect("pressed", [=](){ s_TGUI.remove(child); });
+                button->onPress([=](){ s_TGUI.remove(child); });
                 child->add(button);
 
                 return;
@@ -393,7 +402,8 @@ int main()
             else if (event.type == sf::Event::Resized)
             {
                 window.setView(sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(event.size.width), static_cast<float>(event.size.height))));
-                ln.s_TGUI.setView(window.getView());
+                //ln.s_TGUI.setView(window.getView());
+                ln.s_TGUI.setAbsoluteView(tgui::FloatRect(0.f, 0.f, static_cast<float>(event.size.width), static_cast<float>(event.size.height)));
             }
 
             ln.s_TGUI.handleEvent(event); // Pass the event to the widgets

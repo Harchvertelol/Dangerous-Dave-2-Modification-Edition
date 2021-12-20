@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\gui-builder.dir/objects.a
+C:\PROGRA~2\CODEBL~1\MinGW\bin\ar.exe qc CMakeFiles\gui-builder.dir/objects.a @CMakeFiles\gui-builder.dir\objects1.rsp
+C:\PROGRA~2\CODEBL~1\MinGW\bin\G__~1.EXE -O3 -DNDEBUG -mwindows -Wl,--whole-archive CMakeFiles\gui-builder.dir/objects.a -Wl,--no-whole-archive -o gui-builder.exe -Wl,--out-implib,libgui-builder.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\gui-builder.dir\linklibs.rsp

@@ -1,134 +1,130 @@
 Renderer.1 {
-    arrowbackgroundcolor = #F5F5F5;
-    arrowbackgroundcolorhover = white;
-    arrowcolor = #3C3C3C;
-    arrowcolorhover = black;
-    backgroundcolor = #F5F5F5;
-    bordercolor = black;
-    borders = (1, 1, 1, 1);
-    padding = (0, 0, 0, 0);
-    textcolor = #3C3C3C;
-    texturearrow = None;
-    texturearrowhover = None;
-    texturebackground = None;
+    BackgroundColor = #F5F5F5;
+    BackgroundColorDisabled = #E6E6E6;
+    BackgroundColorDown = #EBEBEB;
+    BackgroundColorHover = white;
+    BorderColor = #3C3C3C;
+    BorderColorDisabled = #7D7D7D;
+    BorderColorDown = black;
+    BorderColorFocused = #1E1EB4;
+    BorderColorHover = black;
+    Borders = (1, 1, 1, 1);
+    TextColor = #3C3C3C;
+    TextColorDisabled = #7D7D7D;
+    TextColorDown = black;
+    TextColorHover = black;
+    Texture = None;
+    TextureDisabled = None;
+    TextureDown = None;
+    TextureDownFocused = None;
+    TextureDownHover = None;
+    TextureFocused = None;
+    TextureHover = None;
 }
 
 Renderer.2 {
-    backgroundcolor = #F5F5F5;
-    backgroundcolordisabled = #E6E6E6;
-    backgroundcolorhover = white;
-    bordercolor = #3C3C3C;
-    bordercolordisabled = #7D7D7D;
-    bordercolorfocused = #1E1EB4;
-    bordercolorhover = black;
-    borders = (1, 1, 1, 1);
-    checkcolor = #3C3C3C;
-    checkcolordisabled = #7D7D7D;
-    checkcolorhover = black;
-    textcolor = #3C3C3C;
-    textcolordisabled = #7D7D7D;
-    textcolorhover = black;
-    textdistanceratio = 0.2;
-    texturechecked = None;
-    texturecheckeddisabled = None;
-    texturecheckedfocused = None;
-    texturecheckedhover = None;
-    textureunchecked = None;
-    textureuncheckeddisabled = None;
-    textureuncheckedfocused = None;
-    textureuncheckedhover = None;
+    BackgroundColor = #F5F5F5;
+    BackgroundColorDisabled = #E6E6E6;
+    BackgroundColorHover = white;
+    BorderColor = #3C3C3C;
+    BorderColorDisabled = #7D7D7D;
+    BorderColorFocused = #1E1EB4;
+    BorderColorHover = black;
+    Borders = (1, 1, 1, 1);
+    CheckColor = #3C3C3C;
+    CheckColorDisabled = #7D7D7D;
+    CheckColorHover = black;
+    TextColor = #3C3C3C;
+    TextColorDisabled = #7D7D7D;
+    TextColorHover = black;
+    TextDistanceRatio = 0.2;
 }
 
 Renderer.3 {
-    backgroundcolor = #F5F5F5;
-    backgroundcolordisabled = #E6E6E6;
-    backgroundcolorhover = white;
-    bordercolor = #3C3C3C;
-    bordercolordisabled = #7D7D7D;
-    bordercolorhover = black;
-    borders = (1, 1, 1, 1);
-    caretcolor = black;
-    caretwidth = 1;
-    defaulttextcolor = #A0A0A0;
-    padding = (0, 0, 0, 0);
-    selectedtextbackgroundcolor = #006EFF;
-    selectedtextcolor = white;
-    textcolor = #3C3C3C;
-    textcolordisabled = #7D7D7D;
-    texture = None;
-    texturedisabled = None;
-    texturefocused = None;
-    texturehover = None;
+    BackgroundColor = #F5F5F5;
+    BackgroundColorDisabled = #E6E6E6;
+    BackgroundColorHover = white;
+    BorderColor = #3C3C3C;
+    BorderColorDisabled = #7D7D7D;
+    BorderColorHover = black;
+    Borders = (1, 1, 1, 1);
+    CaretColor = black;
+    CaretWidth = 1;
+    DefaultTextColor = #A0A0A0;
+    Padding = (0, 0, 0, 0);
+    SelectedTextBackgroundColor = #006EFF;
+    SelectedTextColor = white;
+    TextColor = #3C3C3C;
+    TextColorDisabled = #7D7D7D;
+    Texture = None;
+    TextureDisabled = None;
+    TextureFocused = None;
+    TextureHover = None;
 }
 
 Renderer.4 {
-    backgroundcolor = transparent;
-    bordercolor = #3C3C3C;
-    borders = (0, 0, 0, 0);
-    textcolor = #3C3C3C;
-    texturebackground = None;
 }
 
 Renderer.5 {
-    backgroundcolor = #F5F5F5;
-    backgroundcolordisabled = #E6E6E6;
-    backgroundcolordown = #EBEBEB;
-    backgroundcolorhover = white;
-    bordercolor = #3C3C3C;
-    bordercolordisabled = #7D7D7D;
-    bordercolordown = black;
-    bordercolorfocused = #1E1EB4;
-    bordercolorhover = black;
-    borders = (1, 1, 1, 1);
-    textcolor = #3C3C3C;
-    textcolordisabled = #7D7D7D;
-    textcolordown = black;
-    textcolorhover = black;
-    texture = None;
-    texturedisabled = None;
-    texturedown = None;
-    texturefocused = None;
-    texturehover = None;
+    ArrowBackgroundColor = #F5F5F5;
+    ArrowBackgroundColorHover = white;
+    ArrowColor = #3C3C3C;
+    ArrowColorHover = black;
+    BackgroundColor = #F5F5F5;
+    BorderColor = black;
+    Borders = (1, 1, 1, 1);
+    Padding = (0, 0, 0, 0);
+    TextColor = #3C3C3C;
+    TextureArrow = None;
+    TextureArrowDisabled = None;
+    TextureArrowHover = None;
+    TextureBackground = None;
+    TextureBackgroundDisabled = None;
 }
 
 Renderer.6 {
+    BackgroundColor = transparent;
+    BorderColor = #3C3C3C;
+    Borders = (0, 0, 0, 0);
+    TextColor = #3C3C3C;
+    TextureBackground = None;
 }
 
 Renderer.7 {
-    backgroundcolor = #F5F5F5;
-    backgroundcolordisabled = #E6E6E6;
-    backgroundcolorhover = white;
-    bordercolor = #3C3C3C;
-    bordercolordisabled = #7D7D7D;
-    bordercolorfocused = #1E1EB4;
-    bordercolorhover = black;
-    borders = (1, 1, 1, 1);
-    checkcolor = #3C3C3C;
-    checkcolordisabled = #7D7D7D;
-    checkcolorhover = black;
-    textcolor = #3C3C3C;
-    textcolordisabled = #7D7D7D;
-    textcolorhover = black;
-    textdistanceratio = 0.2;
-    texturechecked = None;
-    texturecheckeddisabled = None;
-    texturecheckedfocused = None;
-    texturecheckedhover = None;
-    textureunchecked = None;
-    textureuncheckeddisabled = None;
-    textureuncheckedfocused = None;
-    textureuncheckedhover = None;
+    BackgroundColor = #F5F5F5;
+    BackgroundColorDisabled = #E6E6E6;
+    BackgroundColorHover = white;
+    BorderColor = #3C3C3C;
+    BorderColorDisabled = #7D7D7D;
+    BorderColorFocused = #1E1EB4;
+    BorderColorHover = black;
+    Borders = (1, 1, 1, 1);
+    CheckColor = #3C3C3C;
+    CheckColorDisabled = #7D7D7D;
+    CheckColorHover = black;
+    TextColor = #3C3C3C;
+    TextColorDisabled = #7D7D7D;
+    TextColorHover = black;
+    TextDistanceRatio = 0.2;
+    TextureChecked = None;
+    TextureCheckedDisabled = None;
+    TextureCheckedFocused = None;
+    TextureCheckedHover = None;
+    TextureUnchecked = None;
+    TextureUncheckedDisabled = None;
+    TextureUncheckedFocused = None;
+    TextureUncheckedHover = None;
 }
 
 Label.DifficultyText {
     AutoSize = true;
     Position = (20, 10);
+    Renderer = &6;
     ScrollbarPolicy = Never;
     Size = (65.2, 18);
     Text = "Difficulty:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &4;
 }
 
 Tabs.Difficulty {
@@ -140,50 +136,50 @@ Tabs.Difficulty {
     TextSize = 13;
 
     Renderer {
-        backgroundcolor = #F5F5F5;
-        backgroundcolordisabled = #E6E6E6;
-        backgroundcolorhover = white;
-        bordercolor = black;
-        borders = (1, 1, 1, 1);
-        selectedbackgroundcolor = #006EFF;
-        selectedbackgroundcolorhover = #1E96FF;
-        selectedtextcolor = white;
-        textcolor = #3C3C3C;
-        textcolordisabled = #7D7D7D;
-        textcolorhover = black;
-        texturedisabledtab = None;
-        textureselectedtab = None;
-        textureselectedtabhover = None;
-        texturetab = None;
-        texturetabhover = None;
+        BackgroundColor = #F5F5F5;
+        BackgroundColorDisabled = #E6E6E6;
+        BackgroundColorHover = white;
+        BorderColor = black;
+        Borders = (1, 1, 1, 1);
+        SelectedBackgroundColor = #006EFF;
+        SelectedBackgroundColorHover = #1E96FF;
+        SelectedTextColor = white;
+        TextColor = #3C3C3C;
+        TextColorDisabled = #7D7D7D;
+        TextColorHover = black;
+        TextureDisabledTab = None;
+        TextureSelectedTab = None;
+        TextureSelectedTabHover = None;
+        TextureTab = None;
+        TextureTabHover = None;
     }
 }
 
 CheckBox.Standard {
     Position = (20, 140);
+    Renderer = &2;
     Size = (18, 18);
     Text = "Using standard modpack";
     TextSize = 13;
-    renderer = &7;
 }
 
 CheckBox.Pooling {
     Position = (20, 240);
+    Renderer = &2;
     Size = (18, 18);
     Text = "Pooling resources";
     TextSize = 13;
-    renderer = &7;
 }
 
 Label.ModpackText {
     AutoSize = true;
     Position = (20, 200);
+    Renderer = &6;
     ScrollbarPolicy = Never;
     Size = (64.2, 18);
     Text = "Modpack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &4;
 }
 
 ComboBox.Modpack {
@@ -193,20 +189,20 @@ ComboBox.Modpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 200);
+    Renderer = &5;
     Size = (160, 22);
     TextSize = 13;
-    renderer = &1;
 }
 
 Label.LevelpackText {
     AutoSize = true;
     Position = (20, 280);
+    Renderer = &6;
     ScrollbarPolicy = Never;
     Size = (72.2, 18);
     Text = "Levelpack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &4;
 }
 
 ComboBox.Levelpack {
@@ -216,20 +212,20 @@ ComboBox.Levelpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 280);
+    Renderer = &5;
     Size = (160, 22);
     TextSize = 13;
-    renderer = &1;
 }
 
 Label.TexturepackText {
     AutoSize = true;
     Position = (20, 320);
+    Renderer = &6;
     ScrollbarPolicy = Never;
     Size = (87.2, 18);
     Text = "Texturepack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &4;
 }
 
 ComboBox.Texturepack {
@@ -239,20 +235,20 @@ ComboBox.Texturepack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 320);
+    Renderer = &5;
     Size = (160, 22);
     TextSize = 13;
-    renderer = &1;
 }
 
 Label.MonsterpackText {
     AutoSize = true;
     Position = (20, 360);
+    Renderer = &6;
     ScrollbarPolicy = Never;
     Size = (89.2, 18);
     Text = "Monsterpack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &4;
 }
 
 ComboBox.Monsterpack {
@@ -262,20 +258,20 @@ ComboBox.Monsterpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 360);
+    Renderer = &5;
     Size = (160, 22);
     TextSize = 13;
-    renderer = &1;
 }
 
 Label.BonuspackText {
     AutoSize = true;
     Position = (20, 400);
+    Renderer = &6;
     ScrollbarPolicy = Never;
     Size = (77.2, 18);
     Text = "Bonuspack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &4;
 }
 
 ComboBox.Bonuspack {
@@ -285,42 +281,42 @@ ComboBox.Bonuspack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 400);
+    Renderer = &5;
     Size = (160, 22);
     TextSize = 13;
-    renderer = &1;
 }
 
 Label.ScreenpackText {
     AutoSize = true;
     Position = (20, 440);
+    Renderer = &6;
     ScrollbarPolicy = Never;
     Size = (82.2, 18);
     Text = "Screenpack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &4;
 }
 
 Label.SoundpackText {
     AutoSize = true;
     Position = (20, 480);
+    Renderer = &6;
     ScrollbarPolicy = Never;
     Size = (78.2, 18);
     Text = "Soundpack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &4;
 }
 
 Label.DavepackText {
     AutoSize = true;
     Position = (20, 560);
+    Renderer = &6;
     ScrollbarPolicy = Never;
     Size = (72.2, 18);
     Text = "Davepack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &4;
 }
 
 ComboBox.Screenpack {
@@ -330,9 +326,9 @@ ComboBox.Screenpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 440);
+    Renderer = &5;
     Size = (160, 22);
     TextSize = 13;
-    renderer = &1;
 }
 
 ComboBox.Soundpack {
@@ -342,9 +338,9 @@ ComboBox.Soundpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 480);
+    Renderer = &5;
     Size = (160, 22);
     TextSize = 13;
-    renderer = &1;
 }
 
 ComboBox.Davepack {
@@ -354,9 +350,9 @@ ComboBox.Davepack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 560);
+    Renderer = &5;
     Size = (160, 22);
     TextSize = 13;
-    renderer = &1;
 }
 
 Button.SaveLaunchGame {
@@ -366,59 +362,61 @@ Button.SaveLaunchGame {
     TextSize = 18;
 
     Renderer {
-        backgroundcolor = #00D000;
-        backgroundcolordisabled = #E6E6E6;
-        backgroundcolordown = #EBEBEB;
-        backgroundcolorhover = green;
-        bordercolor = #3C3C3C;
-        bordercolordisabled = #7D7D7D;
-        bordercolordown = black;
-        bordercolorfocused = #1E1EB4;
-        bordercolorhover = black;
-        borders = (1, 1, 1, 1);
-        textcolor = #3C3C3C;
-        textcolordisabled = #7D7D7D;
-        textcolordown = black;
-        textcolorhover = black;
-        texture = None;
-        texturedisabled = None;
-        texturedown = None;
-        texturefocused = None;
-        texturehover = None;
+        BackgroundColor = #00D000;
+        BackgroundColorDisabled = #E6E6E6;
+        BackgroundColorDown = #EBEBEB;
+        BackgroundColorHover = green;
+        BorderColor = #3C3C3C;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = #1E1EB4;
+        BorderColorHover = black;
+        Borders = (1, 1, 1, 1);
+        TextColor = #3C3C3C;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
     }
 }
 
 Button.SaveConfig {
     Position = (1090, 320);
+    Renderer = &1;
     Size = (160, 38.6667);
     Text = "Save config";
     TextSize = 18;
-    renderer = &5;
 }
 
 Button.ResetToDefault {
     Position = (1090, 260);
+    Renderer = &1;
     Size = (160, 38.6667);
     Text = "Reset to default";
     TextSize = 18;
-    renderer = &5;
 }
 
 Button.EdAllVar {
     Position = (1000, 10);
+    Renderer = &1;
     Size = (250, 51.3333);
     Text = "Edit all variables (expert)";
     TextSize = 18;
-    renderer = &5;
 }
 
 Button.GoToServer {
     Enabled = false;
     Position = (1000, 80);
+    Renderer = &1;
     Size = (250, 51.3333);
     Text = "Go to server...";
     TextSize = 18;
-    renderer = &5;
 }
 
 Label.TextDifficulty {
@@ -429,21 +427,21 @@ Label.TextDifficulty {
     TextSize = 15;
 
     Renderer {
-        backgroundcolor = transparent;
-        bordercolor = #3C3C3C;
-        borders = (0, 0, 0, 0);
-        textcolor = red;
-        texturebackground = None;
+        BackgroundColor = transparent;
+        BorderColor = #3C3C3C;
+        Borders = (0, 0, 0, 0);
+        TextColor = red;
+        TextureBackground = None;
     }
 }
 
 Button.Keys {
     Enabled = false;
     Position = (1090, 208.48);
+    Renderer = &1;
     Size = (160, 32.8533);
     Text = Keys;
     TextSize = 18;
-    renderer = &5;
 }
 
 Button.Exit {
@@ -453,179 +451,181 @@ Button.Exit {
     TextSize = 18;
 
     Renderer {
-        backgroundcolor = #00BBFF;
-        backgroundcolordisabled = #E6E6E6;
-        backgroundcolordown = #EBEBEB;
-        backgroundcolorhover = cyan;
-        bordercolor = #3C3C3C;
-        bordercolordisabled = #7D7D7D;
-        bordercolordown = black;
-        bordercolorfocused = #1E1EB4;
-        bordercolorhover = black;
-        borders = (1, 1, 1, 1);
-        textcolor = #3C3C3C;
-        textcolordisabled = #7D7D7D;
-        textcolordown = black;
-        textcolorhover = black;
-        texture = None;
-        texturedisabled = None;
-        texturedown = None;
-        texturefocused = None;
-        texturehover = None;
+        BackgroundColor = #00BBFF;
+        BackgroundColorDisabled = #E6E6E6;
+        BackgroundColorDown = #EBEBEB;
+        BackgroundColorHover = cyan;
+        BorderColor = #3C3C3C;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = #1E1EB4;
+        BorderColorHover = black;
+        Borders = (1, 1, 1, 1);
+        TextColor = #3C3C3C;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
     }
 }
 
 Button.Editor {
     Enabled = false;
     Position = (1090, 150);
+    Renderer = &1;
     Size = (160, 38.6667);
     Text = Editor;
     TextSize = 18;
-    renderer = &5;
 }
 
 Group.RadioButtonsDaveVersion {
     Enabled = false;
     Position = (220, 120);
+    Renderer = &4;
     Size = (310, 60);
-    renderer = &6;
 
     RadioButton.DD1 {
         Position = (0, 10);
+        Renderer = &7;
         Size = (18, 18);
         Text = "Dangerous Dave 1";
         TextSize = 13;
-        renderer = &2;
     }
 
     RadioButton.DD2 {
         Checked = true;
         Position = (150, 10);
+        Renderer = &7;
         Size = (18, 18);
         Text = "Dangerous Dave 2";
         TextSize = 13;
-        renderer = &2;
     }
 
     RadioButton.DD3 {
         Position = (0, 40);
+        Renderer = &7;
         Size = (18, 18);
         Text = "Dangerous Dave 3";
         TextSize = 13;
-        renderer = &2;
     }
 
     RadioButton.DD4 {
         Position = (150, 40);
+        Renderer = &7;
         Size = (18, 18);
         Text = "Dangerous Dave 4";
         TextSize = 13;
-        renderer = &2;
     }
 }
 
 Group.CustomDifficlutyField {
     Enabled = false;
     Position = (20, 40);
+    Renderer = &4;
     Size = (570, 90);
-    renderer = &6;
 
     Label.TextLivesDecreasePerDeath {
         AutoSize = true;
+        Renderer = &6;
         ScrollbarPolicy = Never;
         Size = (168.2, 18);
         Text = "Decrease lives per death:";
         TextSize = 13;
         VerticalAlignment = Center;
-        renderer = &4;
     }
 
     EditBox.LivesMinusPerDeath {
         Position = (170, 0);
+        Renderer = &3;
         Size = (90, 22);
         Text = 1;
         TextSize = 13;
-        renderer = &3;
     }
 
     Group.RadioButtonsOnDeath {
         Position = (0, 30);
+        Renderer = &4;
         Size = (570, 20);
-        renderer = &6;
 
         RadioButton.NoReloadLevel {
             Position = (80, 0);
+            Renderer = &7;
             Size = (18, 18);
             Text = "No reload level";
             TextSize = 13;
-            renderer = &2;
         }
 
         RadioButton.ReloadLevel {
             Checked = true;
             Position = (210, 0);
+            Renderer = &7;
             Size = (18, 18);
             Text = "Reload level";
             TextSize = 13;
-            renderer = &2;
         }
 
         RadioButton.PreviousLevel {
             Position = (330, 0);
+            Renderer = &7;
             Size = (18, 18);
             Text = "Previous level";
             TextSize = 13;
-            renderer = &2;
         }
 
         RadioButton.GameOver {
             Position = (460, 0);
+            Renderer = &7;
             Size = (18, 18);
             Text = "Game over";
             TextSize = 13;
-            renderer = &2;
         }
 
         Label.TextOnDeath {
             AutoSize = true;
             Position = (0, 1);
+            Renderer = &6;
             ScrollbarPolicy = Never;
             Size = (67.2, 18);
             Text = "On death:";
             TextSize = 13;
-            renderer = &4;
         }
     }
 
     Label.HealthPointsText {
         AutoSize = true;
         Position = (0, 60);
+        Renderer = &6;
         ScrollbarPolicy = Never;
         Size = (92.2, 18);
         Text = "Health points:";
         TextSize = 13;
         VerticalAlignment = Center;
-        renderer = &4;
     }
 
     EditBox.HealthPoints {
         Position = (100, 60);
+        Renderer = &3;
         Size = (90, 22);
         Text = 1;
         TextSize = 13;
-        renderer = &3;
     }
 }
 
 Label.MusicPackText {
     AutoSize = true;
     Position = (20, 520);
+    Renderer = &6;
     ScrollbarPolicy = Never;
     Size = (73.2, 18);
     Text = "Musicpack:";
     TextSize = 13;
     VerticalAlignment = Center;
-    renderer = &4;
 }
 
 ComboBox.Musicpack {
@@ -635,7 +635,7 @@ ComboBox.Musicpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 520);
+    Renderer = &5;
     Size = (160, 22);
     TextSize = 13;
-    renderer = &1;
 }

@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\tgui.dir/objects.a
+C:\PROGRA~2\CODEBL~1\MinGW\bin\ar.exe qc CMakeFiles\tgui.dir/objects.a @CMakeFiles\tgui.dir\objects1.rsp
+C:\PROGRA~2\CODEBL~1\MinGW\bin\G__~1.EXE -O3 -DNDEBUG -shared -o ..\lib\tgui.dll -Wl,--out-implib,..\lib\libtgui.a -Wl,--major-image-version,0,--minor-image-version,9 -Wl,--whole-archive CMakeFiles\tgui.dir/objects.a -Wl,--no-whole-archive @CMakeFiles\tgui.dir\linklibs.rsp

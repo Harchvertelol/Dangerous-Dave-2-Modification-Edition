@@ -228,6 +228,7 @@ bool Level::loadLevel(string file_name)
     ParserFunctions::splitMass(&tmp_spl, 2, 0, dave_coords, ";");
     s_Dave->s_CoordX = tmp_spl[0];
     s_Dave->s_CoordY = tmp_spl[1];
+    return true;
 }
 
 string Level::getNamePhysicTilesField()

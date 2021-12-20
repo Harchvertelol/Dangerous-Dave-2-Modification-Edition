@@ -62,7 +62,6 @@ add_library(sfml-main STATIC IMPORTED)
 
 set_target_properties(sfml-main PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:-shared-libgcc>;\$<LINK_ONLY:-shared-libstdc++>"
 )
 
 # Create imported target sfml-window
