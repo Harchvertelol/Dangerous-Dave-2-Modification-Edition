@@ -63,9 +63,6 @@ Renderer.3 {
 }
 
 Renderer.4 {
-}
-
-Renderer.5 {
     ArrowBackgroundColor = #F5F5F5;
     ArrowBackgroundColorHover = white;
     ArrowColor = #3C3C3C;
@@ -80,6 +77,9 @@ Renderer.5 {
     TextureArrowHover = None;
     TextureBackground = None;
     TextureBackgroundDisabled = None;
+}
+
+Renderer.5 {
 }
 
 Renderer.6 {
@@ -141,6 +141,7 @@ Tabs.Difficulty {
         BackgroundColorHover = white;
         BorderColor = black;
         Borders = (1, 1, 1, 1);
+        DistanceToSide = 6;
         SelectedBackgroundColor = #006EFF;
         SelectedBackgroundColorHover = #1E96FF;
         SelectedTextColor = white;
@@ -189,7 +190,7 @@ ComboBox.Modpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 200);
-    Renderer = &5;
+    Renderer = &4;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -212,7 +213,7 @@ ComboBox.Levelpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 280);
-    Renderer = &5;
+    Renderer = &4;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -235,7 +236,7 @@ ComboBox.Texturepack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 320);
-    Renderer = &5;
+    Renderer = &4;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -258,7 +259,7 @@ ComboBox.Monsterpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 360);
-    Renderer = &5;
+    Renderer = &4;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -281,7 +282,7 @@ ComboBox.Bonuspack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 400);
-    Renderer = &5;
+    Renderer = &4;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -326,7 +327,7 @@ ComboBox.Screenpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 440);
-    Renderer = &5;
+    Renderer = &4;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -338,7 +339,7 @@ ComboBox.Soundpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 480);
-    Renderer = &5;
+    Renderer = &4;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -350,7 +351,7 @@ ComboBox.Davepack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 560);
-    Renderer = &5;
+    Renderer = &4;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -436,7 +437,6 @@ Label.TextDifficulty {
 }
 
 Button.Keys {
-    Enabled = false;
     Position = (1090, 208.48);
     Renderer = &1;
     Size = (160, 32.8533);
@@ -487,7 +487,7 @@ Button.Editor {
 Group.RadioButtonsDaveVersion {
     Enabled = false;
     Position = (220, 120);
-    Renderer = &4;
+    Renderer = &5;
     Size = (310, 60);
 
     RadioButton.DD1 {
@@ -527,7 +527,7 @@ Group.RadioButtonsDaveVersion {
 Group.CustomDifficlutyField {
     Enabled = false;
     Position = (20, 40);
-    Renderer = &4;
+    Renderer = &5;
     Size = (570, 90);
 
     Label.TextLivesDecreasePerDeath {
@@ -550,7 +550,7 @@ Group.CustomDifficlutyField {
 
     Group.RadioButtonsOnDeath {
         Position = (0, 30);
-        Renderer = &4;
+        Renderer = &5;
         Size = (570, 20);
 
         RadioButton.NoReloadLevel {
@@ -635,7 +635,30 @@ ComboBox.Musicpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 520);
-    Renderer = &5;
+    Renderer = &4;
+    Size = (160, 22);
+    TextSize = 13;
+}
+
+Label.GuipackText {
+    AutoSize = true;
+    Position = (20, 600);
+    Renderer = &6;
+    ScrollbarPolicy = Never;
+    Size = (59.2, 18);
+    Text = "Guipack:";
+    TextSize = 13;
+    VerticalAlignment = Center;
+}
+
+ComboBox.Guipack {
+    ChangeItemOnScroll = true;
+    ExpandDirection = Down;
+    Items = [""];
+    ItemsToDisplay = 0;
+    MaximumItems = 0;
+    Position = (120, 600);
+    Renderer = &4;
     Size = (160, 22);
     TextSize = 13;
 }

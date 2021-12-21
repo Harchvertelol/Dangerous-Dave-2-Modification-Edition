@@ -3,7 +3,6 @@
 #include "ParserInfoFile.h"
 #include "PostParsingStruct.h"
 #include "../WorkFunctions.h"
-#include "../Defines.h"
 using namespace std;
 using namespace WorkFunctions;
 using namespace ParserFunctions;
@@ -37,14 +36,20 @@ bool IniParser::ParserInfoFile::writeParsedToFile(PostParsingStruct* pps, string
     return true;
 }
 
-PostParsingStruct* IniParser::ParserInfoFile::getParsedFromFile(string s_FileName, bool log)
+PostParsingStruct* IniParser::ParserInfoFile::getParsedFromFile(string s_FileName, PostParsingStruct* prs, bool log)
 {
-    char buf[FILE_READ_SIZE_STR];
+    //char buf[FILE_READ_SIZE_STR];
     string str;
     string NameMainVariable;
     string NameSecondaryVariable;
     string ValueSecondaryVariable;
-    PostParsingStruct* s_PrsStr = new PostParsingStruct;
+    PostParsingStruct* s_PrsStr = 0;
+    if(prs) s_PrsStr = prs;
+    else
+    {
+        s_PrsStr = new PostParsingStruct;
+        s_PrsStr->setFileName(s_FileName);
+    }
     map<string, map<string, string> >* s_Variables = &s_PrsStr->getMapVariables();
     ifstream FileInfo(s_FileName.c_str());
     if(!FileInfo)
@@ -53,15 +58,17 @@ PostParsingStruct* IniParser::ParserInfoFile::getParsedFromFile(string s_FileNam
         FileInfo.close();
         return 0;
     }
-    FileInfo.getline(buf, FILE_READ_SIZE_STR);
-    str = buf;
+    //FileInfo.getline(buf, FILE_READ_SIZE_STR);
+    //str = buf;
+    getline(FileInfo, str);
     NameMainVariable = getNameMainVariable(str);
     while(FileInfo)
     {
         if(NameMainVariable != "")
         {
-            FileInfo.getline(buf, FILE_READ_SIZE_STR);
-            str = buf;
+            //FileInfo.getline(buf, FILE_READ_SIZE_STR);
+            //str = buf;
+            getline(FileInfo, str);
             while(FileInfo && getNameMainVariable(str) == "")
             {
                 NameSecondaryVariable = getNameSecondaryVariable(str);
@@ -70,19 +77,26 @@ PostParsingStruct* IniParser::ParserInfoFile::getParsedFromFile(string s_FileNam
                 {
                     (*s_Variables)[NameMainVariable][NameSecondaryVariable] = ValueSecondaryVariable;
                 }
-                FileInfo.getline(buf, FILE_READ_SIZE_STR);
-                str = buf;
+                //FileInfo.getline(buf, FILE_READ_SIZE_STR);
+                //str = buf;
+                getline(FileInfo, str);
             }
         }
         else
         {
-            FileInfo.getline(buf, FILE_READ_SIZE_STR);
-            str = buf;
+            //FileInfo.getline(buf, FILE_READ_SIZE_STR);
+            //str = buf;
+            getline(FileInfo, str);
         }
         NameMainVariable = getNameMainVariable(str);
     }
     FileInfo.close();
     return s_PrsStr;
+}
+
+void IniParser::ParserInfoFile::addParsedFromFile(PostParsingStruct* prs, string filename, bool log)
+{
+    getParsedFromFile(filename, prs, log);
 }
 
 PostParsingStruct* IniParser::ParserInfoFile::getParsedFromString(string str_s, string splitter)

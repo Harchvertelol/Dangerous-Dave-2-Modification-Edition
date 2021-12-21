@@ -19,14 +19,21 @@ namespace IniParser
             ~ParserInfoFile();
             //! Получение результата обработки из файла.
             /*! \param filename Имя файла, который надо обработать.
+            \param prs Указатель на PostParsingStruct, куда произвести запись. Если = 0, то создаётся новый.
             \param log Вывод лога ошибок в консоль.
             \return Возвращает указатель на PostParsingStruct. Он равен NULL, если обработка прошла неудачно.
             */
-            PostParsingStruct* getParsedFromFile(std::string filename, bool log = true);
+            PostParsingStruct* getParsedFromFile(std::string filename, PostParsingStruct* prs = 0, bool log = true);
+            //! Добавление результата обработки из файла.
+            /*! \param prs Указатель на PostParsingStruct, куда мы добавляем переменные из файла.
+            \param filename Имя файла, который надо обработать.
+            \param log Вывод лога ошибок в консоль.
+            \return Возвращает указатель на PostParsingStruct. Он равен NULL, если обработка прошла неудачно.
+            */
+            void addParsedFromFile(PostParsingStruct* prs, std::string filename, bool log = true);
             //! Получение результата обработки из строки.
             /*! \param str Строка, которую надо обработать.
             \param splitter Разделитель в строке вместо переноса на новую строку.
-            \return Возвращает указатель на PostParsingStruct. Он равен NULL, если обработка прошла неудачно.
             */
             PostParsingStruct* getParsedFromString(std::string str, std::string splitter);
             //! Конвертация PostParsingStruct в строку.

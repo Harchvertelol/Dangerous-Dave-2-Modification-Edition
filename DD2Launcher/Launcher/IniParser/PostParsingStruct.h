@@ -33,21 +33,44 @@ namespace IniParser
             /*! \return Возвращает map, содержащий все переменные.
             */
             std::map<std::string, std::map<std::string, std::string> >& getMapVariables();
+            //! Получение всех переменных из блока.
+            /*! \param A Значение блока.
+            \return Возвращает map, содержащий все переменные из блока.
+            */
+            std::map<std::string, std::string>& getMapVariables(std::string A);
             //! Добавляет все значения из указанного контейнера в текущий.
             /*! \param pps Откуда добавить все значения.
             */
             void addPostParsingStruct(PostParsingStruct* pps);
             //! Проверяет существование блока.
             /*! \param A Название блока.
+            \return Возвращает true, если существует, иначе false.
             */
             bool isExists(std::string A);
             //! Проверяет существование переменной.
             /*! \param A Название блока.
             \param B Название переменной.
+            \return Возвращает true, если существует, иначе false.
             */
             bool isExists(std::string A, std::string B);
+            //! Установить имя прочитанного файла для логгера.
+            /*! \param A Имя файла.
+            */
+            void setFileName(std::string A);
+            //! Удаляет переменную.
+            /*! \param A Название блока.
+            \param B Название переменной.
+            */
+            void remove(std::string A, std::string B);
+            //! Удаляет блок.
+            /*! \param A Название блока.
+            */
+            void remove(std::string A);
+            //! Очищает все переменные.
+            void clear();
         private:
             std::map<std::string, std::map<std::string, std::string> > s_Variables;
+            std::string s_FileName;
     };
 };
 #endif

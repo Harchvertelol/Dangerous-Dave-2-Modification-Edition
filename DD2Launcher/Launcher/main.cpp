@@ -58,7 +58,9 @@ class Launcher
             s_DD2Ini(0),
             s_GuiFile(""),
             s_Window(0),
-            s_DD2FileName("")
+            s_DD2FileName(""),
+            s_KeyEditBox(0),
+            s_KeyWaitPanel(0)
         {
             //...
         }
@@ -105,42 +107,69 @@ class Launcher
             tgui::ComboBox::Ptr screenpack = s_TGUI.get<tgui::ComboBox>("Screenpack");
             s_DD2Ini->setValue("resources", "screenpack", screenpack->getSelectedItem().toStdString() );
 
-            // SoundPacks
+            tgui::ComboBox::Ptr soundpack = s_TGUI.get<tgui::ComboBox>("Soundpack");
+            s_DD2Ini->setValue("resources", "soundpack", soundpack->getSelectedItem().toStdString() );
+
+            tgui::ComboBox::Ptr musicpack = s_TGUI.get<tgui::ComboBox>("Musicpack");
+            s_DD2Ini->setValue("resources", "musicpack", musicpack->getSelectedItem().toStdString() );
 
             tgui::ComboBox::Ptr davepack = s_TGUI.get<tgui::ComboBox>("Davepack");
             s_DD2Ini->setValue("resources", "davepack", (sf::String)davepack->getSelectedItem());
 
+            tgui::ComboBox::Ptr guipack = s_TGUI.get<tgui::ComboBox>("Guipack");
+            s_DD2Ini->setValue("resources", "guipack", guipack->getSelectedItem().toStdString() );
+
             prs.writeParsedToFile(s_DD2Ini, "DD2.ini");
         }
-        void addTextsEditBoxes(PostParsingStruct* pps, tgui::ScrollablePanel::Ptr layout, string prefix)
+        void addKeysButtons(PostParsingStruct* pps, tgui::ScrollablePanel::Ptr layout, string prefix, string subblock = "")
         {
+            int x_start = 15, y_shift = 35;
             int i = 0;
             map<string, map<string, string> >::iterator iter;
             map<string, string>::iterator iter1;
             for(iter = pps->getMapVariables().begin(); iter != pps->getMapVariables().end(); iter++, i++)
             {
-                auto label = tgui::Label::create();
-                label->setText(iter->first);
-                label->setPosition(5, i * 30);
-                label->setTextSize(25);
-                layout->add(label);
-                i++;
-                i++;
-                for(iter1 = iter->second.begin(); iter1 != iter->second.end(); iter1++, i++)
+                if(subblock == "" || iter->first == subblock)
                 {
                     auto label = tgui::Label::create();
-                    label->setText(iter1->first);
-                    label->setPosition(15, i * 30);
-                    label->setTextSize(15);
+                    label->setText(iter->first);
+                    label->setPosition(5, i * y_shift);
+                    label->setTextSize(25);
                     layout->add(label);
+                    i++;
+                    i++;
+                    for(iter1 = iter->second.begin(); iter1 != iter->second.end(); iter1++, i++)
+                    {
+                        auto label = tgui::Button::create();
+                        label->setText(iter1->first);
+                        label->setPosition(x_start, i * y_shift);
+                        label->setTextSize(15);
+                        layout->add(label);
 
-                    auto editBox = tgui::EditBox::create();
-                    editBox->setTextSize(18);
-                    editBox->setPosition(250, i * 30);
-                    editBox->setText(iter1->second);
-                    editBox->setDefaultText("Empty");
-                    editBox->setWidgetName(prefix + "/" + iter->first + "/" + iter1->first);
-                    layout->add(editBox);
+                        auto editBox = tgui::EditBox::create();
+                        editBox->setTextSize(18);
+                        editBox->setPosition(250, i * y_shift);
+                        editBox->setText(iter1->second);
+                        editBox->setDefaultText("Empty");
+                        layout->add(editBox);
+                        editBox->setWidgetName(prefix + "/" + iter->first + "/" + iter1->first);
+
+                        label->onPress([=](){
+                                           auto panel = tgui::Panel::create();
+                                           panel->setSize("20%", "10%");
+                                           panel->setPosition("40%", "45%");
+                                           s_TGUI.add(panel);
+
+                                           auto label_press_key = tgui::Label::create();
+                                           label_press_key->setText("Press key...");
+                                           label_press_key->setTextSize(15);
+                                           label_press_key->setPosition("20%", "40%");
+                                           panel->add(label_press_key);
+
+                                           this->s_KeyEditBox = editBox;
+                                           this->s_KeyWaitPanel = panel;
+                                       });
+                    }
                 }
             }
             auto label = tgui::Label::create();
@@ -149,13 +178,100 @@ class Launcher
             label->setTextSize(15);
             layout->add(label);
         }
+        void addTextsEditBoxes(PostParsingStruct* pps, tgui::ScrollablePanel::Ptr layout, string prefix)
+        {
+            int x_start = 15, y_shift = 30;
+            int i = 0;
+            map<string, map<string, string> >::iterator iter;
+            map<string, string>::iterator iter1;
+            for(iter = pps->getMapVariables().begin(); iter != pps->getMapVariables().end(); iter++, i++)
+            {
+                auto label = tgui::Label::create();
+                label->setText(iter->first);
+                label->setPosition(5, i * y_shift);
+                label->setTextSize(25);
+                layout->add(label);
+                i++;
+                i++;
+                for(iter1 = iter->second.begin(); iter1 != iter->second.end(); iter1++, i++)
+                {
+                    auto label = tgui::Label::create();
+                    label->setText(iter1->first);
+                    label->setPosition(x_start, i * y_shift);
+                    label->setTextSize(15);
+                    layout->add(label);
+
+                    auto editBox = tgui::EditBox::create();
+                    editBox->setTextSize(18);
+                    editBox->setPosition(250, i * y_shift);
+                    editBox->setText(iter1->second);
+                    editBox->setDefaultText("Empty");
+                    layout->add(editBox);
+                    editBox->setWidgetName(prefix + "/" + iter->first + "/" + iter1->first);
+                }
+            }
+            auto label = tgui::Label::create();
+            label->setText("");
+            label->setPosition(15, i * 30);
+            label->setTextSize(15);
+            layout->add(label);
+        }
+        void keys()
+        {
+            auto child = tgui::Panel::create();
+            child->setSize("100%", "100%");
+            s_TGUI.add(child);
+
+            auto layout = tgui::ScrollablePanel::create();
+            layout->setSize("40%", "100%");
+            layout->setPosition("30%", "0%");
+            layout->setVerticalScrollAmount(40);
+            child->add(layout);
+
+            addKeysButtons(s_DD2Ini, layout, "ini", "keys");
+
+            auto button = tgui::Button::create();
+            button->setPosition("85%", "5%");
+            button->setText("Save");
+            button->setSize("10%", "5%");
+            //button->connect("pressed", [=](){ child->setVisible(false); });
+            button->onPress([=]()
+                            {
+                                vector<tgui::Widget::Ptr> wdgs = layout->getWidgets();
+                                tgui::EditBox::Ptr tmp_ed_box;
+                                for(int i = 0; i < wdgs.size(); i++)
+                                {
+                                    if(wdgs[i]->getWidgetType() == "EditBox")
+                                    {
+                                        tmp_ed_box = wdgs[i]->cast<tgui::EditBox>();
+                                        string str = wdgs[i]->getWidgetName().toStdString();
+                                        map<int, string> spl;
+                                        int end_mas = WorkFunctions::ParserFunctions::splitMassString(&spl, 0, 0, str, "/");
+                                        if(spl[0] == "ini") s_DD2Ini->setValue(spl[1], spl[2], tmp_ed_box->getText().toStdString());
+                                    }
+                                }
+                                ParserInfoFile prs;
+                                prs.writeParsedToFile(s_DD2Ini, "DD2.ini");
+                                s_TGUI.remove(child);
+                            });
+            child->add(button);
+
+            button = tgui::Button::create();
+            button->setPosition("85%", "12%");
+            button->setText("Close");
+            button->setSize("10%", "5%");
+            //button->connect("pressed", [=](){ s_TGUI.remove(child); });
+            button->onPress([=](){ s_TGUI.remove(child); });
+            child->add(button);
+        }
         void editAllVariables()
         {
-            auto child = tgui::ChildWindow::create();
-            child->setSize("100%", "97%");
+            //auto child = tgui::ChildWindow::create();
+            auto child = tgui::Panel::create();
+            child->setSize("100%", "100%");
             //child->setPosition(0, 0);
-            child->setTitle("Edit all variables");
-            child->setPositionLocked(true);
+            //child->setTitle("Edit all variables");
+            //child->setPositionLocked(true);
             s_TGUI.add(child);
 
             auto layout = tgui::ScrollablePanel::create();
@@ -178,6 +294,42 @@ class Launcher
             button->setText("Save");
             button->setSize("10%", "5%");
             //button->connect("pressed", [=](){ child->setVisible(false); });
+            button->onPress([=]()
+                            {
+                                s_DD2Ini->clear();
+                                s_DD2General->clear();
+                                vector<tgui::Widget::Ptr> wdgs = layout->getWidgets();
+                                tgui::EditBox::Ptr tmp_ed_box;
+                                for(int i = 0; i < wdgs.size(); i++)
+                                {
+                                    if(wdgs[i]->getWidgetType() == "EditBox")
+                                    {
+                                        tmp_ed_box = wdgs[i]->cast<tgui::EditBox>();
+                                        string str = wdgs[i]->getWidgetName().toStdString();
+                                        map<int, string> spl;
+                                        int end_mas = WorkFunctions::ParserFunctions::splitMassString(&spl, 0, 0, str, "/");
+                                        if(spl[0] == "ini") s_DD2Ini->setValue(spl[1], spl[2], tmp_ed_box->getText().toStdString());
+                                        else if(spl[0] == "gen") s_DD2General->setValue(spl[1], spl[2], tmp_ed_box->getText().toStdString());
+                                    }
+                                }
+                                wdgs = layout_gen->getWidgets();
+                                for(int i = 0; i < wdgs.size(); i++)
+                                {
+                                    if(wdgs[i]->getWidgetType() == "EditBox")
+                                    {
+                                        tmp_ed_box = wdgs[i]->cast<tgui::EditBox>();
+                                        string str = wdgs[i]->getWidgetName().toStdString();
+                                        map<int, string> spl;
+                                        int end_mas = WorkFunctions::ParserFunctions::splitMassString(&spl, 0, 0, str, "/");
+                                        if(spl[0] == "ini") s_DD2Ini->setValue(spl[1], spl[2], tmp_ed_box->getText().toStdString());
+                                        else if(spl[0] == "gen") s_DD2General->setValue(spl[1], spl[2], tmp_ed_box->getText().toStdString());
+                                    }
+                                }
+                                ParserInfoFile prs;
+                                prs.writeParsedToFile(s_DD2Ini, "DD2.ini");
+                                prs.writeParsedToFile(s_DD2General, "General.ini");
+                                this->loadData();
+                            });
             child->add(button);
 
             button = tgui::Button::create();
@@ -212,6 +364,9 @@ class Launcher
             tgui::Button::Ptr EdAllVar = s_TGUI.get<tgui::Button>("EdAllVar");
             //EdAllVar->connect("pressed", Launcher::editAllVariables, this);
             EdAllVar->onPress(Launcher::editAllVariables, this);
+
+            tgui::Button::Ptr Keys = s_TGUI.get<tgui::Button>("Keys");
+            Keys->onPress(Launcher::keys, this);
         }
         void setDifficulty(const tgui::String& difvalue)
         {
@@ -307,6 +462,12 @@ class Launcher
             if(s_DD2Ini->getValue("resources", "davepack") != "") davepack->setSelectedItem(s_DD2Ini->getValue("resources", "davepack"));
             else davepack->setSelectedItem("");
 
+            tgui::ComboBox::Ptr guipack = s_TGUI.get<tgui::ComboBox>("Guipack");
+            vector<string> guipacks = getDirs("PacksData/GuiPacks", "gui.info");
+            for(unsigned int i = 0; i < guipacks.size(); i++) guipack->addItem(guipacks[i]);
+            if(s_DD2Ini->getValue("resources", "guipack") != "") guipack->setSelectedItem(s_DD2Ini->getValue("resources", "guipack"));
+            else guipack->setSelectedItem("");
+
             tgui::Tabs::Ptr dif = s_TGUI.get<tgui::Tabs>("Difficulty");
             setDifficulty("Normal");
             //dif->connect("TabSelected", Launcher::setDifficulty, this);
@@ -351,6 +512,9 @@ class Launcher
         sf::RenderWindow* s_Window;
         tgui::Gui s_TGUI;
         string s_DD2FileName;
+        //For keys
+        tgui::EditBox::Ptr s_KeyEditBox;
+        tgui::Panel::Ptr s_KeyWaitPanel;
 };
 
 int main()
@@ -366,10 +530,9 @@ int main()
         cout << "Error creating!" << endl;
     }
 
-    //tgui::Theme::setDefault("Launcher/themes/Black.txt");
-
-
     Launcher ln;
+
+    //tgui::Theme::setDefault("Launcher/themes/BabyBlue.txt");
 
     ln.s_Window = &window;
 
@@ -393,6 +556,8 @@ int main()
 
     sf::Sprite posguisprite;
 
+    bool not_pass_event_to_tgui = false;
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -404,14 +569,31 @@ int main()
             // When the window is resized, the view is changed
             else if (event.type == sf::Event::Resized)
             {
-                window.setView(sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(event.size.width), static_cast<float>(event.size.height))));
                 //ln.s_TGUI.setView(window.getView());
-                ln.s_TGUI.setAbsoluteView(tgui::FloatRect(0.f, 0.f, static_cast<float>(event.size.width), static_cast<float>(event.size.height)));
+                //window.setView(sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(event.size.width), static_cast<float>(event.size.height))));
+                //rtgui.create(static_cast<float>(event.size.width), static_cast<float>(event.size.height));
+                //ln.s_TGUI.setAbsoluteView(tgui::FloatRect(0.f, 0.f, static_cast<float>(event.size.width), static_cast<float>(event.size.height)));
+                //ln.s_TGUI.setAbsoluteView(tgui::FloatRect(0.f, 0.f, static_cast<float>(event.size.width), static_cast<float>(event.size.height)));
                 //const float windowHeight = ln.s_TGUI.getView().getRect().height;
                 //ln.s_TGUI.setTextSize(static_cast<unsigned int>(0.07f * windowHeight));
             }
+            else if(event.type == sf::Event::KeyPressed)
+            {
+                if(ln.s_KeyEditBox != 0 && ln.s_KeyWaitPanel != 0)
+                {
+                    int key_code = static_cast<int>(event.key.code);
+                    tgui::String tmp_str;
+                    tmp_str = WorkFunctions::ConvertFunctions::itos(key_code);
+                    ln.s_KeyEditBox->setText(tmp_str);
+                    ln.s_KeyEditBox = 0;
+                    ln.s_KeyWaitPanel->getParent()->remove(ln.s_KeyWaitPanel);
+                    ln.s_KeyWaitPanel = 0;
+                    not_pass_event_to_tgui = true;
+                }
+            }
 
-            ln.s_TGUI.handleEvent(event); // Pass the event to the widgets
+            if(!not_pass_event_to_tgui) ln.s_TGUI.handleEvent(event);
+            not_pass_event_to_tgui = false;
         }
 
         rtgui.clear(sf::Color(255, 255, 255, 255));
@@ -422,6 +604,7 @@ int main()
 
         // draw it to the window
         sf::Sprite guisprite(guitexture);
+        //guisprite.setScale(sf::Vector2f((float)window.getSize().x / 1280, (float)window.getSize().y / 720));
 
         //fix(posguisprite, ln.s_TGUI, window);
 
