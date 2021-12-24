@@ -56,6 +56,8 @@ class Launcher
     public:
         Launcher():
             s_DD2Ini(0),
+            s_DD2General(0),
+            s_LauncherConfig(0),
             s_GuiFile(""),
             s_Window(0),
             s_DD2FileName(""),
@@ -68,6 +70,7 @@ class Launcher
         {
             delete s_DD2Ini;
             delete s_DD2General;
+            delete s_LauncherConfig;
         }
         void resetToDefault()
         {
