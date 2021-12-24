@@ -1,6 +1,7 @@
 [info]
 numberofbonuses=6
 pointforup=10000
+extensions=bmp
 
 [settings]
 speedflypoint=4
@@ -12,9 +13,9 @@ transparentmaskG=255
 transparentmaskB=204
 
 [points]
-100=1_p
-200=2_p
-400=3_p
-800=4_p
-1600=5_p
-up=6_p
+100=1_p.bmp
+200=2_p.bmp
+400=3_p.bmp
+800=4_p.bmp
+1600=5_p.bmp
+up=6_p.bmp

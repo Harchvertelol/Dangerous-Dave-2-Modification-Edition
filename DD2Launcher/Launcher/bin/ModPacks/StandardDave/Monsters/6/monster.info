@@ -6,10 +6,15 @@ numberofframesstarclump=1
 
 [other]
 numberofframesdeathtiles=5
+extensions=bmp
 outputshiftX=0
 outputshiftY=0
 animationstep=8
 animationstepstar=3
+points=1600
+clumps=12
+numberscriptclumps=12
+timelivestarclump=15
 
 [options]
 lives=16
@@ -29,4 +34,6 @@ speed3left=26
 speed3leftcorrection=-10
 speed4left=8
 speed4leftcorrection=10
+speedclump=12
+changeUDSpeedClump=3
 type=boss

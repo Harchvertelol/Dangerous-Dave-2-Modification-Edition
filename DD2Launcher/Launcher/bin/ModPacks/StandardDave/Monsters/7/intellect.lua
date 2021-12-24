@@ -8,6 +8,14 @@ function setFirstState()
 	return "rightrun"
 end
 
+function onKill(type)
+	if type == 0 then
+		lux, luy, rdx, rdy = getMonsterCollision(-1)
+		addMonster(getMonsterOption(-1, "other", "numberscriptclumps"), getCoordMonsterX(-1), getCoordMonsterY(-1), "init", 0, 0, -2, string.format("clumps=%s;phys_box_LU_X=%d;phys_box_LU_Y=%d;phys_box_RD_X=%d;phys_box_RD_Y=%d;", getMonsterOption(-1, "other", "clumps"), lux, luy, rdx, rdy))
+		return
+	end
+end
+
 function mainFunc()
 	local danger = getMonsterValue(-1, "danger")
 	if danger == "1" and testCollisionDave(-1) == 1 then
@@ -27,6 +35,7 @@ function mainFunc()
 			setNullAdditionalNumberOfAction(-1)
 			setMonsterValue(-1, "stateba", getState(-1))
 			setState(-1, "invisoff")
+			playSound("materialisation")
 			return
 		end
 	end

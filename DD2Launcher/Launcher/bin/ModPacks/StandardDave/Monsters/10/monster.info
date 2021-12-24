@@ -7,11 +7,15 @@ numberofframeshand=2
 
 [other]
 numberofframesdeathtiles=5
+extensions=bmp
 outputshiftX=0
 outputshiftY=0
 animationstephand=8
 animationstepfireball=2
 animationstep=2
+clumps=14
+clumpsfromhands=2
+numberscriptclumps=12
 
 [options]
 lives=16

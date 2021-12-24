@@ -192,6 +192,7 @@ void Monsters::drawMonster(int number, string anim, int frame, int x, int y)
     else
     {
         //s_GameClass->s_Window->draw( Image( (*s_CacheImages[number - 1][anim][frame]), x, y) );
+        //s_CacheImages[number - 1][anim][frame]->setColor(sf::Color(255, 170, 170, 255));
         s_CacheImages[number - 1][anim][frame]->setPosition(x, y);
         s_GameClass->s_RenderTexture->draw(*s_CacheImages[number - 1][anim][frame]);
     }

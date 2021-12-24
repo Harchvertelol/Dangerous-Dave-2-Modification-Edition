@@ -2,6 +2,14 @@ function setFirstState()
 	return "rightrun"
 end
 
+function onKill(type)
+	if type == 0 then
+		lux, luy, rdx, rdy = getMonsterCollision(-1)
+		addMonster(getMonsterOption(-1, "other", "numberscriptclumps"), getCoordMonsterX(-1), getCoordMonsterY(-1), "init", 0, 0, -2, string.format("clumps=%s;phys_box_LU_X=%d;phys_box_LU_Y=%d;phys_box_RD_X=%d;phys_box_RD_Y=%d;", getMonsterOption(-1, "other", "clumps"), lux, luy, rdx, rdy))
+		return
+	end
+end
+
 function calculateKnife()
 	local testgo = -1
 	if getState(-1) == "leftknife" then
@@ -27,7 +35,7 @@ function mainFunc()
 		return
 	end
 	if getState(-1) == "traceshoot" and getNumberOfAction(-1) == 1 then
-		killMonster(-1, 0)
+		killMonster(-1, 1)
 	end
 	local oldFrame = 0
 	if string.find(getState(-1), "strike") ~= nil then
@@ -45,11 +53,13 @@ function mainFunc()
 	if getMonsterFrame(-1) == 2 and string.find(getState(-1), "strike") ~= nil then
 		if getState(-1) == "leftstrike" then
 			addDuplicateMonster(-1, getCoordMonsterX(-1), getCoordMonsterY(-1), "leftknife", 0, 0, -2)
+			playSound("knife")
 			return
 		else
 			if getState(-1) == "rightstrike" then
 				if math.random(5) ~= 1 then
 					addDuplicateMonster(-1, getCoordMonsterX(-1) + 34, getCoordMonsterY(-1), "rightknife", 0, 0, -2)
+					playSound("knife")
 				end
 				return
 			end

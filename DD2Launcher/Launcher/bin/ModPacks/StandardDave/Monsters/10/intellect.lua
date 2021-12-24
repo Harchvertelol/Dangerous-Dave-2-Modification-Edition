@@ -20,7 +20,15 @@ function onKill(type)
 	if getState(-1) == "hand" then
 		local idBoss = tonumber(getMonsterValue(-1, "idBoss"))
 		setMonsterValue(idBoss, getMonsterValue(-1, "tp"), "0")
+		if type == 0 then
+			lux, luy, rdx, rdy = getMonsterCollision(-1)
+			addMonster(getMonsterOption(-1, "other", "numberscriptclumps"), getCoordMonsterX(-1), getCoordMonsterY(-1), "init", 0, 0, -2, string.format("clumps=%s;phys_box_LU_X=%d;phys_box_LU_Y=%d;phys_box_RD_X=%d;phys_box_RD_Y=%d;", getMonsterOption(-1, "other", "clumpsfromhands"), lux, luy, rdx, rdy))
+		end
 		return
+	end
+	if type == 0 then
+		lux, luy, rdx, rdy = getMonsterCollision(-1)
+		addMonster(getMonsterOption(-1, "other", "numberscriptclumps"), getCoordMonsterX(-1), getCoordMonsterY(-1), "init", 0, 0, -2, string.format("clumps=%s;phys_box_LU_X=%d;phys_box_LU_Y=%d;phys_box_RD_X=%d;phys_box_RD_Y=%d;", getMonsterOption(-1, "other", "clumps"), lux, luy, rdx, rdy))
 	end
 	setGlobalValue(-1, "goodfriendfreedom", "1")
 	setGlobalValue(-1, getNV(), "1")
@@ -196,6 +204,7 @@ function mainFunc()
 			setMonsterValue(-1, "oldstate", statem)
 			setState(-1, "openmouth")
 			setMonsterValue(-1, "attackCounter", "32")
+			playSound("finalboss")
 		end
 		setMonsterValue(-1, "timeaction", tostring(timeaction))
 	end

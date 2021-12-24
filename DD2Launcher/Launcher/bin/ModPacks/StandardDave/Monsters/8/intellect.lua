@@ -9,8 +9,21 @@ function setFirstState()
 	return "invis"
 end
 
+function onKill(type)
+	if type == 0 then
+		lux, luy, rdx, rdy = getMonsterCollision(-1)
+		addMonster(getMonsterOption(-1, "other", "numberscriptclumps"), getCoordMonsterX(-1), getCoordMonsterY(-1), "init", 0, 0, -2, string.format("clumps=%s;phys_box_LU_X=%d;phys_box_LU_Y=%d;phys_box_RD_X=%d;phys_box_RD_Y=%d;", getMonsterOption(-1, "other", "clumps"), lux, luy, rdx, rdy))
+		return
+	end
+end
+
 function mainFunc()
-	local oldCoordDaveX = tonumber(getMonsterValue(-1, "oldCoordDaveX"))
+	local oldCoordDaveX = getMonsterValue(-1, "oldCoordDaveX")
+	if oldCoordDaveX == "" then
+		oldCoordDaveX = 0
+	else
+		oldCoordDaveX = tonumber(oldCoordDaveX)
+	end
 	if oldCoordDaveX < 0 then
 		oldCoordDaveX = getCoordDaveX()
 		setMonsterValue(-1, "oldCoordDaveX", tostring(cdx))
@@ -37,6 +50,7 @@ function mainFunc()
 				setNullAdditionalNumberOfAction(-1)
 				setMonsterValue(-1, "stateba", getState(-1))
 				setState(-1, "invisoff")
+				playSound("ghost_view_start")
 				return
 			end
 		end
@@ -49,6 +63,7 @@ function mainFunc()
 				if getNumberOfLives(-1) < 0 then
 					setNumberOfLives(-1, 1)
 				end
+				playSound("materialisation")
 			end
 			if getMonsterFrame(-1) == 0 then
 				local stateba = getMonsterValue(-1, "stateba")

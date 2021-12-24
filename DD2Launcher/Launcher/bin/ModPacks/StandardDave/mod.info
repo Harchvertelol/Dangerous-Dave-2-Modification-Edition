@@ -1,9 +1,13 @@
 [info]
+gameversion=0.9pb
 modpackuniquenumber=0
 modpackname=standard
 numberoftiles=858
-numberofmonsters=11
+numberofmonsters=12
 numberofbonuses=6
+name=Standard Dangerous Dave 2 (Haunted Mansion)
+logo=
+desc=
 
 [other]
 inifile=
