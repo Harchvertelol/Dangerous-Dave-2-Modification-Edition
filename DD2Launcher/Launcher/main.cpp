@@ -72,8 +72,10 @@ class Launcher
         void resetToDefault()
         {
             if(!s_DD2Ini) delete s_DD2Ini;
+            if(!s_DD2General) delete s_DD2General;
             ParserInfoFile prs;
             s_DD2Ini = prs.getParsedFromFile("Launcher/DD2Default.ini");
+            s_DD2General = prs.getParsedFromFile("Launcher/GeneralDefault.ini");
             loadData();
         }
         void saveConfig()
@@ -158,12 +160,14 @@ class Launcher
                                            auto panel = tgui::Panel::create();
                                            panel->setSize("20%", "10%");
                                            panel->setPosition("40%", "45%");
+                                           panel->getRenderer()->setBorders(tgui::Borders(1));
+                                           panel->getRenderer()->setBorderColor(tgui::Color(0, 0, 0, 255));
                                            s_TGUI.add(panel);
 
                                            auto label_press_key = tgui::Label::create();
                                            label_press_key->setText("Press key...");
                                            label_press_key->setTextSize(15);
-                                           label_press_key->setPosition("20%", "40%");
+                                           label_press_key->setPosition("35%", "40%");
                                            panel->add(label_press_key);
 
                                            this->s_KeyEditBox = editBox;
@@ -367,6 +371,88 @@ class Launcher
 
             tgui::Button::Ptr Keys = s_TGUI.get<tgui::Button>("Keys");
             Keys->onPress(Launcher::keys, this);
+
+            tgui::Button::Ptr Editor = s_TGUI.get<tgui::Button>("Editor");
+            Editor->onPress(Launcher::editor, this);
+
+            tgui::Button::Ptr EditorSettings = s_TGUI.get<tgui::Button>("EditorSettings");
+            EditorSettings->onPress(Launcher::editorSettings, this, false);
+        }
+        void editorSettings(bool error_path = true)
+        {
+            string PathToTiledExe = s_LauncherConfig->getValue("general", "path_to_tiled_exe");
+            auto panel = tgui::Panel::create();
+            panel->setSize("30%", "20%");
+            panel->setPosition("35%", "30%");
+            panel->getRenderer()->setBorders(tgui::Borders(1));
+            panel->getRenderer()->setBorderColor(tgui::Color(0, 0, 0, 255));
+            s_TGUI.add(panel);
+
+            auto label_press_key = tgui::Label::create();
+            label_press_key->setTextSize(15);
+            if(error_path)
+            {
+                label_press_key->setText("Tiled editor not found!");
+                label_press_key->setPosition("28%", "10%");
+            }
+            else
+            {
+                label_press_key->setText("Editor settings:");
+                label_press_key->setPosition("35%", "10%");
+            }
+            //label_press_key->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+            panel->add(label_press_key);
+
+            auto editBox = tgui::EditBox::create();
+            editBox->setTextSize(15);
+            editBox->setPosition("5%", "30%");
+            editBox->setSize("90%", "15%");
+            editBox->setText(PathToTiledExe);
+            editBox->setDefaultText("Empty");
+            panel->add(editBox);
+
+            auto button = tgui::Button::create();
+            button->setPosition("40%", "53%");
+            button->setText("Choose file");
+            button->onPress([=](){
+                            auto openFileDialog = tgui::FileDialog::create("Choose file", "Open");
+                            openFileDialog->onFileSelect([=](){ editBox->setText(openFileDialog->getSelectedPaths()[0].asString()); });
+                            s_TGUI.add(openFileDialog);
+                            });
+            panel->add(button);
+
+            button = tgui::Button::create();
+            button->setPosition("35%", "75%");
+            button->setText("Save");
+            button->onPress([=](){
+                            s_LauncherConfig->setValue("general", "path_to_tiled_exe", editBox->getText().toStdString());
+                            ParserInfoFile prs;
+                            prs.writeParsedToFile(s_LauncherConfig, "Launcher/Launcher.ini");
+                            s_TGUI.remove(panel);
+                            });
+            panel->add(button);
+
+            button = tgui::Button::create();
+            button->setPosition("55%", "75%");
+            button->setText("Close");
+            button->onPress([=](){ s_TGUI.remove(panel); });
+            panel->add(button);
+        }
+        void editor()
+        {
+            string PathToTiledExe = s_LauncherConfig->getValue("general", "path_to_tiled_exe");
+            if(WorkFunctions::FileFunctions::isFileExists(PathToTiledExe))
+            {
+                string disk_letter_tiled = PathToTiledExe.substr(0, PathToTiledExe.find("/"));
+                string folder_tiled = PathToTiledExe.substr(0, PathToTiledExe.find_last_of("/") + 1);
+                string tiled_exe_name = PathToTiledExe.substr(PathToTiledExe.find_last_of("/") + 1);
+                system( (disk_letter_tiled + " && cd \"" + folder_tiled + "\" && start " + tiled_exe_name).c_str() );
+                s_Window->close();
+            }
+            else
+            {
+                editorSettings();
+            }
         }
         void setDifficulty(const tgui::String& difvalue)
         {
