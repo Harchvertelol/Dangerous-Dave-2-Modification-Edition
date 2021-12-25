@@ -128,21 +128,21 @@ class Launcher
         }
         void addKeysButtons(PostParsingStruct* pps, tgui::ScrollablePanel::Ptr layout, string prefix, string subblock = "")
         {
-            int x_start = 15, y_shift = 35;
-            int i = 0;
+            int x_start = 350, y_shift = 35;
+            int i = 1;
             map<string, map<string, string> >::iterator iter;
             map<string, string>::iterator iter1;
             for(iter = pps->getMapVariables().begin(); iter != pps->getMapVariables().end(); iter++, i++)
             {
                 if(subblock == "" || iter->first == subblock)
                 {
-                    auto label = tgui::Label::create();
+                    /*auto label = tgui::Label::create();
                     label->setText(iter->first);
                     label->setPosition(5, i * y_shift);
                     label->setTextSize(25);
                     layout->add(label);
                     i++;
-                    i++;
+                    i++;*/
                     for(iter1 = iter->second.begin(); iter1 != iter->second.end(); iter1++, i++)
                     {
                         auto label = tgui::Button::create();
@@ -153,7 +153,7 @@ class Launcher
 
                         auto editBox = tgui::EditBox::create();
                         editBox->setTextSize(18);
-                        editBox->setPosition(250, i * y_shift);
+                        editBox->setPosition(x_start + 200, i * y_shift);
                         editBox->setText(iter1->second);
                         editBox->setDefaultText("Empty");
                         layout->add(editBox);
@@ -162,15 +162,18 @@ class Launcher
                         label->onPress([=](){
                                            auto panel = tgui::Panel::create();
                                            panel->setSize("20%", "10%");
-                                           panel->setPosition("40%", "45%");
+                                           panel->setPosition("50%", "43%");
+                                           panel->setOrigin(0.5, 0.5);
                                            panel->getRenderer()->setBorders(tgui::Borders(1));
                                            panel->getRenderer()->setBorderColor(tgui::Color(0, 0, 0, 255));
-                                           s_TGUI.add(panel);
+                                           layout->add(panel);
 
                                            auto label_press_key = tgui::Label::create();
                                            label_press_key->setText("Press key...");
                                            label_press_key->setTextSize(15);
-                                           label_press_key->setPosition("35%", "40%");
+                                           label_press_key->setSize("100%", "100%");
+                                           label_press_key->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+                                           label_press_key->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
                                            panel->add(label_press_key);
 
                                            this->s_KeyEditBox = editBox;
@@ -179,11 +182,6 @@ class Launcher
                     }
                 }
             }
-            auto label = tgui::Label::create();
-            label->setText("");
-            label->setPosition(15, i * 30);
-            label->setTextSize(15);
-            layout->add(label);
         }
         void addTextsEditBoxes(PostParsingStruct* pps, tgui::ScrollablePanel::Ptr layout, string prefix)
         {
@@ -230,10 +228,18 @@ class Launcher
             s_TGUI.add(child);
 
             auto layout = tgui::ScrollablePanel::create();
-            layout->setSize("40%", "100%");
-            layout->setPosition("30%", "0%");
+            layout->setSize("80%", "100%");
             layout->setVerticalScrollAmount(40);
             child->add(layout);
+
+            auto label = tgui::Label::create();
+            label->setText("Keys");
+            label->setOrigin(0.5, 0);
+            label->setSize("40%", "10%");
+            label->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+            label->setPosition("50%", "10%");
+            label->setTextSize(25);
+            layout->add(label);
 
             addKeysButtons(s_DD2Ini, layout, "ini", "keys");
 
@@ -385,47 +391,47 @@ class Launcher
         {
             string PathToTiledExe = s_LauncherConfig->getValue("general", "path_to_tiled_exe");
             auto panel = tgui::Panel::create();
-            panel->setSize("30%", "20%");
-            panel->setPosition("35%", "30%");
+            panel->setSize("40%", "30%");
+            panel->setOrigin(0.5, 0.5);
+            panel->setPosition("50%", "43%");
             panel->getRenderer()->setBorders(tgui::Borders(1));
             panel->getRenderer()->setBorderColor(tgui::Color(0, 0, 0, 255));
             s_TGUI.add(panel);
 
             auto label_press_key = tgui::Label::create();
             label_press_key->setTextSize(15);
-            if(error_path)
-            {
-                label_press_key->setText("Tiled editor not found!");
-                label_press_key->setPosition("28%", "10%");
-            }
-            else
-            {
-                label_press_key->setText("Editor settings:");
-                label_press_key->setPosition("35%", "10%");
-            }
-            //label_press_key->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+            label_press_key->setPosition("0%", "10%");
+            if(error_path) label_press_key->setText("Tiled editor not found!");
+            else label_press_key->setText("Editor settings:");
+            label_press_key->setSize("100%");
+            label_press_key->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
             panel->add(label_press_key);
 
             auto editBox = tgui::EditBox::create();
             editBox->setTextSize(15);
-            editBox->setPosition("5%", "30%");
+            editBox->setOrigin(0.5, 0);
+            editBox->setPosition("50%", "30%");
             editBox->setSize("90%", "15%");
             editBox->setText(PathToTiledExe);
-            editBox->setDefaultText("Empty");
+            editBox->setAlignment(tgui::EditBox::Alignment::Center);
+            editBox->setDefaultText("Choose tiled.exe");
             panel->add(editBox);
 
             auto button = tgui::Button::create();
-            button->setPosition("40%", "53%");
+            button->setOrigin(0.5, 0);
+            button->setPosition("50%", "53%");
             button->setText("Choose file");
             button->onPress([=](){
                             auto openFileDialog = tgui::FileDialog::create("Choose file", "Open");
-                            openFileDialog->onFileSelect([=](){ editBox->setText(openFileDialog->getSelectedPaths()[0].asString()); });
+                            openFileDialog->onFileSelect([=](){ if(openFileDialog->getSelectedPaths().size() > 0) editBox->setText(openFileDialog->getSelectedPaths()[0].asString()); });
                             s_TGUI.add(openFileDialog);
                             });
             panel->add(button);
 
             button = tgui::Button::create();
-            button->setPosition("35%", "75%");
+            button->setSize("15%");
+            button->setOrigin(0.5, 0);
+            button->setPosition("40%", "75%");
             button->setText("Save");
             button->onPress([=](){
                             s_LauncherConfig->setValue("general", "path_to_tiled_exe", editBox->getText().toStdString());
@@ -436,7 +442,9 @@ class Launcher
             panel->add(button);
 
             button = tgui::Button::create();
-            button->setPosition("55%", "75%");
+            button->setSize("15%");
+            button->setOrigin(0.5, 0);
+            button->setPosition("60%", "75%");
             button->setText("Close");
             button->onPress([=](){ s_TGUI.remove(panel); });
             panel->add(button);
