@@ -443,7 +443,8 @@ void Game::drawAll()
     const Texture& txture = s_RenderTexture->getTexture();
     Sprite renderSprite(txture);
     renderSprite.setScale(s_GameRenderScale, s_GameRenderScale);
-    renderSprite.setPosition(Vector2f(0, 0));
+    if(s_IniFile->getValue("video", "center") == "true") renderSprite.setPosition(Vector2f(s_DisplayStruct->s_WindowResolutionX / 2 - s_DisplayStruct->s_GameResolutionX / 2 * s_GameRenderScale, s_DisplayStruct->s_WindowResolutionY / 2 - s_DisplayStruct->s_GameResolutionY / 2 * s_GameRenderScale));
+    else renderSprite.setPosition(Vector2f(0, 0));
     s_RenderWindow->draw(renderSprite);
     s_RenderWindow->display();
 }
