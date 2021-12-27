@@ -378,19 +378,37 @@ getMonsterValue (id, nameofvalue) - get a value from the current monster that wi
 	Returns the "value" of the requested value.
 	Examples: myvaluetest = getMonsterValue (-1, "test") - got a variable.
 
-setGlobalValue (id, nameofvalue, valueofvalue) - set the global value that is available to all monsters. All values are of type string.
-						If you need numbers, then you need to convert back and forth.
-	id - monster id, if -1, then the current monster
-	nameofvalue - value name
-	valueofvalue - value value
-	Examples: setGlobalValue (-1, "test", "value") - set the variable test == "value".
+setGlobalValue (id, nameofblock, nameofvalue, valueofvalue) - set a global value that is available to all monsters. All values are of type "string".
+	If numbers are needed, then it is necessary to convert back and forth.
+	id - monster identifier, if -1, then the current monster
+	nameofblock - the name of the block where the values are stored
+	nameofvalue - the name of the value
+	valueofvalue - the value of the value
+	Examples: setGlobalValue (-1, "testblock", "test", "value") - set the test == "value" variable in the testblock block.
 
-getGlobalValue (id, nameofvalue) - get a global value that is available to all monsters. All values are of type string.
-						If you need numbers, then you need to convert back and forth.
-	id - monster id, if -1, then the current monster
-	nameofvalue - value name
+getGlobalValue (id, nameofblock, nameofvalue) - get a global value that is available to all monsters. All values are of type "string".
+	If numbers are needed, then it is necessary to convert back and forth.
+	id - monster identifier, if -1, then the current monster
+	nameofblock - the name of the block where the values are stored
+	nameofvalue - the name of the value
 	Returns the "value" of the requested value.
-	Examples: myvaluetest = getGlobalValue (-1, "test") - received a variable.
+	Examples: myvaluetest = getGlobalValue (-1, "testblock", "test") - got a variable.
+
+setDaveValue (id, nameofblock, nameofvalue, valueofvalue) - set Dave's value. All values are of type "string".
+	If numbers are needed, then it is necessary to convert back and forth.
+	id - monster identifier, if -1, then the current monster
+	nameofblock - the name of the block where the values are stored
+	nameofvalue - the name of the value
+	valueofvalue - the value of the value
+	Examples: setDaveValue (-1, "test", "testblock", "value") - set the variable test == "value".
+
+getDaveValue (id, nameofblock, nameofvalue) - get Dave's value. All values are of type "string".
+	If numbers are needed, then it is necessary to convert back and forth.
+	id - monster identifier, if -1, then the current monster
+	nameofblock - the name of the block where the values are stored
+	nameofvalue - the name of the value
+	Returns the "value" of the requested value.
+	Examples: myvaluetest = getDaveValue (-1, "testblock", "test") - got a variable.
 
 getModSettingsValue (id, nameofblock, nameofvalue) - get the value from ModPackName/settings.ini.
 	id - monster identifier, if -1, then the current monster
@@ -532,3 +550,4 @@ GameService variables. Variables starting with GS_:
 		GS_teleport - tile variable. Teleport the player to the coordinates specified, separated by commas. Example: 12; 12 = GS_teleport = 123.142;
 		GS_animation_shift - tile variable. How many milliseconds to shift the animation of this tile.
 		GS_animation_frame_lock - tile variable. If set, the tile animation does not work, instead the frame assigned to it is shown. The first frame is numbered 0.
+		GS_secret - tile variable. Contains the name of the activated secret when the tile is touched (from the Secrets list).

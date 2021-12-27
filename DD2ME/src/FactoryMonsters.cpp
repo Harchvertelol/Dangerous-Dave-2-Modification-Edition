@@ -12,17 +12,20 @@ using namespace MathFunctions;
 using namespace GameFunctions;
 using namespace ConvertFunctions;
 
+using namespace IniParser;
+
 using namespace std;
 
 FactoryMonsters::FactoryMonsters(Game* gameclass):
     s_GameClass(gameclass),
     s_MaxIndex(0)
 {
-    //...
+    s_AIMonstersValues = new PostParsingStruct;
 }
 
 FactoryMonsters::~FactoryMonsters()
 {
+    if(s_AIMonstersValues != 0) delete s_AIMonstersValues;
     clear();
 }
 
@@ -49,7 +52,7 @@ CreatureMonster* FactoryMonsters::addMonster(int number, int x, int y, bool gets
 void FactoryMonsters::addMonstersFromQueue()
 {
     if(s_QueueForAddingMonsters.empty()) return;
-    for(int i = 0; i < s_QueueForAddingMonsters.size(); i++)
+    for(unsigned int i = 0; i < s_QueueForAddingMonsters.size(); i++)
     {
         s_Monsters[s_MaxIndex] = s_QueueForAddingMonsters[i];
         //s_Monsters[s_MaxIndex]->s_ID = s_MaxIndex;
@@ -159,7 +162,7 @@ void FactoryMonsters::clear()
        delete iter->second;
        s_Monsters.erase(iter++);
     }
-    s_AIMonstersValues.clear();
+    s_AIMonstersValues->clear();
     s_QueueForAddingMonsters.clear();
     s_MaxIndex = 0;
 }

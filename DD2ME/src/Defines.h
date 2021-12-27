@@ -16,6 +16,7 @@ namespace STRING_CONSTANTS
     const std::string SC_TITLE_WINDOW = "DD2 Remake: ME v0.9 pre-beta";
     const std::string SC_GAME_VERSION = "pre-beta v0.9";
     const std::string DEFAULT_FOLDER_SPLITTER = "/";
+    const std::string SC_DEFAULT_TEXT_ON_FOUND_SECRET = "You found a secret!";
 
     const std::string PREFIX_NAME_FIELD_TILES = "Tiles";
     const std::string NAME_FIELD_BONUSES = "FieldBonuses";

@@ -20,9 +20,10 @@ namespace IniParser
             //! Получение значения переменной.
             /*! \param A Значение блока, откуда берём переменную.
             \param B Название переменной.
+            \param error_on_not_exists Если равно true, то будет выведена ошибка при получении несуществющей переменной, иначе нет
             \return Возвращает значение переменной.
             */
-            std::string getValue(std::string A, std::string B);
+            std::string getValue(std::string A, std::string B, bool error_on_not_exists = true);
             //! Установка значения переменной.
             /*! \param A Значение блока, где берём переменную.
             \param B Название переменной.

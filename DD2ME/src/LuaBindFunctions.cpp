@@ -1281,6 +1281,54 @@ int LuaBindFunctions::getMonsterValue(lua_State* s_Lua)
     return 1;
 }
 
+static int __setDaveValue(lua_State* s_Lua)
+{
+    return s_LBF->setDaveValue(s_Lua);
+}
+
+int LuaBindFunctions::setDaveValue(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n != 4)
+    {
+        cout<<"Error! Number of arguments of function \"setDaveValue\" is incorrect!"<<endl;
+        return 0;
+    }
+    int keyMonster = lua_tonumber(s_Lua, 1);
+    CreatureMonster* mnst;
+    if(keyMonster == -1) mnst = s_CurrentMonster;
+    else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
+    string block = lua_tostring(s_Lua, 2);
+    string key = lua_tostring(s_Lua, 3);
+    string value = lua_tostring(s_Lua, 4);
+    s_GameClass->s_GameInfo->s_MyDave->s_Values->setValue(block, key, value);
+    return 0;
+}
+
+static int __getDaveValue(lua_State* s_Lua)
+{
+    return s_LBF->getDaveValue(s_Lua);
+}
+
+int LuaBindFunctions::getDaveValue(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n != 3)
+    {
+        cout<<"Error! Number of arguments of function \"getDaveValue\" is incorrect!"<<endl;
+        return 0;
+    }
+    int keyMonster = lua_tonumber(s_Lua, 1);
+    CreatureMonster* mnst;
+    if(keyMonster == -1) mnst = s_CurrentMonster;
+    else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
+    string block = lua_tostring(s_Lua, 2);
+    string key = lua_tostring(s_Lua, 3);
+    string value = s_GameClass->s_GameInfo->s_MyDave->s_Values->getValue(block, key, false);
+    lua_pushstring(s_Lua, value.c_str());
+    return 1;
+}
+
 static int __testTileTypeRight(lua_State* s_Lua)
 {
     return s_LBF->testTileTypeRight(s_Lua);
@@ -1628,7 +1676,7 @@ static int __setGlobalValue(lua_State* s_Lua)
 int LuaBindFunctions::setGlobalValue(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
-    if(n != 3)
+    if(n != 4)
     {
         cout<<"Error! Number of arguments of function \"setGlobalValue\" is incorrect!"<<endl;
         return 0;
@@ -1637,9 +1685,10 @@ int LuaBindFunctions::setGlobalValue(lua_State* s_Lua)
     CreatureMonster* mnst;
     if(keyMonster == -1) mnst = s_CurrentMonster;
     else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
-    string key = lua_tostring(s_Lua, 2);
-    string value = lua_tostring(s_Lua, 3);
-    s_GameClass->s_GameInfo->s_FactoryMonsters->s_AIMonstersValues[key] = value;
+    string block = lua_tostring(s_Lua, 2);
+    string key = lua_tostring(s_Lua, 3);
+    string value = lua_tostring(s_Lua, 4);
+    s_GameClass->s_GameInfo->s_FactoryMonsters->s_AIMonstersValues->setValue(block, key, value);
     return 0;
 }
 
@@ -1651,7 +1700,7 @@ static int __getGlobalValue(lua_State* s_Lua)
 int LuaBindFunctions::getGlobalValue(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
-    if(n != 2)
+    if(n != 3)
     {
         cout<<"Error! Number of arguments of function \"getGlobalValue\" is incorrect!"<<endl;
         return 0;
@@ -1660,8 +1709,9 @@ int LuaBindFunctions::getGlobalValue(lua_State* s_Lua)
     CreatureMonster* mnst;
     if(keyMonster == -1) mnst = s_CurrentMonster;
     else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
-    string key = lua_tostring(s_Lua, 2);
-    string value = s_GameClass->s_GameInfo->s_FactoryMonsters->s_AIMonstersValues[key];
+    string block = lua_tostring(s_Lua, 2);
+    string key = lua_tostring(s_Lua, 3);
+    string value = s_GameClass->s_GameInfo->s_FactoryMonsters->s_AIMonstersValues->getValue(block, key, false);
     lua_pushstring(s_Lua, value.c_str());
     return 1;
 }
@@ -1816,6 +1866,8 @@ void LuaBindFunctions::registerFunctionsMonster(lua_State* s_Lua)
     lua_register(s_Lua, "getNumberOfLives", &__getNumberOfLives);
     lua_register(s_Lua, "setNumberOfLives", &__setNumberOfLives);
     lua_register(s_Lua, "getMonsterCollision", &__getMonsterCollision);
+    lua_register(s_Lua, "setDaveValue", &__setDaveValue);
+    lua_register(s_Lua, "getDaveValue", &__getDaveValue);
 }
 
 static int __addPackImagesToFactoryTemporaryImage(lua_State* s_Lua)

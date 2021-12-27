@@ -30,4 +30,7 @@ changelevelongameover=2 // Optional parameter indicating how to change the level
                         // that is %cur_lev% + N> max_lev, then go to the last level). If it is "-N", then N is subtracted from the current level (wisely, if %cur_lev% - N < 1, then go to level 1).
 numberphysictilelayer=1 // Optional parameter, specifies the number of the physical layer of the tiles. If absent, it is equal to 1.
 
+[Secrets] // List of secrets.
+1=You cool! // This text will be displayed when hitting a tile with a tile parameter GS_secret=1.
+
 // Next comes level information

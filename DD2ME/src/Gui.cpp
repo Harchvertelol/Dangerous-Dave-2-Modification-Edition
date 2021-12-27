@@ -13,12 +13,12 @@ using namespace sf;
 Gui::Gui(Game* gameclass):
     s_GameClass(gameclass)
 {
-    //...
+    s_TGUI = new tgui::Gui;
 }
 
 Gui::~Gui()
 {
-    //...
+    if(s_TGUI != 0) delete s_TGUI;
 }
 
 void Gui::drawFPS()
@@ -243,4 +243,39 @@ void Gui::drawGuiState3()
     }
     s_GameClass->s_Data->s_Dave->drawBandolier(s_GameClass->s_GameInfo->s_MyDave->s_Cartridges, 8, 8);
     drawFPS();
+}
+
+void Gui::createPopupWindow(string text, int timer)
+{
+    map<int, int> tmp_mas;
+    int res_col = 0;
+    auto popupWindow = tgui::Panel::create();
+    auto label_text = tgui::Label::create();
+    label_text->setText(text);
+    label_text->setTextSize(15);
+    label_text->setSize("85%", "70%");
+    label_text->setOrigin(0.5, 0.5);
+    label_text->setPosition("50%", "50%");
+    label_text->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+    label_text->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "textcolorpopupwindow"), ";");
+    if(res_col < 3) cout << "Error with gui parameters for popup window: textcolorpopupwindow" << endl;
+    else label_text->getRenderer()->setTextColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
+    popupWindow->setSize("30%", "10%");
+    popupWindow->setOrigin(0.5, 0.5);
+    popupWindow->setPosition("50%", "15%");
+    popupWindow->getRenderer()->setBorders(tgui::Borders(1));
+    tmp_mas.clear();
+    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "bordercolorpopupwindow"), ";");
+    if(res_col < 3) cout << "Error with gui parameters for popup window: bordercolorpopupwindow" << endl;
+    else popupWindow->getRenderer()->setBorderColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
+    tmp_mas.clear();
+    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "backgroundcolorpopupwindow"), ";");
+    if(res_col < 3) cout << "Error with gui parameters for popup window: backgroundcolorpopupwindow" << endl;
+    else popupWindow->getRenderer()->setBackgroundColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
+    popupWindow->add(label_text);
+    popupWindow->showWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "timefadepopupwindow").c_str()));
+    popupWindow->onAnimationFinish([=](bool isShow){ if(!isShow) popupWindow->getParent()->remove(popupWindow); });
+    s_GameClass->s_Gui->s_TGUI->add(popupWindow);
+    tgui::Timer::scheduleCallback([=](){ popupWindow->hideWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "timefadepopupwindow").c_str())); }, timer);
 }

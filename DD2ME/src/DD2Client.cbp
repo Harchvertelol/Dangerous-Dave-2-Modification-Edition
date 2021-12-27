@@ -16,6 +16,7 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
+					<Add library="../../Engines/TGUI-0.9/lib/libtgui-d.a" />
 					<Add library="../../Engines/SFML/lib/libsfml-audio-d.a" />
 					<Add library="../../Engines/SFML/lib/libsfml-graphics-d.a" />
 					<Add library="../../Engines/SFML/lib/libsfml-window-d.a" />
@@ -33,6 +34,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="../../Engines/TGUI-0.9/lib/libtgui.a" />
 					<Add library="../../Engines/SFML/lib/libsfml-audio.a" />
 					<Add library="../../Engines/SFML/lib/libsfml-graphics.a" />
 					<Add library="../../Engines/SFML/lib/libsfml-window.a" />
@@ -42,9 +44,10 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-std=c++11" />
+			<Add option="-std=c++14" />
 			<Add option="-DWIN32" />
 			<Add directory="../../Engines/SFML/include" />
+			<Add directory="../../Engines/TGUI-0.9/include" />
 		</Compiler>
 		<Linker>
 			<Add library="libws2_32.a" />

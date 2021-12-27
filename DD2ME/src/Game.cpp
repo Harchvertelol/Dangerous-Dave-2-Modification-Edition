@@ -315,6 +315,7 @@ void Game::play()
         }
         vector<int> timers_ticks = s_Timers.getTimersTicks();
         for(int i = 0; i < timers_ticks.size(); i++) onTimer(timers_ticks[i]);
+        s_Gui->s_TGUI->handleEvent(event);
     }
 
     /*MSG msg;
@@ -445,7 +446,17 @@ void Game::drawAll()
     renderSprite.setScale(s_GameRenderScale, s_GameRenderScale);
     if(s_IniFile->getValue("video", "center") == "true") renderSprite.setPosition(Vector2f(s_DisplayStruct->s_WindowResolutionX / 2 - s_DisplayStruct->s_GameResolutionX / 2 * s_GameRenderScale, s_DisplayStruct->s_WindowResolutionY / 2 - s_DisplayStruct->s_GameResolutionY / 2 * s_GameRenderScale));
     else renderSprite.setPosition(Vector2f(0, 0));
+    map<int, int> tmp_mas;
+    int res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_NetClient->s_NetInfo->getValue("gui", "fillcolorbackgroundwindow"), ";");
+    if(res_col < 3)
+    {
+        cout << "Error with gui parameters for popup window: fillcolorbackgroundwindow" << endl;
+        s_RenderWindow->clear();
+    }
+    else s_RenderWindow->clear(Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
     s_RenderWindow->draw(renderSprite);
+    s_Gui->s_TGUI->setTarget(*s_RenderWindow);
+    s_Gui->s_TGUI->draw();
     s_RenderWindow->display();
 }
 
@@ -474,10 +485,10 @@ PostParsingStruct* Game::getObjects()
             }
         }
     map<string, string>::iterator iter1m;
-    for( iter1m = s_GameInfo->s_FactoryMonsters->s_AIMonstersValues.begin(); iter1m != s_GameInfo->s_FactoryMonsters->s_AIMonstersValues.end(); iter1m++)
+    /*for( iter1m = s_GameInfo->s_FactoryMonsters->s_AIMonstersValues.begin(); iter1m != s_GameInfo->s_FactoryMonsters->s_AIMonstersValues.end(); iter1m++)
     {
         cpps->setValue("AIMonstersValues", iter1m->first, iter1m->second );
-    }
+    }*/
     map<int, CreatureDave*>::iterator iter1;
     for( iter1 = s_GameInfo->s_Daves.begin(); iter1 != s_GameInfo->s_Daves.end(); iter1++)
     {
@@ -580,10 +591,10 @@ void Game::setObjects(PostParsingStruct* cpps)
         else if(iter->first.find("AIMonstersValues") == 0)
         {
             map<string, string>::iterator iter1;
-            for( iter1 = cpps->getMapVariables()["AIMonstersValues"].begin(); iter1 != cpps->getMapVariables()["AIMonstersValues"].end(); iter1++)
+            /*for( iter1 = cpps->getMapVariables()["AIMonstersValues"].begin(); iter1 != cpps->getMapVariables()["AIMonstersValues"].end(); iter1++)
             {
                 s_GameInfo->s_FactoryMonsters->s_AIMonstersValues[iter1->first] = iter1->second;
-            }
+            }*/
         }
         else if(iter->first.find("dave_") == 0)
         {

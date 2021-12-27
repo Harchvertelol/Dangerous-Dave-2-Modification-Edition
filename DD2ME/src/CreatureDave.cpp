@@ -46,11 +46,13 @@ CreatureDave::CreatureDave(Game* gameclass):
     s_NickName("")
 {
     s_KeysState = new KeysState;
+    s_Values = new PostParsingStruct;
 }
 
 CreatureDave::~CreatureDave()
 {
     if(s_KeysState != 0) delete s_KeysState;
+    if(s_Values != 0) delete s_Values;
 }
 
 void CreatureDave::live(bool doKey)
@@ -588,6 +590,16 @@ int CreatureDave::testChangeLevel()
         {
             string toLevel_str = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_to_level");
             string isTp = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_teleport");
+            string isSecret = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_secret");
+            string cur_secr = s_Values->getValue("GS_secrets_visited", "level_" + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel), false);
+            if(isSecret != "" && !(cur_secr.find(isSecret + ";") == 0 || cur_secr.find(";" + isSecret + ";") != string::npos) )
+            {
+                string setting_str = cur_secr + isSecret + ";";
+                s_Values->setValue("GS_secrets_visited", "level_" + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel), setting_str);
+                string text_popup = STRING_CONSTANTS::SC_DEFAULT_TEXT_ON_FOUND_SECRET;
+                if(s_GameClass->s_Data->s_Level->s_Params->isExists("Secrets", isSecret)) text_popup = s_GameClass->s_Data->s_Level->s_Params->getValue("Secrets", isSecret);
+                s_GameClass->s_Gui->createPopupWindow(text_popup, atoi(s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "hidetimerpopupwindow").c_str()));
+            }
             int toLevel = -1;
             if(TileType == EXITLEVEL) toLevel = s_GameClass->s_GameInfo->s_CurrentLevel + 1;
             if(toLevel_str != "") toLevel = atoi(toLevel_str.c_str());
@@ -602,7 +614,7 @@ int CreatureDave::testChangeLevel()
                     s_CoordY = tmp_coords_tp[1];
                 }
             }
-            return toLevel;
+            if(toLevel != -1) return toLevel;
         }
     }
     return 0;
@@ -745,7 +757,7 @@ bool CreatureDave::correctionPhys(int coord, int what)
     if(s_GameClass->s_IniFile->getValue("settings", "correctionphysics") == "false") return false;
     if(what == 0 || what == 1)
     {
-        if(coord == s_CoordX && what == 0 || coord == s_CoordY && what == 1) return false;
+        if( (coord == s_CoordX && what == 0) || (coord == s_CoordY && what == 1) ) return false;
     }
     else
     {

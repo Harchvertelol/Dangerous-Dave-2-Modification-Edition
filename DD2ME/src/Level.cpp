@@ -260,6 +260,7 @@ bool Level::setTileParameter(int x_tile, int y_tile, string name, string value)
         return false;
     }
     s_TilesParams[x_tile + y_tile * SizeXLev][name] = value;
+    return true;
 }
 
 void Level::draw(bool before_physic_field)

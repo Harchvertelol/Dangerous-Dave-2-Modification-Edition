@@ -21,26 +21,30 @@ IniParser::PostParsingStruct::~PostParsingStruct()
     s_Variables.clear();
 }
 
-string IniParser::PostParsingStruct::getValue(string A, string B)
+string IniParser::PostParsingStruct::getValue(string A, string B, bool error_on_not_exists)
 {
     map<string, map<string, string> >::iterator I = s_Variables.find(A);
     if ( I == s_Variables.end() )
     {
-        string show_error_str = "Error: ";
-        if(s_FileName != "") show_error_str += "File: " + s_FileName + ", ";
-        show_error_str += "First value not setted. ( " + A + " )";
-        cout << show_error_str << endl;
-        //cout << "Error: First value not setted. ( " << A << " )" <<endl;
+        if(error_on_not_exists)
+        {
+            string show_error_str = "Error: ";
+            if(s_FileName != "") show_error_str += "File: " + s_FileName + ", ";
+            show_error_str += "First value not setted. ( " + A + " )";
+            cout << show_error_str << endl;
+        }
         return "";
     }
     map<string, string>::iterator II = s_Variables[A].find(B);
     if ( II == s_Variables[A].end() )
     {
-        string show_error_str = "Error: ";
-        if(s_FileName != "") show_error_str += "File: " + s_FileName + ", ";
-        show_error_str += "Second value not setted. ( " + A + ", " + B + " )";
-        cout << show_error_str << endl;
-        //cout << "Error: Second value not setted. ( " << A << ", " << B << " )" <<endl;
+        if(error_on_not_exists)
+        {
+            string show_error_str = "Error: ";
+            if(s_FileName != "") show_error_str += "File: " + s_FileName + ", ";
+            show_error_str += "Second value not setted. ( " + A + ", " + B + " )";
+            cout << show_error_str << endl;
+        }
         return "";
     }
     return s_Variables[A][B];

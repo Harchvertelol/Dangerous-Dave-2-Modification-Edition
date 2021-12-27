@@ -81,6 +81,8 @@ class LuaBindFunctions
         int getNumberOfLives(lua_State* s_Lua);
         int setNumberOfLives(lua_State* s_Lua);
         int getMonsterCollision(lua_State* s_Lua);
+        int setDaveValue(lua_State* s_Lua);
+        int getDaveValue(lua_State* s_Lua);
         //...
 };
 #endif
