@@ -27,6 +27,7 @@ class CreatureMonster
         unsigned int s_AdditionalNumberOfAction;
         std::map<std::string, std::string> s_AIMonsterValues;
         bool s_IsAlwaysLiveInStep;
+        bool s_IsHighlighted;
         lua_State* s_AILuaState;
         void createLuaState();
         void live();

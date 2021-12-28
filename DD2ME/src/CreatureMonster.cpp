@@ -25,6 +25,7 @@ CreatureMonster::CreatureMonster(Game* gameclass, int number, int id, int x, int
     s_NumberOfAction(0),
     s_AdditionalNumberOfAction(0),
     s_IsAlwaysLiveInStep(false),
+    s_IsHighlighted(false),
     s_AILuaState(0)
 {
     createLuaState();
@@ -113,7 +114,7 @@ bool CreatureMonster::correctionPhys(int coord, int what, bool ladder)
 void CreatureMonster::draw()
 {
     int frame = getFrame();
-    s_GameClass->s_Data->s_Monsters->drawMonster(s_Number, s_State, frame, s_CoordX - s_GameClass->s_GameInfo->s_ScreenCoordX, s_CoordY - s_GameClass->s_GameInfo->s_ScreenCoordY);
+    s_GameClass->s_Data->s_Monsters->drawMonster(s_Number, s_State, frame, s_CoordX - s_GameClass->s_GameInfo->s_ScreenCoordX, s_CoordY - s_GameClass->s_GameInfo->s_ScreenCoordY, s_IsHighlighted);
 }
 
 int CreatureMonster::getFrame()

@@ -9,12 +9,14 @@ with comments from C ++.
 So, the Monsters.dat file is stored in the Monsters folder, its structure:
 ---
 [info]
-numberofmonsters = 11		// The number of monsters in the modpack
+numberofmonsters=11		// The number of monsters in the modpack
 
 [draw]
-transparentmaskR = 204		// Transparency mask RED
-transparentmaskG = 255		// GREEN transparency mask
-transparentmaskB = 204		// transparency mask BLUE
+transparentmaskR=204		// Transparency mask RED
+transparentmaskG=255		// GREEN transparency mask
+transparentmaskB=204		// transparency mask BLUE
+highlightingonhit=0;0;255;255 // Highlight this monster on hit (RGBA)
+timehighlightingonhit=1200 // Time to highlight this monster on hit
 ---
 
 Monsters are numbered from 1 to numberofmonsters inclusive. Mask of transparency - that color
@@ -26,8 +28,8 @@ In the folder there is a file monster.info, its structure:
 ---
 / * In the [info] block, all the "states" of the monster are described. State is a string.
 Each state has its own monster texture. Each state also has frames.
-animations. The state is entered by introducing the variable "numberofframes [NAMEOFSTATE] = [NUMBEROFFRAMEOFTHISSTATE]"
-For example: "numberofframesdownrun = 2" means that we have a state of "downrun" that has
+animations. The state is entered by introducing the variable "numberofframes [NAMEOFSTATE]=[NUMBEROFFRAMEOFTHISSTATE]"
+For example: "numberofframesdownrun=2" means that we have a state of "downrun" that has
 two animation frames. Status textures should be in the folder of this monster, and have names
 like this: "NAMEOFSTATE_ [NUMBEROFFRAME] .bmp." For example, the state "downrun" has
 two textures: "downrun_1.bmp" and "downrun_2.bmp". If at least some texture is not, there will be
@@ -40,32 +42,34 @@ which monsters have in the StandardDave modpack is unprofitable in size, which w
 occupy modpacks, but, again, taken from extracting textures from the original game. In the future, just
 will be changed to the coordinates of the collision rectangle in monster.info. * /
 [info]
-numberofframesdownrun = 2		// The number of animation frames of the corresponding state
-numberofframesleftrun = 4		// The number of animation frames of the corresponding state
-numberofframesleftstrike = 3		// The number of animation frames of the corresponding state
-numberofframesrightrun = 4		// The number of animation frames of the corresponding state
-numberofframesrightstrike = 3		// The number of animation frames of the corresponding state
+numberofframesdownrun=2		// The number of animation frames of the corresponding state
+numberofframesleftrun=4		// The number of animation frames of the corresponding state
+numberofframesleftstrike=3		// The number of animation frames of the corresponding state
+numberofframesrightrun=4		// The number of animation frames of the corresponding state
+numberofframesrightstrike=3		// The number of animation frames of the corresponding state
 
 [other]
-numberofframesdeathtiles = 5		// The number of frames of the losing tiles. They are stored in a folder.
+numberofframesdeathtiles=5		// The number of frames of the losing tiles. They are stored in a folder.
 					// DeathTiles with names of the form "[NUMBER] .bmp", numbered from
 					// units up to this value inclusive.
-outputshiftX = 0		// How much to move the monster along the X axis when placing it in the level. The fact,
+outputshiftX=0		// How much to move the monster along the X axis when placing it in the level. The fact,
 			// that the zombie is too high, on the levels it is located on the second tile from the floor,
 			// and if you leave it like that, without shifts, then the legs will be in the floor. Therefore we him
 			// when outputting, we shift so that it lands exactly on the floor (along the Y axis).
-outputshiftY = -8		// Here we move the monster along the Y axis.
-animationstep = 6		// This variable is used for animation speed in intelligence
+outputshiftY=-8		// Here we move the monster along the Y axis.
+animationstep=6		// This variable is used for animation speed in intelligence
+highlightingonhit=0;0;255;255 // Highlight this monster on hit (takes precedence over general parameters, RGBA).
+timehighlightingonhit=1200 // Time to highlight this monster on hit (takes precedence over general parameters).
 
 [options]
-lives = 2		// The number of monster lives. If -1, then he has infinite lives, hits in him are taken into account (bullet stop).
+lives=2		// The number of monster lives. If -1, then he has infinite lives, hits in him are taken into account (bullet stop).
 		// If -2, then he has infinitely lives, and hits in him are not taken into account (a bullet flies through him).
-speed1 = 11		// Variable to be used in intelligence
-speed2 = 6		// Variable to be used in intelligence
-speed3 = 8		// Variable to be used in intelligence
-speed4 = 5		// Variable to be used in intelligence
-downlook = 5		// Variable to be used in intelligence
-type = standard		// Monster type, standard or boss. When killing the last boss on a level, happens
+speed1=11		// Variable to be used in intelligence
+speed2=6		// Variable to be used in intelligence
+speed3=8		// Variable to be used in intelligence
+speed4=5		// Variable to be used in intelligence
+downlook=5		// Variable to be used in intelligence
+type=standard		// Monster type, standard or boss. When killing the last boss on a level, happens
 			// automatic transition to the next level.
 ---
 

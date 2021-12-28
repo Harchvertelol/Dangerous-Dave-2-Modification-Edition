@@ -42,6 +42,13 @@ int FactoryMonsters::addMonsterImmediately(int number, int x, int y, bool getsta
     return s_MaxIndex - 1;
 }
 
+bool FactoryMonsters::isExistsById(unsigned int id_mnst)
+{
+    map<int, CreatureMonster*>::iterator I = s_Monsters.find(id_mnst);
+    if ( I == s_Monsters.end() ) return false;
+    return true;
+}
+
 CreatureMonster* FactoryMonsters::addMonster(int number, int x, int y, bool getstate)
 {
     CreatureMonster* newMonster = new CreatureMonster(s_GameClass, number, s_MaxIndex + s_QueueForAddingMonsters.size(), x, y, getstate);

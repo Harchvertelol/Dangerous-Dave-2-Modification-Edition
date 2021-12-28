@@ -87,6 +87,7 @@ int main(int argc, char** argv)
         gm->s_GameInfo->s_KeyShoot = atoi( gm->s_IniFile->getValue("keys","shoot").c_str() );
         gm->s_GameInfo->s_KeyJump = atoi( gm->s_IniFile->getValue("keys","jump").c_str() );
         gm->s_GameInfo->s_KeyConsole = atoi( gm->s_IniFile->getValue("keys","console").c_str() );
+        gm->s_GameInfo->s_KeyInfo = atoi( gm->s_IniFile->getValue("keys","info").c_str() );
         gm->s_GameInfo->s_KeySkip = atoi( gm->s_IniFile->getValue("keys","skip").c_str() );
         gm->s_DisplayStruct->s_GameResolutionX = atoi( (gm->s_IniFile->getValue("video","resolutionX") ).c_str() );
         gm->s_DisplayStruct->s_GameResolutionY = atoi( (gm->s_IniFile->getValue("video","resolutionY") ).c_str() );

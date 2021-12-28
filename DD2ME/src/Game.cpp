@@ -49,10 +49,10 @@ namespace
         if(gameState == 1) return ourInst->s_StateManager->s1(hwnd, uMsg, wParam, lParam);
         if(gameState == 2) return ourInst->s_StateManager->s2(hwnd, uMsg, wParam, lParam);
         if(gameState == 3) return ourInst->s_StateManager->s3(hwnd, uMsg, wParam, lParam);*/
-        if(gameState == 0) return ourInst->s_StateManager->s0(event);
-        if(gameState == 1) return ourInst->s_StateManager->s1(event);
-        if(gameState == 2) return ourInst->s_StateManager->s2(event);
-        if(gameState == 3) return ourInst->s_StateManager->s3(event);
+        if(gameState == 0) ourInst->s_StateManager->s0(event);
+        if(gameState == 1) ourInst->s_StateManager->s1(event);
+        if(gameState == 2) ourInst->s_StateManager->s2(event);
+        if(gameState == 3) ourInst->s_StateManager->s3(event);
     }
 
 }

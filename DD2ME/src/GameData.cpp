@@ -99,12 +99,12 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             s_GameClass->s_DisplayStruct->s_GameResolutionY = atoi( (s_GameClass->s_IniFile->getValue("video", "resolutionY") ).c_str() );
             s_GameClass->s_DisplayStruct->s_WindowResolutionX = atoi( (s_GameClass->s_IniFile->getValue("video", "windowresolutionX") ).c_str() );
             s_GameClass->s_DisplayStruct->s_WindowResolutionY = atoi( (s_GameClass->s_IniFile->getValue("video", "windowresolutionY") ).c_str() );
-            s_GameClass->s_GameInfo->s_KeyDown = atoi( s_GameClass->s_IniFile->getValue("keys","down").c_str() );
+            /*s_GameClass->s_GameInfo->s_KeyDown = atoi( s_GameClass->s_IniFile->getValue("keys","down").c_str() );
             s_GameClass->s_GameInfo->s_KeyUp = atoi( s_GameClass->s_IniFile->getValue("keys","up").c_str() );
             s_GameClass->s_GameInfo->s_KeyRight = atoi( s_GameClass->s_IniFile->getValue("keys","right").c_str() );
             s_GameClass->s_GameInfo->s_KeyLeft = atoi( s_GameClass->s_IniFile->getValue("keys","left").c_str() );
             s_GameClass->s_GameInfo->s_KeyShoot = atoi( s_GameClass->s_IniFile->getValue("keys","shoot").c_str() );
-            s_GameClass->s_GameInfo->s_KeyJump = atoi( s_GameClass->s_IniFile->getValue("keys","jump").c_str() );
+            s_GameClass->s_GameInfo->s_KeyJump = atoi( s_GameClass->s_IniFile->getValue("keys","jump").c_str() );*/
             if(s_GameClass->s_DisplayStruct->s_GameResolutionY <= 0 || s_GameClass->s_DisplayStruct->s_GameResolutionX <= 0)
             {
                 cout<<"Error: Display resolution."<<endl;

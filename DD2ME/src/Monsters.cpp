@@ -179,20 +179,31 @@ void Monsters::collisionAnalyze(int number, string state, int frame)
         }
 }
 
-void Monsters::drawMonster(int number, string anim, int frame, int x, int y)
+void Monsters::drawMonster(int number, string anim, int frame, int x, int y, bool is_highlighted)
 {
+    sf::Color spr_color = sf::Color(255, 255, 255, 255);
+    if(is_highlighted)
+    {
+        map<int, int> tmp_mas;
+        string str_highlighting = s_GameClass->s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "highlightingonhit");
+        if(s_GameClass->s_Data->s_Monsters->s_MonstersInfo[number - 1]->isExists("other", "highlightingonhit")) str_highlighting = s_GameClass->s_Data->s_Monsters->s_MonstersInfo[number - 1]->getValue("other", "highlightingonhit");
+        int res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, str_highlighting, ";");
+        if(res_col < 3) cout << "Error with parameters for highlighting monster: highlightingonhit" << endl;
+        else spr_color = tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]);
+    }
     if(s_CacheCreated == false)
     {
         //s_GameClass->s_Window->draw(Image(Bitmap( (*s_Bitmaps[number - 1][anim][frame]), 0, 0, s_Bitmaps[number - 1][anim][frame]->width()/2, s_Bitmaps[number - 1][anim][frame]->height()), x, y));
         Sprite spr(*s_Bitmaps[number - 1][anim][frame]);
         spr.setTextureRect(IntRect(0, 0, s_Bitmaps[number - 1][anim][frame]->getSize().x / 2, s_Bitmaps[number - 1][anim][frame]->getSize().y));
         spr.setPosition(x, y);
+        spr.setColor(spr_color);
         s_GameClass->s_RenderTexture->draw(spr);
     }
     else
     {
         //s_GameClass->s_Window->draw( Image( (*s_CacheImages[number - 1][anim][frame]), x, y) );
-        //s_CacheImages[number - 1][anim][frame]->setColor(sf::Color(255, 170, 170, 255));
+        s_CacheImages[number - 1][anim][frame]->setColor(spr_color);
         s_CacheImages[number - 1][anim][frame]->setPosition(x, y);
         s_GameClass->s_RenderTexture->draw(*s_CacheImages[number - 1][anim][frame]);
     }

@@ -32,6 +32,7 @@ GameInfo::GameInfo(Game* gameclass):
     s_KeyJump(0),
     s_KeySkip(0),
     s_KeyConsole(0),
+    s_KeyInfo(0),
     s_OldAnSt(0),
     s_CurrentDistanceLiveMonstersX(0),
     s_CurrentDistanceLiveMonstersY(0),
@@ -40,7 +41,8 @@ GameInfo::GameInfo(Game* gameclass):
     s_ForcedChangeLevel(false),
     s_CheatGod(false),
     s_IsAIOn(true),
-    s_IsGhostOn(false)
+    s_IsGhostOn(false),
+    s_IsInfoShow(false)
 {
     s_MyDave = new CreatureDave(gameclass);
     s_FactoryMonsters = new FactoryMonsters(gameclass);

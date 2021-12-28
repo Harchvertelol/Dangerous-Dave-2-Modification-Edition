@@ -16,5 +16,10 @@ class Gui
         void drawGuiState2(int);
         void drawGuiState3();
         void createPopupWindow(std::string, int);
+        void showInfo();
+        void removeInfo();
+        std::string getSecretsText();
+    private:
+        tgui::Panel::Ptr s_InfoWindow;
 };
 #endif

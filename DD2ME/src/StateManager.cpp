@@ -68,7 +68,7 @@ void StateManager::s3(Event event)
     switch (event.type)
     {
         case Event::KeyPressed:
-            if(event.key.code == s_GameClass->s_GameInfo->s_KeySkip) //в параметре wParam код клавишы. Рассматриваем код
+            if(event.key.code == s_GameClass->s_GameInfo->s_KeySkip)
             {
                 switchState(0);
                 if(s_GameClass->s_GameInfo->s_CurrentLives <= 0) s_GameClass->s_GameInfo->doChangeLevelOnGameOver();
@@ -141,6 +141,18 @@ void StateManager::s3(Event event)
                     }
                 }
             }
+            else if(event.key.code == s_GameClass->s_GameInfo->s_KeyInfo)
+            {
+                if(!s_GameClass->s_GameInfo->s_IsInfoShow)
+                {
+                    s_GameClass->s_Gui->showInfo();
+                }
+                else
+                {
+                    s_GameClass->s_Gui->removeInfo();
+                }
+                s_GameClass->s_GameInfo->s_IsInfoShow = !s_GameClass->s_GameInfo->s_IsInfoShow;
+            }
             break;
     }
 }
@@ -197,6 +209,9 @@ void StateManager::s3I()
 
 bool StateManager::switchState(int state, bool callstartstate)
 {
+    s_GameClass->s_GameInfo->s_IsInfoShow = false;
+    s_GameClass->s_Gui->removeInfo();
+    s_GameClass->s_Gui->s_TGUI->removeAllWidgets();
     if(state > s_MaxState) return false;
     s_GameClass->s_GameInfo->s_GameState = state;
     if(callstartstate) startState(state);

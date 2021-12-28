@@ -30,6 +30,7 @@ class FactoryMonsters
         bool isMonsterInDaveRadius(CreatureDave*, CreatureMonster*, MONSTER_DAVE_RADIUS_TYPE);
         void removeMonster(int);
         void addMonstersFromQueue();
+        bool isExistsById(unsigned int);
         void live();
         void clear();
         void reloadAIAll();

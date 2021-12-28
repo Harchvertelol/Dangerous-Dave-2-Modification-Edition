@@ -11,7 +11,8 @@ using namespace std;
 using namespace sf;
 
 Gui::Gui(Game* gameclass):
-    s_GameClass(gameclass)
+    s_GameClass(gameclass),
+    s_InfoWindow(0)
 {
     s_TGUI = new tgui::Gui;
 }
@@ -96,6 +97,19 @@ void Gui::drawFPS()
     }
 }
 
+string Gui::getSecretsText()
+{
+    string cur_col_secr_str = "";
+    if(s_GameClass->s_GameInfo->s_MyDave->s_Values->isExists("GS_secrets_visited", "level_" + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel))) cur_col_secr_str = s_GameClass->s_GameInfo->s_MyDave->s_Values->getValue("GS_secrets_visited", "level_" + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel));
+    int cur_col_secr = 0;
+    if(cur_col_secr_str != "")
+    {
+        map<int, string> map_tmp;
+        cur_col_secr = WorkFunctions::ParserFunctions::splitMassString(&map_tmp, 0, 0, cur_col_secr_str, ";") - 1;
+    }
+    return "Secrets: " + WorkFunctions::ConvertFunctions::itos(cur_col_secr) + "/" + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_Data->s_Level->s_Params->getMapVariables()["Secrets"].size());
+}
+
 void Gui::drawGuiState2(int screennumber)
 {
     string screenname = "screen_" + WorkFunctions::ConvertFunctions::itos(screennumber + 1);
@@ -135,7 +149,7 @@ void Gui::drawGuiState2(int screennumber)
     txt.setString(level_str);
     s_GameClass->s_RenderTexture->draw(txt);
 
-    string secrets_text = "Secrets: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_Data->s_Level->s_Params->getMapVariables()["Secrets"].size());
+    string secrets_text = getSecretsText();
     txt.setFillColor(Color(0, 0, 0, 255));
     txt.setCharacterSize(secretssize);
     txt.setPosition(Vector2f(secretscoordX, secretscoordY));
@@ -148,7 +162,6 @@ void Gui::drawGuiState2(int screennumber)
     txt.setPosition(Vector2f(scorecoordX, scorecoordY));
     txt.setString(score_text);
     s_GameClass->s_RenderTexture->draw(txt);
-
 
     string highscore_text = WorkFunctions::ConvertFunctions::itos(0);
     txt.setFillColor(Color(0, 0, 0, 255));
@@ -278,4 +291,100 @@ void Gui::createPopupWindow(string text, int timer)
     popupWindow->onAnimationFinish([=](bool isShow){ if(!isShow) popupWindow->getParent()->remove(popupWindow); });
     s_GameClass->s_Gui->s_TGUI->add(popupWindow);
     tgui::Timer::scheduleCallback([=](){ popupWindow->hideWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "timefadepopupwindow").c_str())); }, timer);
+}
+
+void Gui::showInfo()
+{
+    if(s_InfoWindow != 0)
+    {
+        s_InfoWindow->getParent()->remove(s_InfoWindow);
+        s_InfoWindow = 0;
+    }
+    string size_panel_x = "90%", size_panel_y = "90%";
+    string size_text_x = "85%", size_text_y = "70%";
+    string start_pos_text_x = "50%", start_pos_text_y = "10%";
+    int size_text_info_main = 40 * s_GameClass->s_DisplayStruct->s_WindowResolutionX / 1280;
+    int size_text_info = 30 * s_GameClass->s_DisplayStruct->s_WindowResolutionX / 1280;
+    auto infoWindow = tgui::Panel::create();
+    infoWindow->getRenderer()->setBorders(tgui::Borders(1));
+    map<int, int> tmp_mas;
+    int res_col = 0;
+    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "backgroundcolorinfowindow"), ";");
+    if(res_col < 3) cout << "Error with gui parameters for info window: backgroundcolorinfowindow" << endl;
+    else infoWindow->getRenderer()->setBackgroundColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
+    infoWindow->setSize(size_panel_x.c_str(), size_panel_y.c_str());
+    infoWindow->setOrigin(0.5, 0.5);
+    infoWindow->setPosition("50%", "50%");
+
+    auto label_text = tgui::Label::create();
+    label_text->setText("Information:");
+    label_text->setTextSize(size_text_info_main);
+    label_text->setSize(size_text_x.c_str(), size_text_y.c_str());
+    label_text->setOrigin(0.5, 0.5);
+    label_text->setPosition(start_pos_text_x.c_str(), start_pos_text_y.c_str());
+    label_text->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+    label_text->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    infoWindow->add(label_text);
+
+    label_text = tgui::Label::create();
+    label_text->setText("Level: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel));
+    label_text->setTextSize(size_text_info);
+    label_text->setSize(size_text_x.c_str(), size_text_y.c_str());
+    label_text->setOrigin(0.5, 0.5);
+    label_text->setPosition("50%", "20%");
+    label_text->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+    label_text->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    infoWindow->add(label_text);
+
+    label_text = tgui::Label::create();
+    label_text->setText("Lives: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLives));
+    label_text->setTextSize(size_text_info);
+    label_text->setSize(size_text_x.c_str(), size_text_y.c_str());
+    label_text->setOrigin(0.5, 0.5);
+    label_text->setPosition("50%", "30%");
+    label_text->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+    label_text->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    infoWindow->add(label_text);
+
+    label_text = tgui::Label::create();
+    label_text->setText("Points: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints));
+    label_text->setTextSize(size_text_info);
+    label_text->setSize(size_text_x.c_str(), size_text_y.c_str());
+    label_text->setOrigin(0.5, 0.5);
+    label_text->setPosition("50%", "40%");
+    label_text->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+    label_text->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    infoWindow->add(label_text);
+
+    label_text = tgui::Label::create();
+    label_text->setText("Highscore: 0");
+    label_text->setTextSize(size_text_info);
+    label_text->setSize(size_text_x.c_str(), size_text_y.c_str());
+    label_text->setOrigin(0.5, 0.5);
+    label_text->setPosition("50%", "50%");
+    label_text->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+    label_text->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    infoWindow->add(label_text);
+
+    label_text = tgui::Label::create();
+    label_text->setText(getSecretsText());
+    label_text->setTextSize(size_text_info);
+    label_text->setSize(size_text_x.c_str(), size_text_y.c_str());
+    label_text->setOrigin(0.5, 0.5);
+    label_text->setPosition("50%", "60%");
+    label_text->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+    label_text->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    infoWindow->add(label_text);
+
+    s_GameClass->s_Gui->s_TGUI->add(infoWindow);
+    s_InfoWindow = infoWindow;
+
+    infoWindow->showWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "timefadeinfowindow").c_str()));
+}
+
+void Gui::removeInfo()
+{
+    if(!s_InfoWindow) return;
+    s_InfoWindow->hideWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "timefadeinfowindow").c_str()));
+    s_InfoWindow->onAnimationFinish([=](bool isShow){ if(!isShow) s_InfoWindow->getParent()->remove(s_InfoWindow); s_InfoWindow = 0; });
 }

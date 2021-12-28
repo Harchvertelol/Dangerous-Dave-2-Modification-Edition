@@ -681,9 +681,9 @@ int LuaBindFunctions::testLookDaveX(lua_State* s_Lua)
     int frame = mnst->getFrame();
     /*int SizeXMonster = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL, 16, -1);
     int SizeYMonster = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL, 16, -1);*/
-    int SizeXMonster = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
+    //int SizeXMonster = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
     int SizeYMonster = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
-    int realColCoordXMonster = mnst->s_CoordX + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
+    //int realColCoordXMonster = mnst->s_CoordX + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
     int realColCoordYMonster = mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
     int SizeYMonsterPix = SizeYMonster;
     int CoordY1, CoordY2;
@@ -718,9 +718,9 @@ int LuaBindFunctions::testLookDaveY(lua_State* s_Lua)
     /*int SizeXMonster = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL, 16, -1);
     int SizeYMonster = WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR, 16, 1) - WorkFunctions::MathFunctions::roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL, 16, -1);*/
     int SizeXMonster = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
-    int SizeYMonster = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
+    //int SizeYMonster = s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YR - s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
     int realColCoordXMonster = mnst->s_CoordX + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL;
-    int realColCoordYMonster = mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
+    //int realColCoordYMonster = mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
     int SizeXMonsterPix = SizeXMonster;
     int CoordX1, CoordX2;
     CoordX1 = s_GameClass->s_GameInfo->s_MyDave->s_CoordX;

@@ -37,6 +37,7 @@ class GameInfo
         int s_KeyJump;
         int s_KeySkip;
         int s_KeyConsole;
+        int s_KeyInfo;
         unsigned int s_OldAnSt;
         CreatureDave* s_MyDave;
         int s_CurrentDistanceLiveMonstersX;
@@ -47,6 +48,7 @@ class GameInfo
         bool s_CheatGod;
         bool s_IsAIOn;
         bool s_IsGhostOn;
+        bool s_IsInfoShow;
         void live();
         bool deathDave(int);
         void doChangeLevelOnGameOver();

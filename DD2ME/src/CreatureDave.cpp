@@ -591,6 +591,7 @@ int CreatureDave::testChangeLevel()
             string toLevel_str = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_to_level");
             string isTp = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_teleport");
             string isSecret = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_secret");
+            if(isSecret.find(";") != string::npos) cout << "Warning: secret name has \";\" symbol. It's error for calculating of number of visited secrets!" << endl;
             string cur_secr = s_Values->getValue("GS_secrets_visited", "level_" + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel), false);
             if(isSecret != "" && !(cur_secr.find(isSecret + ";") == 0 || cur_secr.find(";" + isSecret + ";") != string::npos) )
             {
@@ -916,6 +917,14 @@ void CreatureDave::testShoot()
                                 infofsf.damage = 1;
                                 s_GameClass->s_AI->runSpecialFunction(iter->second, TSF_ON_DAMAGE, infofsf);
                                 if(iter->second->s_CurrentLives < 0) iter->second->s_CurrentLives = 0;
+                                iter->second->s_IsHighlighted = true;
+                                int mnst_id_for_lambda_func = iter->second->s_ID;
+                                int time_highl_on_hit = atoi(s_GameClass->s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "timehighlightingonhit").c_str());
+                                if(s_GameClass->s_Data->s_Monsters->s_MonstersInfo[iter->second->s_Number - 1]->isExists("other", "timehighlightingonhit")) time_highl_on_hit = atoi(s_GameClass->s_Data->s_Monsters->s_MonstersInfo[iter->second->s_Number - 1]->getValue("other", "timehighlightingonhit").c_str());
+                                tgui::Timer::scheduleCallback([=]()
+                                                    {
+                                                        if(s_GameClass->s_GameInfo->s_FactoryMonsters->isExistsById(mnst_id_for_lambda_func)) iter->second->s_IsHighlighted = false;
+                                                    }, time_highl_on_hit);
                             }
                             if(iter->second->s_CurrentLives == 0)
                             {

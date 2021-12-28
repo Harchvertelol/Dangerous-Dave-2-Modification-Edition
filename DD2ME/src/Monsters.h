@@ -23,7 +23,7 @@ class Monsters
         bool loadMonster(std::string, int);
         void collisionAnalyze(int, std::string, int);
         bool createCache();
-        void drawMonster(int, std::string, int, int, int);
+        void drawMonster(int, std::string, int, int, int, bool);
         void deleteAllGDIObjects();
         void createMaskTransparent(int, int, int);
 };
