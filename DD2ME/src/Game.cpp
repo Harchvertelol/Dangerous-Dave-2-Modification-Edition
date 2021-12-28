@@ -170,6 +170,7 @@ bool Game::changeNextLevel(bool switchstate)
 
 bool Game::changeLevel(int number, bool switchstate, bool playmusic)
 {
+    tgui::Timer::clearTimers();
     if(number < 1 || number > atoi( s_Data->s_LevelsInfo->getValue("info", "numberoflevels").c_str()  ) )
     {
         s_GameInfo->s_Stop = true;
@@ -212,6 +213,8 @@ bool Game::changeLevel(int number, bool switchstate, bool playmusic)
     s_GameInfo->s_MyDave->s_Cartridges = s_GameInfo->s_MyDave->s_MaxCartridges;
     s_GameInfo->s_MyDave->s_ScreenCoordX = 0;
     s_GameInfo->s_MyDave->s_ScreenCoordY = 0;
+    if(s_GameInfo->s_MyDave->s_KeysState) delete s_GameInfo->s_MyDave->s_KeysState;
+    s_GameInfo->s_MyDave->s_KeysState = new KeysState;
     s_Data->s_Music->stopAllMusic();
     if(switchstate == true) s_StateManager->switchState(2, false);
     if(playmusic)
