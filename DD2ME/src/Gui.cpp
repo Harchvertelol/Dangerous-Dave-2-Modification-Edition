@@ -271,10 +271,12 @@ void Gui::createPopupWindow(string text, int timer)
     label_text->setPosition("50%", "50%");
     label_text->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
     label_text->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    //label_text->setMaximumTextWidth("85%");
     res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "textcolorpopupwindow"), ";");
     if(res_col < 3) cout << "Error with gui parameters for popup window: textcolorpopupwindow" << endl;
     else label_text->getRenderer()->setTextColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
     popupWindow->setSize("30%", "10%");
+    //popupWindow->setSize(bindSize(label_text));
     popupWindow->setOrigin(0.5, 0.5);
     popupWindow->setPosition("50%", "15%");
     popupWindow->getRenderer()->setBorders(tgui::Borders(1));
