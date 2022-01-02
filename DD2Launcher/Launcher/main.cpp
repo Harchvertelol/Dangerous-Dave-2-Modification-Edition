@@ -457,7 +457,9 @@ class Launcher
                 string disk_letter_tiled = PathToTiledExe.substr(0, PathToTiledExe.find("/"));
                 string folder_tiled = PathToTiledExe.substr(0, PathToTiledExe.find_last_of("/") + 1);
                 string tiled_exe_name = PathToTiledExe.substr(PathToTiledExe.find_last_of("/") + 1);
-                system( (disk_letter_tiled + " && cd \"" + folder_tiled + "\" && start " + tiled_exe_name).c_str() );
+                string userprofile_set = "%cd%/Launcher/ForTiled";
+                string template_path = "%cd%/Launcher/ForTiled/Levels/template.lev";
+                system( ("set userprofile=" + userprofile_set + "&& " + disk_letter_tiled + " && cd \"" + folder_tiled + "\" && start " + tiled_exe_name + " " + template_path).c_str() );
                 s_Window->close();
             }
             else

@@ -1,0 +1,183 @@
+{ "columns":4,
+ "image":"DDME_creature_spawn.png",
+ "imageheight":48,
+ "imagewidth":64,
+ "margin":0,
+ "name":"Creature spawn",
+ "spacing":0,
+ "tilecount":12,
+ "tiledversion":"1.7.1",
+ "tileheight":16,
+ "tiles":[
+        {
+         "id":0,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Empty"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Creature spawn"
+                }]
+        }, 
+        {
+         "id":1,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Zombie"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Creature spawn"
+                }]
+        }, 
+        {
+         "id":2,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Hunchback"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Creature spawn"
+                }]
+        }, 
+        {
+         "id":3,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Slime"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Creature spawn"
+                }]
+        }, 
+        {
+         "id":4,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Spider"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Creature spawn"
+                }]
+        }, 
+        {
+         "id":5,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Werewolf"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Creature spawn"
+                }]
+        }, 
+        {
+         "id":6,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Frank"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Creature spawn"
+                }]
+        }, 
+        {
+         "id":7,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Ghost attack"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Creature spawn"
+                }]
+        }, 
+        {
+         "id":8,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Ghost ambush"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Creature spawn"
+                }]
+        }, 
+        {
+         "id":9,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Skull"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Creature spawn"
+                }]
+        }, 
+        {
+         "id":10,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Silas Master"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Creature spawn"
+                }]
+        }, 
+        {
+         "id":11,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Delbert"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Creature spawn"
+                }]
+        }],
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.6"
+}

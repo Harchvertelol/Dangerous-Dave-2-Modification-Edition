@@ -1,0 +1,14 @@
+{ "columns":13,
+ "image":"DDME_tiles.png",
+ "imageheight":1056,
+ "imagewidth":208,
+ "margin":0,
+ "name":"Tiles",
+ "spacing":0,
+ "tilecount":858,
+ "tiledversion":"1.7.1",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.6"
+}

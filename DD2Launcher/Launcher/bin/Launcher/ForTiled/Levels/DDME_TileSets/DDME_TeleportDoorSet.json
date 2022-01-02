@@ -1,0 +1,58 @@
+{ "columns":2,
+ "image":"DDME_teleport_doors.png",
+ "imageheight":16,
+ "imagewidth":32,
+ "margin":0,
+ "name":"Teleport doors",
+ "spacing":0,
+ "tilecount":2,
+ "tiledversion":"1.7.1",
+ "tileheight":16,
+ "tiles":[
+        {
+         "id":0,
+         "properties":[
+                {
+                 "name":"Exit_X",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"Exit_Y",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Door"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Teleport door"
+                }]
+        }, 
+        {
+         "id":1,
+         "properties":[
+                {
+                 "name":"DestinationLevelNumber",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Exit door"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Teleport door"
+                }]
+        }],
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.6"
+}

@@ -1,0 +1,57 @@
+{ "columns":3,
+ "image":"DDME_tile_params.png",
+ "imageheight":16,
+ "imagewidth":48,
+ "margin":0,
+ "name":"Tile params",
+ "spacing":0,
+ "tilecount":3,
+ "tiledversion":"1.7.1",
+ "tileheight":16,
+ "tiles":[
+        {
+         "id":0,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Empty"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Tile param"
+                }]
+        }, 
+        {
+         "id":1,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Param"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Tile param"
+                }]
+        },
+	{
+         "id":2,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Secrets"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Name secrets"
+                }]
+        }],
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.6"
+}

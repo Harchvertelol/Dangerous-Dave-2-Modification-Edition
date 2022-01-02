@@ -31,6 +31,6 @@ changelevelongameover=2 // Optional parameter indicating how to change the level
 numberphysictilelayer=1 // Optional parameter, specifies the number of the physical layer of the tiles. If absent, it is equal to 1.
 
 [Secrets] // List of secrets.
-1=You cool! // This text will be displayed when hitting a tile with a tile parameter GS_secret=1.
+1=You cool!\nVery good man!\\n! // This text will be displayed when hitting a tile with a tile parameter GS_secret=1. '\ n' - line break, "\\n" -> '\n'.
 
 // Next comes level information
