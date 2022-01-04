@@ -29,6 +29,7 @@ distanceactivatemonstersY=64 // Optional parameter to activate monsters at a dis
 changelevelongameover=2 // Optional parameter indicating how to change the level on Game Over. If it is just equal to the number N, then it changes to the level with the number N. If it says "+ N", then N is added to the current number (wisely,
                         // that is %cur_lev% + N> max_lev, then go to the last level). If it is "-N", then N is subtracted from the current level (wisely, if %cur_lev% - N < 1, then go to level 1).
 numberphysictilelayer=1 // Optional parameter, specifies the number of the physical layer of the tiles. If absent, it is equal to 1.
+numberobjectstilesfield=1 // Optional parameter, specifies the number of the tile layer, after which the objects are drawn. If absent, it is equal to 1.
 
 [Secrets] // List of secrets.
 1=You cool!\nVery good man!\\n! // This text will be displayed when hitting a tile with a tile parameter GS_secret=1. '\ n' - line break, "\\n" -> '\n'.

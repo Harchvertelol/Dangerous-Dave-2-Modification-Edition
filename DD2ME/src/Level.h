@@ -19,8 +19,10 @@ class Level
         void draw(bool);
         std::string getNameTilesField(int);
         std::string getNamePhysicTilesField();
+        std::string getNameObjectsTilesField();
         int getNumberTilesFields();
         int getNumberPhysicTilesField();
+        int getNumberObjectsTilesField();
         int getTileType(int, int, int);
         int getTileID(int, int, int);
         bool setTileID(int, int, int, int);

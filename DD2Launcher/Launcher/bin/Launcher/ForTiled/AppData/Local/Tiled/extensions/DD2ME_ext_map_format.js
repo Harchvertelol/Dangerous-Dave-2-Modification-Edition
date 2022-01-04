@@ -433,6 +433,7 @@ var customMapFormat = {
 		paramatersLayer.setProperty("distanceactivatemonstersY", "default");
 		paramatersLayer.setProperty("changelevelongameover", "default");
 		paramatersLayer.setProperty("numberphysictilesfield", "default");
+		paramatersLayer.setProperty("numberobjectstilesfield", "default");
 		for(var key in params)
 			if(key != "sizeX" && key != "sizeY" && key != "numberoftilesfields" && key != "levelformat") paramatersLayer.setProperty(key, params[key]);
 
