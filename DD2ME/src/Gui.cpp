@@ -1,6 +1,5 @@
 #include "Gui.h"
 
-#include <regex>
 #include <SFML/Graphics.hpp>
 
 #include "Game.h"
@@ -265,8 +264,7 @@ void Gui::createPopupWindow(string text, int timer)
     int res_col = 0;
     auto popupWindow = tgui::Panel::create();
     auto label_text = tgui::Label::create();
-    text = std::regex_replace(text, std::regex("\\\\n"), "\n");
-    text = std::regex_replace(text, std::regex("\\\\\\n"), "\\n");
+    text = WorkFunctions::WordFunctions::removeSlashes(text);
     label_text->setText(text);
     label_text->setTextSize(15);
     label_text->setSize("85%", "70%");

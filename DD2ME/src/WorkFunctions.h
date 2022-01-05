@@ -14,6 +14,7 @@ namespace WorkFunctions
     {
         std::string FirstWord(std::string);
         std::string RemoveFirstWord(std::string);
+        std::string removeSlashes(std::string);
     };
     namespace ParserFunctions
     {
