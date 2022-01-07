@@ -87,7 +87,7 @@ bool Level::loadLevel(string file_name)
     }
     if(!s_Params->isExists("info", "levelformat") || atof(s_Params->getValue("info", "levelformat").c_str()) - NUMBER_CONSTANTS::NC_LEVEL_FORMAT_VERSION > NUMBER_CONSTANTS::NC_EPS) cout << "Warning: incorrect level format version!" << endl;
     if(!s_Params->isExists("options", "numberphysictilesfield")) s_Params->setValue("options", "numberphysictilesfield", "1");
-    if(!s_Params->isExists("options", "numberobjectstilesfield")) s_Params->setValue("options", "numberobjectstilesfield", "1");
+    if(!s_Params->isExists("options", "numberobjectstilesfield")) s_Params->setValue("options", "numberobjectstilesfield", s_Params->getValue("options", "numberphysictilesfield"));
     string str, NameField, nameblock, name, value;
     int size_x = atoi( s_Params->getValue("info", "sizeX").c_str() );
     int size_y = atoi( s_Params->getValue("info", "sizeY").c_str() );
