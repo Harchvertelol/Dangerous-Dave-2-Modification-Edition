@@ -19,8 +19,8 @@
 
 				var tilesetsFilePath = FileInfo.path(fileName);
 
-				let tileSetsFolder = "/DDME_TileSets/";
-				let tspath = tilesetsFilePath + tileSetsFolder;
+				let tileSetsFolder = DDME_func_getTilesetsPath(tilesetsFilePath);
+				let tspath = tileSetsFolder;
 
 				var tilesTileset         = tiled.open(tspath + "DDME_Tileset.json");
 				var playersTileset       = tiled.open(tspath + "DDME_Playerset.json");
@@ -30,6 +30,8 @@
 				var teleportdoorsTileset = tiled.open(tspath + "DDME_Teleportdoorset.json");
 				var tileParametersTileset = tiled.open(tspath + "DDME_TileParamSet.json");
 
+				var good_opened_checker = true;
+
 				if (tilesTileset)
 				{
 					if (tilesTileset.isTileset)
@@ -37,6 +39,7 @@
 						map.addTileset(tilesTileset);
 					}
 				}
+				else good_opened_checker = false;
 
 				if (playersTileset)
 				{
@@ -45,6 +48,7 @@
 						map.addTileset(playersTileset);
 					}
 				}
+				else good_opened_checker = false;
 
 				if (creaturesTileset)
 				{
@@ -53,6 +57,7 @@
 						map.addTileset(creaturesTileset);
 					}
 				}
+				else good_opened_checker = false;
 
 				if (bonusesTileset)
 				{
@@ -61,6 +66,7 @@
 						map.addTileset(bonusesTileset);
 					}
 				}
+				else good_opened_checker = false;
 
 				if (bonusdoorsTileset)
 				{
@@ -69,6 +75,7 @@
 						map.addTileset(bonusdoorsTileset);
 					}
 				}
+				else good_opened_checker = false;
 
 				if (teleportdoorsTileset)
 				{
@@ -77,6 +84,7 @@
 						map.addTileset(teleportdoorsTileset);
 					}
 				}
+				else good_opened_checker = false;
 
 				if (tileParametersTileset)
 				{
@@ -85,12 +93,18 @@
 						map.addTileset(tileParametersTileset);
 					}
 				}
+				else good_opened_checker = false;
 
 
 				if (tilesTileset || playersTileset|| creaturesTileset || bonusesTileset || bonusdoorsTileset || teleportdoorsTileset || tileParametersTileset)
 				{
-					tiled.log("onAssetChanged() RELOAD MAP");
+					//tiled.log("onAssetChanged() RELOAD MAP");
 					tiled.reload(map);
+				}
+
+				if(!good_opened_checker)
+				{
+					tiled.alert("Error opening level file: tilesets not found!", "Error!")
 				}
 
 				map.setProperty("IsNewMap", false);

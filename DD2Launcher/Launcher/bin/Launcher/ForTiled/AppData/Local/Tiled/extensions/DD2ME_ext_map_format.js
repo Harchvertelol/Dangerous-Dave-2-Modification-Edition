@@ -1,3 +1,22 @@
+function DDME_func_getTilesetsPath(ts_path)
+{
+	var test_file = "DDME_Tileset.json";
+	var places_search = [ts_path + '/DDME_TileSets/', ts_path + '/../DDME_TileSets/', ts_path + '/../../../Launcher/ForTiled/DDME_TileSets/', ''];//, '%userprofile%/AppData/Local/Tiled/extensions/DDME_TileSets/'];
+	var folder;
+	var test_ts = null;
+	for(var i = 0; test_ts == null && i < places_search.length; i++)
+	{
+		folder = places_search[i];
+		try
+		{
+			test_ts = new TextFile(folder + test_file, TextFile.ReadOnly);
+		}
+		catch(err)
+		{}
+	}
+	return folder;
+}
+
 var customMapFormat = {
     name: "DD2ME v0.1 map format",
     extension: "lev",
@@ -241,6 +260,8 @@ var customMapFormat = {
         file.write("[SpawnPlayers]\n\n");
 
         file.commit();
+
+        file.close();
     },
 
 	read: function(fileName)
@@ -285,8 +306,8 @@ var customMapFormat = {
 
 		var tilesetsFilePath = FileInfo.path(fileName);
 
-		let tileSetsFolder = "/DDME_TileSets/";
-		let tspath = tilesetsFilePath + tileSetsFolder;
+		let tileSetsFolder = DDME_func_getTilesetsPath(tilesetsFilePath);
+		let tspath = tileSetsFolder;
 
 		var tilesTileset         = tiled.open(tspath + "DDME_Tileset.json");
 		var playersTileset       = tiled.open(tspath + "DDME_Playerset.json");
@@ -296,6 +317,8 @@ var customMapFormat = {
 		var teleportdoorsTileset = tiled.open(tspath + "DDME_Teleportdoorset.json");
 		var tileParametersTileset = tiled.open(tspath + "DDME_TileParamSet.json");
 
+		var good_opened_checker = true;
+
 		if (tilesTileset)
 		{
 			if (tilesTileset.isTileset)
@@ -303,6 +326,7 @@ var customMapFormat = {
 				map.addTileset(tilesTileset);
 			}
 		}
+		else good_opened_checker = false;
 
 		if (playersTileset)
 		{
@@ -319,6 +343,7 @@ var customMapFormat = {
 				map.addTileset(creaturesTileset);
 			}
 		}
+		else good_opened_checker = false;
 
 		if (bonusesTileset)
 		{
@@ -327,6 +352,7 @@ var customMapFormat = {
 				map.addTileset(bonusesTileset);
 			}
 		}
+		else good_opened_checker = false;
 
 		if (bonusdoorsTileset)
 		{
@@ -335,6 +361,7 @@ var customMapFormat = {
 				map.addTileset(bonusdoorsTileset);
 			}
 		}
+		else good_opened_checker = false;
 
 		if (teleportdoorsTileset)
 		{
@@ -343,6 +370,7 @@ var customMapFormat = {
 				map.addTileset(teleportdoorsTileset);
 			}
 		}
+		else good_opened_checker = false;
 
 		if (tileParametersTileset)
 		{
@@ -350,6 +378,13 @@ var customMapFormat = {
 			{
 				map.addTileset(tileParametersTileset);
 			}
+		}
+		else good_opened_checker = false;
+
+		if(!good_opened_checker)
+		{
+			tiled.alert("Error opening level file: tilesets not found!", "Error!");
+			return;
 		}
 
 		var file = new TextFile(fileName, TextFile.ReadOnly);
