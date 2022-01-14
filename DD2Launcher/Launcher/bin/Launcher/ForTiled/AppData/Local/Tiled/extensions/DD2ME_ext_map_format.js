@@ -260,8 +260,6 @@ var customMapFormat = {
         file.write("[SpawnPlayers]\n\n");
 
         file.commit();
-
-        file.close();
     },
 
 	read: function(fileName)

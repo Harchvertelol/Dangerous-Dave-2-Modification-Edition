@@ -192,7 +192,7 @@ void CreatureDave::live(bool doKey)
                 typeexit = "exit";
             }
             //TileDoor = s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][s_CoordY/16*SizeXLev + s_CoordX/16];
-            TileDoor = s_GameClass->s_Data->s_Level->getTileID(s_CoordX/16, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
+            TileDoor = s_GameClass->s_Data->s_Level->getTileID(s_CoordX/16, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField());
             numberofdoors = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("info","numberofdoors").c_str() );
             for(int i = 0; i < numberofdoors; i++)
             {
@@ -208,12 +208,12 @@ void CreatureDave::live(bool doKey)
                         s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() );
                         s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() );*/
 
-                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, (s_CoordY - 16)/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() ) );
-                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, (s_CoordY - 16)/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() ) );
-                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() ) );
-                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() ) );
-                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, (s_CoordY + 16)/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() ) );
-                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, (s_CoordY + 16)/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() ) );
+                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, (s_CoordY - 16)/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() ) );
+                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, (s_CoordY - 16)/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() ) );
+                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() ) );
+                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() ) );
+                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, (s_CoordY + 16)/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() ) );
+                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, (s_CoordY + 16)/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() ) );
                         break;
                         break;
                     }
@@ -244,7 +244,7 @@ void CreatureDave::live(bool doKey)
                 s_CoordX = x;
                 s_CoordY = y;
                 //TileDoor = s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][s_CoordY/16*SizeXLev + s_CoordX/16];
-                TileDoor = s_GameClass->s_Data->s_Level->getTileID(s_CoordX/16, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
+                TileDoor = s_GameClass->s_Data->s_Level->getTileID(s_CoordX/16, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField());
                 numberofdoors = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("info","numberofdoors").c_str() );
                 s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordY/16*SizeXLev + s_CoordX/16] = abs(s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordY/16*SizeXLev + s_CoordX/16]);
                 typeexit = "exit";
@@ -262,12 +262,12 @@ void CreatureDave::live(bool doKey)
                             s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() );
                             s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() );*/
 
-                            s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, (s_CoordY - 16)/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() ) );
-                            s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, (s_CoordY - 16)/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() ) );
-                            s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() ) );
-                            s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() ) );
-                            s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, (s_CoordY + 16)/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() ) );
-                            s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, (s_CoordY + 16)/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() ) );
+                            s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, (s_CoordY - 16)/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() ) );
+                            s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, (s_CoordY - 16)/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() ) );
+                            s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() ) );
+                            s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() ) );
+                            s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, (s_CoordY + 16)/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() ) );
+                            s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, (s_CoordY + 16)/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() ) );
                             break;
                             break;
                         }
