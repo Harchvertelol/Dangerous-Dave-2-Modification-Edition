@@ -128,7 +128,7 @@ void Game::calculateFPS(unsigned int* fps, unsigned int* calcfps, time_t* timeol
     if(timenew - (*timeold) >= TIME_SECOND_FPS)
     {
         (*fps) = (*calcfps);
-        int tmp_t = timenew - (*timeold);
+        //int tmp_t = timenew - (*timeold);
         //(*fps) = 1000 / tmp_t;
         (*calcfps) = 0;
         (*timeold) = timenew;
@@ -245,7 +245,7 @@ void Game::startGame(int idgameclass)
     configureForGame();
 }
 
-void Game::createWindow()
+bool Game::createWindow()
 {
     if(s_RenderWindow)
     {
@@ -253,11 +253,22 @@ void Game::createWindow()
         delete s_RenderWindow;
     }
     float window_scale = atof( (s_IniFile->getValue("video", "gamescale") ).c_str() );
+    if( (s_DisplayStruct->s_WindowResolutionX == -1 || s_DisplayStruct->s_WindowResolutionY == -1) && window_scale == -1 )
+    {
+        cout << "Error: (window resolution x, window resolution y) and gamescale cannot be equal to -1 at the same time!" << endl;
+        return false;
+    }
     s_RenderTexture->create(s_DisplayStruct->s_GameResolutionX, s_DisplayStruct->s_GameResolutionY, true);
     if(s_DisplayStruct->s_WindowResolutionX == -1 || s_DisplayStruct->s_WindowResolutionY == -1)
     {
         s_DisplayStruct->s_WindowResolutionX = s_DisplayStruct->s_GameResolutionX * window_scale;
         s_DisplayStruct->s_WindowResolutionY = s_DisplayStruct->s_GameResolutionY * window_scale;
+    }
+    if(window_scale == -1)
+    {
+        float tmp_window_scale = (float)s_DisplayStruct->s_WindowResolutionX / (float)s_DisplayStruct->s_GameResolutionX;
+        window_scale = (float)s_DisplayStruct->s_WindowResolutionY / (float)s_DisplayStruct->s_GameResolutionY;
+        if(window_scale - tmp_window_scale > NUMBER_CONSTANTS::NC_EPS) window_scale = tmp_window_scale;
     }
     if(s_IniFile->getValue("video", "fullscreen") == "true")
     {
@@ -266,6 +277,7 @@ void Game::createWindow()
     }
     else s_RenderWindow = new RenderWindow( VideoMode(s_DisplayStruct->s_WindowResolutionX, s_DisplayStruct->s_WindowResolutionY), STRING_CONSTANTS::SC_TITLE_WINDOW);
     s_GameRenderScale = window_scale;
+    return true;
 }
 
 void Game::configureForGame()

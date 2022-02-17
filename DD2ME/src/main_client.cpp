@@ -20,6 +20,7 @@ int main(int argc, char** argv)
 {
     srand((unsigned)time(NULL));
     Game* gm = new Game;
+
     if(!gm)
     {
         cout << "Error creating GameClass!" << endl;
@@ -95,7 +96,7 @@ int main(int argc, char** argv)
         gm->s_DisplayStruct->s_WindowResolutionY = atoi( (gm->s_IniFile->getValue("video", "windowresolutionY") ).c_str() );
         if(gm->s_DisplayStruct->s_GameResolutionY <= 0 || gm->s_DisplayStruct->s_GameResolutionX <= 0)
         {
-            cout<<"Error: Display resolution."<<endl;
+            cout<<"Error: Game resolution."<<endl;
             system("pause");
             return 0;
         }
@@ -109,7 +110,11 @@ int main(int argc, char** argv)
         gm->s_RenderWindow = new RenderWindow( VideoMode(gm->s_DisplayStruct->s_GameResolutionX * window_scale, gm->s_DisplayStruct->s_GameResolutionY * window_scale), STRING_CONSTANTS::SC_TITLE_WINDOW);
         gm->s_GameRenderScale = window_scale;*/
 
-        gm->createWindow();
+        if(!gm->createWindow())
+        {
+            cout << "Error: create window!" << endl;
+            return 0;
+        }
 
         //...
         if(!gm->loadPack())

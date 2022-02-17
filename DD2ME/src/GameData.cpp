@@ -61,6 +61,76 @@ void GameData::deleteAllGDIObjects()
     s_Monsters->deleteAllGDIObjects();
 }
 
+int GameData::compareGameVersions(string first, string second)
+{
+    int first_level_version, second_level_version; // pre-beta = -2, beta = -1, pre-release = 0, release = 1
+    map<int, int> first_mas, second_mas;
+
+    int tmp_level_version = -2;
+    string work_str = first;
+    unsigned int str_vers_cut = work_str.find("pb");
+    if(str_vers_cut == string::npos)
+    {
+        str_vers_cut = work_str.find("b");
+        tmp_level_version = -1;
+    }
+    if(str_vers_cut == string::npos)
+    {
+        str_vers_cut = work_str.find("pr");
+        tmp_level_version = 0;
+    }
+    if(str_vers_cut == string::npos)
+    {
+        str_vers_cut = work_str.size();
+        tmp_level_version = 1;
+    }
+    work_str = work_str.substr(0, str_vers_cut);
+    WorkFunctions::ParserFunctions::splitMass(&first_mas, 0, 0, work_str, ".");
+    first_level_version = tmp_level_version;
+
+    tmp_level_version = -2;
+    work_str = second;
+    str_vers_cut = work_str.find("pb");
+    if(str_vers_cut == string::npos)
+    {
+        str_vers_cut = work_str.find("b");
+        tmp_level_version = -1;
+    }
+    if(str_vers_cut == string::npos)
+    {
+        str_vers_cut = work_str.find("pr");
+        tmp_level_version = 0;
+    }
+    if(str_vers_cut == string::npos)
+    {
+        str_vers_cut = work_str.size();
+        tmp_level_version = 1;
+    }
+    work_str = work_str.substr(0, str_vers_cut);
+    WorkFunctions::ParserFunctions::splitMass(&second_mas, 0, 0, work_str, ".");
+    second_level_version = tmp_level_version;
+
+    if(first_level_version > second_level_version) return 1;
+    else if(first_level_version < second_level_version) return -1;
+
+    map<int, int>* pointer_lower_mas = &second_mas;
+    unsigned int max_size_mas = first_mas.size(), min_size_mas = second_mas.size();
+    if(max_size_mas < second_mas.size())
+    {
+        min_size_mas = max_size_mas;
+        max_size_mas = second_mas.size();
+        pointer_lower_mas = &first_mas;
+    }
+
+    for(unsigned int i = 0; i < max_size_mas; i++)
+    {
+        if(i >= min_size_mas) (*pointer_lower_mas)[i] = 0;
+        if(first_mas[i] > second_mas[i]) return 1;
+        else if(first_mas[i] < second_mas[i]) return -1;
+    }
+    return 0;
+}
+
 bool GameData::loadData(PostParsingStruct* s_IniFile)
 {
     ParserInfoFile prs;
@@ -81,11 +151,11 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
         s_ModSettings = prs.getParsedFromFile("ModPacks/" + s_NameMod + "/settings.ini");
         if(!s_ModInfo || !s_ModSettings) return false;
 
-        int str_vers_cut = s_ModInfo->getValue("info", "gameversion").find("pb");
-        if(str_vers_cut == string::npos) str_vers_cut = s_ModInfo->getValue("info", "gameversion").find("b");
-        else if(str_vers_cut == string::npos) str_vers_cut = s_ModInfo->getValue("info", "gameversion").find("a");
-        else str_vers_cut = s_ModInfo->getValue("info", "gameversion").size();
-        if(stof(s_ModInfo->getValue("info", "gameversion").substr(0, str_vers_cut)) < NUMBER_CONSTANTS::NC_GAME_VERSION) cout << "Warning: this modpack was added for previously version of DD2:ME!" << endl;
+        int res_compare_game_versions = compareGameVersions(STRING_CONSTANTS::SC_GAME_VERSION, s_ModInfo->getValue("info", "gameversion"));
+        string str_error = "";
+        if(res_compare_game_versions == 1) str_error = "previously";
+        else if(res_compare_game_versions == -1) str_error = "newer";
+        if(str_error != "") cout << "Warning: this modpack was added for " << str_error << " version of DD2:ME! (" << "game version: " << STRING_CONSTANTS::SC_GAME_VERSION << ", modpack version: " << s_ModInfo->getValue("info", "gameversion") << ")" << endl;
 
         if(s_ModInfo->getValue("other", "inifile") != "")
         {

@@ -47,5 +47,6 @@ class GameData
         bool drawScreenState2();
         bool drawScreenState3();
         void deleteAllGDIObjects();
+        int compareGameVersions(std::string, std::string);
 };
 #endif

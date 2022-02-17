@@ -71,6 +71,6 @@ class Game
         bool insertDave(int, int, std::string);
         bool removeDave(int);
         void deleteAllGDIObjects();
-        void createWindow();
+        bool createWindow();
 };
 #endif
