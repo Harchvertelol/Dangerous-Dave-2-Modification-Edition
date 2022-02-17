@@ -25,7 +25,7 @@ Gui::~Gui()
 void Gui::drawFPS()
 {
     if(s_GameClass->s_IniFile->getValue("FPS", "ShowFPS") != "true" || s_GameClass->s_IniFile->getValue("FPS", "ShowFPSMode") != "graphic") return;
-    Font main_fnt = s_GameClass->s_Data->s_GuiData->getFont("main");
+    sf::Font main_fnt = s_GameClass->s_Data->s_GuiData->getSFMLFont("fps");
     stringstream s;
     int k = 0;
     int shift = 15;
@@ -112,6 +112,8 @@ string Gui::getSecretsText()
 
 void Gui::drawGuiState2(int screennumber)
 {
+    map<int, int> tmp_mas;
+    int res_col = 0;
     string screenname = "screen_" + WorkFunctions::ConvertFunctions::itos(screennumber + 1);
     int levelnamecoordX = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "levelnamecoordX").c_str());
     int levelnamecoordY = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "levelnamecoordY").c_str());
@@ -137,23 +139,27 @@ void Gui::drawGuiState2(int screennumber)
     s_GameClass->s_Window->draw(Label("Secrets: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_Data->s_Level->s_Params->getMapVariables()["Secrets"].size()), secretscoordX, secretscoordY, secretssize), Pen(0, 0, 0));
     s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints), scorecoordX, scorecoordY, scoresize), Pen(0, 0, 0));
     s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(0), highscorecoordX, highscorecoordY, highscoresize), Pen(0, 0, 0));*/
-    Font main_fnt = s_GameClass->s_Data->s_GuiData->getFont("main");
+    sf::Font main_fnt = s_GameClass->s_Data->s_GuiData->getSFMLFont("changelevelscreen");
     Text txt;
     txt.setFont(main_fnt);
 
-    txt.setFillColor(Color(0, 0, 0, 255));
     txt.setCharacterSize(levelnamesize);
     txt.setPosition(Vector2f(levelnamecoordX, levelnamecoordY));
     string level_str = "Level " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel);
     if(levelname != "") level_str = levelname;
     txt.setString(level_str);
+    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "textcolorlevelname"), ";");
+    if(res_col < 3) cout << "Error with gui parameters: textcolorlevelname" << endl;
+    else txt.setFillColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
     s_GameClass->s_RenderTexture->draw(txt);
 
     string secrets_text = getSecretsText();
-    txt.setFillColor(Color(0, 0, 0, 255));
     txt.setCharacterSize(secretssize);
     txt.setPosition(Vector2f(secretscoordX, secretscoordY));
     txt.setString(secrets_text);
+    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "textcolorsecret"), ";");
+    if(res_col < 3) cout << "Error with gui parameters: textcolorsecret" << endl;
+    else txt.setFillColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
     s_GameClass->s_RenderTexture->draw(txt);
 
     string score_text = WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints);
@@ -161,13 +167,18 @@ void Gui::drawGuiState2(int screennumber)
     txt.setCharacterSize(scoresize);
     txt.setPosition(Vector2f(scorecoordX, scorecoordY));
     txt.setString(score_text);
+    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "textcolorscore"), ";");
+    if(res_col < 3) cout << "Error with gui parameters: textcolorscore" << endl;
+    else txt.setFillColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
     s_GameClass->s_RenderTexture->draw(txt);
 
     string highscore_text = WorkFunctions::ConvertFunctions::itos(0);
-    txt.setFillColor(Color(0, 0, 0, 255));
     txt.setCharacterSize(highscoresize);
     txt.setPosition(Vector2f(highscorecoordX, highscorecoordY));
     txt.setString(highscore_text);
+    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "textcolorhighscore"), ";");
+    if(res_col < 3) cout << "Error with gui parameters: textcolorhighscore" << endl;
+    else txt.setFillColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
     s_GameClass->s_RenderTexture->draw(txt);
 
     for(int i = 0; i < s_GameClass->s_GameInfo->s_CurrentLives - 1 && i < livesmaxobject; i++)
@@ -262,6 +273,9 @@ void Gui::createPopupWindow(string text, int timer)
 {
     map<int, int> tmp_mas;
     int res_col = 0;
+
+    tgui::Font main_fnt = s_GameClass->s_Data->s_GuiData->getTGUIFont("popupwindow");
+
     auto popupWindow = tgui::Panel::create();
     auto label_text = tgui::Label::create();
     text = WorkFunctions::WordFunctions::removeSlashes(text);
@@ -272,8 +286,9 @@ void Gui::createPopupWindow(string text, int timer)
     label_text->setPosition("50%", "50%");
     label_text->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
     label_text->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    label_text->getRenderer()->setFont(main_fnt);
     //label_text->setMaximumTextWidth("85%");
-    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "textcolorpopupwindow"), ";");
+    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "textcolorpopupwindow"), ";");
     if(res_col < 3) cout << "Error with gui parameters for popup window: textcolorpopupwindow" << endl;
     else label_text->getRenderer()->setTextColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
     popupWindow->setSize("30%", "10%");
@@ -282,18 +297,18 @@ void Gui::createPopupWindow(string text, int timer)
     popupWindow->setPosition("50%", "15%");
     popupWindow->getRenderer()->setBorders(tgui::Borders(1));
     tmp_mas.clear();
-    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "bordercolorpopupwindow"), ";");
+    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "bordercolorpopupwindow"), ";");
     if(res_col < 3) cout << "Error with gui parameters for popup window: bordercolorpopupwindow" << endl;
     else popupWindow->getRenderer()->setBorderColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
     tmp_mas.clear();
-    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "backgroundcolorpopupwindow"), ";");
+    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "backgroundcolorpopupwindow"), ";");
     if(res_col < 3) cout << "Error with gui parameters for popup window: backgroundcolorpopupwindow" << endl;
     else popupWindow->getRenderer()->setBackgroundColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
     popupWindow->add(label_text);
-    popupWindow->showWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "timefadepopupwindow").c_str()));
+    popupWindow->showWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "timefadepopupwindow").c_str()));
     popupWindow->onAnimationFinish([=](bool isShow){ if(!isShow) popupWindow->getParent()->remove(popupWindow); });
     s_GameClass->s_Gui->s_TGUI->add(popupWindow);
-    tgui::Timer::scheduleCallback([=](){ popupWindow->hideWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "timefadepopupwindow").c_str())); }, timer);
+    tgui::Timer::scheduleCallback([=](){ popupWindow->hideWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "timefadepopupwindow").c_str())); }, timer);
 }
 
 void Gui::showInfo()
@@ -303,6 +318,7 @@ void Gui::showInfo()
         s_InfoWindow->getParent()->remove(s_InfoWindow);
         s_InfoWindow = 0;
     }
+    tgui::Font main_fnt = s_GameClass->s_Data->s_GuiData->getTGUIFont("infowindow");
     string size_panel_x = "90%", size_panel_y = "90%";
     string size_text_x = "85%", size_text_y = "70%";
     string start_pos_text_x = "50%", start_pos_text_y = "10%";
@@ -312,12 +328,14 @@ void Gui::showInfo()
     infoWindow->getRenderer()->setBorders(tgui::Borders(1));
     map<int, int> tmp_mas;
     int res_col = 0;
-    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "backgroundcolorinfowindow"), ";");
+    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "backgroundcolorinfowindow"), ";");
     if(res_col < 3) cout << "Error with gui parameters for info window: backgroundcolorinfowindow" << endl;
     else infoWindow->getRenderer()->setBackgroundColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
     infoWindow->setSize(size_panel_x.c_str(), size_panel_y.c_str());
     infoWindow->setOrigin(0.5, 0.5);
     infoWindow->setPosition("50%", "50%");
+
+    res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "textcolorinfowindow"), ";");
 
     auto label_text = tgui::Label::create();
     label_text->setText("Information:");
@@ -327,6 +345,9 @@ void Gui::showInfo()
     label_text->setPosition(start_pos_text_x.c_str(), start_pos_text_y.c_str());
     label_text->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
     label_text->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    if(res_col < 3) cout << "Error with gui parameters for popup window: textcolorinfowindow" << endl;
+    else label_text->getRenderer()->setTextColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
+    label_text->getRenderer()->setFont(main_fnt);
     infoWindow->add(label_text);
 
     label_text = tgui::Label::create();
@@ -337,6 +358,9 @@ void Gui::showInfo()
     label_text->setPosition("50%", "20%");
     label_text->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
     label_text->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    if(res_col < 3) cout << "Error with gui parameters for popup window: textcolorinfowindow" << endl;
+    else label_text->getRenderer()->setTextColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
+    label_text->getRenderer()->setFont(main_fnt);
     infoWindow->add(label_text);
 
     label_text = tgui::Label::create();
@@ -347,6 +371,9 @@ void Gui::showInfo()
     label_text->setPosition("50%", "30%");
     label_text->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
     label_text->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    if(res_col < 3) cout << "Error with gui parameters for popup window: textcolorinfowindow" << endl;
+    else label_text->getRenderer()->setTextColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
+    label_text->getRenderer()->setFont(main_fnt);
     infoWindow->add(label_text);
 
     label_text = tgui::Label::create();
@@ -357,6 +384,9 @@ void Gui::showInfo()
     label_text->setPosition("50%", "40%");
     label_text->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
     label_text->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    if(res_col < 3) cout << "Error with gui parameters for popup window: textcolorinfowindow" << endl;
+    else label_text->getRenderer()->setTextColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
+    label_text->getRenderer()->setFont(main_fnt);
     infoWindow->add(label_text);
 
     label_text = tgui::Label::create();
@@ -367,6 +397,9 @@ void Gui::showInfo()
     label_text->setPosition("50%", "50%");
     label_text->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
     label_text->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    if(res_col < 3) cout << "Error with gui parameters for popup window: textcolorinfowindow" << endl;
+    else label_text->getRenderer()->setTextColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
+    label_text->getRenderer()->setFont(main_fnt);
     infoWindow->add(label_text);
 
     label_text = tgui::Label::create();
@@ -377,17 +410,20 @@ void Gui::showInfo()
     label_text->setPosition("50%", "60%");
     label_text->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
     label_text->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+    if(res_col < 3) cout << "Error with gui parameters for popup window: textcolorinfowindow" << endl;
+    else label_text->getRenderer()->setTextColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
+    label_text->getRenderer()->setFont(main_fnt);
     infoWindow->add(label_text);
 
     s_GameClass->s_Gui->s_TGUI->add(infoWindow);
     s_InfoWindow = infoWindow;
 
-    infoWindow->showWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "timefadeinfowindow").c_str()));
+    infoWindow->showWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "timefadeinfowindow").c_str()));
 }
 
 void Gui::removeInfo()
 {
     if(!s_InfoWindow) return;
-    s_InfoWindow->hideWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "timefadeinfowindow").c_str()));
+    s_InfoWindow->hideWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "timefadeinfowindow").c_str()));
     s_InfoWindow->onAnimationFinish([=](bool isShow){ if(!isShow) s_InfoWindow->getParent()->remove(s_InfoWindow); s_InfoWindow = 0; });
 }

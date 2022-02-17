@@ -450,7 +450,7 @@ void Game::drawAll()
     if(s_IniFile->getValue("video", "center") == "true") renderSprite.setPosition(Vector2f(s_DisplayStruct->s_WindowResolutionX / 2 - s_DisplayStruct->s_GameResolutionX / 2 * s_GameRenderScale, s_DisplayStruct->s_WindowResolutionY / 2 - s_DisplayStruct->s_GameResolutionY / 2 * s_GameRenderScale));
     else renderSprite.setPosition(Vector2f(0, 0));
     map<int, int> tmp_mas;
-    int res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_NetClient->s_NetInfo->getValue("gui", "fillcolorbackgroundwindow"), ";");
+    int res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_Data->s_GuiData->s_GuiInfo->getValue("gui", "fillcolorbackgroundwindow"), ";");
     if(res_col < 3)
     {
         cout << "Error with gui parameters for popup window: fillcolorbackgroundwindow" << endl;

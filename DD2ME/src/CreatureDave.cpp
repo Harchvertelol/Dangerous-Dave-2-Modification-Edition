@@ -599,7 +599,7 @@ int CreatureDave::testChangeLevel()
                 s_Values->setValue("GS_secrets_visited", "level_" + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel), setting_str);
                 string text_popup = STRING_CONSTANTS::SC_DEFAULT_TEXT_ON_FOUND_SECRET;
                 if(s_GameClass->s_Data->s_Level->s_Params->isExists("Secrets", isSecret) && s_GameClass->s_Data->s_Level->s_Params->getValue("Secrets", isSecret) != "") text_popup = s_GameClass->s_Data->s_Level->s_Params->getValue("Secrets", isSecret);
-                s_GameClass->s_Gui->createPopupWindow(text_popup, atoi(s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "hidetimerpopupwindow").c_str()));
+                s_GameClass->s_Gui->createPopupWindow(text_popup, atoi(s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "hidetimerpopupwindow").c_str()));
             }
             int toLevel = -1;
             if(TileType == EXITLEVEL) toLevel = s_GameClass->s_GameInfo->s_CurrentLevel + 1;

@@ -2,6 +2,7 @@
 #define GUIDATA_H
 #include <map>
 #include <SFML/Graphics.hpp>
+#include <TGUI/Font.hpp>
 
 #include "IniParser/PostParsingStruct.h"
 
@@ -12,10 +13,12 @@ class GuiData
     public:
         GuiData();
         ~GuiData();
-        IniParser::PostParsingStruct* s_FontsInfo;
+        IniParser::PostParsingStruct* s_GuiInfo;
         std::map<std::string, sf::Font> s_Fonts;
         bool load(std::string);
-        sf::Font getFont(std::string);
+        bool isExists(std::string);
+        sf::Font getSFMLFont(std::string);
+        tgui::Font getTGUIFont(std::string);
 };
 
 #endif
