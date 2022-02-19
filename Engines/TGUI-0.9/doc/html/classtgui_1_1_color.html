@@ -215,6 +215,11 @@ static const <a class="el" href="classtgui_1_1_color.html">Color</a>&#160;</td><
 static const <a class="el" href="classtgui_1_1_color.html">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_color.html#a1f089362e40f84d6a2d43e5a5146a246">Transparent</a> { 0, 0, 0, 0}</td></tr>
 <tr class="memdesc:a1f089362e40f84d6a2d43e5a5146a246"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transparent (black) predefined color. <br /></td></tr>
 <tr class="separator:a1f089362e40f84d6a2d43e5a5146a246"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d15fb92265c045c63081ad9f65bbc43"><td class="memItemLeft" align="right" valign="top"><a id="a7d15fb92265c045c63081ad9f65bbc43"></a>
+static const std::map&lt; <a class="el" href="classtgui_1_1_string.html">String</a>, <a class="el" href="classtgui_1_1_color.html">Color</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>colorMap</b></td></tr>
+<tr class="separator:a7d15fb92265c045c63081ad9f65bbc43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee3afa23b5510400d30afae540c37f01"><td class="memItemLeft" align="right" valign="top">static const std::array&lt; std::pair&lt; StringView, <a class="el" href="classtgui_1_1_color.html">Color</a> &gt;, 9 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>colorNamesMap</b></td></tr>
+<tr class="separator:aee3afa23b5510400d30afae540c37f01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Wrapper for colors. </p>
@@ -611,14 +616,57 @@ static const <a class="el" href="classtgui_1_1_color.html">Color</a>&#160;</td><
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="aee3afa23b5510400d30afae540c37f01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee3afa23b5510400d30afae540c37f01">&#9670;&nbsp;</a></span>colorNamesMap</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr const std::array&lt; std::pair&lt; StringView, <a class="el" href="classtgui_1_1_color.html">Color</a> &gt;, 9 &gt; tgui::Color::colorNamesMap</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">        {{U<span class="stringliteral">&quot;black&quot;</span>, <a class="code" href="classtgui_1_1_color.html#a6e24621cb5489ced76a0daeb5df7faea">Color::Black</a>},</div>
+<div class="line">         {U<span class="stringliteral">&quot;white&quot;</span>, <a class="code" href="classtgui_1_1_color.html#aa01b43e54eca75f0141ebf6c22f2f2ee">Color::White</a>},</div>
+<div class="line">         {U<span class="stringliteral">&quot;red&quot;</span>, <a class="code" href="classtgui_1_1_color.html#ae4d33a5b1bfc6bec0a67c256974fede6">Color::Red</a>},</div>
+<div class="line">         {U<span class="stringliteral">&quot;yellow&quot;</span>, <a class="code" href="classtgui_1_1_color.html#ae49a93d30059bf30c5afa99d1228ef8b">Color::Yellow</a>},</div>
+<div class="line">         {U<span class="stringliteral">&quot;green&quot;</span>, <a class="code" href="classtgui_1_1_color.html#a759b8d0d430ff5009c3617696fa4bc83">Color::Green</a>},</div>
+<div class="line">         {U<span class="stringliteral">&quot;cyan&quot;</span>, <a class="code" href="classtgui_1_1_color.html#ac61a60d44a7feb08be2fd0303f9ccd01">Color::Cyan</a>},</div>
+<div class="line">         {U<span class="stringliteral">&quot;blue&quot;</span>, <a class="code" href="classtgui_1_1_color.html#aebe98eac6c156af03fba15bbebd3f0a0">Color::Blue</a>},</div>
+<div class="line">         {U<span class="stringliteral">&quot;magenta&quot;</span>, <a class="code" href="classtgui_1_1_color.html#ad882fe860994837e785ebc5da6e9e796">Color::Magenta</a>},</div>
+<div class="line">         {U<span class="stringliteral">&quot;transparent&quot;</span>, <a class="code" href="classtgui_1_1_color.html#a1f089362e40f84d6a2d43e5a5146a246">Color::Transparent</a>}}</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Program Files (x86)/Jenkins/workspace/TGUI/include/TGUI/<a class="el" href="_color_8hpp_source.html">Color.hpp</a></li>
+<li>C:/Program Files (x86)/Jenkins/workspace/TGUI-0.9/include/TGUI/<a class="el" href="_color_8hpp_source.html">Color.hpp</a></li>
 </ul>
 </div><!-- contents -->
+<div class="ttc" id="aclasstgui_1_1_color_html_ac61a60d44a7feb08be2fd0303f9ccd01"><div class="ttname"><a href="classtgui_1_1_color.html#ac61a60d44a7feb08be2fd0303f9ccd01">tgui::Color::Cyan</a></div><div class="ttdeci">static const Color Cyan</div><div class="ttdoc">Cyan predefined color.</div><div class="ttdef"><b>Definition:</b> Color.hpp:260</div></div>
+<div class="ttc" id="aclasstgui_1_1_color_html_aa01b43e54eca75f0141ebf6c22f2f2ee"><div class="ttname"><a href="classtgui_1_1_color.html#aa01b43e54eca75f0141ebf6c22f2f2ee">tgui::Color::White</a></div><div class="ttdeci">static const Color White</div><div class="ttdoc">White predefined color.</div><div class="ttdef"><b>Definition:</b> Color.hpp:254</div></div>
+<div class="ttc" id="aclasstgui_1_1_color_html_a1f089362e40f84d6a2d43e5a5146a246"><div class="ttname"><a href="classtgui_1_1_color.html#a1f089362e40f84d6a2d43e5a5146a246">tgui::Color::Transparent</a></div><div class="ttdeci">static const Color Transparent</div><div class="ttdoc">Transparent (black) predefined color.</div><div class="ttdef"><b>Definition:</b> Color.hpp:261</div></div>
+<div class="ttc" id="aclasstgui_1_1_color_html_ae49a93d30059bf30c5afa99d1228ef8b"><div class="ttname"><a href="classtgui_1_1_color.html#ae49a93d30059bf30c5afa99d1228ef8b">tgui::Color::Yellow</a></div><div class="ttdeci">static const Color Yellow</div><div class="ttdoc">Yellow predefined color.</div><div class="ttdef"><b>Definition:</b> Color.hpp:258</div></div>
+<div class="ttc" id="aclasstgui_1_1_color_html_a759b8d0d430ff5009c3617696fa4bc83"><div class="ttname"><a href="classtgui_1_1_color.html#a759b8d0d430ff5009c3617696fa4bc83">tgui::Color::Green</a></div><div class="ttdeci">static const Color Green</div><div class="ttdoc">Green predefined color.</div><div class="ttdef"><b>Definition:</b> Color.hpp:256</div></div>
+<div class="ttc" id="aclasstgui_1_1_color_html_aebe98eac6c156af03fba15bbebd3f0a0"><div class="ttname"><a href="classtgui_1_1_color.html#aebe98eac6c156af03fba15bbebd3f0a0">tgui::Color::Blue</a></div><div class="ttdeci">static const Color Blue</div><div class="ttdoc">Blue predefined color.</div><div class="ttdef"><b>Definition:</b> Color.hpp:257</div></div>
+<div class="ttc" id="aclasstgui_1_1_color_html_ad882fe860994837e785ebc5da6e9e796"><div class="ttname"><a href="classtgui_1_1_color.html#ad882fe860994837e785ebc5da6e9e796">tgui::Color::Magenta</a></div><div class="ttdeci">static const Color Magenta</div><div class="ttdoc">Magenta predefined color.</div><div class="ttdef"><b>Definition:</b> Color.hpp:259</div></div>
+<div class="ttc" id="aclasstgui_1_1_color_html_ae4d33a5b1bfc6bec0a67c256974fede6"><div class="ttname"><a href="classtgui_1_1_color.html#ae4d33a5b1bfc6bec0a67c256974fede6">tgui::Color::Red</a></div><div class="ttdeci">static const Color Red</div><div class="ttdoc">Red predefined color.</div><div class="ttdef"><b>Definition:</b> Color.hpp:255</div></div>
+<div class="ttc" id="aclasstgui_1_1_color_html_a6e24621cb5489ced76a0daeb5df7faea"><div class="ttname"><a href="classtgui_1_1_color.html#a6e24621cb5489ced76a0daeb5df7faea">tgui::Color::Black</a></div><div class="ttdeci">static const Color Black</div><div class="ttdoc">Black predefined color.</div><div class="ttdef"><b>Definition:</b> Color.hpp:253</div></div>
 <!-- HTML footer for doxygen 1.8.10-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 5 2021 19:36:21 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 15 2022 14:50:46 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.20
 </small></address>

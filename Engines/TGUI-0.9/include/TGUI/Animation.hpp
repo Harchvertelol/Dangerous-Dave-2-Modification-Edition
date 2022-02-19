@@ -26,7 +26,7 @@
 #ifndef TGUI_ANIMATION_HPP
 #define TGUI_ANIMATION_HPP
 
-#include <TGUI/Vector2.hpp>
+#include <TGUI/Layout.hpp>
 #include <TGUI/Duration.hpp>
 #include <functional>
 #include <memory>
@@ -40,7 +40,7 @@ namespace tgui
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// @brief Type of animation to show/hide widget
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    enum class ShowAnimationType
+    enum class ShowEffectType
     {
         Fade,          //!< Fade widget in or out
         Scale,         //!< Shrink to the center of the widget to hide or grow from its center to show
@@ -54,6 +54,9 @@ namespace tgui
         SlideFromTop = SlideToBottom, //!< Slide from top to show or to the bottom to hide
         SlideFromBottom = SlideToTop  //!< Slide from bottom to show or to the top to hide
     };
+
+    using ShowAnimationType TGUI_DEPRECATED("ShowAnimationType was renamed to ShowEffectType") = ShowEffectType;
+
 
     namespace priv
     {
@@ -101,7 +104,7 @@ namespace tgui
         class TGUI_API MoveAnimation : public Animation
         {
         public:
-            MoveAnimation(std::shared_ptr<Widget> widget, Vector2f start, Vector2f end, Duration duration, std::function<void()> finishedCallback = nullptr);
+            MoveAnimation(std::shared_ptr<Widget> widget, Vector2f start, Layout2d end, Duration duration, std::function<void()> finishedCallback = nullptr);
 
             bool update(Duration elapsedTime) override;
 
@@ -109,7 +112,7 @@ namespace tgui
 
         private:
             Vector2f m_startPos;
-            Vector2f m_endPos;
+            Layout2d m_endPos;
         };
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -117,7 +120,7 @@ namespace tgui
         class TGUI_API ResizeAnimation : public Animation
         {
         public:
-            ResizeAnimation(std::shared_ptr<Widget> widget, Vector2f start, Vector2f end, Duration duration, std::function<void()> finishedCallback = nullptr);
+            ResizeAnimation(std::shared_ptr<Widget> widget, Vector2f start, Layout2d end, Duration duration, std::function<void()> finishedCallback = nullptr);
 
             bool update(Duration elapsedTime) override;
 
@@ -125,7 +128,7 @@ namespace tgui
 
         private:
             Vector2f m_startSize;
-            Vector2f m_endSize;
+            Layout2d m_endSize;
         };
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -219,6 +219,31 @@ template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:abb671592facd86e49938587e510becc4 inherit pro_static_methods_classtgui_1_1_signal"><td class="memTemplItemLeft" align="right" valign="top">static const std::decay_t&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classtgui_1_1_signal.html#abb671592facd86e49938587e510becc4">dereferenceParam</a> (std::size_t paramIndex)</td></tr>
 <tr class="memdesc:abb671592facd86e49938587e510becc4 inherit pro_static_methods_classtgui_1_1_signal"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the void* parameters back into its original type right before calling the callback function. <br /></td></tr>
 <tr class="separator:abb671592facd86e49938587e510becc4 inherit pro_static_methods_classtgui_1_1_signal"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8317e47c964e7e0119981616bc162db inherit pro_static_methods_classtgui_1_1_signal"><td class="memTemplParams" colspan="2"><a id="ad8317e47c964e7e0119981616bc162db"></a>
+template&lt;typename Func , typename... Args, typename std::enable_if&lt; std::is_member_pointer&lt; typename std::decay&lt; Func &gt;::type &gt;::value &gt;::type *  = nullptr&gt; </td></tr>
+<tr class="memitem:ad8317e47c964e7e0119981616bc162db inherit pro_static_methods_classtgui_1_1_signal"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>invokeFunc</b> (Func &amp;&amp;func, Args &amp;&amp;... args)</td></tr>
+<tr class="separator:ad8317e47c964e7e0119981616bc162db inherit pro_static_methods_classtgui_1_1_signal"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8317e47c964e7e0119981616bc162db inherit pro_static_methods_classtgui_1_1_signal"><td class="memTemplParams" colspan="2"><a id="ad8317e47c964e7e0119981616bc162db"></a>
+template&lt;typename Func , typename... Args, typename std::enable_if&lt;!std::is_member_pointer&lt; typename std::decay&lt; Func &gt;::type &gt;::value &gt;::type *  = nullptr&gt; </td></tr>
+<tr class="memitem:ad8317e47c964e7e0119981616bc162db inherit pro_static_methods_classtgui_1_1_signal"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>invokeFunc</b> (Func &amp;&amp;func, Args &amp;&amp;... args)</td></tr>
+<tr class="separator:ad8317e47c964e7e0119981616bc162db inherit pro_static_methods_classtgui_1_1_signal"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classtgui_1_1_signal"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classtgui_1_1_signal')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classtgui_1_1_signal.html">tgui::Signal</a></td></tr>
+<tr class="memitem:aa33017e94baf9d50c638f9264630cb0f inherit pro_attribs_classtgui_1_1_signal"><td class="memItemLeft" align="right" valign="top"><a id="aa33017e94baf9d50c638f9264630cb0f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_enabled</b> = true</td></tr>
+<tr class="separator:aa33017e94baf9d50c638f9264630cb0f inherit pro_attribs_classtgui_1_1_signal"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b2f8ae669a078fde5fd0be283ee6006 inherit pro_attribs_classtgui_1_1_signal"><td class="memItemLeft" align="right" valign="top"><a id="a3b2f8ae669a078fde5fd0be283ee6006"></a>
+<a class="el" href="classtgui_1_1_string.html">String</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_name</b></td></tr>
+<tr class="separator:a3b2f8ae669a078fde5fd0be283ee6006 inherit pro_attribs_classtgui_1_1_signal"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21200c6cf55f05c5108817831f0a490e inherit pro_attribs_classtgui_1_1_signal"><td class="memItemLeft" align="right" valign="top"><a id="a21200c6cf55f05c5108817831f0a490e"></a>
+std::map&lt; unsigned int, std::function&lt; void()&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_handlers</b></td></tr>
+<tr class="separator:a21200c6cf55f05c5108817831f0a490e inherit pro_attribs_classtgui_1_1_signal"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_static_attribs_classtgui_1_1_signal"><td colspan="2" onclick="javascript:toggleInherit('pro_static_attribs_classtgui_1_1_signal')"><img src="closed.png" alt="-"/>&#160;Static Protected Attributes inherited from <a class="el" href="classtgui_1_1_signal.html">tgui::Signal</a></td></tr>
+<tr class="memitem:a3805529fa9314b8e06cb6821859a43b0 inherit pro_static_attribs_classtgui_1_1_signal"><td class="memItemLeft" align="right" valign="top"><a id="a3805529fa9314b8e06cb6821859a43b0"></a>
+static unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>m_lastSignalId</b></td></tr>
+<tr class="separator:a3805529fa9314b8e06cb6821859a43b0 inherit pro_static_attribs_classtgui_1_1_signal"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b15bb033591fef74b5e19442e872403 inherit pro_static_attribs_classtgui_1_1_signal"><td class="memItemLeft" align="right" valign="top"><a id="a2b15bb033591fef74b5e19442e872403"></a>
+static std::deque&lt; const void * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_parameters</b></td></tr>
+<tr class="separator:a2b15bb033591fef74b5e19442e872403 inherit pro_static_attribs_classtgui_1_1_signal"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T1, typename T2&gt;<br />
@@ -435,13 +460,13 @@ template&lt;typename Func , typename... BoundArgs&gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Program Files (x86)/Jenkins/workspace/TGUI/include/TGUI/<a class="el" href="_signal_8hpp_source.html">Signal.hpp</a></li>
+<li>C:/Program Files (x86)/Jenkins/workspace/TGUI-0.9/include/TGUI/<a class="el" href="_signal_8hpp_source.html">Signal.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.10-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 5 2021 19:36:22 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 15 2022 14:50:47 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.20
 </small></address>

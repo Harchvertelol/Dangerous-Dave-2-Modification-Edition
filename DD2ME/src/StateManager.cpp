@@ -210,7 +210,7 @@ void StateManager::s3I()
 bool StateManager::switchState(int state, bool callstartstate)
 {
     s_GameClass->s_GameInfo->s_IsInfoShow = false;
-    s_GameClass->s_Gui->removeInfo();
+    s_GameClass->s_Gui->removeInfo(true);
     s_GameClass->s_Gui->s_TGUI->removeAllWidgets();
     if(state > s_MaxState) return false;
     s_GameClass->s_GameInfo->s_GameState = state;

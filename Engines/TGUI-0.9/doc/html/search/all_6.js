@@ -242,7 +242,7 @@ var searchData=
   ['getright_459',['getRight',['../classtgui_1_1_outline.html#a4ac084ac9ed20c351eae0e9e182c9914',1,'tgui::Outline']]],
   ['getrotation_460',['getRotation',['../classtgui_1_1_sprite.html#a1f9e0ec53b951fd79f60edd041844ae1',1,'tgui::Sprite::getRotation()'],['../classtgui_1_1_widget.html#a530f60a1a0c3f02b757bf9ec97d88520',1,'tgui::Widget::getRotation()']]],
   ['getrotationorigin_461',['getRotationOrigin',['../classtgui_1_1_widget.html#afdc40ac003ba3a736ab1cf0e986f9a13',1,'tgui::Widget']]],
-  ['getroundedborderradius_462',['getRoundedBorderRadius',['../classtgui_1_1_button_renderer.html#aae4262b1f5ba0172c14d26584d62a675',1,'tgui::ButtonRenderer']]],
+  ['getroundedborderradius_462',['getRoundedBorderRadius',['../classtgui_1_1_button_renderer.html#aae4262b1f5ba0172c14d26584d62a675',1,'tgui::ButtonRenderer::getRoundedBorderRadius()'],['../classtgui_1_1_panel_renderer.html#af0d0268d61b31d406ab2316d43253184',1,'tgui::PanelRenderer::getRoundedBorderRadius()']]],
   ['getscale_463',['getScale',['../classtgui_1_1_widget.html#a2c9e76bec13d26124eae7fc096ad2f21',1,'tgui::Widget']]],
   ['getscaleorigin_464',['getScaleOrigin',['../classtgui_1_1_widget.html#a5dd7e59dfe37fb5ed8f1ebb4cac8efe9',1,'tgui::Widget']]],
   ['getscalingtype_465',['getScalingType',['../classtgui_1_1_sprite.html#a667a08d7341e4b6a76d0bc1eebc370df',1,'tgui::Sprite']]],

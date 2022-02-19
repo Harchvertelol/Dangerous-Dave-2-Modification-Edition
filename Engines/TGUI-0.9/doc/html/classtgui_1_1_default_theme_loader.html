@@ -112,6 +112,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
 <a href="classtgui_1_1_default_theme_loader-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">tgui::DefaultThemeLoader Class Reference</div>  </div>
@@ -160,6 +161,19 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:ad153b1f043ade8a2f173c5576c53f464"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; DataIO::Node &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_default_theme_loader.html#ad153b1f043ade8a2f173c5576c53f464">readFile</a> (const <a class="el" href="classtgui_1_1_string.html">String</a> &amp;filename) const</td></tr>
 <tr class="memdesc:ad153b1f043ade8a2f173c5576c53f464"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads and return the contents of the entire file.  <a href="classtgui_1_1_default_theme_loader.html#ad153b1f043ade8a2f173c5576c53f464">More...</a><br /></td></tr>
 <tr class="separator:ad153b1f043ade8a2f173c5576c53f464"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classtgui_1_1_base_theme_loader"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classtgui_1_1_base_theme_loader')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classtgui_1_1_base_theme_loader.html">tgui::BaseThemeLoader</a></td></tr>
+<tr class="memitem:a3f0addc9da2cbafe03971bf5602d694d inherit pro_methods_classtgui_1_1_base_theme_loader"><td class="memItemLeft" align="right" valign="top"><a id="a3f0addc9da2cbafe03971bf5602d694d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>injectThemePath</b> (const std::unique_ptr&lt; DataIO::Node &gt; &amp;node, const <a class="el" href="classtgui_1_1_string.html">String</a> &amp;path) const</td></tr>
+<tr class="separator:a3f0addc9da2cbafe03971bf5602d694d inherit pro_methods_classtgui_1_1_base_theme_loader"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa29410d60d5739f3d5964639841f93e inherit pro_methods_classtgui_1_1_base_theme_loader"><td class="memItemLeft" align="right" valign="top"><a id="aaa29410d60d5739f3d5964639841f93e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>resolveReferences</b> (std::map&lt; <a class="el" href="classtgui_1_1_string.html">String</a>, std::reference_wrapper&lt; const std::unique_ptr&lt; DataIO::Node &gt;&gt;&gt; &amp;sections, const std::unique_ptr&lt; DataIO::Node &gt; &amp;node) const</td></tr>
+<tr class="separator:aaa29410d60d5739f3d5964639841f93e inherit pro_methods_classtgui_1_1_base_theme_loader"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
+Static Protected Attributes</h2></td></tr>
+<tr class="memitem:ac3ca1728437fb4ed02cb587ecdedb12a"><td class="memItemLeft" align="right" valign="top"><a id="ac3ca1728437fb4ed02cb587ecdedb12a"></a>
+static std::map&lt; <a class="el" href="classtgui_1_1_string.html">String</a>, std::map&lt; <a class="el" href="classtgui_1_1_string.html">String</a>, std::map&lt; <a class="el" href="classtgui_1_1_string.html">String</a>, <a class="el" href="classtgui_1_1_string.html">String</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_propertiesCache</b></td></tr>
+<tr class="separator:ac3ca1728437fb4ed02cb587ecdedb12a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Default implementation for theme loading. </p>
@@ -381,13 +395,13 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Program Files (x86)/Jenkins/workspace/TGUI/include/TGUI/Loading/<a class="el" href="_theme_loader_8hpp_source.html">ThemeLoader.hpp</a></li>
+<li>C:/Program Files (x86)/Jenkins/workspace/TGUI-0.9/include/TGUI/Loading/<a class="el" href="_theme_loader_8hpp_source.html">ThemeLoader.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.10-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 5 2021 19:36:21 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 15 2022 14:50:46 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.20
 </small></address>

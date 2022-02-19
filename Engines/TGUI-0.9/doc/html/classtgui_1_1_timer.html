@@ -109,6 +109,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classtgui_1_1_timer-members.html">List of all members</a>  </div>
@@ -128,8 +129,20 @@ Inheritance diagram for tgui::Timer:</div>
   <img src="classtgui_1_1_timer.png" alt=""/>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:ab8faf1d7d7c0e0d1cc02dc5903898f4f"><td class="memItemLeft" align="right" valign="top"><a id="ab8faf1d7d7c0e0d1cc02dc5903898f4f"></a>
+typedef std::shared_ptr&lt; <a class="el" href="classtgui_1_1_timer.html">Timer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Ptr</b></td></tr>
+<tr class="separator:ab8faf1d7d7c0e0d1cc02dc5903898f4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a69df5d2d549833f0f1500fdd9a896b17"><td class="memItemLeft" align="right" valign="top"><a id="a69df5d2d549833f0f1500fdd9a896b17"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Timer</b> (const <a class="el" href="classtgui_1_1_timer.html">Timer</a> &amp;)=delete</td></tr>
+<tr class="separator:a69df5d2d549833f0f1500fdd9a896b17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44e3a89b7bf28b8cfebd5a5eb7e1bfbf"><td class="memItemLeft" align="right" valign="top"><a id="a44e3a89b7bf28b8cfebd5a5eb7e1bfbf"></a>
+<a class="el" href="classtgui_1_1_timer.html">Timer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classtgui_1_1_timer.html">Timer</a> &amp;)=delete</td></tr>
+<tr class="separator:a44e3a89b7bf28b8cfebd5a5eb7e1bfbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43d310ac631055331f879626db6c3638"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_timer.html#a43d310ac631055331f879626db6c3638">setInterval</a> (<a class="el" href="classtgui_1_1_duration.html">Duration</a> interval)</td></tr>
 <tr class="memdesc:a43d310ac631055331f879626db6c3638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the interval at which a timer callback is send.  <a href="classtgui_1_1_timer.html#a43d310ac631055331f879626db6c3638">More...</a><br /></td></tr>
 <tr class="separator:a43d310ac631055331f879626db6c3638"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,6 +177,15 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a7114cf53984451c475d1b3bb4fe90f0d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_timer.html#a7114cf53984451c475d1b3bb4fe90f0d">scheduleCallback</a> (std::function&lt; void()&gt; callback, <a class="el" href="classtgui_1_1_duration.html">Duration</a> interval=<a class="el" href="classtgui_1_1_duration.html">Duration</a>())</td></tr>
 <tr class="memdesc:a7114cf53984451c475d1b3bb4fe90f0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a timer.  <a href="classtgui_1_1_timer.html#a7114cf53984451c475d1b3bb4fe90f0d">More...</a><br /></td></tr>
 <tr class="separator:a7114cf53984451c475d1b3bb4fe90f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c3fcbb43439031badfac05c891c3c33"><td class="memItemLeft" align="right" valign="top"><a id="a7c3fcbb43439031badfac05c891c3c33"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>updateTime</b> (<a class="el" href="classtgui_1_1_duration.html">Duration</a> elapsedTime)</td></tr>
+<tr class="separator:a7c3fcbb43439031badfac05c891c3c33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a294cc2b29a183ad6c565122ecb6ece99"><td class="memItemLeft" align="right" valign="top"><a id="a294cc2b29a183ad6c565122ecb6ece99"></a>
+static Optional&lt; <a class="el" href="classtgui_1_1_duration.html">Duration</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getNextScheduledTime</b> ()</td></tr>
+<tr class="separator:a294cc2b29a183ad6c565122ecb6ece99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac7a9ce91fe486d8d058cf38880e2a95"><td class="memItemLeft" align="right" valign="top"><a id="aac7a9ce91fe486d8d058cf38880e2a95"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>clearTimers</b> ()</td></tr>
+<tr class="separator:aac7a9ce91fe486d8d058cf38880e2a95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Executes callbacks after a certain amount of time. </p>
@@ -462,13 +484,13 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Program Files (x86)/Jenkins/workspace/TGUI/include/TGUI/<a class="el" href="_timer_8hpp_source.html">Timer.hpp</a></li>
+<li>C:/Program Files (x86)/Jenkins/workspace/TGUI-0.9/include/TGUI/<a class="el" href="_timer_8hpp_source.html">Timer.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.10-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 5 2021 19:36:22 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 15 2022 14:50:47 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.20
 </small></address>

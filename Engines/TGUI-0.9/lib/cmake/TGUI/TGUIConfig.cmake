@@ -102,5 +102,5 @@ if (NOT TGUI_FOUND)
 endif()
 
 if (TGUI_FOUND AND NOT TGUI_FIND_QUIETLY)
-    message(STATUS "Found TGUI 0.9.2 in ${CMAKE_CURRENT_LIST_DIR}")
+    message(STATUS "Found TGUI 0.9.3 in ${CMAKE_CURRENT_LIST_DIR}")
 endif()

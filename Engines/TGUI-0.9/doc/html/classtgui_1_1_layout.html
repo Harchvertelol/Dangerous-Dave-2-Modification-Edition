@@ -124,7 +124,28 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a35bfb195a1f1e6fd4ed82b0568feb81b"><td class="memItemLeft" align="right" valign="top"><a id="a35bfb195a1f1e6fd4ed82b0568feb81b"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_layout.html#a35bfb195a1f1e6fd4ed82b0568feb81b">Operation</a> </td></tr>
+<tr class="memitem:a35bfb195a1f1e6fd4ed82b0568feb81b"><td class="memItemLeft" align="right" valign="top"><a id="a35bfb195a1f1e6fd4ed82b0568feb81b"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_layout.html#a35bfb195a1f1e6fd4ed82b0568feb81b">Operation</a> { <br />
+&#160;&#160;<b>Value</b>, 
+<b>Plus</b>, 
+<b>Minus</b>, 
+<b>Multiplies</b>, 
+<br />
+&#160;&#160;<b>Divides</b>, 
+<b>Minimum</b>, 
+<b>Maximum</b>, 
+<b>BindingPosX</b>, 
+<br />
+&#160;&#160;<b>BindingPosY</b>, 
+<b>BindingLeft</b>, 
+<b>BindingTop</b>, 
+<b>BindingWidth</b>, 
+<br />
+&#160;&#160;<b>BindingHeight</b>, 
+<b>BindingInnerWidth</b>, 
+<b>BindingInnerHeight</b>, 
+<b>BindingString</b>
+<br />
+ }</td></tr>
 <tr class="memdesc:a35bfb195a1f1e6fd4ed82b0568feb81b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The operation which the layout has to perform to find its value. <br /></td></tr>
 <tr class="separator:a35bfb195a1f1e6fd4ed82b0568feb81b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -144,6 +165,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a13bbf6ec98092d65b57b5b7b13f5d817"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_layout.html#a13bbf6ec98092d65b57b5b7b13f5d817">Layout</a> (<a class="el" href="classtgui_1_1_string.html">String</a> expression)</td></tr>
 <tr class="memdesc:a13bbf6ec98092d65b57b5b7b13f5d817"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the layout based on a string which will be parsed to determine the value of the layout.  <a href="classtgui_1_1_layout.html#a13bbf6ec98092d65b57b5b7b13f5d817">More...</a><br /></td></tr>
 <tr class="separator:a13bbf6ec98092d65b57b5b7b13f5d817"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac56d5239e0a6d927704632c6664bcbde"><td class="memItemLeft" align="right" valign="top"><a id="ac56d5239e0a6d927704632c6664bcbde"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Layout</b> (<a class="el" href="classtgui_1_1_layout.html#a35bfb195a1f1e6fd4ed82b0568feb81b">Operation</a> operation, <a class="el" href="classtgui_1_1_widget.html">Widget</a> *boundWidget)</td></tr>
+<tr class="separator:ac56d5239e0a6d927704632c6664bcbde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9829d85ec6c4884a20217eeefc97c5d1"><td class="memItemLeft" align="right" valign="top"><a id="a9829d85ec6c4884a20217eeefc97c5d1"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Layout</b> (<a class="el" href="classtgui_1_1_layout.html#a35bfb195a1f1e6fd4ed82b0568feb81b">Operation</a> operation, std::unique_ptr&lt; <a class="el" href="classtgui_1_1_layout.html">Layout</a> &gt; leftOperand, std::unique_ptr&lt; <a class="el" href="classtgui_1_1_layout.html">Layout</a> &gt; rightOperand)</td></tr>
+<tr class="separator:a9829d85ec6c4884a20217eeefc97c5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab885585ef73f16a948e8a6b988332e2f"><td class="memItemLeft" align="right" valign="top"><a id="ab885585ef73f16a948e8a6b988332e2f"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_layout.html#ab885585ef73f16a948e8a6b988332e2f">Layout</a> (const <a class="el" href="classtgui_1_1_layout.html">Layout</a> &amp;other)</td></tr>
 <tr class="memdesc:ab885585ef73f16a948e8a6b988332e2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor. <br /></td></tr>
@@ -170,6 +197,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af8038884b003aef5e80091dc68c3758f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_layout.html#af8038884b003aef5e80091dc68c3758f">isConstant</a> () const</td></tr>
 <tr class="memdesc:af8038884b003aef5e80091dc68c3758f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the layout stores a constant value.  <a href="classtgui_1_1_layout.html#af8038884b003aef5e80091dc68c3758f">More...</a><br /></td></tr>
 <tr class="separator:af8038884b003aef5e80091dc68c3758f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17d804f4e9de909edf839c9c373c5a51"><td class="memItemLeft" align="right" valign="top"><a id="a17d804f4e9de909edf839c9c373c5a51"></a>
+<a class="el" href="classtgui_1_1_string.html">String</a>&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> () const</td></tr>
+<tr class="separator:a17d804f4e9de909edf839c9c373c5a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64918b728827472cd04649d63f8cbc07"><td class="memItemLeft" align="right" valign="top"><a id="a64918b728827472cd04649d63f8cbc07"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>connectWidget</b> (<a class="el" href="classtgui_1_1_widget.html">Widget</a> *widget, bool xAxis, std::function&lt; void()&gt; valueChangedCallbackHandler)</td></tr>
+<tr class="separator:a64918b728827472cd04649d63f8cbc07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a208b09cb280002553b5e15983a46ff29"><td class="memItemLeft" align="right" valign="top"><a id="a208b09cb280002553b5e15983a46ff29"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>unbindWidget</b> ()</td></tr>
+<tr class="separator:a208b09cb280002553b5e15983a46ff29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa36d040ccbfb8f4cf093bfcad365f929"><td class="memItemLeft" align="right" valign="top"><a id="aa36d040ccbfb8f4cf093bfcad365f929"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>recalculateValue</b> ()</td></tr>
+<tr class="separator:aa36d040ccbfb8f4cf093bfcad365f929"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class to store the left, top, width or height of a widget. </p>
@@ -329,13 +368,13 @@ template&lt;typename T , typename  = typename std::enable_if&lt;std::is_arithmet
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Program Files (x86)/Jenkins/workspace/TGUI/include/TGUI/<a class="el" href="_layout_8hpp_source.html">Layout.hpp</a></li>
+<li>C:/Program Files (x86)/Jenkins/workspace/TGUI-0.9/include/TGUI/<a class="el" href="_layout_8hpp_source.html">Layout.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.10-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 5 2021 19:36:22 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 15 2022 14:50:47 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.20
 </small></address>

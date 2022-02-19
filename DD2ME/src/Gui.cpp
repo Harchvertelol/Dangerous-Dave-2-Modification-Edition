@@ -294,7 +294,7 @@ void Gui::createPopupWindow(string text, int timer)
     popupWindow->setSize("30%", "10%");
     //popupWindow->setSize(bindSize(label_text));
     popupWindow->setOrigin(0.5, 0.5);
-    popupWindow->setPosition("50%", "15%");
+    popupWindow->setPosition("50%", "10%");
     popupWindow->getRenderer()->setBorders(tgui::Borders(1));
     tmp_mas.clear();
     res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "bordercolorpopupwindow"), ";");
@@ -306,9 +306,11 @@ void Gui::createPopupWindow(string text, int timer)
     else popupWindow->getRenderer()->setBackgroundColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
     popupWindow->add(label_text);
     popupWindow->showWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "timefadepopupwindow").c_str()));
-    popupWindow->onAnimationFinish([=](bool isShow){ if(!isShow) popupWindow->getParent()->remove(popupWindow); });
+    //popupWindow->onShowEffectFinish([=](bool isShow){ if(!isShow) popupWindow->getParent()->remove(popupWindow); });
+    //s_GameClass->s_Gui->s_TGUI->add(popupWindow);
+    //tgui::Timer::scheduleCallback([=](){ popupWindow->hideWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "timefadepopupwindow").c_str())); }, timer);
+    popupWindow->onShowEffectFinish([=](bool isShow){ if(!isShow) popupWindow->getParent()->remove(popupWindow); else tgui::Timer::scheduleCallback([=](){ popupWindow->hideWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "timefadepopupwindow").c_str())); }, timer); });
     s_GameClass->s_Gui->s_TGUI->add(popupWindow);
-    tgui::Timer::scheduleCallback([=](){ popupWindow->hideWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "timefadepopupwindow").c_str())); }, timer);
 }
 
 void Gui::showInfo()
@@ -421,9 +423,15 @@ void Gui::showInfo()
     infoWindow->showWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "timefadeinfowindow").c_str()));
 }
 
-void Gui::removeInfo()
+void Gui::removeInfo(bool immediately)
 {
     if(!s_InfoWindow) return;
+    if(immediately)
+    {
+        s_InfoWindow->getParent()->remove(s_InfoWindow);
+        s_InfoWindow = 0;
+        return;
+    }
     s_InfoWindow->hideWithEffect(tgui::ShowAnimationType::Fade, atoi(s_GameClass->s_Data->s_GuiData->s_GuiInfo->getValue("gui", "timefadeinfowindow").c_str()));
-    s_InfoWindow->onAnimationFinish([=](bool isShow){ if(!isShow) s_InfoWindow->getParent()->remove(s_InfoWindow); s_InfoWindow = 0; });
+    s_InfoWindow->onShowEffectFinish([=](bool isShow){ if(!isShow) s_InfoWindow->getParent()->remove(s_InfoWindow); s_InfoWindow = 0; });
 }

@@ -16,7 +16,7 @@ var searchData=
   ['middle_751',['Middle',['../structtgui_1_1_event.html#a369666e9b529309b223263eb0297ac9bab1ca34f82e83c52b010f86955f264e05',1,'tgui::Event']]],
   ['minimize_752',['Minimize',['../classtgui_1_1_child_window.html#a745bc87bd3cb52c390cc26ea1e08765dad80f1df381289742e2adbaae76ae0492',1,'tgui::ChildWindow']]],
   ['minus_753',['Minus',['../structtgui_1_1_event.html#a647c4342d425d6f03185126fc6eb5cd9a453fb623e752c5993f65bc410fd74fe5',1,'tgui::Event']]],
-  ['mousebutton_754',['MouseButton',['../structtgui_1_1_event.html#a369666e9b529309b223263eb0297ac9b',1,'tgui::Event::MouseButton()'],['../structtgui_1_1_event.html#ab8e98ea1f6c46bdac15b5eb4657de953',1,'tgui::Event::mouseButton()']]],
+  ['mousebutton_754',['mouseButton',['../structtgui_1_1_event.html#ab8e98ea1f6c46bdac15b5eb4657de953',1,'tgui::Event::mouseButton()'],['../structtgui_1_1_event.html#a369666e9b529309b223263eb0297ac9b',1,'tgui::Event::MouseButton()']]],
   ['mousebuttonevent_755',['MouseButtonEvent',['../structtgui_1_1_event_1_1_mouse_button_event.html',1,'tgui::Event']]],
   ['mousebuttonpressed_756',['MouseButtonPressed',['../structtgui_1_1_event.html#ad3ebeee16f4b6ed4691f09d2edbe8b0aa7349f643d689997b7c54bf93e4095f5c',1,'tgui::Event']]],
   ['mousebuttonreleased_757',['MouseButtonReleased',['../structtgui_1_1_event.html#ad3ebeee16f4b6ed4691f09d2edbe8b0aa7584c169de594c27f00084b93186fd7c',1,'tgui::Event']]],

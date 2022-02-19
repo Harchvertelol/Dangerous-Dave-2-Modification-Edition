@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
-<title>TGUI: C:/Program Files (x86)/Jenkins/workspace/TGUI/include/TGUI/Widgets/Panel.hpp Source File</title>
+<title>TGUI: C:/Program Files (x86)/Jenkins/workspace/TGUI-0.9/include/TGUI/Widgets/Panel.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -104,7 +104,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_8df09c2692ff8b790a19c86eae64854b.html">Program Files (x86)</a></li><li class="navelem"><a class="el" href="dir_8ee1db569ab00e334eb411abd73e6fc3.html">Jenkins</a></li><li class="navelem"><a class="el" href="dir_856945abe4d43db707ece2e8c4670513.html">workspace</a></li><li class="navelem"><a class="el" href="dir_d6e1ff2992e1118221b18f4701cfe573.html">TGUI</a></li><li class="navelem"><a class="el" href="dir_9b991de5ce1ad4c4d035b891a3a13143.html">include</a></li><li class="navelem"><a class="el" href="dir_d14f59a32ab8928bbbb2f15926c61523.html">TGUI</a></li><li class="navelem"><a class="el" href="dir_d185f2da6d668de2dd114db268741d7f.html">Widgets</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_8df09c2692ff8b790a19c86eae64854b.html">Program Files (x86)</a></li><li class="navelem"><a class="el" href="dir_8ee1db569ab00e334eb411abd73e6fc3.html">Jenkins</a></li><li class="navelem"><a class="el" href="dir_856945abe4d43db707ece2e8c4670513.html">workspace</a></li><li class="navelem"><a class="el" href="dir_cf0328bbbd17ceed3d12594ec8ee63b2.html">TGUI-0.9</a></li><li class="navelem"><a class="el" href="dir_eaa010581b80550c92202b94ec2fa43c.html">include</a></li><li class="navelem"><a class="el" href="dir_8270e888824ed7ddea5fd69f31c51aeb.html">TGUI</a></li><li class="navelem"><a class="el" href="dir_c1190d8848c2c64000e222cf39371e64.html">Widgets</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -234,17 +234,19 @@ $(function() {
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        <a class="code" href="classtgui_1_1_color.html">Color</a>   m_backgroundColorCached;</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <a class="code" href="classtgui_1_1_sprite.html">Sprite</a>  m_spriteBackground;</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        <span class="keywordtype">bool</span>    m_rightMouseDown = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        <span class="keywordtype">float</span>   m_roundedBorderRadius = 0;</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160; </div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        <span class="comment">// Will be set to true after the first click, but gets reset to false when the second click does not occur soon after</span></div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        <span class="keywordtype">bool</span> m_possibleDoubleClick = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    };</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;}</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160; </div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        <span class="keywordtype">bool</span>    m_rightMouseDown = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160; </div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        <span class="comment">// Will be set to true after the first click, but gets reset to false when the second click does not occur soon after</span></div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        <span class="keywordtype">bool</span> m_possibleDoubleClick = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160; </div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    };</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160; </div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;}</div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160; </div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor">#endif // TGUI_PANEL_HPP</span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160; </div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="preprocessor">#endif // TGUI_PANEL_HPP</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasstgui_1_1_panel_html_a0bc256069b682a72b7ee16db6b22fa67"><div class="ttname"><a href="classtgui_1_1_panel.html#a0bc256069b682a72b7ee16db6b22fa67">tgui::Panel::getSharedRenderer</a></div><div class="ttdeci">PanelRenderer * getSharedRenderer()</div><div class="ttdoc">Returns the renderer, which gives access to functions that determine how the widget is displayed.</div></div>
 <div class="ttc" id="aclasstgui_1_1_vector2_html"><div class="ttname"><a href="classtgui_1_1_vector2.html">tgui::Vector2&lt; float &gt;</a></div></div>
@@ -280,7 +282,7 @@ $(function() {
 <!-- HTML footer for doxygen 1.8.10-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 5 2021 19:36:21 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 15 2022 14:50:46 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.20
 </small></address>

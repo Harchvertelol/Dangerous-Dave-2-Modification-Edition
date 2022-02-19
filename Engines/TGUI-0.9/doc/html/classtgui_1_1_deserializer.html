@@ -109,6 +109,8 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classtgui_1_1_deserializer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">tgui::Deserializer Class Reference</div>  </div>
@@ -119,16 +121,38 @@ $(function() {
  <a href="classtgui_1_1_deserializer.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_deserializer_8hpp_source.html">TGUI/Loading/Deserializer.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a319a3cc3b00a103603a882c65133b0c8"><td class="memItemLeft" align="right" valign="top"><a id="a319a3cc3b00a103603a882c65133b0c8"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>DeserializeFunc</b> = std::function&lt; <a class="el" href="classtgui_1_1_object_converter.html">ObjectConverter</a>(const <a class="el" href="classtgui_1_1_string.html">String</a> &amp;)&gt;</td></tr>
+<tr class="separator:a319a3cc3b00a103603a882c65133b0c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a1a7be722e7e0838d623fd0e86a45d028"><td class="memItemLeft" align="right" valign="top"><a id="a1a7be722e7e0838d623fd0e86a45d028"></a>
+static <a class="el" href="classtgui_1_1_object_converter.html">ObjectConverter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>deserialize</b> (ObjectConverter::Type type, const <a class="el" href="classtgui_1_1_string.html">String</a> &amp;serializedString)</td></tr>
+<tr class="separator:a1a7be722e7e0838d623fd0e86a45d028"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab94d93e9d37991645fc3ca4fed679893"><td class="memItemLeft" align="right" valign="top"><a id="ab94d93e9d37991645fc3ca4fed679893"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>setFunction</b> (ObjectConverter::Type type, const DeserializeFunc &amp;deserializer)</td></tr>
+<tr class="separator:ab94d93e9d37991645fc3ca4fed679893"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dc62c9b4cb86dbdcdf8531ceb5bcfe8"><td class="memItemLeft" align="right" valign="top"><a id="a9dc62c9b4cb86dbdcdf8531ceb5bcfe8"></a>
+static const DeserializeFunc &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getFunction</b> (ObjectConverter::Type type)</td></tr>
+<tr class="separator:a9dc62c9b4cb86dbdcdf8531ceb5bcfe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b5d56ca48f1749f28c17b6445b60ab1"><td class="memItemLeft" align="right" valign="top"><a id="a0b5d56ca48f1749f28c17b6445b60ab1"></a>
+static std::vector&lt; <a class="el" href="classtgui_1_1_string.html">String</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>split</b> (const <a class="el" href="classtgui_1_1_string.html">String</a> &amp;str, char delim)</td></tr>
+<tr class="separator:a0b5d56ca48f1749f28c17b6445b60ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Deserializes a settable property. </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Program Files (x86)/Jenkins/workspace/TGUI/include/TGUI/Loading/<a class="el" href="_deserializer_8hpp_source.html">Deserializer.hpp</a></li>
+<li>C:/Program Files (x86)/Jenkins/workspace/TGUI-0.9/include/TGUI/Loading/<a class="el" href="_deserializer_8hpp_source.html">Deserializer.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.10-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 5 2021 19:36:21 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 15 2022 14:50:46 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.20
 </small></address>

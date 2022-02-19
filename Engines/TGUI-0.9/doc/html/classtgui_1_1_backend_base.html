@@ -110,6 +110,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classtgui_1_1_backend_base-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">tgui::BackendBase Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -137,6 +138,12 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_backend_base.html#aed3b8680771a35d6bc9d8fda2e2131ff">BackendBase</a> ()=default</td></tr>
 <tr class="memdesc:aed3b8680771a35d6bc9d8fda2e2131ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
 <tr class="separator:aed3b8680771a35d6bc9d8fda2e2131ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1d20f6d2fdd09ad6a2f8c254aab33a6"><td class="memItemLeft" align="right" valign="top"><a id="ad1d20f6d2fdd09ad6a2f8c254aab33a6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>BackendBase</b> (const <a class="el" href="classtgui_1_1_backend_base.html">BackendBase</a> &amp;)=delete</td></tr>
+<tr class="separator:ad1d20f6d2fdd09ad6a2f8c254aab33a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02380192008522e24288e847c85cd088"><td class="memItemLeft" align="right" valign="top"><a id="a02380192008522e24288e847c85cd088"></a>
+<a class="el" href="classtgui_1_1_backend_base.html">BackendBase</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classtgui_1_1_backend_base.html">BackendBase</a> &amp;)=delete</td></tr>
+<tr class="separator:a02380192008522e24288e847c85cd088"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f4bb719d74eb4740cf85d65d73883f8"><td class="memItemLeft" align="right" valign="top"><a id="a5f4bb719d74eb4740cf85d65d73883f8"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_backend_base.html#a5f4bb719d74eb4740cf85d65d73883f8">~BackendBase</a> ()=default</td></tr>
 <tr class="memdesc:a5f4bb719d74eb4740cf85d65d73883f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. <br /></td></tr>
@@ -190,6 +197,15 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:a0eab5937aed7986530f0729d31dba983"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; std::uint8_t[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_backend_base.html#a0eab5937aed7986530f0729d31dba983">readFileFromAndroidAssets</a> (const <a class="el" href="classtgui_1_1_string.html">String</a> &amp;filename, std::size_t &amp;fileSize) const</td></tr>
 <tr class="memdesc:a0eab5937aed7986530f0729d31dba983"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses the AssetManager on Android to read a file and return its contents.  <a href="classtgui_1_1_backend_base.html#a0eab5937aed7986530f0729d31dba983">More...</a><br /></td></tr>
 <tr class="separator:a0eab5937aed7986530f0729d31dba983"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:aada71627d7a6d2f6e9b8ecba87adec27"><td class="memItemLeft" align="right" valign="top"><a id="aada71627d7a6d2f6e9b8ecba87adec27"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_destroyOnLastGuiDetatch</b> = false</td></tr>
+<tr class="separator:aada71627d7a6d2f6e9b8ecba87adec27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef687c61c7b65b2c03edfc57f47e132d"><td class="memItemLeft" align="right" valign="top"><a id="aef687c61c7b65b2c03edfc57f47e132d"></a>
+<a class="el" href="classtgui_1_1_string.html">String</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_clipboardContents</b></td></tr>
+<tr class="separator:aef687c61c7b65b2c03edfc57f47e132d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for the backend. </p>
@@ -743,13 +759,13 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Program Files (x86)/Jenkins/workspace/TGUI/include/TGUI/<a class="el" href="_backend_8hpp_source.html">Backend.hpp</a></li>
+<li>C:/Program Files (x86)/Jenkins/workspace/TGUI-0.9/include/TGUI/<a class="el" href="_backend_8hpp_source.html">Backend.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.10-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 5 2021 19:36:21 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 15 2022 14:50:46 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.20
 </small></address>

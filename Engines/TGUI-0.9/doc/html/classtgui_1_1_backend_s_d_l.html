@@ -196,6 +196,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_backend_base.html#aed3b8680771a35d6bc9d8fda2e2131ff">BackendBase</a> ()=default</td></tr>
 <tr class="memdesc:aed3b8680771a35d6bc9d8fda2e2131ff inherit pub_methods_classtgui_1_1_backend_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
 <tr class="separator:aed3b8680771a35d6bc9d8fda2e2131ff inherit pub_methods_classtgui_1_1_backend_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1d20f6d2fdd09ad6a2f8c254aab33a6 inherit pub_methods_classtgui_1_1_backend_base"><td class="memItemLeft" align="right" valign="top"><a id="ad1d20f6d2fdd09ad6a2f8c254aab33a6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>BackendBase</b> (const <a class="el" href="classtgui_1_1_backend_base.html">BackendBase</a> &amp;)=delete</td></tr>
+<tr class="separator:ad1d20f6d2fdd09ad6a2f8c254aab33a6 inherit pub_methods_classtgui_1_1_backend_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02380192008522e24288e847c85cd088 inherit pub_methods_classtgui_1_1_backend_base"><td class="memItemLeft" align="right" valign="top"><a id="a02380192008522e24288e847c85cd088"></a>
+<a class="el" href="classtgui_1_1_backend_base.html">BackendBase</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classtgui_1_1_backend_base.html">BackendBase</a> &amp;)=delete</td></tr>
+<tr class="separator:a02380192008522e24288e847c85cd088 inherit pub_methods_classtgui_1_1_backend_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f4bb719d74eb4740cf85d65d73883f8 inherit pub_methods_classtgui_1_1_backend_base"><td class="memItemLeft" align="right" valign="top"><a id="a5f4bb719d74eb4740cf85d65d73883f8"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_backend_base.html#a5f4bb719d74eb4740cf85d65d73883f8">~BackendBase</a> ()=default</td></tr>
 <tr class="memdesc:a5f4bb719d74eb4740cf85d65d73883f8 inherit pub_methods_classtgui_1_1_backend_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. <br /></td></tr>
@@ -212,6 +218,16 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ab12275e360ac2f9fc853759c86d107dd"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_backend_s_d_l.html#ab12275e360ac2f9fc853759c86d107dd">convertEvent</a> (const SDL_Event &amp;eventSDL, <a class="el" href="structtgui_1_1_event.html">Event</a> &amp;eventTGUI)</td></tr>
 <tr class="memdesc:ab12275e360ac2f9fc853759c86d107dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function that converts an SDL event to a TGUI event.  <a href="classtgui_1_1_backend_s_d_l.html#ab12275e360ac2f9fc853759c86d107dd">More...</a><br /></td></tr>
 <tr class="separator:ab12275e360ac2f9fc853759c86d107dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_attribs_classtgui_1_1_backend_base"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classtgui_1_1_backend_base')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classtgui_1_1_backend_base.html">tgui::BackendBase</a></td></tr>
+<tr class="memitem:aada71627d7a6d2f6e9b8ecba87adec27 inherit pro_attribs_classtgui_1_1_backend_base"><td class="memItemLeft" align="right" valign="top"><a id="aada71627d7a6d2f6e9b8ecba87adec27"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_destroyOnLastGuiDetatch</b> = false</td></tr>
+<tr class="separator:aada71627d7a6d2f6e9b8ecba87adec27 inherit pro_attribs_classtgui_1_1_backend_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef687c61c7b65b2c03edfc57f47e132d inherit pro_attribs_classtgui_1_1_backend_base"><td class="memItemLeft" align="right" valign="top"><a id="aef687c61c7b65b2c03edfc57f47e132d"></a>
+<a class="el" href="classtgui_1_1_string.html">String</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_clipboardContents</b></td></tr>
+<tr class="separator:aef687c61c7b65b2c03edfc57f47e132d inherit pro_attribs_classtgui_1_1_backend_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Backend that uses SDL. </p>
@@ -814,13 +830,13 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Program Files (x86)/Jenkins/workspace/TGUI/include/TGUI/Backends/SDL/<a class="el" href="_backend_s_d_l_8hpp_source.html">BackendSDL.hpp</a></li>
+<li>C:/Program Files (x86)/Jenkins/workspace/TGUI-0.9/include/TGUI/Backends/SDL/<a class="el" href="_backend_s_d_l_8hpp_source.html">BackendSDL.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.10-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 5 2021 19:36:21 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 15 2022 14:50:46 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.20
 </small></address>

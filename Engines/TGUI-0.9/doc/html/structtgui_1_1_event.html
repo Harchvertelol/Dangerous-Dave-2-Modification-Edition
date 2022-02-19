@@ -279,7 +279,11 @@ Public Types</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a369666e9b529309b223263eb0297ac9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mouse buttons.  <a href="structtgui_1_1_event.html#a369666e9b529309b223263eb0297ac9b">More...</a><br /></td></tr>
 <tr class="separator:a369666e9b529309b223263eb0297ac9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37932d1570a768aafff139c38e9734c5"><td class="memItemLeft" align="right" valign="top"><a id="a37932d1570a768aafff139c38e9734c5"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtgui_1_1_event.html#a37932d1570a768aafff139c38e9734c5">KeyModifier</a> </td></tr>
+<tr class="memitem:a37932d1570a768aafff139c38e9734c5"><td class="memItemLeft" align="right" valign="top"><a id="a37932d1570a768aafff139c38e9734c5"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtgui_1_1_event.html#a37932d1570a768aafff139c38e9734c5">KeyModifier</a> { <b>System</b>, 
+<b>Control</b>, 
+<b>Shift</b>, 
+<b>Alt</b>
+ }</td></tr>
 <tr class="memdesc:a37932d1570a768aafff139c38e9734c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifiers keys. <br /></td></tr>
 <tr class="separator:a37932d1570a768aafff139c38e9734c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad3ebeee16f4b6ed4691f09d2edbe8b0a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtgui_1_1_event.html#ad3ebeee16f4b6ed4691f09d2edbe8b0a">Type</a> { <br />
@@ -306,30 +310,34 @@ Public Attributes</h2></td></tr>
 <a class="el" href="structtgui_1_1_event.html#ad3ebeee16f4b6ed4691f09d2edbe8b0a">Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtgui_1_1_event.html#a0671717b6d59bad5a8ad746bab918ad3">type</a></td></tr>
 <tr class="memdesc:a0671717b6d59bad5a8ad746bab918ad3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of the event. <br /></td></tr>
 <tr class="separator:a0671717b6d59bad5a8ad746bab918ad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb691eee843f7b4adcf04d1c9abe691f"><td class="memItemLeft" align="right" valign="top"><a id="adb691eee843f7b4adcf04d1c9abe691f"></a>
-<a class="el" href="structtgui_1_1_event_1_1_key_event.html">KeyEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtgui_1_1_event.html#adb691eee843f7b4adcf04d1c9abe691f">key</a></td></tr>
-<tr class="memdesc:adb691eee843f7b4adcf04d1c9abe691f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key event parameters (Event::KeyPressed) <br /></td></tr>
-<tr class="separator:adb691eee843f7b4adcf04d1c9abe691f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba3a0959c29c15fb125dbc5829e52d98"><td class="memItemLeft" align="right" valign="top"><a id="aba3a0959c29c15fb125dbc5829e52d98"></a>
-<a class="el" href="structtgui_1_1_event_1_1_text_event.html">TextEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtgui_1_1_event.html#aba3a0959c29c15fb125dbc5829e52d98">text</a></td></tr>
-<tr class="memdesc:aba3a0959c29c15fb125dbc5829e52d98"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classtgui_1_1_text.html">Text</a> event parameters (Event::TextEntered) <br /></td></tr>
-<tr class="separator:aba3a0959c29c15fb125dbc5829e52d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99e53ea678f7a0847992715f3d539c77"><td class="memItemLeft" align="right" valign="top"><a id="a99e53ea678f7a0847992715f3d539c77"></a>
-<a class="el" href="structtgui_1_1_event_1_1_mouse_move_event.html">MouseMoveEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtgui_1_1_event.html#a99e53ea678f7a0847992715f3d539c77">mouseMove</a></td></tr>
-<tr class="memdesc:a99e53ea678f7a0847992715f3d539c77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mouse move event parameters (Event::MouseMoved) <br /></td></tr>
-<tr class="separator:a99e53ea678f7a0847992715f3d539c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8e98ea1f6c46bdac15b5eb4657de953"><td class="memItemLeft" align="right" valign="top"><a id="ab8e98ea1f6c46bdac15b5eb4657de953"></a>
-<a class="el" href="structtgui_1_1_event_1_1_mouse_button_event.html">MouseButtonEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtgui_1_1_event.html#ab8e98ea1f6c46bdac15b5eb4657de953">mouseButton</a></td></tr>
-<tr class="memdesc:ab8e98ea1f6c46bdac15b5eb4657de953"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mouse button event parameters (Event::MouseButtonPressed, Event::MouseButtonReleased) <br /></td></tr>
-<tr class="separator:ab8e98ea1f6c46bdac15b5eb4657de953"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46fc514629894beaa24c662659e57aa2"><td class="memItemLeft" align="right" valign="top"><a id="a46fc514629894beaa24c662659e57aa2"></a>
-<a class="el" href="structtgui_1_1_event_1_1_mouse_wheel_event.html">MouseWheelEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtgui_1_1_event.html#a46fc514629894beaa24c662659e57aa2">mouseWheel</a></td></tr>
-<tr class="memdesc:a46fc514629894beaa24c662659e57aa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mouse wheel event parameters (Event::MouseWheelScrolled) <br /></td></tr>
-<tr class="separator:a46fc514629894beaa24c662659e57aa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af21726a9671a73a101e15c215541f73b"><td class="memItemLeft" align="right" valign="top"><a id="af21726a9671a73a101e15c215541f73b"></a>
-<a class="el" href="structtgui_1_1_event_1_1_size_event.html">SizeEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtgui_1_1_event.html#af21726a9671a73a101e15c215541f73b">size</a></td></tr>
-<tr class="memdesc:af21726a9671a73a101e15c215541f73b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size event parameters (Event::Resized) <br /></td></tr>
-<tr class="separator:af21726a9671a73a101e15c215541f73b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a680604e707a8ce5e09da45761f0d434d"><td class="memItemLeft" ><a id="a680604e707a8ce5e09da45761f0d434d"></a>
+union {</td></tr>
+<tr class="memitem:aefa89aadde7525806906bd18e384ff25"><td class="memItemLeft" >
+&#160;&#160;&#160;<a class="el" href="structtgui_1_1_event_1_1_key_event.html">KeyEvent</a>&#160;&#160;&#160;<a class="el" href="structtgui_1_1_event.html#adb691eee843f7b4adcf04d1c9abe691f">key</a></td></tr>
+<tr class="memdesc:aefa89aadde7525806906bd18e384ff25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key event parameters (Event::KeyPressed) <br /></td></tr>
+<tr class="separator:aefa89aadde7525806906bd18e384ff25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19182cad7872ece9bf6927e60f752549"><td class="memItemLeft" >
+&#160;&#160;&#160;<a class="el" href="structtgui_1_1_event_1_1_text_event.html">TextEvent</a>&#160;&#160;&#160;<a class="el" href="structtgui_1_1_event.html#aba3a0959c29c15fb125dbc5829e52d98">text</a></td></tr>
+<tr class="memdesc:a19182cad7872ece9bf6927e60f752549"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classtgui_1_1_text.html">Text</a> event parameters (Event::TextEntered) <br /></td></tr>
+<tr class="separator:a19182cad7872ece9bf6927e60f752549"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c186a3966fb68d6c3bcf98057577602"><td class="memItemLeft" >
+&#160;&#160;&#160;<a class="el" href="structtgui_1_1_event_1_1_mouse_move_event.html">MouseMoveEvent</a>&#160;&#160;&#160;<a class="el" href="structtgui_1_1_event.html#a99e53ea678f7a0847992715f3d539c77">mouseMove</a></td></tr>
+<tr class="memdesc:a5c186a3966fb68d6c3bcf98057577602"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mouse move event parameters (Event::MouseMoved) <br /></td></tr>
+<tr class="separator:a5c186a3966fb68d6c3bcf98057577602"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ef0102226624bf56e7624dc602a671f"><td class="memItemLeft" >
+&#160;&#160;&#160;<a class="el" href="structtgui_1_1_event_1_1_mouse_button_event.html">MouseButtonEvent</a>&#160;&#160;&#160;<a class="el" href="structtgui_1_1_event.html#ab8e98ea1f6c46bdac15b5eb4657de953">mouseButton</a></td></tr>
+<tr class="memdesc:a1ef0102226624bf56e7624dc602a671f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mouse button event parameters (Event::MouseButtonPressed, Event::MouseButtonReleased) <br /></td></tr>
+<tr class="separator:a1ef0102226624bf56e7624dc602a671f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01277de0776533441dddf8de39595448"><td class="memItemLeft" >
+&#160;&#160;&#160;<a class="el" href="structtgui_1_1_event_1_1_mouse_wheel_event.html">MouseWheelEvent</a>&#160;&#160;&#160;<a class="el" href="structtgui_1_1_event.html#a46fc514629894beaa24c662659e57aa2">mouseWheel</a></td></tr>
+<tr class="memdesc:a01277de0776533441dddf8de39595448"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mouse wheel event parameters (Event::MouseWheelScrolled) <br /></td></tr>
+<tr class="separator:a01277de0776533441dddf8de39595448"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee71750a53beb044e61c362902a9aa1c"><td class="memItemLeft" >
+&#160;&#160;&#160;<a class="el" href="structtgui_1_1_event_1_1_size_event.html">SizeEvent</a>&#160;&#160;&#160;<a class="el" href="structtgui_1_1_event.html#af21726a9671a73a101e15c215541f73b">size</a></td></tr>
+<tr class="memdesc:aee71750a53beb044e61c362902a9aa1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size event parameters (Event::Resized) <br /></td></tr>
+<tr class="separator:aee71750a53beb044e61c362902a9aa1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a680604e707a8ce5e09da45761f0d434d"><td class="memItemLeft" valign="top">};&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:a680604e707a8ce5e09da45761f0d434d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="a647c4342d425d6f03185126fc6eb5cd9"></a>
@@ -641,13 +649,13 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>C:/Program Files (x86)/Jenkins/workspace/TGUI/include/TGUI/<a class="el" href="_event_8hpp_source.html">Event.hpp</a></li>
+<li>C:/Program Files (x86)/Jenkins/workspace/TGUI-0.9/include/TGUI/<a class="el" href="_event_8hpp_source.html">Event.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.10-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 5 2021 19:36:22 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 15 2022 14:50:47 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.20
 </small></address>

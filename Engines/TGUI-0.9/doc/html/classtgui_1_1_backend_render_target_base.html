@@ -111,6 +111,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classtgui_1_1_backend_render_target_base-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">tgui::BackendRenderTargetBase Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -176,6 +177,21 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a9f1d33cc949fad43f6d5e7982c7a6c41"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_backend_render_target_base.html#a9f1d33cc949fad43f6d5e7982c7a6c41">updateClipping</a> (<a class="el" href="classtgui_1_1_rect.html">FloatRect</a> clipRect, <a class="el" href="classtgui_1_1_rect.html">FloatRect</a> clipViewport)</td></tr>
 <tr class="memdesc:a9f1d33cc949fad43f6d5e7982c7a6c41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called from addClippingLayer and removeClippingLayer to apply the clipping.  <a href="classtgui_1_1_backend_render_target_base.html#a9f1d33cc949fad43f6d5e7982c7a6c41">More...</a><br /></td></tr>
 <tr class="separator:a9f1d33cc949fad43f6d5e7982c7a6c41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a6bfad7161d8c6eb692a9e264f74c5e8a"><td class="memItemLeft" align="right" valign="top"><a id="a6bfad7161d8c6eb692a9e264f74c5e8a"></a>
+<a class="el" href="classtgui_1_1_rect.html">FloatRect</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_viewRect</b></td></tr>
+<tr class="separator:a6bfad7161d8c6eb692a9e264f74c5e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac168722bf445bbc35c973a8d0447d582"><td class="memItemLeft" align="right" valign="top"><a id="ac168722bf445bbc35c973a8d0447d582"></a>
+<a class="el" href="classtgui_1_1_rect.html">FloatRect</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_viewport</b></td></tr>
+<tr class="separator:ac168722bf445bbc35c973a8d0447d582"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97afd4c3544f33dfd64e400c059bca84"><td class="memItemLeft" align="right" valign="top"><a id="a97afd4c3544f33dfd64e400c059bca84"></a>
+<a class="el" href="classtgui_1_1_vector2.html">Vector2f</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_targetSize</b></td></tr>
+<tr class="separator:a97afd4c3544f33dfd64e400c059bca84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae23bc005fea64d80175e9f5f83cbe245"><td class="memItemLeft" align="right" valign="top"><a id="ae23bc005fea64d80175e9f5f83cbe245"></a>
+std::vector&lt; std::pair&lt; <a class="el" href="classtgui_1_1_rect.html">FloatRect</a>, <a class="el" href="classtgui_1_1_rect.html">FloatRect</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_clipLayers</b></td></tr>
+<tr class="separator:ae23bc005fea64d80175e9f5f83cbe245"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for render targets. </p>
@@ -930,13 +946,13 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Program Files (x86)/Jenkins/workspace/TGUI/include/TGUI/<a class="el" href="_backend_render_target_8hpp_source.html">BackendRenderTarget.hpp</a></li>
+<li>C:/Program Files (x86)/Jenkins/workspace/TGUI-0.9/include/TGUI/<a class="el" href="_backend_render_target_8hpp_source.html">BackendRenderTarget.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.10-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 5 2021 19:36:21 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 15 2022 14:50:46 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.20
 </small></address>

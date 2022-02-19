@@ -112,6 +112,8 @@ $(function() {
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classtgui_1_1_backend_s_f_m_l-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">tgui::BackendSFML Class Reference</div>  </div>
@@ -190,6 +192,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_backend_base.html#aed3b8680771a35d6bc9d8fda2e2131ff">BackendBase</a> ()=default</td></tr>
 <tr class="memdesc:aed3b8680771a35d6bc9d8fda2e2131ff inherit pub_methods_classtgui_1_1_backend_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
 <tr class="separator:aed3b8680771a35d6bc9d8fda2e2131ff inherit pub_methods_classtgui_1_1_backend_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1d20f6d2fdd09ad6a2f8c254aab33a6 inherit pub_methods_classtgui_1_1_backend_base"><td class="memItemLeft" align="right" valign="top"><a id="ad1d20f6d2fdd09ad6a2f8c254aab33a6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>BackendBase</b> (const <a class="el" href="classtgui_1_1_backend_base.html">BackendBase</a> &amp;)=delete</td></tr>
+<tr class="separator:ad1d20f6d2fdd09ad6a2f8c254aab33a6 inherit pub_methods_classtgui_1_1_backend_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02380192008522e24288e847c85cd088 inherit pub_methods_classtgui_1_1_backend_base"><td class="memItemLeft" align="right" valign="top"><a id="a02380192008522e24288e847c85cd088"></a>
+<a class="el" href="classtgui_1_1_backend_base.html">BackendBase</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classtgui_1_1_backend_base.html">BackendBase</a> &amp;)=delete</td></tr>
+<tr class="separator:a02380192008522e24288e847c85cd088 inherit pub_methods_classtgui_1_1_backend_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f4bb719d74eb4740cf85d65d73883f8 inherit pub_methods_classtgui_1_1_backend_base"><td class="memItemLeft" align="right" valign="top"><a id="a5f4bb719d74eb4740cf85d65d73883f8"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_backend_base.html#a5f4bb719d74eb4740cf85d65d73883f8">~BackendBase</a> ()=default</td></tr>
 <tr class="memdesc:a5f4bb719d74eb4740cf85d65d73883f8 inherit pub_methods_classtgui_1_1_backend_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor. <br /></td></tr>
@@ -206,6 +214,34 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ae6be90a5579cd7cecd8debb724112b9e"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtgui_1_1_backend_s_f_m_l.html#ae6be90a5579cd7cecd8debb724112b9e">convertEvent</a> (const sf::Event &amp;eventSFML, <a class="el" href="structtgui_1_1_event.html">Event</a> &amp;eventTGUI)</td></tr>
 <tr class="memdesc:ae6be90a5579cd7cecd8debb724112b9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function that converts an SFML event to a TGUI event.  <a href="classtgui_1_1_backend_s_f_m_l.html#ae6be90a5579cd7cecd8debb724112b9e">More...</a><br /></td></tr>
 <tr class="separator:ae6be90a5579cd7cecd8debb724112b9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a8b7033ca9e42888e47b3ed68307be679"><td class="memItemLeft" align="right" valign="top"><a id="a8b7033ca9e42888e47b3ed68307be679"></a>
+std::unique_ptr&lt; sf::Cursor &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>createSystemCursor</b> (<a class="el" href="classtgui_1_1_cursor.html#a4e9a3c57acd4bf2b261aa2fe77f4d2f5">Cursor::Type</a> type)</td></tr>
+<tr class="separator:a8b7033ca9e42888e47b3ed68307be679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a36003c6ed9fa20cea626f0c79f106b"><td class="memItemLeft" align="right" valign="top"><a id="a9a36003c6ed9fa20cea626f0c79f106b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateMouseCursor</b> (<a class="el" href="classtgui_1_1_cursor.html#a4e9a3c57acd4bf2b261aa2fe77f4d2f5">Cursor::Type</a> type, std::unique_ptr&lt; sf::Cursor &gt; cursor)</td></tr>
+<tr class="separator:a9a36003c6ed9fa20cea626f0c79f106b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1a0cd0bea473c79ba016c9793c2ca40"><td class="memItemLeft" align="right" valign="top"><a id="ac1a0cd0bea473c79ba016c9793c2ca40"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateMouseCursor</b> (sf::Window *window, <a class="el" href="classtgui_1_1_cursor.html#a4e9a3c57acd4bf2b261aa2fe77f4d2f5">Cursor::Type</a> type)</td></tr>
+<tr class="separator:ac1a0cd0bea473c79ba016c9793c2ca40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a0fad91d406d56ea972d486d125ed66a5"><td class="memItemLeft" align="right" valign="top"><a id="a0fad91d406d56ea972d486d125ed66a5"></a>
+std::map&lt; <a class="el" href="classtgui_1_1_gui_base.html">GuiBase</a> *, GuiResources &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_guis</b></td></tr>
+<tr class="separator:a0fad91d406d56ea972d486d125ed66a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af27ef09d5e77c520cda1cb3084e50eb1"><td class="memItemLeft" align="right" valign="top"><a id="af27ef09d5e77c520cda1cb3084e50eb1"></a>
+std::map&lt; <a class="el" href="classtgui_1_1_cursor.html#a4e9a3c57acd4bf2b261aa2fe77f4d2f5">Cursor::Type</a>, std::unique_ptr&lt; sf::Cursor &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_mouseCursors</b></td></tr>
+<tr class="separator:af27ef09d5e77c520cda1cb3084e50eb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classtgui_1_1_backend_base"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classtgui_1_1_backend_base')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classtgui_1_1_backend_base.html">tgui::BackendBase</a></td></tr>
+<tr class="memitem:aada71627d7a6d2f6e9b8ecba87adec27 inherit pro_attribs_classtgui_1_1_backend_base"><td class="memItemLeft" align="right" valign="top"><a id="aada71627d7a6d2f6e9b8ecba87adec27"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_destroyOnLastGuiDetatch</b> = false</td></tr>
+<tr class="separator:aada71627d7a6d2f6e9b8ecba87adec27 inherit pro_attribs_classtgui_1_1_backend_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef687c61c7b65b2c03edfc57f47e132d inherit pro_attribs_classtgui_1_1_backend_base"><td class="memItemLeft" align="right" valign="top"><a id="aef687c61c7b65b2c03edfc57f47e132d"></a>
+<a class="el" href="classtgui_1_1_string.html">String</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_clipboardContents</b></td></tr>
+<tr class="separator:aef687c61c7b65b2c03edfc57f47e132d inherit pro_attribs_classtgui_1_1_backend_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Backend that uses SFML. </p>
@@ -770,13 +806,13 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Program Files (x86)/Jenkins/workspace/TGUI/include/TGUI/Backends/SFML/<a class="el" href="_backend_s_f_m_l_8hpp_source.html">BackendSFML.hpp</a></li>
+<li>C:/Program Files (x86)/Jenkins/workspace/TGUI-0.9/include/TGUI/Backends/SFML/<a class="el" href="_backend_s_f_m_l_8hpp_source.html">BackendSFML.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.10-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 5 2021 19:36:21 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 15 2022 14:50:46 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.20
 </small></address>

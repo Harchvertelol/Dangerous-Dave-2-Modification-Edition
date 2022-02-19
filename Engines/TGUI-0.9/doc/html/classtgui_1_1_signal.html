@@ -111,6 +111,8 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
 <a href="classtgui_1_1_signal-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">tgui::Signal Class Reference</div>  </div>
@@ -139,10 +141,10 @@ Inheritance diagram for tgui::Signal:</div>
 <area href="classtgui_1_1_signal_typed.html" alt="tgui::SignalTyped&lt; int &gt;" shape="rect" coords="363,560,716,584"/>
 <area href="classtgui_1_1_signal_typed.html" alt="tgui::SignalTyped&lt; unsigned int &gt;" shape="rect" coords="363,616,716,640"/>
 <area href="classtgui_1_1_signal_typed.html" alt="tgui::SignalTyped&lt; Vector2f &gt;" shape="rect" coords="363,672,716,696"/>
-<area href="classtgui_1_1_signal_animation.html" title="Signal to which the user can subscribe to get callbacks from." alt="tgui::SignalAnimation" shape="rect" coords="363,728,716,752"/>
-<area href="classtgui_1_1_signal_child_window.html" title="Signal to which the user can subscribe to get callbacks from." alt="tgui::SignalChildWindow" shape="rect" coords="363,784,716,808"/>
-<area href="classtgui_1_1_signal_item.html" title="Signal to which the user can subscribe to get callbacks from." alt="tgui::SignalItem" shape="rect" coords="363,840,716,864"/>
-<area href="classtgui_1_1_signal_item_hierarchy.html" title="Signal to which the user can subscribe to get callbacks from." alt="tgui::SignalItemHierarchy" shape="rect" coords="363,896,716,920"/>
+<area href="classtgui_1_1_signal_child_window.html" title="Signal to which the user can subscribe to get callbacks from." alt="tgui::SignalChildWindow" shape="rect" coords="363,728,716,752"/>
+<area href="classtgui_1_1_signal_item.html" title="Signal to which the user can subscribe to get callbacks from." alt="tgui::SignalItem" shape="rect" coords="363,784,716,808"/>
+<area href="classtgui_1_1_signal_item_hierarchy.html" title="Signal to which the user can subscribe to get callbacks from." alt="tgui::SignalItemHierarchy" shape="rect" coords="363,840,716,864"/>
+<area href="classtgui_1_1_signal_show_effect.html" title="Signal to which the user can subscribe to get callbacks from." alt="tgui::SignalShowEffect" shape="rect" coords="363,896,716,920"/>
 <area href="classtgui_1_1_signal_typed.html" title="Signal to which the user can subscribe to get callbacks from." alt="tgui::SignalTyped&lt; T &gt;" shape="rect" coords="363,952,716,976"/>
 <area href="classtgui_1_1_signal_typed2.html" title="Signal to which the user can subscribe to get callbacks from." alt="tgui::SignalTyped2&lt; T1, T2 &gt;" shape="rect" coords="363,1008,716,1032"/>
   </map>
@@ -216,6 +218,35 @@ template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:abb671592facd86e49938587e510becc4"><td class="memTemplItemLeft" align="right" valign="top">static const std::decay_t&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classtgui_1_1_signal.html#abb671592facd86e49938587e510becc4">dereferenceParam</a> (std::size_t paramIndex)</td></tr>
 <tr class="memdesc:abb671592facd86e49938587e510becc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the void* parameters back into its original type right before calling the callback function. <br /></td></tr>
 <tr class="separator:abb671592facd86e49938587e510becc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8317e47c964e7e0119981616bc162db"><td class="memTemplParams" colspan="2"><a id="ad8317e47c964e7e0119981616bc162db"></a>
+template&lt;typename Func , typename... Args, typename std::enable_if&lt; std::is_member_pointer&lt; typename std::decay&lt; Func &gt;::type &gt;::value &gt;::type *  = nullptr&gt; </td></tr>
+<tr class="memitem:ad8317e47c964e7e0119981616bc162db"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>invokeFunc</b> (Func &amp;&amp;func, Args &amp;&amp;... args)</td></tr>
+<tr class="separator:ad8317e47c964e7e0119981616bc162db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8317e47c964e7e0119981616bc162db"><td class="memTemplParams" colspan="2"><a id="ad8317e47c964e7e0119981616bc162db"></a>
+template&lt;typename Func , typename... Args, typename std::enable_if&lt;!std::is_member_pointer&lt; typename std::decay&lt; Func &gt;::type &gt;::value &gt;::type *  = nullptr&gt; </td></tr>
+<tr class="memitem:ad8317e47c964e7e0119981616bc162db"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>invokeFunc</b> (Func &amp;&amp;func, Args &amp;&amp;... args)</td></tr>
+<tr class="separator:ad8317e47c964e7e0119981616bc162db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:aa33017e94baf9d50c638f9264630cb0f"><td class="memItemLeft" align="right" valign="top"><a id="aa33017e94baf9d50c638f9264630cb0f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_enabled</b> = true</td></tr>
+<tr class="separator:aa33017e94baf9d50c638f9264630cb0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b2f8ae669a078fde5fd0be283ee6006"><td class="memItemLeft" align="right" valign="top"><a id="a3b2f8ae669a078fde5fd0be283ee6006"></a>
+<a class="el" href="classtgui_1_1_string.html">String</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_name</b></td></tr>
+<tr class="separator:a3b2f8ae669a078fde5fd0be283ee6006"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21200c6cf55f05c5108817831f0a490e"><td class="memItemLeft" align="right" valign="top"><a id="a21200c6cf55f05c5108817831f0a490e"></a>
+std::map&lt; unsigned int, std::function&lt; void()&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_handlers</b></td></tr>
+<tr class="separator:a21200c6cf55f05c5108817831f0a490e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
+Static Protected Attributes</h2></td></tr>
+<tr class="memitem:a3805529fa9314b8e06cb6821859a43b0"><td class="memItemLeft" align="right" valign="top"><a id="a3805529fa9314b8e06cb6821859a43b0"></a>
+static unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>m_lastSignalId</b></td></tr>
+<tr class="separator:a3805529fa9314b8e06cb6821859a43b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b15bb033591fef74b5e19442e872403"><td class="memItemLeft" align="right" valign="top"><a id="a2b15bb033591fef74b5e19442e872403"></a>
+static std::deque&lt; const void * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_parameters</b></td></tr>
+<tr class="separator:a2b15bb033591fef74b5e19442e872403"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classtgui_1_1_signal.html" title="Signal to which the user can subscribe to get callbacks from.">Signal</a> to which the user can subscribe to get callbacks from. </p>
@@ -557,13 +588,13 @@ template&lt;typename Func , typename... BoundArgs&gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Program Files (x86)/Jenkins/workspace/TGUI/include/TGUI/<a class="el" href="_signal_8hpp_source.html">Signal.hpp</a></li>
+<li>C:/Program Files (x86)/Jenkins/workspace/TGUI-0.9/include/TGUI/<a class="el" href="_signal_8hpp_source.html">Signal.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.10-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 5 2021 19:36:22 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 15 2022 14:50:47 for TGUI by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.20
 </small></address>
