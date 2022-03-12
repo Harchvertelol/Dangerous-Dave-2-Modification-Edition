@@ -114,11 +114,17 @@ function mainFunc()
 	if testgo ~= 0 then
 		if getState(-1) == "rightrun" then
 			setState(-1, "leftrun")
-			setMonsterValue(-1, "counterDaveReaction", tostring(2*math.random(1, 4)))
+			local start_rand = tonumber(getMonsterOption(-1, "options", "startRandomShiftPlayerReaction"))
+			local end_rand = tonumber(getMonsterOption(-1, "options", "endRandomShiftPlayerReaction"))
+			local mult = tonumber(getMonsterOption(-1, "options", "multipleRandomShiftPlayerReaction"))
+			setMonsterValue(-1, "counterDaveReaction", tostring(mult*math.random(start_rand, end_rand)))
 		else
 			if getState(-1) == "leftrun" then
 				setState(-1, "rightrun")
-				setMonsterValue(-1, "counterDaveReaction", tostring(2*math.random(1,4)))
+				local start_rand = tonumber(getMonsterOption(-1, "options", "startRandomShiftPlayerReaction"))
+				local end_rand = tonumber(getMonsterOption(-1, "options", "endRandomShiftPlayerReaction"))
+				local mult = tonumber(getMonsterOption(-1, "options", "multipleRandomShiftPlayerReaction"))
+				setMonsterValue(-1, "counterDaveReaction", tostring(mult*math.random(start_rand, end_rand)))
 			else
 				if getState(-1) == "downrun" then
 					if testLookDaveX(-1) == -1 then
