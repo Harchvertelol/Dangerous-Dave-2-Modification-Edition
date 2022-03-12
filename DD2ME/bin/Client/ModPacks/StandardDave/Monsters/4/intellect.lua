@@ -64,7 +64,11 @@ function mainFunc()
 		noattack = noattack - 1
 		setMonsterValue(-1, "noattack", noattack)
 	end
-	if (getState(-1) == "leftrun" or getState(-1) == "rightrun") and noattack == 0 and testLookDaveY(-1) == 1 and getDistanceToDaveXHead(-1, 1) <= 8 and getDistanceToDaveY(-1, 1) > 4 and getDistanceToDaveY(-1, 1) < 16*6 then
+	local dist_cropX = 8
+	if getState(-1) == "leftrun" then
+		dist_cropX = 16
+	end
+	if (getState(-1) == "leftrun" or getState(-1) == "rightrun") and noattack == 0 and testLookDaveY(-1) == 1 and getDistanceToDaveXHead(-1, 1) <= dist_cropX and getDistanceToDaveY(-1, 1) > 4 and getDistanceToDaveY(-1, 1) < 16*6 then
 		setState(-1, "attack")
 		setMonsterValue(-1, "numberofattack", "0")
 		setMonsterValue(-1, "when", "1")

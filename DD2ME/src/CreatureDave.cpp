@@ -318,26 +318,73 @@ void CreatureDave::live(bool doKey)
             }
         }
     }
-    int TileCoordX = roundNumber(s_CoordX, 16, -1);
-    int TileCoordY = roundNumber(s_CoordY + 32, 16, 1);
-    int TileType1 = s_GameClass->s_Data->s_Level->getTileType(TileCoordX/16, TileCoordY/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
+    int frame = getFrame();
+    int CoordXColDave = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XL;
+    int CoordYColDave = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YL;
+    int SizeCollisDaveY = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YR - s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YL + 1;
+    int SizeCollisDaveX = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XR - s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XL + 1;
+    int TileCoordX = roundNumber(s_CoordX + CoordXColDave, 16, -1);
+    int TileCoordY = roundNumber(s_CoordY + CoordYColDave + SizeCollisDaveY, 16, 1);
+    int FirstCoordX = roundNumber(s_CoordX + CoordXColDave, 16, -1);
+    int SecondCoordX = roundNumber(s_CoordX + CoordXColDave + SizeCollisDaveX, 16, 1);
+    int SizeTileTypes = (SecondCoordX - FirstCoordX)/16;
+    int* TileTypes = new int[SizeTileTypes];
+    bool* StandCollisions = new bool[SizeTileTypes];
+    bool IsStopFallNow = false;
+    for(int i = 0; i < SizeTileTypes; i++)
+    {
+        TileTypes[i] = s_GameClass->s_Data->s_Level->getTileType(TileCoordX/16 + i, TileCoordY/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
+        StandCollisions[i] = testCollision(s_CoordX, s_CoordY, TileCoordX + 16*i, TileCoordY, s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15), true);
+        if( (TileTypes[i] == IMPASSABLE || TileTypes[i] == LADDER) && StandCollisions[i] )
+        {
+            IsStopFallNow = true;
+            break;
+        }
+    }
+
+    /*int TileType1 = s_GameClass->s_Data->s_Level->getTileType(TileCoordX/16, TileCoordY/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
     int TileType2 = s_GameClass->s_Data->s_Level->getTileType(TileCoordX/16 + 1, TileCoordY/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
-    int numberofframes = atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info", "numberofframes" + s_State).c_str() );
-    int frame = s_NumberOfAction%numberofframes;
     bool StandCollision1 = testCollision(s_CoordX, s_CoordY, TileCoordX, TileCoordY, s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15), true);
     bool StandCollision2 = testCollision(s_CoordX, s_CoordY, TileCoordX + 16, TileCoordY, s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15), true);
-    if( ( (TileType1 == IMPASSABLE || TileType1 == LADDER) && StandCollision1 ) || ( (TileType2 == IMPASSABLE || TileType2 == LADDER) && StandCollision2 ) )
+    if( ( (TileType1 == IMPASSABLE || TileType1 == LADDER) && StandCollision1 ) || ( (TileType2 == IMPASSABLE || TileType2 == LADDER) && StandCollision2 ) )*/
+    if(IsStopFallNow)
     {
-        if(s_State.find("jump") != string::npos)
+        if(s_State.find("jumpdown") != string::npos)
         {
             s_GameClass->s_Data->s_Sounds->play("fall");
             if(s_State.find("right") == 0) step("right");
             else step("left");
             if(s_State.find("right") == 0) s_State = "rightstand";
             else s_State = "leftstand";
-            StandCollision1 = testCollision(s_CoordX, s_CoordY, TileCoordX, TileCoordY, s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15), true);
+            delete[] TileTypes;
+            delete[] StandCollisions;
+            frame = getFrame();
+            CoordXColDave = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XL;
+            CoordYColDave = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YL;
+            SizeCollisDaveY = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YR - s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YL + 1;
+            SizeCollisDaveX = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XR - s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XL + 1;
+            TileCoordX = roundNumber(s_CoordX + CoordXColDave, 16, -1);
+            TileCoordY = roundNumber(s_CoordY + CoordYColDave + SizeCollisDaveY, 16, 1);
+            FirstCoordX = roundNumber(s_CoordX + CoordXColDave, 16, -1);
+            SecondCoordX = roundNumber(s_CoordX + CoordXColDave + SizeCollisDaveX, 16, 1);
+            SizeTileTypes = (SecondCoordX - FirstCoordX)/16;
+            TileTypes = new int[SizeTileTypes];
+            StandCollisions = new bool[SizeTileTypes];
+            bool IsStepElse = true;
+            for(int i = 0; i < SizeTileTypes; i++)
+            {
+                TileTypes[i] = s_GameClass->s_Data->s_Level->getTileType(TileCoordX/16 + i, TileCoordY/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
+                StandCollisions[i] = testCollision(s_CoordX, s_CoordY, TileCoordX + 16*i, TileCoordY, s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15), true);
+                if( (TileTypes[i] == IMPASSABLE || TileTypes[i] == LADDER) && StandCollisions[i] )
+                {
+                    IsStepElse = false;
+                    break;
+                }
+            }
+            /*StandCollision1 = testCollision(s_CoordX, s_CoordY, TileCoordX, TileCoordY, s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15), true);
             StandCollision2 = testCollision(s_CoordX, s_CoordY, TileCoordX + 16, TileCoordY, s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15), true);
-            if( !( ( (TileType1 == IMPASSABLE || TileType1 == LADDER) && StandCollision1 ) || ( (TileType2 == IMPASSABLE || TileType2 == LADDER) && StandCollision2 ) ) )
+            if( !( ( (TileType1 == IMPASSABLE || TileType1 == LADDER) && StandCollision1 ) || ( (TileType2 == IMPASSABLE || TileType2 == LADDER) && StandCollision2 ) ) )*/
+            if(IsStepElse)
             {
                 if(s_State.find("right") == 0) step("right");
                 else step("left");
@@ -354,6 +401,8 @@ void CreatureDave::live(bool doKey)
             s_Acceleration = 0;
         }
     }
+    delete[] TileTypes;
+    delete[] StandCollisions;
     if(oldstate != s_State && s_State.find("door") == string::npos)
     {
         int oldXColSq = s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[oldstate][getFrame()].s_XL;
@@ -755,6 +804,65 @@ void CreatureDave::step(string direction)
 bool CreatureDave::correctionPhys(int coord, int what)
 {
     bool yes = false;
+    int frame = getFrame();
+    if(s_GameClass->s_IniFile->getValue("settings", "correctionphysics") == "false") return false;
+    if( (what == 0 && s_CoordX == coord) || (what == 1 && s_CoordY == coord) ) return false;
+    int SizeXDave = roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XL, 16, -1);
+    int SizeYDave = roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YL, 16, -1);
+    SizeXDave = SizeXDave/16 + 1;
+    SizeYDave = SizeYDave/16 + 1;
+    int* TileCoordX = new int[SizeXDave];
+    int* TileCoordY = new int[SizeYDave];
+    for(int i = 0; i < SizeXDave; i++) TileCoordX[i] = roundNumber(s_CoordX,16,-1) + i*16;
+    for(int i = 0; i < SizeYDave; i++) TileCoordY[i] = roundNumber(s_CoordY,16,-1) + i*16;
+    bool col = false;
+    int sign;
+    if(what == 0) sign = (s_CoordX - coord)/abs(s_CoordX - coord);
+    if(what == 1) sign = (s_CoordY - coord)/abs(s_CoordY - coord);
+    int TileType = 0;
+    do
+    {
+        col = false;
+        for(int j = 0; j < SizeYDave; j++)
+            for(int i = 0; i < SizeXDave; i++)
+            {
+                TileType = s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i]/16, TileCoordY[j]/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
+                if( TileType == IMPASSABLE && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[j], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) ) col = true;
+                if(true)
+                {
+                    //if( TileType == LADDER && ladder == true && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[j], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) ) col = true;
+                    if( what == 1 && sign == 1 && TileType == LADDER &&
+                       testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[j],
+                                     s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame],
+                                     Square(0,0,15,15)) &&
+                       !testCollision(s_CoordX, coord, TileCoordX[i], TileCoordY[j],
+                                      s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame],
+                                      Square(0,0,15,15), true) &&
+                       !testCollision(s_CoordX, coord, TileCoordX[i], TileCoordY[j],
+                                      s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame],
+                                      Square(0,0,15,15)) ) col = true;
+                }
+            }
+        if(what == 0) s_CoordX -= sign;
+        if(what == 1) s_CoordY -= sign;
+        if(col == true) yes = true;
+    }
+    while(col == true);
+    if(what == 0) s_CoordX += sign;
+    if(what == 1) s_CoordY += sign;
+    if(yes && s_GameClass->s_IniFile->getValue("loggers","correctionphysics") == "true")
+    {
+        if(what == 0) cout<<"(Dave) Physics correction X: "<<"old - "<<coord<<", new - "<<s_CoordX<<endl;
+        else if(what == 1) cout<<"(Dave) Physics correction Y: "<<"old - "<<coord<<", new - "<<s_CoordY<<endl;
+    }
+    delete[] TileCoordX;
+    delete[] TileCoordY;
+    return yes;
+}
+
+/*bool CreatureDave::correctionPhys(int coord, int what)
+{
+    bool yes = false;
     if(s_GameClass->s_IniFile->getValue("settings", "correctionphysics") == "false") return false;
     if(what == 0 || what == 1)
     {
@@ -823,7 +931,7 @@ bool CreatureDave::correctionPhys(int coord, int what)
         cout << "(Dave) Physics correction " << axis << ": " << "old - " << coord << ", new - " << correctionCoord << ", state - " << s_State << endl;
     }
     return yes;
-}
+}*/
 
 bool CreatureDave::testSetStates(string states)
 {
@@ -848,6 +956,24 @@ void CreatureDave::draw()
     int ScrLX = s_GameClass->s_GameInfo->s_ScreenCoordX;
     int ScrLY = s_GameClass->s_GameInfo->s_ScreenCoordY;
     s_GameClass->s_Data->s_Dave->drawDave(s_State, getFrame(), s_CoordX - ScrLX, s_CoordY - ScrLY);
+    /*int frame = getFrame();
+    int SizeXDave = roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XL, 16, -1);
+    int SizeYDave = roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YL, 16, -1);
+    SizeXDave = SizeXDave/16 + 1;
+    SizeYDave = SizeYDave/16 + 1;
+    int* TileCoordX = new int[SizeXDave];
+    int* TileCoordY = new int[SizeYDave];
+    for(int i = 0; i < SizeXDave; i++) TileCoordX[i] = roundNumber(s_CoordX,16,-1) + i*16;
+    for(int i = 0; i < SizeYDave; i++) TileCoordY[i] = roundNumber(s_CoordY,16,-1) + i*16;
+    sf::RectangleShape rectangle;
+    rectangle.setSize(sf::Vector2f(SizeXDave * 16, SizeYDave * 16));
+    rectangle.setOutlineColor(sf::Color::Red);
+    rectangle.setOutlineThickness(5);
+    rectangle.setFillColor(sf::Color(0, 0, 0, 0));
+    rectangle.setPosition(TileCoordX[0] - ScrLX, TileCoordY[0] - ScrLY);
+    s_GameClass->s_RenderTexture->draw(rectangle);
+    delete[] TileCoordX;
+    delete[] TileCoordY;*/
 }
 
 void CreatureDave::testShoot()
