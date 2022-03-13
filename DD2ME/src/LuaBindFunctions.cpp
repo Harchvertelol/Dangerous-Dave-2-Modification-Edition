@@ -656,22 +656,22 @@ int LuaBindFunctions::getMainValue(lua_State* s_Lua)
     return 1;
 }
 
-static int __testLookDaveX(lua_State* s_Lua)
+static int __testLookPlayerX(lua_State* s_Lua)
 {
-    return s_LBF->testLookDaveX(s_Lua);
+    return s_LBF->testLookPlayerX(s_Lua);
 }
 
-static int __testLookDaveY(lua_State* s_Lua)
+static int __testLookPlayerY(lua_State* s_Lua)
 {
-    return s_LBF->testLookDaveY(s_Lua);
+    return s_LBF->testLookPlayerY(s_Lua);
 }
 
-int LuaBindFunctions::testLookDaveX(lua_State* s_Lua)
+int LuaBindFunctions::testLookPlayerX(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        cout<<"Error! Number of arguments of function \"testLookDaveX\" is incorrect!"<<endl;
+        cout<<"Error! Number of arguments of function \"testLookPlayerX\" is incorrect!"<<endl;
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -702,12 +702,12 @@ int LuaBindFunctions::testLookDaveX(lua_State* s_Lua)
     return 1;
 }
 
-int LuaBindFunctions::testLookDaveY(lua_State* s_Lua)
+int LuaBindFunctions::testLookPlayerY(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        cout<<"Error! Number of arguments of function \"testLookDaveY\" is incorrect!"<<endl;
+        cout<<"Error! Number of arguments of function \"testLookPlayerY\" is incorrect!"<<endl;
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -759,27 +759,27 @@ int LuaBindFunctions::getMonsterFrame(lua_State* s_Lua)
     return 1;
 }
 
-static int __getDistanceToDaveX(lua_State* s_Lua)
+static int __getDistanceToPlayerX(lua_State* s_Lua)
 {
-    return s_LBF->getDistanceToDaveX(s_Lua);
+    return s_LBF->getDistanceToPlayerX(s_Lua);
 }
 
-static int __getDistanceToDaveY(lua_State* s_Lua)
+static int __getDistanceToPlayerY(lua_State* s_Lua)
 {
-    return s_LBF->getDistanceToDaveY(s_Lua);
+    return s_LBF->getDistanceToPlayerY(s_Lua);
 }
 
-static int __getDistanceToDave(lua_State* s_Lua)
+static int __getDistanceToPlayer(lua_State* s_Lua)
 {
-    return s_LBF->getDistanceToDave(s_Lua);
+    return s_LBF->getDistanceToPlayer(s_Lua);
 }
 
-int LuaBindFunctions::getDistanceToDaveX(lua_State* s_Lua)
+int LuaBindFunctions::getDistanceToPlayerX(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
     if(n != 1 && n != 2)
     {
-        cout<<"Error! Number of arguments of function \"getDistanceToDaveX\" is incorrect!"<<endl;
+        cout<<"Error! Number of arguments of function \"getDistanceToPlayerX\" is incorrect!"<<endl;
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -819,12 +819,12 @@ int LuaBindFunctions::getDistanceToDaveX(lua_State* s_Lua)
     return 1;
 }
 
-int LuaBindFunctions::getDistanceToDaveY(lua_State* s_Lua)
+int LuaBindFunctions::getDistanceToPlayerY(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
     if(n != 1 && n != 2)
     {
-        cout<<"Error! Number of arguments of function \"getDistanceToDaveY\" is incorrect!"<<endl;
+        cout<<"Error! Number of arguments of function \"getDistanceToPlayerY\" is incorrect!"<<endl;
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -864,12 +864,12 @@ int LuaBindFunctions::getDistanceToDaveY(lua_State* s_Lua)
     return 1;
 }
 
-int LuaBindFunctions::getDistanceToDave(lua_State* s_Lua)
+int LuaBindFunctions::getDistanceToPlayer(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        cout<<"Error! Number of arguments of function \"getDistanceToDave\" is incorrect!"<<endl;
+        cout<<"Error! Number of arguments of function \"getDistanceToPlayer\" is incorrect!"<<endl;
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -977,27 +977,27 @@ int LuaBindFunctions::testTileTypeDown(lua_State* s_Lua)
     return 1;
 }
 
-static int __getDistanceToDaveXHead(lua_State* s_Lua)
+static int __getDistanceToPlayerXHead(lua_State* s_Lua)
 {
-    return s_LBF->getDistanceToDaveXHead(s_Lua);
+    return s_LBF->getDistanceToPlayerXHead(s_Lua);
 }
 
-static int __getDistanceToDaveYHead(lua_State* s_Lua)
+static int __getDistanceToPlayerYHead(lua_State* s_Lua)
 {
-    return s_LBF->getDistanceToDaveYHead(s_Lua);
+    return s_LBF->getDistanceToPlayerYHead(s_Lua);
 }
 
-static int __getDistanceToDaveHead(lua_State* s_Lua)
+static int __getDistanceToPlayerHead(lua_State* s_Lua)
 {
-    return s_LBF->getDistanceToDaveHead(s_Lua);
+    return s_LBF->getDistanceToPlayerHead(s_Lua);
 }
 
-int LuaBindFunctions::getDistanceToDaveXHead(lua_State* s_Lua)
+int LuaBindFunctions::getDistanceToPlayerXHead(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
     if(n != 1 && n != 2)
     {
-        cout<<"Error! Number of arguments of function \"getDistanceToDaveXHead\" is incorrect!"<<endl;
+        cout<<"Error! Number of arguments of function \"getDistanceToPlayerXHead\" is incorrect!"<<endl;
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1014,12 +1014,12 @@ int LuaBindFunctions::getDistanceToDaveXHead(lua_State* s_Lua)
     return 1;
 }
 
-int LuaBindFunctions::getDistanceToDaveYHead(lua_State* s_Lua)
+int LuaBindFunctions::getDistanceToPlayerYHead(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
     if(n != 1 && n != 2)
     {
-        cout<<"Error! Number of arguments of function \"getDistanceToDaveYHead\" is incorrect!"<<endl;
+        cout<<"Error! Number of arguments of function \"getDistanceToPlayerYHead\" is incorrect!"<<endl;
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1036,12 +1036,12 @@ int LuaBindFunctions::getDistanceToDaveYHead(lua_State* s_Lua)
     return 1;
 }
 
-int LuaBindFunctions::getDistanceToDaveHead(lua_State* s_Lua)
+int LuaBindFunctions::getDistanceToPlayerHead(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        cout<<"Error! Number of arguments of function \"getDistanceToDaveHead\" is incorrect!"<<endl;
+        cout<<"Error! Number of arguments of function \"getDistanceToPlayerHead\" is incorrect!"<<endl;
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1056,17 +1056,17 @@ int LuaBindFunctions::getDistanceToDaveHead(lua_State* s_Lua)
     return 1;
 }
 
-static int __testCollisionDave(lua_State* s_Lua)
+static int __testCollisionPlayer(lua_State* s_Lua)
 {
-    return s_LBF->testCollisionDave(s_Lua);
+    return s_LBF->testCollisionPlayer(s_Lua);
 }
 
-int LuaBindFunctions::testCollisionDave(lua_State* s_Lua)
+int LuaBindFunctions::testCollisionPlayer(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        cout<<"Error! Number of arguments of function \"testCollisionDave\" is incorrect!"<<endl;
+        cout<<"Error! Number of arguments of function \"testCollisionPlayer\" is incorrect!"<<endl;
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1080,17 +1080,17 @@ int LuaBindFunctions::testCollisionDave(lua_State* s_Lua)
     return 1;
 }
 
-static int __killDave(lua_State* s_Lua)
+static int __killPlayer(lua_State* s_Lua)
 {
-    return s_LBF->killDave(s_Lua);
+    return s_LBF->killPlayer(s_Lua);
 }
 
-int LuaBindFunctions::killDave(lua_State* s_Lua)
+int LuaBindFunctions::killPlayer(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        cout<<"Error! Number of arguments of function \"killDave\" is incorrect!"<<endl;
+        cout<<"Error! Number of arguments of function \"killPlayer\" is incorrect!"<<endl;
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1281,17 +1281,17 @@ int LuaBindFunctions::getMonsterValue(lua_State* s_Lua)
     return 1;
 }
 
-static int __setDaveValue(lua_State* s_Lua)
+static int __setPlayerValue(lua_State* s_Lua)
 {
-    return s_LBF->setDaveValue(s_Lua);
+    return s_LBF->setPlayerValue(s_Lua);
 }
 
-int LuaBindFunctions::setDaveValue(lua_State* s_Lua)
+int LuaBindFunctions::setPlayerValue(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
     if(n != 4)
     {
-        cout<<"Error! Number of arguments of function \"setDaveValue\" is incorrect!"<<endl;
+        cout<<"Error! Number of arguments of function \"setPlayerValue\" is incorrect!"<<endl;
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1305,17 +1305,17 @@ int LuaBindFunctions::setDaveValue(lua_State* s_Lua)
     return 0;
 }
 
-static int __getDaveValue(lua_State* s_Lua)
+static int __getPlayerValue(lua_State* s_Lua)
 {
-    return s_LBF->getDaveValue(s_Lua);
+    return s_LBF->getPlayerValue(s_Lua);
 }
 
-int LuaBindFunctions::getDaveValue(lua_State* s_Lua)
+int LuaBindFunctions::getPlayerValue(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
     if(n != 3)
     {
-        cout<<"Error! Number of arguments of function \"getDaveValue\" is incorrect!"<<endl;
+        cout<<"Error! Number of arguments of function \"getPlayerValue\" is incorrect!"<<endl;
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1574,51 +1574,51 @@ int LuaBindFunctions::getCoordMonsterY(lua_State* s_Lua)
     return 1;
 }
 
-static int __getCoordDaveX(lua_State* s_Lua)
+static int __getCoordPlayerX(lua_State* s_Lua)
 {
-    return s_LBF->getCoordDaveX(s_Lua);
+    return s_LBF->getCoordPlayerX(s_Lua);
 }
 
-static int __getStateDave(lua_State* s_Lua)
+static int __getStatePlayer(lua_State* s_Lua)
 {
-    return s_LBF->getStateDave(s_Lua);
+    return s_LBF->getStatePlayer(s_Lua);
 }
 
-static int __getCoordDaveY(lua_State* s_Lua)
+static int __getCoordPlayerY(lua_State* s_Lua)
 {
-    return s_LBF->getCoordDaveY(s_Lua);
+    return s_LBF->getCoordPlayerY(s_Lua);
 }
 
-int LuaBindFunctions::getCoordDaveX(lua_State* s_Lua)
+int LuaBindFunctions::getCoordPlayerX(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
     if(n != 0)
     {
-        cout<<"Error! Number of arguments of function \"getCoordDaveX\" is incorrect!"<<endl;
+        cout<<"Error! Number of arguments of function \"getCoordPlayerX\" is incorrect!"<<endl;
         return 0;
     }
     lua_pushnumber(s_Lua, s_GameClass->s_GameInfo->s_MyDave->s_CoordX);
     return 1;
 }
 
-int LuaBindFunctions::getCoordDaveY(lua_State* s_Lua)
+int LuaBindFunctions::getCoordPlayerY(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
     if(n != 0)
     {
-        cout<<"Error! Number of arguments of function \"getCoordDaveY\" is incorrect!"<<endl;
+        cout<<"Error! Number of arguments of function \"getCoordPlayerY\" is incorrect!"<<endl;
         return 0;
     }
     lua_pushnumber(s_Lua, s_GameClass->s_GameInfo->s_MyDave->s_CoordY);
     return 1;
 }
 
-int LuaBindFunctions::getStateDave(lua_State* s_Lua)
+int LuaBindFunctions::getStatePlayer(lua_State* s_Lua)
 {
     int n = lua_gettop(s_Lua);
     if(n != 0)
     {
-        cout<<"Error! Number of arguments of function \"getCoordDaveY\" is incorrect!"<<endl;
+        cout<<"Error! Number of arguments of function \"getCoordPlayerY\" is incorrect!"<<endl;
         return 0;
     }
     lua_pushstring(s_Lua, s_GameClass->s_GameInfo->s_MyDave->s_State.c_str());
@@ -1833,18 +1833,18 @@ void LuaBindFunctions::registerFunctionsMonster(lua_State* s_Lua)
     lua_register(s_Lua, "nextAdditionalNumberOfAction", &__nextAdditionalNumberOfAction);
     lua_register(s_Lua, "setNullAdditionalNumberOfAction", &__setNullAdditionalNumberOfAction);
     lua_register(s_Lua, "getMonsterOption", &__getMonsterOption);
-    lua_register(s_Lua, "testLookDaveX", &__testLookDaveX);
-    lua_register(s_Lua, "testLookDaveY", &__testLookDaveY);
+    lua_register(s_Lua, "testLookPlayerX", &__testLookPlayerX);
+    lua_register(s_Lua, "testLookPlayerY", &__testLookPlayerY);
     lua_register(s_Lua, "getMonsterFrame", &__getMonsterFrame);
-    lua_register(s_Lua, "getDistanceToDave", &__getDistanceToDave);
-    lua_register(s_Lua, "getDistanceToDaveX", &__getDistanceToDaveX);
-    lua_register(s_Lua, "getDistanceToDaveY", &__getDistanceToDaveY);
+    lua_register(s_Lua, "getDistanceToPlayer", &__getDistanceToPlayer);
+    lua_register(s_Lua, "getDistanceToPlayerX", &__getDistanceToPlayerX);
+    lua_register(s_Lua, "getDistanceToPlayerY", &__getDistanceToPlayerY);
     lua_register(s_Lua, "testTileTypeDown", &__testTileTypeDown);
-    lua_register(s_Lua, "getDistanceToDaveHead", &__getDistanceToDaveHead);
-    lua_register(s_Lua, "getDistanceToDaveXHead", &__getDistanceToDaveXHead);
-    lua_register(s_Lua, "getDistanceToDaveYHead", &__getDistanceToDaveYHead);
-    lua_register(s_Lua, "testCollisionDave", &__testCollisionDave);
-    lua_register(s_Lua, "killDave", &__killDave);
+    lua_register(s_Lua, "getDistanceToPlayerHead", &__getDistanceToPlayerHead);
+    lua_register(s_Lua, "getDistanceToPlayerXHead", &__getDistanceToPlayerXHead);
+    lua_register(s_Lua, "getDistanceToPlayerYHead", &__getDistanceToPlayerYHead);
+    lua_register(s_Lua, "testCollisionPlayer", &__testCollisionPlayer);
+    lua_register(s_Lua, "killPlayer", &__killPlayer);
     lua_register(s_Lua, "killMonster", &__killMonster);
     lua_register(s_Lua, "addDuplicateMonster", &__addDuplicateMonster);
     lua_register(s_Lua, "addMonster", &__addMonster);
@@ -1860,14 +1860,14 @@ void LuaBindFunctions::registerFunctionsMonster(lua_State* s_Lua)
     lua_register(s_Lua, "testTileTypeUp", &__testTileTypeUp);
     lua_register(s_Lua, "getCoordMonsterX", &__getCoordMonsterX);
     lua_register(s_Lua, "getCoordMonsterY", &__getCoordMonsterY);
-    lua_register(s_Lua, "getCoordDaveX", &__getCoordDaveX);
-    lua_register(s_Lua, "getCoordDaveY", &__getCoordDaveY);
-    lua_register(s_Lua, "getStateDave", &__getStateDave);
+    lua_register(s_Lua, "getCoordPlayerX", &__getCoordPlayerX);
+    lua_register(s_Lua, "getCoordPlayerY", &__getCoordPlayerY);
+    lua_register(s_Lua, "getStatePlayer", &__getStatePlayer);
     lua_register(s_Lua, "getNumberOfLives", &__getNumberOfLives);
     lua_register(s_Lua, "setNumberOfLives", &__setNumberOfLives);
     lua_register(s_Lua, "getMonsterCollision", &__getMonsterCollision);
-    lua_register(s_Lua, "setDaveValue", &__setDaveValue);
-    lua_register(s_Lua, "getDaveValue", &__getDaveValue);
+    lua_register(s_Lua, "setPlayerValue", &__setPlayerValue);
+    lua_register(s_Lua, "getPlayerValue", &__getPlayerValue);
 }
 
 static int __addPackImagesToFactoryTemporaryImage(lua_State* s_Lua)

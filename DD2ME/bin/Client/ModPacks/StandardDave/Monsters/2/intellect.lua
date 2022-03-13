@@ -19,8 +19,8 @@ function calculateKnife()
 			testgo = goRight(-1, 5, 1, 0)
 		end
 	end
-	if testgo == 0 and testCollisionDave(-1) == 1 then
-		killDave(-1)
+	if testgo == 0 and testCollisionPlayer(-1) == 1 then
+		killPlayer(-1)
 	end
 	if testgo ~= 0 then
 		setState(-1, "traceshoot")
@@ -67,13 +67,13 @@ function mainFunc()
 	end
 	local oldstate = getState(-1)
 	if math.random(50) == 1 then
-		if testLookDaveX(-1) == -1 and getDistanceToDaveXHead(-1, 1) < -16*5 then
+		if testLookPlayerX(-1) == -1 and getDistanceToPlayerXHead(-1, 1) < -16*5 then
 			if string.find(getState(-1), "strike") == nil then
 				setNullNumberOfAction(-1)
 			end
 			setState(-1, "leftstrike")
 		else
-			if testLookDaveX(-1) == 1 and getDistanceToDaveXHead(-1, 1) > 16*5 then
+			if testLookPlayerX(-1) == 1 and getDistanceToPlayerXHead(-1, 1) > 16*5 then
 				if string.find(getState(-1), "strike") == nil then
 					setNullNumberOfAction(-1)
 				end

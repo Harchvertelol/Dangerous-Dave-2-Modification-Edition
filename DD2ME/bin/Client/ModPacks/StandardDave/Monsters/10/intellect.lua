@@ -55,13 +55,13 @@ function calculateHand()
 		end
 	end
 	local lstate = 0
-	if getDistanceToDaveXHead(-1, 1) > 0 then
+	if getDistanceToPlayerXHead(-1, 1) > 0 then
 		lstate = 1
 	else
 		lstate = -1
 	end
 	local distanceFromFloor = tonumber(getMonsterOption(-1, "options", "distanceFromFloorHands"))
-	if getDistanceToDaveYHead(-1, 1) > distanceFromFloor then
+	if getDistanceToPlayerYHead(-1, 1) > distanceFromFloor then
 		local speedDown = tonumber(getMonsterOption(-1, "options", "speedDownHands"))
 		goDown(-1, speedDown, 0)
 	else
@@ -154,8 +154,8 @@ function createHands()
 end
 
 function mainFunc()
-	if testCollisionDave(-1) == 1 then
-		killDave(-1)
+	if testCollisionPlayer(-1) == 1 then
+		killPlayer(-1)
 	end
 	local statem = getState(-1)
 	if statem == "hand" then

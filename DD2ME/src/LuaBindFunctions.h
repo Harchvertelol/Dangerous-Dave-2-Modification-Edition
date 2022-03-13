@@ -48,18 +48,18 @@ class LuaBindFunctions
         int nextAdditionalNumberOfAction(lua_State* s_Lua);
         int setNullAdditionalNumberOfAction(lua_State* s_Lua);
         int getMonsterOption(lua_State* s_Lua);
-        int testLookDaveX(lua_State* s_Lua);
-        int testLookDaveY(lua_State* s_Lua);
+        int testLookPlayerX(lua_State* s_Lua);
+        int testLookPlayerY(lua_State* s_Lua);
         int getMonsterFrame(lua_State* s_Lua);
-        int getDistanceToDaveX(lua_State* s_Lua);
-        int getDistanceToDaveY(lua_State* s_Lua);
-        int getDistanceToDave(lua_State* s_Lua);
+        int getDistanceToPlayerX(lua_State* s_Lua);
+        int getDistanceToPlayerY(lua_State* s_Lua);
+        int getDistanceToPlayer(lua_State* s_Lua);
         int testTileTypeDown(lua_State* s_Lua);
-        int getDistanceToDaveXHead(lua_State* s_Lua);
-        int getDistanceToDaveYHead(lua_State* s_Lua);
-        int getDistanceToDaveHead(lua_State* s_Lua);
-        int testCollisionDave(lua_State* s_Lua);
-        int killDave(lua_State* s_Lua);
+        int getDistanceToPlayerXHead(lua_State* s_Lua);
+        int getDistanceToPlayerYHead(lua_State* s_Lua);
+        int getDistanceToPlayerHead(lua_State* s_Lua);
+        int testCollisionPlayer(lua_State* s_Lua);
+        int killPlayer(lua_State* s_Lua);
         int killMonster(lua_State* s_Lua);
         int addDuplicateMonster(lua_State* s_Lua);
         int addMonster(lua_State* s_Lua);
@@ -75,14 +75,14 @@ class LuaBindFunctions
         int testTileTypeUp(lua_State* s_Lua);
         int getCoordMonsterX(lua_State* s_Lua);
         int getCoordMonsterY(lua_State* s_Lua);
-        int getCoordDaveX(lua_State* s_Lua);
-        int getCoordDaveY(lua_State* s_Lua);
-        int getStateDave(lua_State* s_Lua);
+        int getCoordPlayerX(lua_State* s_Lua);
+        int getCoordPlayerY(lua_State* s_Lua);
+        int getStatePlayer(lua_State* s_Lua);
         int getNumberOfLives(lua_State* s_Lua);
         int setNumberOfLives(lua_State* s_Lua);
         int getMonsterCollision(lua_State* s_Lua);
-        int setDaveValue(lua_State* s_Lua);
-        int getDaveValue(lua_State* s_Lua);
+        int setPlayerValue(lua_State* s_Lua);
+        int getPlayerValue(lua_State* s_Lua);
         //...
 };
 #endif

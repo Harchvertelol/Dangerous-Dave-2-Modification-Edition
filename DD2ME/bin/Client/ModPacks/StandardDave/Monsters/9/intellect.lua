@@ -9,13 +9,13 @@ function mainFunc()
 	else
 		return
 	end
-	if getDistanceToDaveXHead(-1, 1) > 0 then
+	if getDistanceToPlayerXHead(-1, 1) > 0 then
 		setState(-1, "rightrun")
 	else
 		setState(-1, "leftrun")
 	end
 	local distanceFromFloor = tonumber(getMonsterOption(-1, "options", "distanceFromFloor"))
-	if getDistanceToDaveYHead(-1, 1) > distanceFromFloor then
+	if getDistanceToPlayerYHead(-1, 1) > distanceFromFloor then
 		local speedDown = getMonsterOption(-1, "options", "speedDown")
 		goDown(-1, speedDown, 1)
 	else
@@ -32,7 +32,7 @@ function mainFunc()
 			goLeft(-1, speedLeft, 1)
 		end
 	end
-	if testCollisionDave(-1) == 1 then
-		killDave(-1)
+	if testCollisionPlayer(-1) == 1 then
+		killPlayer(-1)
 	end
 end

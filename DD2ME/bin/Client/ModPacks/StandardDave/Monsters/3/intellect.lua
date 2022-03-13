@@ -54,8 +54,8 @@ function setJump()
 end
 
 function mainFunc()
-	if testCollisionDave(-1) == 1 then
-		killDave(-1)
+	if testCollisionPlayer(-1) == 1 then
+		killPlayer(-1)
 	end
 	nextAdditionalNumberOfAction(-1)
 	if getAdditionalNumberOfAction(-1) % getMonsterOption(-1, "other", "animationstep") == 0 then
@@ -70,7 +70,7 @@ function mainFunc()
 	end
 	local oldstate = getState(-1)
 	if math.random(10) == 1 and (string.find(getState(-1), "leftrun") ~= nil or string.find(getState(-1), "rightrun") ~= nil) then
-		if getDistanceToDaveX(-1, 1) < 0 then
+		if getDistanceToPlayerX(-1, 1) < 0 then
 			if string.find(getState(-1), "rightrun") ~= nil then
 				changeDirection()
 				return
@@ -82,8 +82,8 @@ function mainFunc()
 			end
 		end
 	end
-	if math.random(10) == 1 and math.abs( getDistanceToDaveX(-1) - getDistanceToDaveY(-1) ) < 16 and (string.find(getState(-1), "leftrun") ~= nil or string.find(getState(-1), "rightrun") ~= nil) then
-		if getDistanceToDaveX(-1, 1) < 0 then
+	if math.random(10) == 1 and math.abs( getDistanceToPlayerX(-1) - getDistanceToPlayerY(-1) ) < 16 and (string.find(getState(-1), "leftrun") ~= nil or string.find(getState(-1), "rightrun") ~= nil) then
+		if getDistanceToPlayerX(-1, 1) < 0 then
 			if string.find(getState(-1), "rightrun") ~= nil then
 				changeDirection()
 				return

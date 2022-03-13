@@ -170,8 +170,8 @@ function calculateStarClump()
 end
 
 function mainFunc()
-	if testCollisionDave(-1) == 1 then
-		killDave(-1)
+	if testCollisionPlayer(-1) == 1 then
+		killPlayer(-1)
 	end
 	if getState(-1) == "star" then
 		calculateStar()

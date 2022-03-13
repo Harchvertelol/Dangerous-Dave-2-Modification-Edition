@@ -21,8 +21,8 @@ function changeDirection()
 end
 
 function mainFunc()
-	if testCollisionDave(-1) == 1 then
-		killDave(-1)
+	if testCollisionPlayer(-1) == 1 then
+		killPlayer(-1)
 	end
 	local speedattack = getMonsterOption(-1, "options", "speedattack")
 	local noa = -1
@@ -68,11 +68,11 @@ function mainFunc()
 	if getState(-1) == "leftrun" then
 		dist_cropX = 16
 	end
-	if (getState(-1) == "leftrun" or getState(-1) == "rightrun") and noattack == 0 and testLookDaveY(-1) == 1 and getDistanceToDaveXHead(-1, 1) <= dist_cropX and getDistanceToDaveY(-1, 1) > 4 and getDistanceToDaveY(-1, 1) < 16*6 then
+	if (getState(-1) == "leftrun" or getState(-1) == "rightrun") and noattack == 0 and testLookPlayerY(-1) == 1 and getDistanceToPlayerXHead(-1, 1) <= dist_cropX and getDistanceToPlayerY(-1, 1) > 4 and getDistanceToPlayerY(-1, 1) < 16*6 then
 		setState(-1, "attack")
 		setMonsterValue(-1, "numberofattack", "0")
 		setMonsterValue(-1, "when", "1")
-		setMonsterValue(-1, "maxattack", tostring(getDistanceToDaveY(-1) / 16))
+		setMonsterValue(-1, "maxattack", tostring(getDistanceToPlayerY(-1) / 16))
 	end
 	nextAdditionalNumberOfAction(-1)
 	if getAdditionalNumberOfAction(-1) % getMonsterOption(-1, "other", "animationstep") == 0 then
@@ -80,18 +80,18 @@ function mainFunc()
 	else
 		return
 	end
-	if getMonsterValue(-1, "counterDaveReaction") == "" then
-		setMonsterValue(-1, "counterDaveReaction", "0")
+	if getMonsterValue(-1, "counterPlayerReaction") == "" then
+		setMonsterValue(-1, "counterPlayerReaction", "0")
 	end
 	local change = 1
-	local cdr = tonumber(getMonsterValue(-1, "counterDaveReaction"))
+	local cdr = tonumber(getMonsterValue(-1, "counterPlayerReaction"))
 	if cdr > 0 then
 		change = 0
-		setMonsterValue(-1, "counterDaveReaction", tostring(cdr - 1))
+		setMonsterValue(-1, "counterPlayerReaction", tostring(cdr - 1))
 	end
 	local oldstate = getState(-1)
-	if change == 1 and (string.find(getState(-1), "leftrun") ~= nil or string.find(getState(-1), "rightrun") ~= nil) and getDistanceToDave(-1) < 32*16 then
-		if getDistanceToDaveXHead(-1, 1) < 4 then
+	if change == 1 and (string.find(getState(-1), "leftrun") ~= nil or string.find(getState(-1), "rightrun") ~= nil) and getDistanceToPlayer(-1) < 32*16 then
+		if getDistanceToPlayerXHead(-1, 1) < 4 then
 			if string.find(getState(-1), "rightrun") ~= nil then
 				changeDirection(-1)
 				return
@@ -119,6 +119,6 @@ function mainFunc()
 		local start_rand = tonumber(getMonsterOption(-1, "options", "startRandomShiftPlayerReaction"))
 		local end_rand = tonumber(getMonsterOption(-1, "options", "endRandomShiftPlayerReaction"))
 		local mult = tonumber(getMonsterOption(-1, "options", "multipleRandomShiftPlayerReaction"))
-		setMonsterValue(-1, "counterDaveReaction", tostring(mult*math.random(start_rand, end_rand)))
+		setMonsterValue(-1, "counterPlayerReaction", tostring(mult*math.random(start_rand, end_rand)))
 	end
 end
