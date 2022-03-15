@@ -269,7 +269,12 @@ bool Level::setTileParameter(int x_tile, int y_tile, string name, string value)
     return true;
 }
 
-void Level::draw(bool before_objects_field)
+void Level::drawBackgrounds(int number)
+{
+    //...
+}
+
+void Level::drawTilesField(int number)
 {
     int ScrLX = s_GameClass->s_GameInfo->s_ScreenCoordX;
     int ScrLY = s_GameClass->s_GameInfo->s_ScreenCoordY;
@@ -292,6 +297,18 @@ void Level::draw(bool before_objects_field)
     if(DrawLevRY > SizeYLev) DrawLevRY = SizeYLev;
 
     string namefield, nameobjectsfield = getNameObjectsTilesField();
+
+    namefield = getNameTilesField(number);
+    for(int i = DrawLevLY; i < DrawLevRY; i++)
+        for(int j = DrawLevLX; j < DrawLevRX; j++)
+        {
+            s_GameClass->s_Data->s_Textures->drawTile(s_Fields[namefield][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16, j, i);
+            if(namefield == nameobjectsfield) s_GameClass->s_Data->s_Bonuses->drawBonus(s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
+        }
+}
+
+void Level::draw(bool before_objects_field)
+{
     int numberoftilefields = getNumberTilesFields();
 
     int startI = 0, endI = numberoftilefields;
@@ -300,13 +317,7 @@ void Level::draw(bool before_objects_field)
 
     for(int i = startI; i < endI; i++)
     {
-        namefield = getNameTilesField(i + 1);
-        for(int i = DrawLevLY; i < DrawLevRY; i++)
-            for(int j = DrawLevLX; j < DrawLevRX; j++)
-            {
-                s_GameClass->s_Data->s_Textures->drawTile(s_Fields[namefield][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16, j, i);
-                if(namefield == nameobjectsfield) s_GameClass->s_Data->s_Bonuses->drawBonus(s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i*SizeXLev + j], (j - DrawLevLX)*16 - ScrLX%16, (i - DrawLevLY)*16 - ScrLY%16);
-            }
+        drawTilesField(i + 1);
     }
 }
 

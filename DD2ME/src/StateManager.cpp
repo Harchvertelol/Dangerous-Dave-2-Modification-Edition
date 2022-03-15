@@ -115,6 +115,28 @@ void StateManager::s3(Event event)
                             s_GameClass->s_GameInfo->s_FactoryMonsters->reloadAIAll();
                             cout << "Reload AI completed." << endl;
                         }
+                        else if(str.substr(str.find(" ") + 1) == "count")
+                        {
+                            cout << "Current AI objects loaded: " << s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters.size() << endl;
+                        }
+                        else if(str.substr(str.find(" ") + 1).find("kill ") == 0)
+                        {
+                            str = str.substr(str.find(" ") + 1);
+                            str = str.substr(str.find(" ") + 1);
+                            int num_kill = atoi(str.c_str());
+                            int num_killed = 0;
+                            int i = 0;
+                            while(num_killed < num_kill && i < s_GameClass->s_GameInfo->s_FactoryMonsters->s_MaxIndex)
+                            {
+                                if(s_GameClass->s_GameInfo->s_FactoryMonsters->isExistsById(i))
+                                {
+                                    s_GameClass->s_GameInfo->s_FactoryMonsters->removeMonster(i);
+                                    num_killed++;
+                                }
+                                i++;
+                            }
+                            cout << "Killed " << str << " AI objects." << endl;
+                        }
                     }
                     if(str.find("add ") == 0)
                     {
@@ -124,6 +146,13 @@ void StateManager::s3(Event event)
                             str = str.substr(str.find(" ") + 1);
                             s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints += atoi(str.c_str());
                             cout << "Added " << str << " points." << endl;
+                        }
+                        else if(str.substr(str.find(" ") + 1).find("lives ") == 0)
+                        {
+                            str = str.substr(str.find(" ") + 1);
+                            str = str.substr(str.find(" ") + 1);
+                            s_GameClass->s_GameInfo->s_CurrentLives += atoi(str.c_str());
+                            cout << "Added " << str << " lives." << endl;
                         }
                     }
                     if(str.find("ghost ") == 0)

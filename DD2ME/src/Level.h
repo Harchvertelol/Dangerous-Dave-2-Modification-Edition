@@ -17,6 +17,8 @@ class Level
         std::map<std::string, std::map<int, int> > s_Fields;
         bool loadLevel(std::string);
         void draw(bool);
+        void drawBackgrounds(int);
+        void drawTilesField(int);
         std::string getNameTilesField(int);
         std::string getNamePhysicTilesField();
         std::string getNameObjectsTilesField();
