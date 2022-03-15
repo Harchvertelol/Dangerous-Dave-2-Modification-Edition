@@ -58,7 +58,10 @@ var customMapFormat = {
 		var file = new TextFile(fileName, TextFile.WriteOnly);
 		file.codec = "UTF-8";
 
+		var allProperties;
+
 		var tiles_number = 1;
+		var background_number = 1;
 
 		var width = map.width;
 		var height = map.height;
@@ -66,13 +69,14 @@ var customMapFormat = {
         for (var i = 0; i < map.layerCount; i++)
 		{
             var layer = map.layerAt(i);
-            var isPlayers = false, isCreatures = false, isBonuses = false, isBonusDoors = false, isTeleportDoors = false, isTiles = false, isParameters = false;
+            var isPlayers = false, isCreatures = false, isBonuses = false, isBonusDoors = false, isTeleportDoors = false, isTiles = false, isParameters = false, isBackground = false;
 			if(layer.isTileLayer && layer.name == "Players") isPlayers = true;
 			else if(layer.name == "Creatures") isCreatures = true;
 			else if(layer.isTileLayer && layer.name == "Bonuses") isBonuses = true;
 			else if(layer.isTileLayer && layer.name == "Bonus doors") isBonusDoors = true;
 			else if(layer.name == "Teleport doors") isTeleportDoors = true;
 			else if(layer.name == "Parameters") isParameters = true;
+			else if(layer.name.search("Background") == 0) isBackground = true;
 			else if(layer.isTileLayer) isTiles = true;
 
 			if(isPlayers)
@@ -94,7 +98,7 @@ var customMapFormat = {
 				file.write("\n");
 			}
 
-			if (isBonuses)
+			if(isBonuses)
 			{
 				file.write("[Bonuses]\n");
 				for (y = 0; y < height; y++)
@@ -108,7 +112,7 @@ var customMapFormat = {
 				file.write("\n");
 			}
 
-			if (isBonusDoors)
+			if(isBonusDoors)
 			{
 				file.write("[BonusDoors]\n");
 				for (y = 0; y < height; y++)
@@ -122,7 +126,7 @@ var customMapFormat = {
 				file.write("\n");
 			}
 
-			if (isTeleportDoors)
+			if(isTeleportDoors)
 			{
 				file.write("[Doors]\n");
 
@@ -169,7 +173,7 @@ var customMapFormat = {
 				file.write("\n");
 			}
 
-			if (isCreatures)
+			if(isCreatures)
 			{
 				file.write("[Monsters]\n");
 				let count = layer.objectCount;
@@ -216,8 +220,9 @@ var customMapFormat = {
 				file.write("\n");
 			}
 
-			if (isTiles)
+			if(isTiles)
 			{
+				background_number = 1;
 				file.write("[Field_Tiles" + tiles_number + "]\n");
 				tiles_number++;
 				for (y = 0; y < height; y++)
@@ -233,6 +238,15 @@ var customMapFormat = {
 				}
 				file.write("\n");
 			}
+
+			if(isBackground)
+			{
+				file.write("[Background" + tiles_number + "_" + background_number + "]\n");
+				background_number++;
+				allProperties = layer.resolvedProperties();
+				for(var key in allProperties) file.write(key + "=" + allProperties[key] + "\n");
+				file.write("\n");
+			}
         }
 
         var layer_params = getLayerByName(map, "Parameters");
@@ -246,7 +260,7 @@ var customMapFormat = {
 		file.write("type=" + layer_params.property("type") + "\n");
 		file.write("\n");
 
-		var allProperties = layer_params.resolvedProperties();
+		allProperties = layer_params.resolvedProperties();
 
 		delete allProperties["name"];
 		delete allProperties["background"];
@@ -646,32 +660,100 @@ var customMapFormat = {
 		delete levelData["ExitLevelDoors"];
 		delete levelData["Secrets"];
 
-		// ------------- TILES ------------------------
+		// ------------- TILES and BACKGROUNDS ------------------------
 
-		for(var key in levelData)
+		/*for(var key in levelData)
 		{
-			var tilesLayer = new TileLayer();
-			tilesLayer.width = width;
-			tilesLayer.height = height;
-			tilesLayer.name = "Tiles";
-			tilesLayer.visible = true;
-			var tilesLayerEdit = tilesLayer.edit();
-			//...
-			var layer_name = key.substr(6);
-			tilesLayer.name = layer_name;
-			for (var y = 0; y < height; y++)
+			if(key.search("Field_") == 0)
 			{
-				var str_level = levelData[key]["l" + (y + 1)];
-				var ids = str_level.split(" ");
-				for (var x = 0; x < width; x++)
+				var tilesLayer = new TileLayer();
+				tilesLayer.width = width;
+				tilesLayer.height = height;
+				tilesLayer.name = "Tiles";
+				tilesLayer.visible = true;
+				var tilesLayerEdit = tilesLayer.edit();
+				//...
+				var layer_name = key.substr(6);
+				tilesLayer.name = layer_name;
+				for (var y = 0; y < height; y++)
 				{
-					var tileID = parseInt(ids[x]);
-					if(tileID >= 0) tilesLayerEdit.setTile(x, y, tilesTileset.tile(tileID));
+					var str_level = levelData[key]["l" + (y + 1)];
+					var ids = str_level.split(" ");
+					for (var x = 0; x < width; x++)
+					{
+						var tileID = parseInt(ids[x]);
+						if(tileID >= 0) tilesLayerEdit.setTile(x, y, tilesTileset.tile(tileID));
+					}
 				}
+				//...
+				tilesLayerEdit.apply();
+				map.addLayer(tilesLayer);
 			}
-			//...
-			tilesLayerEdit.apply();
-			map.addLayer(tilesLayer);
+			else if(key.search("Background") == 0)
+			{
+				//...
+			}
+		}*/
+
+		var stop_tiles_read = false;
+
+		var numberBackgroundForTileField;
+		var varprefixKeyBackground = "";
+		var key_background = "";
+
+		var numberTilesField = 1;
+		var prefixKeyTilesField = "Field_Tiles";
+		var key = prefixKeyTilesField + numberTilesField;
+		while(!stop_tiles_read)
+		{
+			numberBackgroundForTileField = 1;
+			prefixKeyBackground = "Background" + numberTilesField + "_";
+			key_background = prefixKeyBackground + numberBackgroundForTileField;
+			while(levelData[key_background] != undefined)
+			{
+				var background_layer = new ObjectGroup();
+				background_layer.width = width;
+				background_layer.height = height;
+				background_layer.name = key_background;
+				background_layer.visible = true;
+
+				params = levelData[key_background];
+				background_layer.setProperty("image", "");
+				for(var tmp_key in params)
+					if(tmp_key.search("anim") != 0) background_layer.setProperty(tmp_key, params[tmp_key]);
+
+				map.addLayer(background_layer);
+
+				numberBackgroundForTileField++;
+				key_background = prefixKeyBackground + numberBackgroundForTileField;
+			}
+			if(levelData[key] === undefined) stop_tiles_read = true;
+			else
+			{
+				var tilesLayer = new TileLayer();
+				tilesLayer.width = width;
+				tilesLayer.height = height;
+				tilesLayer.visible = true;
+				var tilesLayerEdit = tilesLayer.edit();
+				//...
+				var layer_name = key.substr(6);
+				tilesLayer.name = layer_name;
+				for (var y = 0; y < height; y++)
+				{
+					var str_level = levelData[key]["l" + (y + 1)];
+					var ids = str_level.split(" ");
+					for (var x = 0; x < width; x++)
+					{
+						var tileID = parseInt(ids[x]);
+						if(tileID >= 0) tilesLayerEdit.setTile(x, y, tilesTileset.tile(tileID));
+					}
+				}
+				//...
+				tilesLayerEdit.apply();
+				map.addLayer(tilesLayer);
+				numberTilesField++;
+				key = prefixKeyTilesField + numberTilesField;
+			}
 		}
 
 		// -----------------------------
@@ -681,7 +763,6 @@ var customMapFormat = {
 		bonusDoorLayerEdit.apply();
 
 		map.addLayer(playersLayer);
-		map.addLayer(creaturesLayer);
 		map.addLayer(bonusLayer);
 		map.addLayer(bonusDoorLayer);
 		map.addLayer(teleportDoorsLayer);

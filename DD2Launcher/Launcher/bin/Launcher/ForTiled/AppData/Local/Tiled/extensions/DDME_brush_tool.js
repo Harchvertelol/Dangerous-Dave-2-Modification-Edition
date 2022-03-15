@@ -318,7 +318,7 @@ var tool = tiled.registerTool("BrushTool", {
 
 
 var tool = tiled.registerTool("DD Tiles Tool", {
-    name: "Tiles",
+	name: "Tiles",
 	icon: "tool_tiles.png",
 	statusInfo: "Tiles tool is active",
 
@@ -330,7 +330,7 @@ var tool = tiled.registerTool("DD Tiles Tool", {
 })
 
 var tool = tiled.registerTool("DD Players Tool", {
-    name: "Players",
+	name: "Players",
 	icon: "tool_players.png",
 	statusInfo: "Players tool is active",
 
@@ -341,7 +341,7 @@ var tool = tiled.registerTool("DD Players Tool", {
 })
 
 var tool = tiled.registerTool("DD Creatures Tool", {
-    name: "Creatures",
+	name: "Creatures",
 	icon: "tool_creatures.png",
 	statusInfo: "Creatures tool is active",
 
@@ -353,7 +353,7 @@ var tool = tiled.registerTool("DD Creatures Tool", {
 })
 
 var tool = tiled.registerTool("DD Bonuses Tool", {
-    name: "Bonuses",
+	name: "Bonuses",
 	icon: "tool_bonuses.png",
 	statusInfo: "Bonuses tool is active",
 
@@ -364,7 +364,7 @@ var tool = tiled.registerTool("DD Bonuses Tool", {
 })
 
 var tool = tiled.registerTool("DD Bonus doors Tool", {
-    name: "Bonus doors",
+	name: "Bonus doors",
 	icon: "tool_bonus_doors.png",
 	statusInfo: "Bonus doors tool is active",
 
@@ -375,7 +375,7 @@ var tool = tiled.registerTool("DD Bonus doors Tool", {
 })
 
 var tool = tiled.registerTool("DD Tile parameters Tool", {
-    name: "Tile parameters",
+	name: "Tile parameters",
 	icon: "tool_tile_parameters.png",
 	statusInfo: "Tile parameters tool is active",
 
@@ -383,5 +383,29 @@ var tool = tiled.registerTool("DD Tile parameters Tool", {
 	{
 		selectLayerAndTileset(this, "Tile params", "Parameters", 1);
 		tiled.trigger("CreateTileObjectTool");
+	},
+})
+
+var tool = tiled.registerTool("DD add background Tool", {
+	name: "Add background",
+	icon: "tool_add_background.png",
+	statusInfo: "Add background tool is active",
+
+	activated: function()
+	{
+		var map = this.map;
+		var background_layer = new ObjectGroup();
+		background_layer.width = map.width;
+		background_layer.height = map.height;
+		background_layer.name = "BackgroundUnk_Unk";
+		background_layer.visible = true;
+
+		background_layer.setProperty("image", "");
+		background_layer.setProperty("startShiftX", "0");
+		background_layer.setProperty("startShiftY", "0");
+		background_layer.setProperty("scrollSpeedX", "adaptive");
+		background_layer.setProperty("scrollSpeedY", "adaptive");
+
+		map.addLayer(background_layer);
 	},
 })

@@ -317,8 +317,10 @@ void Level::draw(bool before_objects_field)
 
     for(int i = startI; i < endI; i++)
     {
+        drawBackgrounds(i + 1);
         drawTilesField(i + 1);
     }
+    if(!before_objects_field) drawBackgrounds(endI + 1);
 }
 
 int Level::getNumberObjectsTilesField()
