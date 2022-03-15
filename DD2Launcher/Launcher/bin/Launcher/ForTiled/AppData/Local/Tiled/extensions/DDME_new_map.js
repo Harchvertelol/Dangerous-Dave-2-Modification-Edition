@@ -29,6 +29,7 @@
 				var bonusdoorsTileset    = tiled.open(tspath + "DDME_Bonusdoorset.json");
 				var teleportdoorsTileset = tiled.open(tspath + "DDME_Teleportdoorset.json");
 				var tileParametersTileset = tiled.open(tspath + "DDME_TileParamSet.json");
+				var backgroundObjectsTileset = tiled.open(tspath + "DDME_BackgroundsObjects.json");
 
 				var good_opened_checker = true;
 
@@ -95,8 +96,17 @@
 				}
 				else good_opened_checker = false;
 
+				if (backgroundObjectsTileset)
+				{
+					if (backgroundObjectsTileset.isTileset)
+					{
+						map.addTileset(backgroundObjectsTileset);
+					}
+				}
+				else good_opened_checker = false;
 
-				if (tilesTileset || playersTileset|| creaturesTileset || bonusesTileset || bonusdoorsTileset || teleportdoorsTileset || tileParametersTileset)
+
+				if (tilesTileset || playersTileset|| creaturesTileset || bonusesTileset || bonusdoorsTileset || teleportdoorsTileset || tileParametersTileset || backgroundObjectsTileset)
 				{
 					//tiled.log("onAssetChanged() RELOAD MAP");
 					tiled.reload(map);
@@ -286,7 +296,6 @@
 			map.addLayer(bonusDoorLayer);
 			map.addLayer(teleportDoorsLayer);
 			map.addLayer(doorsLinksLayer);
-			//map.addLayer(tileParamatersLayer);
 			map.addLayer(paramatersLayer);
 
 			asset.setProperty("IsNewMap", true);

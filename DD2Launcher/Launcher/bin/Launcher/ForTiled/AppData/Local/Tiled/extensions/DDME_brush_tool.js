@@ -257,6 +257,10 @@ var tool = tiled.registerTool("BrushTool", {
 		var sel_layer_name = getNameFirstSelectedLayer(map);
 
 		if(layerName.search("Tiles") == 0 && sel_layer_name != "" && sel_layer_name.search("Tiles") == 0) already_selected = true;
+		if(layerName.search("Background") == 0 && sel_layer_name != "" && sel_layer_name.search("Background") == 0) already_selected = true;
+
+		var type_layer = "Tiles";
+		if(layerName.search("Background") == 0) type_layer = "Background";
 
 		if (map)
 		{
@@ -265,9 +269,9 @@ var tool = tiled.registerTool("BrushTool", {
 				var layer = map.layerAt(layerIndex);
 				let tmplayerName = layer.name;
 				//tiled.log("selectTilesetByLayer() tmplayerName = " + tmplayerName + " layerName = " + layerName);
-				let isNeedLayer = (layerName == tmplayerName || (tmplayerName.search("Tiles") == 0 && layerName.search("Tiles") == 0) );
+				let isNeedLayer = (layerName == tmplayerName || (tmplayerName.search(type_layer) == 0 && layerName.search(type_layer) == 0) );
 				if(!already_selected && isNeedLayer) { layer.selected = isNeedLayer; already_selected = true; }
-				else if(layerName.search("Tiles") != 0 || sel_layer_name.search("Tiles") != 0) layer.selected = false;
+				else if(layerName.search(type_layer) != 0 || sel_layer_name.search(type_layer) != 0) layer.selected = false;
 				layer.locked = !isNeedLayer;
 			}
 
@@ -347,8 +351,8 @@ var tool = tiled.registerTool("DD Creatures Tool", {
 
 	activated: function()
 	{
-		tiled.trigger("CreateTileObjectTool");
 		selectLayerAndTileset(this, "Creatures");
+		tiled.trigger("CreateTileObjectTool");
 	},
 })
 
@@ -382,6 +386,18 @@ var tool = tiled.registerTool("DD Tile parameters Tool", {
 	activated: function()
 	{
 		selectLayerAndTileset(this, "Tile params", "Parameters", 1);
+		tiled.trigger("CreateTileObjectTool");
+	},
+})
+
+var tool = tiled.registerTool("DD Backgorunds objects Tool", {
+	name: "Backgrounds objects",
+	icon: "tool_backgrounds_objects.png",
+	statusInfo: "Backgorunds objects tool is active",
+
+	activated: function()
+	{
+		selectLayerAndTileset(this, "Backgrounds objects", "Background");
 		tiled.trigger("CreateTileObjectTool");
 	},
 })

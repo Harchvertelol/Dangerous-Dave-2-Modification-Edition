@@ -245,6 +245,18 @@ var customMapFormat = {
 				background_number++;
 				allProperties = layer.resolvedProperties();
 				for(var key in allProperties) file.write(key + "=" + allProperties[key] + "\n");
+				let count = layer.objectCount;
+				for (var index = 0; index < count; index++)
+				{
+						var obj = layer.objectAt(index);
+						if(obj.tile.id != 0)
+						{
+							let parameters = "";
+							var allProperties = obj.resolvedProperties();
+							for(var key in allProperties) if(key != "" && key != "Name" && key != "Type") parameters += key + "=" + allProperties[key] + ";";
+							file.write("anim" + (index + 1) + "=" + obj.tile.id + ";" + obj.x + ";" + (obj.y - tileSetTileHeight) + ";{" + parameters + "};\n");
+						}
+				}
 				file.write("\n");
 			}
         }
@@ -328,6 +340,7 @@ var customMapFormat = {
 		var bonusdoorsTileset    = tiled.open(tspath + "DDME_Bonusdoorset.json");
 		var teleportdoorsTileset = tiled.open(tspath + "DDME_Teleportdoorset.json");
 		var tileParametersTileset = tiled.open(tspath + "DDME_TileParamSet.json");
+		var backgroundObjectsTileset = tiled.open(tspath + "DDME_BackgroundsObjects.json");
 
 		var good_opened_checker = true;
 
@@ -389,6 +402,15 @@ var customMapFormat = {
 			if (tileParametersTileset.isTileset)
 			{
 				map.addTileset(tileParametersTileset);
+			}
+		}
+		else good_opened_checker = false;
+
+		if (backgroundObjectsTileset)
+		{
+			if (backgroundObjectsTileset.isTileset)
+			{
+				map.addTileset(backgroundObjectsTileset);
 			}
 		}
 		else good_opened_checker = false;
@@ -722,6 +744,40 @@ var customMapFormat = {
 				for(var tmp_key in params)
 					if(tmp_key.search("anim") != 0) background_layer.setProperty(tmp_key, params[tmp_key]);
 
+				setObjs = levelData[key_background];
+				for(var key_anim_background in setObjs)
+				{
+					if(key_anim_background.search("anim") == 0)
+					{
+						tiled.log(key_anim_background);
+						var tmp_info = setObjs[key_anim_background].split("{");
+						var info = tmp_info[0].substr(0, tmp_info[0].length - 1).split(";");
+						info.push("{" + tmp_info[1].substr(0, tmp_info[1].length - 2) + "}");
+						tileID = info[0];
+
+						var tmp_backgorund_object = new MapObject();
+						tile = backgroundObjectsTileset.tile(tileID);
+						var x = parseInt(info[1]);
+						var y = parseInt(info[2]);
+						tmp_backgorund_object.tile = tile;
+						tmp_backgorund_object.size = playersTileset.tileSize;
+						tmp_backgorund_object.pos = Qt.point(x, y + tileSetTileHeight);
+						info[3] = info[3].substr(1);
+						info[3] = info[3].substr(0, info[3].length - 1);
+						var params_array = info[3].split(";");
+						for(var i = 0; i < params_array.length; i++)
+						{
+							if(params_array[i] != "")
+							{
+								var par_name = params_array[i].substr(0, params_array[i].search("="));
+								var par_value = params_array[i].substr(params_array[i].search("=") + 1);
+								tmp_backgorund_object.setProperty(par_name, par_value);
+							}
+						}
+						background_layer.addObject(tmp_backgorund_object);
+					}
+				}
+
 				map.addLayer(background_layer);
 
 				numberBackgroundForTileField++;
@@ -763,11 +819,11 @@ var customMapFormat = {
 		bonusDoorLayerEdit.apply();
 
 		map.addLayer(playersLayer);
+		map.addLayer(creaturesLayer);
 		map.addLayer(bonusLayer);
 		map.addLayer(bonusDoorLayer);
 		map.addLayer(teleportDoorsLayer);
 		map.addLayer(doorsLinksLayer);
-		//map.addLayer(tileParamatersLayer);
 		map.addLayer(paramatersLayer);
 
 		updateLinks(doorsLinksLayer, teleportDoorsLayer);
