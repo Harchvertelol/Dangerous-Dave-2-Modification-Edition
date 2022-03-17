@@ -1,6 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 #include <map>
+#include <vector>
 #include <cstring>
 #include "IniParser/PostParsingStruct.h"
 
@@ -15,6 +16,7 @@ class Level
         IniParser::PostParsingStruct* s_Params;
         std::map<int, std::map<std::string, std::string> > s_TilesParams;
         std::map<std::string, std::map<int, int> > s_Fields;
+        std::vector<int> s_NumberBackgroundsOfFields;
         bool loadLevel(std::string);
         void draw(bool);
         void drawBackgrounds(int);
@@ -22,6 +24,7 @@ class Level
         std::string getNameTilesField(int);
         std::string getNamePhysicTilesField();
         std::string getNameObjectsTilesField();
+        std::string getNameBackground(int, int);
         int getNumberTilesFields();
         int getNumberPhysicTilesField();
         int getNumberObjectsTilesField();

@@ -421,6 +421,8 @@ var tool = tiled.registerTool("DD add background Tool", {
 		background_layer.setProperty("startShiftY", "0");
 		background_layer.setProperty("scrollSpeedX", "adaptive");
 		background_layer.setProperty("scrollSpeedY", "adaptive");
+		background_layer.setProperty("isLoopedX", "true");
+		background_layer.setProperty("isLoopedY", "true");
 
 		map.addLayer(background_layer);
 	},

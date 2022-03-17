@@ -20,6 +20,7 @@ namespace STRING_CONSTANTS
     const std::string SC_DEFAULT_TEXT_ON_FOUND_SECRET = "You found a secret!";
 
     const std::string PREFIX_NAME_FIELD_TILES = "Tiles";
+    const std::string PREFIX_NAME_BACKGROUND = "Background";
     const std::string NAME_FIELD_BONUSES = "FieldBonuses";
     const std::string NAME_FIELD_BONUSDOORS = "FieldBonusDoors";
     const std::string NAME_FIELD_DOORS = "FieldDoors";

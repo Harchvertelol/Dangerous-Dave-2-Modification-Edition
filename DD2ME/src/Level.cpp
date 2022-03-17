@@ -78,6 +78,8 @@ bool Level::loadLevel(string file_name)
 
     //new format read
     map<int, int>* field;
+    s_Fields.clear();
+    if(!s_Params) delete s_Params;
     ParserInfoFile prs;
     s_Params = prs.getParsedFromFile(file_name + ".lev");
     if(!s_Params)
@@ -111,10 +113,27 @@ bool Level::loadLevel(string file_name)
         }
         else ++tmpiter1;
     }
+
+    s_NumberBackgroundsOfFields.clear();
+    s_NumberBackgroundsOfFields.push_back(-1); //Чтобы нумерация началась с 1-цы, а не с 0
+    int numberTF = getNumberTilesFields();
+    bool stop_find_bckgr = false;
+    for(int i = 0; i <= numberTF; i++)
+    {
+        stop_find_bckgr = false;
+        int j = 1;
+        while(!stop_find_bckgr)
+        {
+            if(!s_Params->isExists(getNameBackground(i + 1, j))) stop_find_bckgr = true;
+            else j++;
+        }
+        s_NumberBackgroundsOfFields.push_back(j - 1);
+    }
+
     map<string, string> tmpMap_subbl;
     map<string, string>::iterator tmpiter1_, tmpiter2_;
 
-    s_Fields.erase(STRING_CONSTANTS::NAME_FIELD_BONUSES);
+    //s_Fields.erase(STRING_CONSTANTS::NAME_FIELD_BONUSES);
     tmpMap_subbl = s_Params->getMapVariables("Bonuses");
     for (tmpiter1_ = tmpMap_subbl.begin(), tmpiter2_ = tmpMap_subbl.end(); tmpiter1_ != tmpiter2_;)
     {
@@ -127,7 +146,7 @@ bool Level::loadLevel(string file_name)
     }
     s_Params->remove("Bonuses");
 
-    s_Fields.erase(STRING_CONSTANTS::NAME_FIELD_BONUSDOORS);
+    //s_Fields.erase(STRING_CONSTANTS::NAME_FIELD_BONUSDOORS);
     tmpMap_subbl = s_Params->getMapVariables("BonusDoors");
     for (tmpiter1_ = tmpMap_subbl.begin(), tmpiter2_ = tmpMap_subbl.end(); tmpiter1_ != tmpiter2_;)
     {
@@ -140,7 +159,7 @@ bool Level::loadLevel(string file_name)
     }
     s_Params->remove("BonusDoors");
 
-    s_Fields.erase(STRING_CONSTANTS::NAME_FIELD_DOORS);
+    //s_Fields.erase(STRING_CONSTANTS::NAME_FIELD_DOORS);
     tmpMap_subbl = s_Params->getMapVariables("Doors");
     for (tmpiter1_ = tmpMap_subbl.begin(), tmpiter2_ = tmpMap_subbl.end(); tmpiter1_ != tmpiter2_;)
     {
@@ -155,7 +174,7 @@ bool Level::loadLevel(string file_name)
     }
     s_Params->remove("Doors");
 
-    s_Fields.erase(STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS);
+    //s_Fields.erase(STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS);
     tmpMap_subbl = s_Params->getMapVariables("ExitLevelDoors");
     for (tmpiter1_ = tmpMap_subbl.begin(), tmpiter2_ = tmpMap_subbl.end(); tmpiter1_ != tmpiter2_;)
     {
@@ -232,6 +251,11 @@ bool Level::loadLevel(string file_name)
     return true;
 }
 
+string Level::getNameBackground(int number_tiles_field, int number_background)
+{
+    return STRING_CONSTANTS::PREFIX_NAME_BACKGROUND + WorkFunctions::ConvertFunctions::itos(number_tiles_field) + "_" + WorkFunctions::ConvertFunctions::itos(number_background);
+}
+
 string Level::getNamePhysicTilesField()
 {
     return STRING_CONSTANTS::PREFIX_NAME_FIELD_TILES + s_Params->getValue("options", "numberphysictilesfield");
@@ -271,7 +295,32 @@ bool Level::setTileParameter(int x_tile, int y_tile, string name, string value)
 
 void Level::drawBackgrounds(int number)
 {
-    //...
+    int number_of_bckgrs = s_NumberBackgroundsOfFields[number], shiftX, shiftY, scrollspeedX, scrollspeedY;
+    bool isloopedX, isloopedY;
+    string name_val_bg, scrollspeedXstr, scrollspeedYstr;
+    for(int i = 0; i < number_of_bckgrs; i++)
+    {
+        name_val_bg = getNameBackground(number, i + 1);
+        shiftX = atoi(s_Params->getValue(name_val_bg, "startShiftX").c_str());
+        shiftY = atoi(s_Params->getValue(name_val_bg, "startShiftY").c_str());
+        isloopedX = false;
+        if(s_Params->getValue(name_val_bg, "isLoopedX") == "true") isloopedX = true;
+        isloopedY = false;
+        if(s_Params->getValue(name_val_bg, "isLoopedY") == "true") isloopedY = true;
+        scrollspeedXstr = s_Params->getValue(name_val_bg, "scrollSpeedX");
+        if(scrollspeedXstr == "adaptive")
+        {
+            //...
+        }
+        else scrollspeedX = atoi(scrollspeedXstr.c_str());
+        scrollspeedYstr = s_Params->getValue(name_val_bg, "scrollSpeedY");
+        if(scrollspeedYstr == "adaptive")
+        {
+            //...
+        }
+        else scrollspeedY = atoi(scrollspeedYstr.c_str());
+        // DRAW
+    }
 }
 
 void Level::drawTilesField(int number)
