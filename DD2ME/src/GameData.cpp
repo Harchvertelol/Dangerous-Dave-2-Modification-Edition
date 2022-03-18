@@ -19,7 +19,7 @@ GameData::GameData(Game* gameclass):
     PathToSoundPack(""),
     PathToMusicPack(""),
     PathToLevelPack(""),
-    PathToDavePack(""),
+    PathToPlayerPack(""),
     PathToGuiPack(""),
     s_ModInfo(0),
     s_ModSettings(0),
@@ -30,7 +30,7 @@ GameData::GameData(Game* gameclass):
     s_Textures = new Textures(gameclass);
     s_Bonuses = new Bonuses(gameclass);
     s_Screens = new Screens(gameclass);
-    s_Dave = new Dave(gameclass);
+    s_Player = new Player(gameclass);
     s_Monsters = new Monsters(gameclass);
     s_Sounds = new Sounds(gameclass);
     s_Music = new Music(gameclass);
@@ -45,7 +45,7 @@ GameData::~GameData()
     if(s_ModInfo != 0) delete s_ModInfo;
     if(s_Bonuses != 0) delete s_Bonuses;
     if(s_Screens != 0) delete s_Screens;
-    if(s_Dave != 0) delete s_Dave;
+    if(s_Player != 0) delete s_Player;
     if(s_Monsters != 0) delete s_Monsters;
     if(s_Sounds != 0) delete s_Sounds;
     if(s_Music != 0) delete s_Music;
@@ -57,7 +57,7 @@ void GameData::deleteAllGDIObjects()
     s_Textures->deleteAllGDIObjects();
     s_Bonuses->deleteAllGDIObjects();
     s_Screens->deleteAllGDIObjects();
-    s_Dave->deleteAllGDIObjects();
+    s_Player->deleteAllGDIObjects();
     s_Monsters->deleteAllGDIObjects();
 }
 
@@ -141,7 +141,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     PathToSoundPack = "PacksData/SoundPacks/" + s_IniFile->getValue("resources", "soundpack") + "/";
     PathToMusicPack = "PacksData/MusicPacks/" + s_IniFile->getValue("resources", "musicpack") + "/";
     PathToLevelPack = "PacksData/LevelPacks/" + s_IniFile->getValue("resources", "levelpack") + "/";
-    PathToDavePack = "PacksData/DavePacks/" + s_IniFile->getValue("resources", "davepack") + "/";
+    PathToPlayerPack = "PacksData/PlayerPacks/" + s_IniFile->getValue("resources", "playerpack") + "/";
     PathToGuiPack = "PacksData/GuiPacks/" + s_IniFile->getValue("resources", "guipack") + "/";
     if( s_IniFile->getValue("resources", "standard") == "true" ) s_IniFile->getMapVariables()["resources"]["modpack"] = "StandardDave";
     if( s_IniFile->getValue("resources", "modpack") != "")
@@ -198,7 +198,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             PathToSoundPack = "ModPacks/" + s_NameMod + "/Sounds/";
             PathToMusicPack = "ModPacks/" + s_NameMod + "/Music/";
             PathToLevelPack = "ModPacks/" + s_NameMod + "/Levels/";
-            PathToDavePack = "ModPacks/" + s_NameMod + "/Dave/";
+            PathToPlayerPack = "ModPacks/" + s_NameMod + "/Player/";
             PathToGuiPack = "ModPacks/" + s_NameMod + "/Gui/";
         }
         else
@@ -210,7 +210,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             if(s_IniFile->getValue("resources", "soundpack") == "") PathToSoundPack = "ModPacks/" + s_NameMod + "/Sounds/";
             if(s_IniFile->getValue("resources", "musicpack") == "") PathToMusicPack = "ModPacks/" + s_NameMod + "/Music/";
             if(s_IniFile->getValue("resources", "levelpack") == "") PathToLevelPack = "ModPacks/" + s_NameMod + "/Levels/";
-            if(s_IniFile->getValue("resources", "davepack") == "") PathToDavePack = "ModPacks/" + s_NameMod + "/Dave/";
+            if(s_IniFile->getValue("resources", "playerpack") == "") PathToPlayerPack = "ModPacks/" + s_NameMod + "/Player/";
             if(s_IniFile->getValue("resources", "guipack") == "") PathToGuiPack = "ModPacks/" + s_NameMod + "/Gui/";
         }
     }
@@ -228,9 +228,9 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     cout << "Loading textures..." << endl;
     if( !s_Textures->load(PathToTexturePack) ) return false;
     cout << "Textures is loaded." << endl;
-    cout << "Loading dave..." << endl;
-    if( !s_Dave->load(PathToDavePack) ) return false;
-    cout << "Dave is loaded." << endl;
+    cout << "Loading player..." << endl;
+    if( !s_Player->load(PathToPlayerPack) ) return false;
+    cout << "Player is loaded." << endl;
     cout << "Loading monsters..." << endl;
     if( !s_Monsters->load(PathToMonsterPack) ) return false;
     cout << "Monsters is loaded." << endl;
@@ -284,7 +284,7 @@ bool GameData::drawScreenState2()
     }
     hlvl += atoi( s_Screens->s_ChangeLevelInfo->getValue("screen_" + WorkFunctions::ConvertFunctions::itos(scr + 1), "numberoflevels").c_str() );
     s_Screens->drawScreen("changelevelscreen", 0, 0, scr);
-    int drawingBonus = atoi( s_Screens->s_ChangeLevelInfo->getValue("info", "numberofbonusfordave").c_str() );
+    int drawingBonus = atoi( s_Screens->s_ChangeLevelInfo->getValue("info", "numberofbonusforplayer").c_str() );
     int coordX = atoi( s_Screens->s_ChangeLevelInfo->getValue("screen_" + WorkFunctions::ConvertFunctions::itos(scr + 1), "x" + WorkFunctions::ConvertFunctions::itos(hlvl)).c_str() );
     int coordY = atoi( s_Screens->s_ChangeLevelInfo->getValue("screen_" + WorkFunctions::ConvertFunctions::itos(scr + 1), "y" + WorkFunctions::ConvertFunctions::itos(hlvl)).c_str() );
     s_Bonuses->drawBonus(drawingBonus, coordX, coordY, false);

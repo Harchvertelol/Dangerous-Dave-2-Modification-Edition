@@ -144,7 +144,7 @@ void StateManager::s3(Event event)
                         {
                             str = str.substr(str.find(" ") + 1);
                             str = str.substr(str.find(" ") + 1);
-                            s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints += atoi(str.c_str());
+                            s_GameClass->s_GameInfo->s_MyPlayer->s_CurrentPoints += atoi(str.c_str());
                             cout << "Added " << str << " points." << endl;
                         }
                         else if(str.substr(str.find(" ") + 1).find("lives ") == 0)
@@ -205,35 +205,35 @@ void StateManager::s3I()
 {
     if(s_GameClass->s_NetClient->s_NetInfo->getValue("settings", "keysaction") == "false") return;
 
-    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeft))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeft = false;
-    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeft))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeft = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeft))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyLeft = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeft))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyLeft = true;
 
-    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRight))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRight = false;
-    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRight))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRight = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRight))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyRight = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRight))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyRight = true;
 
-    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyUp))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyUp = false;
-    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyUp))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyUp = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyUp))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyUp = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyUp))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyUp = true;
 
-    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyDown))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyDown = false;
-    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyDown))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyDown = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyDown))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyDown = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyDown))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyDown = true;
 
-    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyJump))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyJump = false;
-    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyJump))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyJump = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyJump))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyJump = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyJump))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyJump = true;
 
-    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyShoot))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyShoot = false;
-    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyShoot))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyShoot = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyShoot))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyShoot = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyShoot))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyShoot = true;
 
-    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeftDown))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftDown = false;
-    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeftDown))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftDown = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeftDown))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyLeftDown = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeftDown))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyLeftDown = true;
 
-    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeftUp))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftUp = false;
-    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeftUp))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyLeftUp = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeftUp))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyLeftUp = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeftUp))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyLeftUp = true;
 
-    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRightDown))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightDown = false;
-    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRightDown))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightDown = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRightDown))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyRightDown = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRightDown))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyRightDown = true;
 
-    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRightUp))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightUp = false;
-    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRightUp))) s_GameClass->s_GameInfo->s_MyDave->s_KeysState->s_KeyRightUp = true;
+    if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRightUp))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyRightUp = false;
+    if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyRightUp))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyRightUp = true;
 }
 
 bool StateManager::switchState(int state, bool callstartstate)

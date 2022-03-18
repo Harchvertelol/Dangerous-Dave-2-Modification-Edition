@@ -71,9 +71,9 @@ bool Level::loadLevel(string file_name)
         for(int j = 0; j < size_x; j++)
             if(s_Fields["FieldMonsters"][i*size_x + j] != 0)
                 s_GameClass->s_GameInfo->s_FactoryMonsters->addMonsterImmediately(s_Fields["FieldMonsters"][i*size_x + j], 16*j + atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Fields["FieldMonsters"][i*size_x + j] - 1]->getValue("other","outputshiftX").c_str() ), 16*i +  + atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Fields["FieldMonsters"][i*size_x + j] - 1]->getValue("other","outputshiftY").c_str() ));
-    CreatureDave* s_Dave = s_GameClass->s_GameInfo->s_MyDave;
-    s_Dave->s_CoordX = 16*atoi( s_Params->getValue("daves", "dave1X").c_str() );
-    s_Dave->s_CoordY = 16*atoi( s_Params->getValue("daves", "dave1Y").c_str() );
+    CreaturePlayer* s_Player = s_GameClass->s_GameInfo->s_MyPlayer;
+    s_Player->s_CoordX = 16*atoi( s_Params->getValue("daves", "dave1X").c_str() );
+    s_Player->s_CoordY = 16*atoi( s_Params->getValue("daves", "dave1Y").c_str() );
     return true;*/
 
     //new format read
@@ -242,12 +242,12 @@ bool Level::loadLevel(string file_name)
     }
     s_Params->remove("TilesParams");
 
-    CreatureDave* s_Dave = s_GameClass->s_GameInfo->s_MyDave;
-    string dave_coords = s_Params->getValue("Players", "player1");
+    CreaturePlayer* s_Player = s_GameClass->s_GameInfo->s_MyPlayer;
+    string player_coords = s_Params->getValue("Players", "player1");
     map<int, int> tmp_spl;
-    ParserFunctions::splitMass(&tmp_spl, 2, 0, dave_coords, ";");
-    s_Dave->s_CoordX = tmp_spl[0];
-    s_Dave->s_CoordY = tmp_spl[1];
+    ParserFunctions::splitMass(&tmp_spl, 2, 0, player_coords, ";");
+    s_Player->s_CoordX = tmp_spl[0];
+    s_Player->s_CoordY = tmp_spl[1];
     return true;
 }
 
@@ -295,18 +295,15 @@ bool Level::setTileParameter(int x_tile, int y_tile, string name, string value)
 
 void Level::drawBackgrounds(int number)
 {
-    int number_of_bckgrs = s_NumberBackgroundsOfFields[number], shiftX, shiftY, scrollspeedX, scrollspeedY;
-    bool isloopedX, isloopedY;
+    int number_of_bckgrs = s_NumberBackgroundsOfFields[number], shiftX = 0, shiftY = 0, scrollspeedX = 1, scrollspeedY = 1, countloopX = -1, countloopY = -1;
     string name_val_bg, scrollspeedXstr, scrollspeedYstr;
     for(int i = 0; i < number_of_bckgrs; i++)
     {
         name_val_bg = getNameBackground(number, i + 1);
         shiftX = atoi(s_Params->getValue(name_val_bg, "startShiftX").c_str());
         shiftY = atoi(s_Params->getValue(name_val_bg, "startShiftY").c_str());
-        isloopedX = false;
-        if(s_Params->getValue(name_val_bg, "isLoopedX") == "true") isloopedX = true;
-        isloopedY = false;
-        if(s_Params->getValue(name_val_bg, "isLoopedY") == "true") isloopedY = true;
+        countloopX = atoi(s_Params->getValue(name_val_bg, "countLoopX").c_str());
+        countloopY = atoi(s_Params->getValue(name_val_bg, "countLoopY").c_str());
         scrollspeedXstr = s_Params->getValue(name_val_bg, "scrollSpeedX");
         if(scrollspeedXstr == "adaptive")
         {

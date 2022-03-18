@@ -1,4 +1,21 @@
 Renderer.1 {
+    ArrowBackgroundColor = #F5F5F5;
+    ArrowBackgroundColorHover = white;
+    ArrowColor = #3C3C3C;
+    ArrowColorHover = black;
+    BackgroundColor = #F5F5F5;
+    BorderColor = black;
+    Borders = (1, 1, 1, 1);
+    Padding = (0, 0, 0, 0);
+    TextColor = #3C3C3C;
+    TextureArrow = None;
+    TextureArrowDisabled = None;
+    TextureArrowHover = None;
+    TextureBackground = None;
+    TextureBackgroundDisabled = None;
+}
+
+Renderer.2 {
     BackgroundColor = #F5F5F5;
     BackgroundColorDisabled = #E6E6E6;
     BackgroundColorHover = white;
@@ -20,24 +37,7 @@ Renderer.1 {
     TextureHover = None;
 }
 
-Renderer.2 {
-}
-
 Renderer.3 {
-    ArrowBackgroundColor = #F5F5F5;
-    ArrowBackgroundColorHover = white;
-    ArrowColor = #3C3C3C;
-    ArrowColorHover = black;
-    BackgroundColor = #F5F5F5;
-    BorderColor = black;
-    Borders = (1, 1, 1, 1);
-    Padding = (0, 0, 0, 0);
-    TextColor = #3C3C3C;
-    TextureArrow = None;
-    TextureArrowDisabled = None;
-    TextureArrowHover = None;
-    TextureBackground = None;
-    TextureBackgroundDisabled = None;
 }
 
 Renderer.4 {
@@ -190,7 +190,7 @@ ComboBox.Modpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 200);
-    Renderer = &3;
+    Renderer = &1;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -213,7 +213,7 @@ ComboBox.Levelpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 280);
-    Renderer = &3;
+    Renderer = &1;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -236,7 +236,7 @@ ComboBox.Texturepack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 320);
-    Renderer = &3;
+    Renderer = &1;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -259,7 +259,7 @@ ComboBox.Monsterpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 360);
-    Renderer = &3;
+    Renderer = &1;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -282,7 +282,7 @@ ComboBox.Bonuspack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 400);
-    Renderer = &3;
+    Renderer = &1;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -309,13 +309,13 @@ Label.SoundpackText {
     VerticalAlignment = Center;
 }
 
-Label.DavepackText {
+Label.PlayerpackText {
     AutoSize = true;
     Position = (20, 560);
     Renderer = &6;
     ScrollbarPolicy = Never;
-    Size = (72.2, 18);
-    Text = "Davepack:";
+    Size = (78.2, 18);
+    Text = "Playerpack:";
     TextSize = 13;
     VerticalAlignment = Center;
 }
@@ -327,7 +327,7 @@ ComboBox.Screenpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 440);
-    Renderer = &3;
+    Renderer = &1;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -339,19 +339,19 @@ ComboBox.Soundpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 480);
-    Renderer = &3;
+    Renderer = &1;
     Size = (160, 22);
     TextSize = 13;
 }
 
-ComboBox.Davepack {
+ComboBox.Playerpack {
     ChangeItemOnScroll = true;
     ExpandDirection = Down;
     Items = [""];
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 560);
-    Renderer = &3;
+    Renderer = &1;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -486,7 +486,7 @@ Button.Editor {
 Group.RadioButtonsDaveVersion {
     Enabled = false;
     Position = (220, 120);
-    Renderer = &2;
+    Renderer = &3;
     Size = (310, 60);
 
     RadioButton.DD1 {
@@ -526,7 +526,7 @@ Group.RadioButtonsDaveVersion {
 Group.CustomDifficlutyField {
     Enabled = false;
     Position = (20, 40);
-    Renderer = &2;
+    Renderer = &3;
     Size = (570, 90);
 
     Label.TextLivesDecreasePerDeath {
@@ -541,7 +541,7 @@ Group.CustomDifficlutyField {
 
     EditBox.LivesMinusPerDeath {
         Position = (170, 0);
-        Renderer = &1;
+        Renderer = &2;
         Size = (90, 22);
         Text = 1;
         TextSize = 13;
@@ -549,7 +549,7 @@ Group.CustomDifficlutyField {
 
     Group.RadioButtonsOnDeath {
         Position = (0, 30);
-        Renderer = &2;
+        Renderer = &3;
         Size = (570, 20);
 
         RadioButton.NoReloadLevel {
@@ -609,7 +609,7 @@ Group.CustomDifficlutyField {
 
     EditBox.HealthPoints {
         Position = (100, 60);
-        Renderer = &1;
+        Renderer = &2;
         Size = (90, 22);
         Text = 1;
         TextSize = 13;
@@ -634,7 +634,7 @@ ComboBox.Musicpack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 520);
-    Renderer = &3;
+    Renderer = &1;
     Size = (160, 22);
     TextSize = 13;
 }
@@ -657,7 +657,7 @@ ComboBox.Guipack {
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (120, 600);
-    Renderer = &3;
+    Renderer = &1;
     Size = (160, 22);
     TextSize = 13;
 }

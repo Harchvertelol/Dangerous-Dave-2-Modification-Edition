@@ -4,7 +4,7 @@
 #include "Textures.h"
 #include "Bonuses.h"
 #include "Screens.h"
-#include "Dave.h"
+#include "Player.h"
 #include "Monsters.h"
 #include "Sounds.h"
 #include "Music.h"
@@ -26,7 +26,7 @@ class GameData
         std::string PathToSoundPack;
         std::string PathToMusicPack;
         std::string PathToLevelPack;
-        std::string PathToDavePack;
+        std::string PathToPlayerPack;
         std::string PathToGuiPack;
         IniParser::PostParsingStruct* s_ModInfo;
         IniParser::PostParsingStruct* s_ModSettings;
@@ -35,7 +35,7 @@ class GameData
         Level* s_Level;
         Bonuses* s_Bonuses;
         Screens* s_Screens;
-        Dave* s_Dave;
+        Player* s_Player;
         Monsters* s_Monsters;
         Sounds* s_Sounds;
         Music* s_Music;

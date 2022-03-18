@@ -18,8 +18,8 @@ end
 
 function mainFunc()
 	local danger = getMonsterValue(-1, "danger")
-	if danger == "1" and testCollisionDave(-1) == 1 then
-		killDave(-1)
+	if danger == "1" and testCollisionPlayer(-1) == 1 then
+		killPlayer(-1)
 	end
 	nextAdditionalNumberOfAction(-1)
 	local activate = tonumber(getMonsterValue(-1, "activate"))
@@ -29,7 +29,7 @@ function mainFunc()
 		else
 			return
 		end
-		if testCollisionDave(-1) == 1 then
+		if testCollisionPlayer(-1) == 1 then
 			setMonsterValue(-1, "activate", "1")
 			setNullNumberOfAction(-1)
 			setNullAdditionalNumberOfAction(-1)
@@ -73,7 +73,7 @@ function mainFunc()
 		local dirH = tonumber(getMonsterValue(-1, "dirH"))
 		local speedX = tonumber(getMonsterValue(-1, "speedX"))
 		local maxspeed = 8
-		local cdy = getCoordDaveY()
+		local cdy = getCoordPlayerY()
 		local heightline = 0
 		local updlineY = cdy + 2 - heightline
 		local dpdlineY = cdy + 2 + heightline
@@ -110,7 +110,7 @@ function mainFunc()
 			goUp(-1, curspeedY, 0)
 		end
 
-		local cdx = getCoordDaveX()
+		local cdx = getCoordPlayerX()
 		local widthtline = 0
 		local lpdlineX = cdx + 2 - widthtline
 		local rpdlineX = cdx + 2 + widthtline

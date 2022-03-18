@@ -195,8 +195,8 @@ bool Game::changeLevel(int number, bool switchstate, bool playmusic)
     else s_GameInfo->s_CurrentDistanceActivateMonstersY = atoi( s_IniFile->getValue("settings", "distanceactivatemonstersY").c_str() );
 
     //...
-    map<int, CreatureDave*>::iterator iter;
-    for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)
+    map<int, CreaturePlayer*>::iterator iter;
+    for ( iter = s_GameInfo->s_Players.begin(); iter != s_GameInfo->s_Players.end(); iter++)
     {
         iter->second->s_State = "rightstand";
         iter->second->s_ShootNow = 0;
@@ -205,16 +205,16 @@ bool Game::changeLevel(int number, bool switchstate, bool playmusic)
         iter->second->s_ScreenCoordY = 0;
     }
     //...
-    s_GameInfo->s_MyDave->s_State = "rightstand";
+    s_GameInfo->s_MyPlayer->s_State = "rightstand";
     s_FactoryTmpImgs->clear();
-    s_GameInfo->s_MyDave->s_ShootNow = 0;
+    s_GameInfo->s_MyPlayer->s_ShootNow = 0;
     s_GameInfo->s_ForcedChangeLevel = false;
     s_GameInfo->s_Stop = false;
-    s_GameInfo->s_MyDave->s_Cartridges = s_GameInfo->s_MyDave->s_MaxCartridges;
-    s_GameInfo->s_MyDave->s_ScreenCoordX = 0;
-    s_GameInfo->s_MyDave->s_ScreenCoordY = 0;
-    if(s_GameInfo->s_MyDave->s_KeysState) delete s_GameInfo->s_MyDave->s_KeysState;
-    s_GameInfo->s_MyDave->s_KeysState = new KeysState;
+    s_GameInfo->s_MyPlayer->s_Cartridges = s_GameInfo->s_MyPlayer->s_MaxCartridges;
+    s_GameInfo->s_MyPlayer->s_ScreenCoordX = 0;
+    s_GameInfo->s_MyPlayer->s_ScreenCoordY = 0;
+    if(s_GameInfo->s_MyPlayer->s_KeysState) delete s_GameInfo->s_MyPlayer->s_KeysState;
+    s_GameInfo->s_MyPlayer->s_KeysState = new KeysState;
     s_Data->s_Music->stopAllMusic();
     if(switchstate == true) s_StateManager->switchState(2, false);
     if(playmusic)
@@ -231,14 +231,14 @@ void Game::startGame(int idgameclass)
     if(s_IniFile->getValue("video", "usetilecache") == "true") s_Data->s_Textures->createCache();
     if(s_IniFile->getValue("video", "usebonuscache") == "true") s_Data->s_Bonuses->createCache();
     if(s_IniFile->getValue("video", "usescreencache") == "true") s_Data->s_Screens->createCache();
-    if(s_IniFile->getValue("video", "usedavecache") == "true") s_Data->s_Dave->createCache();
+    if(s_IniFile->getValue("video", "useplayercache") == "true") s_Data->s_Player->createCache();
     if(s_IniFile->getValue("video", "usemonstercache") == "true") s_Data->s_Monsters->createCache();
     if(s_IniFile->getValue("video", "usetransparentmask") == "true")
     {
         if(s_Data->s_Textures->s_TilesInfo->getValue("draw", "transparentmaskR") != "-1" && s_Data->s_Textures->s_TilesInfo->getValue("draw", "transparentmaskG") != "-1" && s_Data->s_Textures->s_TilesInfo->getValue("draw", "transparentmaskB") != "-1") s_Data->s_Textures->createMaskTransparent(atoi(s_Data->s_Textures->s_TilesInfo->getValue("draw", "transparentmaskR").c_str()), atoi(s_Data->s_Textures->s_TilesInfo->getValue("draw", "transparentmaskG").c_str()), atoi(s_Data->s_Textures->s_TilesInfo->getValue("draw", "transparentmaskB").c_str()));
         if(s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("draw", "transparentmaskR") != "-1" && s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("draw", "transparentmaskG") != "-1" && s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("draw", "transparentmaskB") != "-1") s_Data->s_Bonuses->createMaskTransparent(atoi(s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("draw", "transparentmaskR").c_str()), atoi(s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("draw", "transparentmaskG").c_str()), atoi(s_Data->s_Bonuses->s_GlobBonusesInfo->getValue("draw", "transparentmaskB").c_str()));
         if(s_Data->s_Screens->s_ScreensInfo->getValue("draw", "transparentmaskR") != "-1" && s_Data->s_Screens->s_ScreensInfo->getValue("draw", "transparentmaskG") != "-1" && s_Data->s_Screens->s_ScreensInfo->getValue("draw", "transparentmaskB") != "-1") s_Data->s_Screens->createMaskTransparent(atoi(s_Data->s_Screens->s_ScreensInfo->getValue("draw", "transparentmaskR").c_str()), atoi(s_Data->s_Screens->s_ScreensInfo->getValue("draw", "transparentmaskG").c_str()), atoi(s_Data->s_Screens->s_ScreensInfo->getValue("draw", "transparentmaskB").c_str()));
-        if(s_Data->s_Dave->s_DaveInfo->getValue("draw", "transparentmaskR") != "-1" && s_Data->s_Dave->s_DaveInfo->getValue("draw", "transparentmaskG") != "-1" && s_Data->s_Dave->s_DaveInfo->getValue("draw", "transparentmaskB") != "-1") s_Data->s_Dave->createMaskTransparent(atoi(s_Data->s_Dave->s_DaveInfo->getValue("draw", "transparentmaskR").c_str()), atoi(s_Data->s_Dave->s_DaveInfo->getValue("draw", "transparentmaskG").c_str()), atoi(s_Data->s_Dave->s_DaveInfo->getValue("draw", "transparentmaskB").c_str()));
+        if(s_Data->s_Player->s_PlayerInfo->getValue("draw", "transparentmaskR") != "-1" && s_Data->s_Player->s_PlayerInfo->getValue("draw", "transparentmaskG") != "-1" && s_Data->s_Player->s_PlayerInfo->getValue("draw", "transparentmaskB") != "-1") s_Data->s_Player->createMaskTransparent(atoi(s_Data->s_Player->s_PlayerInfo->getValue("draw", "transparentmaskR").c_str()), atoi(s_Data->s_Player->s_PlayerInfo->getValue("draw", "transparentmaskG").c_str()), atoi(s_Data->s_Player->s_PlayerInfo->getValue("draw", "transparentmaskB").c_str()));
         if(s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "transparentmaskR") != "-1" && s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "transparentmaskG") != "-1" && s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "transparentmaskB") != "-1") s_Data->s_Monsters->createMaskTransparent(atoi(s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "transparentmaskR").c_str()), atoi(s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "transparentmaskG").c_str()), atoi(s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "transparentmaskB").c_str()));
     }
     s_StateManager->switchState(0);
@@ -387,17 +387,17 @@ void Game::onTimer(unsigned int timer_id)
         if(s_IniFile->getValue("video", "animation") == "true")
         {
             //...
-            map<int, CreatureDave*>::iterator iter;
-            for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)
+            map<int, CreaturePlayer*>::iterator iter;
+            for ( iter = s_GameInfo->s_Players.begin(); iter != s_GameInfo->s_Players.end(); iter++)
             {
                 iter->second->s_NumberOfAction++;
                 if(iter->second->s_State == "doorexit" || iter->second->s_State == "recharge") iter->second->s_NumberOfAction--;
                 if(iter->second->s_NumberOfAction > MAXIMAL_UNSIGNED_NUMBER) iter->second->s_NumberOfAction = 0;
             }
             //...
-            s_GameInfo->s_MyDave->s_NumberOfAction++;
-            if(s_GameInfo->s_MyDave->s_State == "doorexit" || s_GameInfo->s_MyDave->s_State == "recharge") s_GameInfo->s_MyDave->s_NumberOfAction--;
-            if(s_GameInfo->s_MyDave->s_NumberOfAction > MAXIMAL_UNSIGNED_NUMBER) s_GameInfo->s_MyDave->s_NumberOfAction = 0;
+            s_GameInfo->s_MyPlayer->s_NumberOfAction++;
+            if(s_GameInfo->s_MyPlayer->s_State == "doorexit" || s_GameInfo->s_MyPlayer->s_State == "recharge") s_GameInfo->s_MyPlayer->s_NumberOfAction--;
+            if(s_GameInfo->s_MyPlayer->s_NumberOfAction > MAXIMAL_UNSIGNED_NUMBER) s_GameInfo->s_MyPlayer->s_NumberOfAction = 0;
         }
     }
     if(timer_id == s_IdTimerTilesAnimationStep)
@@ -415,12 +415,12 @@ void Game::correctionAllScreens()
 {
     if(s_NetClient->s_NetInfo->getValue("program", "mode") == "client")
     {
-        s_GameInfo->correctionScreen(s_GameInfo->s_MyDave);
-        s_GameInfo->s_ScreenCoordX = s_GameInfo->s_MyDave->s_ScreenCoordX;
-        s_GameInfo->s_ScreenCoordY = s_GameInfo->s_MyDave->s_ScreenCoordY;
+        s_GameInfo->correctionScreen(s_GameInfo->s_MyPlayer);
+        s_GameInfo->s_ScreenCoordX = s_GameInfo->s_MyPlayer->s_ScreenCoordX;
+        s_GameInfo->s_ScreenCoordY = s_GameInfo->s_MyPlayer->s_ScreenCoordY;
     }
-    map<int, CreatureDave*>::iterator iter;
-    for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)
+    map<int, CreaturePlayer*>::iterator iter;
+    for ( iter = s_GameInfo->s_Players.begin(); iter != s_GameInfo->s_Players.end(); iter++)
     {
         s_GameInfo->correctionScreen(iter->second);
     }
@@ -444,12 +444,12 @@ void Game::drawAll()
         s_Data->s_Level->draw(true);
         s_FactoryTmpImgs->drawAll(false);
         s_GameInfo->s_FactoryMonsters->drawAll();
-        map<int, CreatureDave*>::iterator iter;
-        for ( iter = s_GameInfo->s_Daves.begin(); iter != s_GameInfo->s_Daves.end(); iter++)
+        map<int, CreaturePlayer*>::iterator iter;
+        for ( iter = s_GameInfo->s_Players.begin(); iter != s_GameInfo->s_Players.end(); iter++)
         {
             iter->second->draw();
         }
-        s_GameInfo->s_MyDave->draw();
+        s_GameInfo->s_MyPlayer->draw();
         s_Data->drawScreenState3();
         s_Data->s_Level->draw(false);
         s_FactoryTmpImgs->drawAll(true);
@@ -479,7 +479,7 @@ PostParsingStruct* Game::getObjects()
 {
     PostParsingStruct* cpps = new PostParsingStruct;
     unsigned int monsterid = 0;
-    unsigned int daveid = 0;
+    unsigned int playerid = 0;
     map<int, CreatureMonster*>::iterator iter;
     for( iter = s_GameInfo->s_FactoryMonsters->s_Monsters.begin(); iter != s_GameInfo->s_FactoryMonsters->s_Monsters.end(); iter++)
         if(iter->second->s_DeleteNow == false)
@@ -504,23 +504,23 @@ PostParsingStruct* Game::getObjects()
     {
         cpps->setValue("AIMonstersValues", iter1m->first, iter1m->second );
     }*/
-    map<int, CreatureDave*>::iterator iter1;
-    for( iter1 = s_GameInfo->s_Daves.begin(); iter1 != s_GameInfo->s_Daves.end(); iter1++)
+    map<int, CreaturePlayer*>::iterator iter1;
+    for( iter1 = s_GameInfo->s_Players.begin(); iter1 != s_GameInfo->s_Players.end(); iter1++)
     {
-        //daveid++;
-        daveid = iter1->first;
-        PostParsingStruct* gdpps = iter1->second->getListOfVariables("dave_" + WorkFunctions::ConvertFunctions::itos(daveid));
+        //playerid++;
+        playerid = iter1->first;
+        PostParsingStruct* gdpps = iter1->second->getListOfVariables("player_" + WorkFunctions::ConvertFunctions::itos(playerid));
         cpps->addPostParsingStruct(gdpps);
         delete gdpps;
 
-        cpps->setValue("dave_" + WorkFunctions::ConvertFunctions::itos(daveid), "id", WorkFunctions::ConvertFunctions::itos(daveid) );
+        cpps->setValue("player_" + WorkFunctions::ConvertFunctions::itos(playerid), "id", WorkFunctions::ConvertFunctions::itos(playerid) );
         //...
-        cpps->setValue("KeysState_dave_" + WorkFunctions::ConvertFunctions::itos(daveid), "keyLeft", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyLeft) );
-        cpps->setValue("KeysState_dave_" + WorkFunctions::ConvertFunctions::itos(daveid), "keyRight", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyRight) );
-        cpps->setValue("KeysState_dave_" + WorkFunctions::ConvertFunctions::itos(daveid), "keyUp", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyUp) );
-        cpps->setValue("KeysState_dave_" + WorkFunctions::ConvertFunctions::itos(daveid), "keyDown", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyDown) );
-        cpps->setValue("KeysState_dave_" + WorkFunctions::ConvertFunctions::itos(daveid), "keyShoot", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyShoot) );
-        cpps->setValue("KeysState_dave_" + WorkFunctions::ConvertFunctions::itos(daveid), "keyJump", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyJump) );
+        cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyLeft", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyLeft) );
+        cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyRight", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyRight) );
+        cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyUp", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyUp) );
+        cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyDown", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyDown) );
+        cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyShoot", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyShoot) );
+        cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyJump", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyJump) );
     }
     int size_x_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeX").c_str() );
     int size_y_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeY").c_str() );
@@ -552,19 +552,19 @@ PostParsingStruct* Game::getObjects()
 
 void Game::setObjects(PostParsingStruct* cpps)
 {
-    int keymonster = 0, davekey = 0;
+    int keymonster = 0, playerkey = 0;
     int coordX, coordY, currentLives, number, numberOfAction, dopNumberOfAction;
     string state;
     s_GameInfo->s_FactoryMonsters->clear();
-    map<int, CreatureDave*>::iterator iter_, iter2_;
-    for (iter_ = s_GameInfo->s_Daves.begin(), iter2_ = s_GameInfo->s_Daves.end(); iter_ != iter2_;)
+    map<int, CreaturePlayer*>::iterator iter_, iter2_;
+    for (iter_ = s_GameInfo->s_Players.begin(), iter2_ = s_GameInfo->s_Players.end(); iter_ != iter2_;)
     {
         if(iter_->second != 0)
         {
-            if(!cpps->isExists("dave_" + WorkFunctions::ConvertFunctions::itos(iter_->first)))
+            if(!cpps->isExists("player_" + WorkFunctions::ConvertFunctions::itos(iter_->first)))
             {
                 delete iter_->second;
-                s_GameInfo->s_Daves.erase(iter_++);
+                s_GameInfo->s_Players.erase(iter_++);
             }
             else ++iter_;
         }
@@ -611,20 +611,20 @@ void Game::setObjects(PostParsingStruct* cpps)
                 s_GameInfo->s_FactoryMonsters->s_AIMonstersValues[iter1->first] = iter1->second;
             }*/
         }
-        else if(iter->first.find("dave_") == 0)
+        else if(iter->first.find("player_") == 0)
         {
-            //davekey++;
-            string daveid = cpps->getValue(iter->first, "id");
-            davekey = atoi( daveid.c_str() );
-            if(!s_GameInfo->s_Daves[davekey]) s_GameInfo->s_Daves[davekey] = new CreatureDave(this);
-            s_GameInfo->s_Daves[davekey]->setListOfVariables(cpps, "dave_" + daveid);
+            //playerkey++;
+            string playerid = cpps->getValue(iter->first, "id");
+            playerkey = atoi( playerid.c_str() );
+            if(!s_GameInfo->s_Players[playerkey]) s_GameInfo->s_Players[playerkey] = new CreaturePlayer(this);
+            s_GameInfo->s_Players[playerkey]->setListOfVariables(cpps, "player_" + playerid);
             //...
-            s_GameInfo->s_Daves[davekey]->s_KeysState->s_KeyLeft = (bool)atoi( cpps->getValue("KeysState_dave_" + daveid, "keyLeft").c_str() );
-            s_GameInfo->s_Daves[davekey]->s_KeysState->s_KeyRight = (bool)atoi( cpps->getValue("KeysState_dave_" + daveid, "keyRight").c_str() );
-            s_GameInfo->s_Daves[davekey]->s_KeysState->s_KeyUp = (bool)atoi( cpps->getValue("KeysState_dave_" + daveid, "keyUp").c_str() );
-            s_GameInfo->s_Daves[davekey]->s_KeysState->s_KeyDown = (bool)atoi( cpps->getValue("KeysState_dave_" + daveid, "keyDown").c_str() );
-            s_GameInfo->s_Daves[davekey]->s_KeysState->s_KeyShoot = (bool)atoi( cpps->getValue("KeysState_dave_" + daveid, "keyShoot").c_str() );
-            s_GameInfo->s_Daves[davekey]->s_KeysState->s_KeyJump = (bool)atoi( cpps->getValue("KeysState_dave_" + daveid, "keyJump").c_str() );
+            s_GameInfo->s_Players[playerkey]->s_KeysState->s_KeyLeft = (bool)atoi( cpps->getValue("KeysState_player_" + playerid, "keyLeft").c_str() );
+            s_GameInfo->s_Players[playerkey]->s_KeysState->s_KeyRight = (bool)atoi( cpps->getValue("KeysState_player_" + playerid, "keyRight").c_str() );
+            s_GameInfo->s_Players[playerkey]->s_KeysState->s_KeyUp = (bool)atoi( cpps->getValue("KeysState_player_" + playerid, "keyUp").c_str() );
+            s_GameInfo->s_Players[playerkey]->s_KeysState->s_KeyDown = (bool)atoi( cpps->getValue("KeysState_player_" + playerid, "keyDown").c_str() );
+            s_GameInfo->s_Players[playerkey]->s_KeysState->s_KeyShoot = (bool)atoi( cpps->getValue("KeysState_player_" + playerid, "keyShoot").c_str() );
+            s_GameInfo->s_Players[playerkey]->s_KeysState->s_KeyJump = (bool)atoi( cpps->getValue("KeysState_player_" + playerid, "keyJump").c_str() );
         }
         else if(iter->first.find("bonuse_") == 0)
         {
@@ -652,39 +652,39 @@ void Game::setObjects(PostParsingStruct* cpps)
         }
 }
 
-bool Game::insertDave(int id, int numberOfSpawn, string nickname)
+bool Game::insertPlayer(int id, int numberOfSpawn, string nickname)
 {
-    if(s_GameInfo->s_Daves[id] != 0)
+    if(s_GameInfo->s_Players[id] != 0)
     {
-        cout<<"Error inserting Dave: this ID already used."<<endl;
+        cout<<"Error inserting player: this ID already used."<<endl;
         return false;
     }
-    s_GameInfo->s_Daves[id] = new CreatureDave(this);
-    CreatureDave* s_Dave = s_GameInfo->s_Daves[id];
-    string str = s_Data->s_Level->s_Params->getValue("daves", "numberofdaves");
+    s_GameInfo->s_Players[id] = new CreaturePlayer(this);
+    CreaturePlayer* s_Player = s_GameInfo->s_Players[id];
+    string str = s_Data->s_Level->s_Params->getValue("Players", "numberofplayers");
     if(numberOfSpawn > atoi(str.c_str()))
     {
         cout<<"Error: this level haven't point of spawn with this number."<<endl;
         return false;
     }
-    str = s_Data->s_Level->s_Params->getValue("daves", "dave" + WorkFunctions::ConvertFunctions::itos(numberOfSpawn) + "X");
+    str = s_Data->s_Level->s_Params->getValue("Players", "player" + WorkFunctions::ConvertFunctions::itos(numberOfSpawn) + "X");
     if(str == "") str = "0";
-    s_Dave->s_CoordX = 16*atoi( str.c_str() );
-    str = s_Data->s_Level->s_Params->getValue("daves", "dave" + WorkFunctions::ConvertFunctions::itos(numberOfSpawn) + "Y");
+    s_Player->s_CoordX = 16*atoi( str.c_str() );
+    str = s_Data->s_Level->s_Params->getValue("Players", "player" + WorkFunctions::ConvertFunctions::itos(numberOfSpawn) + "Y");
     if(str == "") str = "0";
-    s_Dave->s_CoordY = 16*atoi( str.c_str() );
-    s_Dave->s_NickName = nickname;
+    s_Player->s_CoordY = 16*atoi( str.c_str() );
+    s_Player->s_NickName = nickname;
     return true;
 }
 
-bool Game::removeDave(int id)
+bool Game::removePlayer(int id)
 {
-    if(s_GameInfo->s_Daves[id] == 0)
+    if(s_GameInfo->s_Players[id] == 0)
     {
-        cout<<"Error removing Dave: this ID is empty."<<endl;
+        cout<<"Error removing player: this ID is empty."<<endl;
         return false;
     }
-    delete s_GameInfo->s_Daves[id];
-    s_GameInfo->s_Daves.erase(id);
+    delete s_GameInfo->s_Players[id];
+    s_GameInfo->s_Players.erase(id);
     return true;
 }

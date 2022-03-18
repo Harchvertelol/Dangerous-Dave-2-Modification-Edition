@@ -1,5 +1,5 @@
-#ifndef CREATURE_H
-#define CREATURE_H
+#ifndef CREATUREPLAYER_H
+#define CREATUREPLAYER_H
 #include <iostream>
 #include "IniParser/PostParsingStruct.h"
 
@@ -9,11 +9,11 @@ class Game;
 
 class KeysState;
 
-class CreatureDave
+class CreaturePlayer
 {
     public:
-        CreatureDave(Game*);
-        ~CreatureDave();
+        CreaturePlayer(Game*);
+        ~CreaturePlayer();
         Game* s_GameClass;
         int s_CurrentPoints;
         int s_CurrentHealth;
@@ -62,7 +62,7 @@ class CreatureDave
         Square getCollision();
         IniParser::PostParsingStruct* getKeys(std::string, IniParser::PostParsingStruct* cpps = 0);
         void setKeys(IniParser::PostParsingStruct*, std::string);
-        void mergeDave(CreatureDave*);
+        void mergePlayer(CreaturePlayer*);
         IniParser::PostParsingStruct* getListOfVariables(std::string, IniParser::PostParsingStruct* dpps = 0);
         void setListOfVariables(IniParser::PostParsingStruct*, std::string);
 };

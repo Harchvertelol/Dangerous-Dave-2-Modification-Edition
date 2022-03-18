@@ -29,53 +29,53 @@ function mainFunc()
 			return
 		end
 	end
-	if getMonsterFrame(-1) == 2 and string.find(getState(-1), "strike") ~= nil and testCollisionDave(-1) == 1 then
-		killDave(-1)
+	if getMonsterFrame(-1) == 2 and string.find(getState(-1), "strike") ~= nil and testCollisionPlayer(-1) == 1 then
+		killPlayer(-1)
 	end
 	local oldstate = getState(-1)
 	local change = 1
-	if getMonsterValue(-1, "counterDaveReaction") == "" then
-		setMonsterValue(-1, "counterDaveReaction", "0")
+	if getMonsterValue(-1, "counterPlayerReaction") == "" then
+		setMonsterValue(-1, "counterPlayerReaction", "0")
 	end
 	if getMonsterValue(-1, "testdownrun") == "1" or getMonsterValue(-1, "testfirstdownrun") == "1" then
 		change = 0
 	end
-	if testLookDaveX(-1) ~= 0 and getState(-1) == "downrun" then
-		if getDistanceToDaveYHead(-1, 1) > 10 then
+	if testLookPlayerX(-1) ~= 0 and getState(-1) == "downrun" then
+		if getDistanceToPlayerYHead(-1, 1) > 10 then
 			change = 0
 		end
 	end
 	if string.find(getState(-1), "strike") ~= nil then
 		change = 0
 	end
-	local cdr = tonumber(getMonsterValue(-1, "counterDaveReaction"))
+	local cdr = tonumber(getMonsterValue(-1, "counterPlayerReaction"))
 	if cdr > 0 then
 		change = 0
-		setMonsterValue(-1, "counterDaveReaction", tostring(cdr - 1))
+		setMonsterValue(-1, "counterPlayerReaction", tostring(cdr - 1))
 	end
 	if change == 1 then
-		if testLookDaveX(-1) == 1 then
+		if testLookPlayerX(-1) == 1 then
 			setState(-1, "rightrun")
 		else
-			if testLookDaveX(-1) == -1 then
+			if testLookPlayerX(-1) == -1 then
 				setState(-1, "leftrun")
 			end
 		end
 	end
-	if testCollisionDave(-1) == 1 and getDistanceToDaveXHead(-1, 1) < 0 and getState(-1) ~= "downrun" then
+	if testCollisionPlayer(-1) == 1 and getDistanceToPlayerXHead(-1, 1) < 0 and getState(-1) ~= "downrun" then
 		if string.find(getState(-1), "strike") == nil then
 			setNullNumberOfAction(-1)
 		end
 		setState(-1, "leftstrike")
 	else
-		if testCollisionDave(-1) == 1 and getDistanceToDaveXHead(-1, 1) >= 0 and getState(-1) ~= "downrun" then
+		if testCollisionPlayer(-1) == 1 and getDistanceToPlayerXHead(-1, 1) >= 0 and getState(-1) ~= "downrun" then
 			if string.find(getState(-1), "strike") == nil then
 				setNullNumberOfAction(-1)
 			end
 			setState(-1, "rightstrike")
 		end
 	end
-	if getDistanceToDaveYHead(-1, 1) >= 16 and getDistanceToDave(-1) <= 16*6 and testTileTypeDown(-1, "LADDER", 0) == 1 and
+	if getDistanceToPlayerYHead(-1, 1) >= 16 and getDistanceToPlayer(-1) <= 16*6 and testTileTypeDown(-1, "LADDER", 0) == 1 and
 				(testTileTypeDown(-1, "LADDER", 0, 1) == 1 or testTileTypeDown(-1, "IMPASSABLE", 0, 1) == 1) then
         if getState(-1) ~= "downrun" then
             setMonsterValue(-1, "testdownrun", "0")
@@ -95,13 +95,13 @@ function mainFunc()
 			testgo = goLeft(-1, speed, 1, 1)
 		else
 			if getState(-1) == "downrun" then
-				if (getDistanceToDave(-1) <= 16*6 and getDistanceToDaveYHead(-1, 1) >= 16 and testTileTypeDown(-1, "IMPASSABLE", 1) == 0 ) or getMonsterValue(-1, "testdownrun") == "1" or getMonsterValue(-1, "testfirstdownrun") == "1" then
+				if (getDistanceToPlayer(-1) <= 16*6 and getDistanceToPlayerYHead(-1, 1) >= 16 and testTileTypeDown(-1, "IMPASSABLE", 1) == 0 ) or getMonsterValue(-1, "testdownrun") == "1" or getMonsterValue(-1, "testfirstdownrun") == "1" then
 					testgo = goDown(-1, 8, tonumber(getMonsterValue(-1, "testdownrun")))
 					setMonsterValue(-1, "testdownrun", tostring((tonumber(getMonsterValue(-1, "testdownrun")) + 1) % 2))
 					setMonsterValue(-1, "testfirstdownrun", "0")
 				else
 					if getMonsterValue(-1, "testdownrun") == "0" and getMonsterValue(-1, "testfirstdownrun") == "0" then
-						if testLookDaveX(-1) == -1 then
+						if testLookPlayerX(-1) == -1 then
 							setState(-1, "leftrun")
 						else
 							setState(-1, "rightrun")
@@ -114,14 +114,20 @@ function mainFunc()
 	if testgo ~= 0 then
 		if getState(-1) == "rightrun" then
 			setState(-1, "leftrun")
-			setMonsterValue(-1, "counterDaveReaction", tostring(2*math.random(1, 4)))
+			local start_rand = tonumber(getMonsterOption(-1, "options", "startRandomShiftPlayerReaction"))
+			local end_rand = tonumber(getMonsterOption(-1, "options", "endRandomShiftPlayerReaction"))
+			local mult = tonumber(getMonsterOption(-1, "options", "multipleRandomShiftPlayerReaction"))
+			setMonsterValue(-1, "counterPlayerReaction", tostring(mult*math.random(start_rand, end_rand)))
 		else
 			if getState(-1) == "leftrun" then
 				setState(-1, "rightrun")
-				setMonsterValue(-1, "counterDaveReaction", tostring(2*math.random(1,4)))
+				local start_rand = tonumber(getMonsterOption(-1, "options", "startRandomShiftPlayerReaction"))
+				local end_rand = tonumber(getMonsterOption(-1, "options", "endRandomShiftPlayerReaction"))
+				local mult = tonumber(getMonsterOption(-1, "options", "multipleRandomShiftPlayerReaction"))
+				setMonsterValue(-1, "counterPlayerReaction", tostring(mult*math.random(start_rand, end_rand)))
 			else
 				if getState(-1) == "downrun" then
-					if testLookDaveX(-1) == -1 then
+					if testLookPlayerX(-1) == -1 then
 						setState(-1, "leftrun")
 					else
 						setState(-1, "rightrun")
@@ -131,7 +137,7 @@ function mainFunc()
 		end
 	end
 	local newState = ""
-	if oldFrame == 2 and string.find(getState(-1), "strike") ~= nil and testCollisionDave(-1) == 0 then
+	if oldFrame == 2 and string.find(getState(-1), "strike") ~= nil and testCollisionPlayer(-1) == 0 then
 		newState = string.gsub(getState(-1), "strike", "run")
 		setState(-1, newState)
 	end

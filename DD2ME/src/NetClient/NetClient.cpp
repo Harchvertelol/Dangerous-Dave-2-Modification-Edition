@@ -185,9 +185,9 @@ void NetClient::getCreaturesList()
 
 void NetClient::sendInfoFromClient()
 {
-    //PostParsingStruct* pps = s_GameClass->s_GameInfo->s_MyDave->getKeys("Keys");
-    //s_GameClass->s_GameInfo->s_MyDave->getListOfVariables("dave", pps);
-    PostParsingStruct* pps = s_GameClass->s_GameInfo->s_MyDave->getListOfVariables("dave");
+    //PostParsingStruct* pps = s_GameClass->s_GameInfo->s_MyPlayer->getKeys("Keys");
+    //s_GameClass->s_GameInfo->s_MyPlayer->getListOfVariables("player", pps);
+    PostParsingStruct* pps = s_GameClass->s_GameInfo->s_MyPlayer->getListOfVariables("player");
     ParserInfoFile prs;
     string str_send = prs.convertPostParsingStructToString(pps, SPLITTER_STR_VARIABLE);
     str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);

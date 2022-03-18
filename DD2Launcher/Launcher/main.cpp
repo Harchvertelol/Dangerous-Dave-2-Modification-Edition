@@ -118,8 +118,8 @@ class Launcher
             tgui::ComboBox::Ptr musicpack = s_TGUI.get<tgui::ComboBox>("Musicpack");
             s_DD2Ini->setValue("resources", "musicpack", musicpack->getSelectedItem().toStdString() );
 
-            tgui::ComboBox::Ptr davepack = s_TGUI.get<tgui::ComboBox>("Davepack");
-            s_DD2Ini->setValue("resources", "davepack", (sf::String)davepack->getSelectedItem());
+            tgui::ComboBox::Ptr playerpack = s_TGUI.get<tgui::ComboBox>("Playerpack");
+            s_DD2Ini->setValue("resources", "playerpack", (sf::String)playerpack->getSelectedItem());
 
             tgui::ComboBox::Ptr guipack = s_TGUI.get<tgui::ComboBox>("Guipack");
             s_DD2Ini->setValue("resources", "guipack", guipack->getSelectedItem().toStdString() );
@@ -555,11 +555,11 @@ class Launcher
             if(s_DD2Ini->getValue("resources", "musicpack") != "") musicpack->setSelectedItem(s_DD2Ini->getValue("resources", "musicpack"));
             else musicpack->setSelectedItem("");
 
-            tgui::ComboBox::Ptr davepack = s_TGUI.get<tgui::ComboBox>("Davepack");
-            vector<string> davepacks = getDirs("PacksData/DavePacks", "dave.dat");
-            for(unsigned int i = 0; i < davepacks.size(); i++) davepack->addItem(davepacks[i]);
-            if(s_DD2Ini->getValue("resources", "davepack") != "") davepack->setSelectedItem(s_DD2Ini->getValue("resources", "davepack"));
-            else davepack->setSelectedItem("");
+            tgui::ComboBox::Ptr playerpack = s_TGUI.get<tgui::ComboBox>("Playerpack");
+            vector<string> playerpacks = getDirs("PacksData/PlayerPacks", "player.dat");
+            for(unsigned int i = 0; i < playerpacks.size(); i++) playerpack->addItem(playerpacks[i]);
+            if(s_DD2Ini->getValue("resources", "playerpack") != "") playerpack->setSelectedItem(s_DD2Ini->getValue("resources", "playerpack"));
+            else playerpack->setSelectedItem("");
 
             tgui::ComboBox::Ptr guipack = s_TGUI.get<tgui::ComboBox>("Guipack");
             vector<string> guipacks = getDirs("PacksData/GuiPacks", "gui.info");

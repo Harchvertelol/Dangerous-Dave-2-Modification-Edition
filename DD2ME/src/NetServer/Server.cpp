@@ -104,10 +104,10 @@ void Server::on_command(NetServerCallback* cl, const std::string& cmd)
     }
     if(pps->getValue("SystemInfo", "ID_MESSAGE") == FROM_CLIENT_IDS_MESSAGES::FCIM_InfoFromClient && cl->s_UserData->s_IdServerConnected != STRING_CONSTANTS::MISSING_ID_SERVER)
     {
-        //s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->s_GameInfo->s_Daves[cl->s_ID]->setKeys(pps, "Keys");
-        string davenickname = s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->s_GameInfo->s_Daves[cl->s_ID]->s_NickName;
-        s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->s_GameInfo->s_Daves[cl->s_ID]->setListOfVariables(pps, "dave");
-        s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->s_GameInfo->s_Daves[cl->s_ID]->s_NickName = davenickname;
+        //s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->s_GameInfo->s_Players[cl->s_ID]->setKeys(pps, "Keys");
+        string playernickname = s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->s_GameInfo->s_Players[cl->s_ID]->s_NickName;
+        s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->s_GameInfo->s_Players[cl->s_ID]->setListOfVariables(pps, "player");
+        s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->s_GameInfo->s_Players[cl->s_ID]->s_NickName = playernickname;
         string str_send = "";
         str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
         str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_ConfirmGettingInfoFromClient, SPLITTER_STR_VARIABLE);
@@ -154,7 +154,7 @@ void Server::doCommand(NetServerCallback* cl, string command, PostParsingStruct*
         {
             return;
         }
-        if(!s_MainServer->s_ListGameClass[id]->insertDave(cl->s_ID, 1, cl->s_UserData->s_UserInfo->getValue("login", "name")))
+        if(!s_MainServer->s_ListGameClass[id]->insertPlayer(cl->s_ID, 1, cl->s_UserData->s_UserInfo->getValue("login", "name")))
         {
             return;
         }
@@ -183,7 +183,7 @@ void Server::doCommand(NetServerCallback* cl, string command, PostParsingStruct*
     }
     else if(command == SERVER_COMMANDS_FROM_CLIENT::SCFC_leaveServer)
     {
-        if(cl->s_UserData->s_IdServerConnected != STRING_CONSTANTS::MISSING_ID_SERVER) s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->removeDave(cl->s_ID);
+        if(cl->s_UserData->s_IdServerConnected != STRING_CONSTANTS::MISSING_ID_SERVER) s_MainServer->s_ListGameClass[cl->s_UserData->s_IdServerConnected]->removePlayer(cl->s_ID);
         cl->s_UserData->s_IdServerConnected = STRING_CONSTANTS::MISSING_ID_SERVER;
         str_send = "";
         str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
@@ -195,7 +195,7 @@ void Server::doCommand(NetServerCallback* cl, string command, PostParsingStruct*
 
 void Server::close(NetServerCallback* c)
 {
-    if(c->s_UserData->s_IdServerConnected != STRING_CONSTANTS::MISSING_ID_SERVER) s_MainServer->s_ListGameClass[c->s_UserData->s_IdServerConnected]->removeDave(c->s_ID);
+    if(c->s_UserData->s_IdServerConnected != STRING_CONSTANTS::MISSING_ID_SERVER) s_MainServer->s_ListGameClass[c->s_UserData->s_IdServerConnected]->removePlayer(c->s_ID);
     c->s_UserData->s_IdServerConnected = STRING_CONSTANTS::MISSING_ID_SERVER;
     s_MainServer->s_Server->s_ClientsId[c->s_UserData->s_UserInfo->getValue("login", "name")] = 0;
 	s_Clients.erase(c->s_ID);

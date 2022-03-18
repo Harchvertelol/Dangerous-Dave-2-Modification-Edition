@@ -1,7 +1,7 @@
 #ifndef GAMEINFO_H
 #define GAMEINFO_H
 #include <map>
-#include "CreatureDave.h"
+#include "CreaturePlayer.h"
 #include "FactoryMonsters.h"
 #include <SFML/Graphics.hpp>
 
@@ -16,7 +16,7 @@ class GameInfo
         int s_CurrentLevel;
         int s_GameState;
         int s_CurrentLives;
-        std::map<int, CreatureDave*> s_Daves;
+        std::map<int, CreaturePlayer*> s_Players;
         FactoryMonsters* s_FactoryMonsters;
         int s_ScreenCoordX;
         int s_ScreenCoordY;
@@ -39,7 +39,7 @@ class GameInfo
         int s_KeyConsole;
         int s_KeyInfo;
         unsigned int s_OldAnSt;
-        CreatureDave* s_MyDave;
+        CreaturePlayer* s_MyPlayer;
         int s_CurrentDistanceLiveMonstersX;
         int s_CurrentDistanceLiveMonstersY;
         int s_CurrentDistanceActivateMonstersX;
@@ -50,10 +50,10 @@ class GameInfo
         bool s_IsGhostOn;
         bool s_IsInfoShow;
         void live();
-        bool deathDave(int);
+        bool deathPlayer(int);
         void doChangeLevelOnGameOver();
         void playDeath();
         void drawDeathFrame(std::map<int, sf::Texture* >*, std::map<int, sf::Sprite* >*, int);
-        void correctionScreen(CreatureDave*);
+        void correctionScreen(CreaturePlayer*);
 };
 #endif

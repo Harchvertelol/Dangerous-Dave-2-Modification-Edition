@@ -42,12 +42,10 @@
 		<Unit filename="AI.h" />
 		<Unit filename="Bonuses.cpp" />
 		<Unit filename="Bonuses.h" />
-		<Unit filename="CreatureDave.cpp" />
-		<Unit filename="CreatureDave.h" />
 		<Unit filename="CreatureMonster.cpp" />
 		<Unit filename="CreatureMonster.h" />
-		<Unit filename="Dave.cpp" />
-		<Unit filename="Dave.h" />
+		<Unit filename="CreaturePlayer.cpp" />
+		<Unit filename="CreaturePlayer.h" />
 		<Unit filename="Defines.h" />
 		<Unit filename="DisplayStruct.h" />
 		<Unit filename="FactoryMonsters.cpp" />
@@ -88,6 +86,8 @@
 		<Unit filename="NetServer/NetServerCallback.h" />
 		<Unit filename="NetServer/Server.cpp" />
 		<Unit filename="NetServer/Server.h" />
+		<Unit filename="Player.cpp" />
+		<Unit filename="Player.h" />
 		<Unit filename="Screens.cpp" />
 		<Unit filename="Screens.h" />
 		<Unit filename="Sounds.cpp" />

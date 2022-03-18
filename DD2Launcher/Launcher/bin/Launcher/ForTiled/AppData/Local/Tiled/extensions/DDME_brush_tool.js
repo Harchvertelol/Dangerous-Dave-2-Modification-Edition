@@ -329,6 +329,7 @@ var tool = tiled.registerTool("DD Tiles Tool", {
 	activated: function()
 	{
 		selectLayerAndTileset(this, "Tiles", "Tiles1");
+		tiled.trigger("StampTool");
 	},
 
 })
@@ -341,6 +342,7 @@ var tool = tiled.registerTool("DD Players Tool", {
 	activated: function()
 	{
 		selectLayerAndTileset(this, "Players");
+		tiled.trigger("StampTool");
 	},
 })
 
@@ -364,6 +366,7 @@ var tool = tiled.registerTool("DD Bonuses Tool", {
 	activated: function()
 	{
 		selectLayerAndTileset(this, "Bonuses");
+		tiled.trigger("StampTool");
 	},
 })
 
@@ -375,6 +378,7 @@ var tool = tiled.registerTool("DD Bonus doors Tool", {
 	activated: function()
 	{
 		selectLayerAndTileset(this, "Bonus doors");
+		tiled.trigger("StampTool");
 	},
 })
 
@@ -390,10 +394,10 @@ var tool = tiled.registerTool("DD Tile parameters Tool", {
 	},
 })
 
-var tool = tiled.registerTool("DD Backgorunds objects Tool", {
+var tool = tiled.registerTool("DD Backgrounds objects Tool", {
 	name: "Backgrounds objects",
 	icon: "tool_backgrounds_objects.png",
-	statusInfo: "Backgorunds objects tool is active",
+	statusInfo: "Backgrounds objects tool is active",
 
 	activated: function()
 	{
@@ -421,9 +425,11 @@ var tool = tiled.registerTool("DD add background Tool", {
 		background_layer.setProperty("startShiftY", "0");
 		background_layer.setProperty("scrollSpeedX", "adaptive");
 		background_layer.setProperty("scrollSpeedY", "adaptive");
-		background_layer.setProperty("isLoopedX", "true");
-		background_layer.setProperty("isLoopedY", "true");
+		background_layer.setProperty("countLoopX", "-1");
+		background_layer.setProperty("countLoopY", "-1");
 
 		map.addLayer(background_layer);
+
+		tiled.trigger("CreateTileObjectTool");
 	},
 })

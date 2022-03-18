@@ -22,4 +22,7 @@ speed2=6
 speed3=8
 speed4=5
 downlook=5
+startRandomShiftPlayerReaction=1
+endRandomShiftPlayerReaction=4
+multipleRandomShiftPlayerReaction=2
 type=standard

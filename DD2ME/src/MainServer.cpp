@@ -88,9 +88,9 @@ bool MainServer::load()
             string soundpack = s_ServerList->getValue(iter->first, "soundpack");
             string musicpack = s_ServerList->getValue(iter->first, "musicpack");
             string levelpack = s_ServerList->getValue(iter->first, "levelpack");
-            string davepack = s_ServerList->getValue(iter->first, "davepack");
+            string playerpack = s_ServerList->getValue(iter->first, "playerpack");
             bool changeAll = false;
-            if(modpack != "standard" || texturepack != "" || monsterpack != "" || bonuspack != "" || screenpack != "" || soundpack != "" || soundpack == "" || levelpack != "" || davepack != "")
+            if(modpack != "standard" || texturepack != "" || monsterpack != "" || bonuspack != "" || screenpack != "" || soundpack != "" || soundpack == "" || levelpack != "" || playerpack != "")
             {
                 if(gm->s_IniFile->getValue("resources", "pooling") == "false")
                 {
@@ -108,7 +108,7 @@ bool MainServer::load()
             if(changeAll || soundpack != "") gm->s_IniFile->setValue("resources", "soundpack", soundpack);
             if(changeAll || musicpack != "") gm->s_IniFile->setValue("resources", "musicpack", musicpack);
             if(changeAll || levelpack != "") gm->s_IniFile->setValue("resources", "levelpack", levelpack);
-            if(changeAll || davepack != "") gm->s_IniFile->setValue("resources", "davepack", davepack);
+            if(changeAll || playerpack != "") gm->s_IniFile->setValue("resources", "playerpack", playerpack);
             //...
             if(!gm->loadPack())
             {
@@ -121,8 +121,8 @@ bool MainServer::load()
             s_ListTimerId[gm->s_IdTimerDrawStep] = gm;
             gm->changeLevel( atoi(s_ServerList->getValue(iter->first, "level").c_str() ) );
             gm->s_StateManager->switchState(3);
-            gm->s_GameInfo->s_MyDave->s_CoordX = -1000;
-            gm->s_GameInfo->s_MyDave->s_CoordY = -1000;
+            gm->s_GameInfo->s_MyPlayer->s_CoordX = -1000;
+            gm->s_GameInfo->s_MyPlayer->s_CoordY = -1000;
             gm->s_GameInfo->s_ScreenCoordX = -1*atoi( gm->s_IniFile->getValue("video", "gameresolutionX").c_str() ) - atoi( gm->s_IniFile->getValue("settings", "distancelivemonstersX").c_str() ) - 1000;
             gm->s_GameInfo->s_ScreenCoordY = -1*atoi( gm->s_IniFile->getValue("video", "gameresolutionY").c_str() ) - atoi( gm->s_IniFile->getValue("settings", "distancelivemonstersY").c_str() ) - 1000;
         }

@@ -687,9 +687,9 @@ int LuaBindFunctions::testLookPlayerX(lua_State* s_Lua)
     int realColCoordYMonster = mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
     int SizeYMonsterPix = SizeYMonster;
     int CoordY1, CoordY2;
-    CoordY1 = s_GameClass->s_GameInfo->s_MyDave->s_CoordY;
-    CoordY2 = s_GameClass->s_GameInfo->s_MyDave->s_CoordY + 32 - 1;
-    int CoordX = s_GameClass->s_GameInfo->s_MyDave->s_CoordX;
+    CoordY1 = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY;
+    CoordY2 = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY + 32 - 1;
+    int CoordX = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX;
     if( ( (CoordY1 >= realColCoordYMonster && CoordY1 <= realColCoordYMonster + SizeYMonsterPix) ||
         (CoordY2 >= realColCoordYMonster && CoordY2 <= realColCoordYMonster + SizeYMonsterPix) ||
         (CoordY1 <= realColCoordYMonster && CoordY2 >= realColCoordYMonster + SizeYMonsterPix) ) )
@@ -723,9 +723,9 @@ int LuaBindFunctions::testLookPlayerY(lua_State* s_Lua)
     //int realColCoordYMonster = mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
     int SizeXMonsterPix = SizeXMonster;
     int CoordX1, CoordX2;
-    CoordX1 = s_GameClass->s_GameInfo->s_MyDave->s_CoordX;
-    CoordX2 = s_GameClass->s_GameInfo->s_MyDave->s_CoordX + 16 - 1;
-    int CoordY = s_GameClass->s_GameInfo->s_MyDave->s_CoordY;
+    CoordX1 = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX;
+    CoordX2 = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX + 16 - 1;
+    int CoordY = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY;
     if( ( (CoordX1 >= realColCoordXMonster && CoordX1 <= realColCoordXMonster + SizeXMonsterPix) ||
         (CoordX2 >= realColCoordXMonster && CoordX2 <= realColCoordXMonster + SizeXMonsterPix) ||
         (CoordX1 <= realColCoordXMonster && CoordX2 >= realColCoordXMonster + SizeXMonsterPix) ) )
@@ -799,15 +799,15 @@ int LuaBindFunctions::getDistanceToPlayerX(lua_State* s_Lua)
     y[2] = mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
     x[3] = mnst->s_CoordX + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR;
     y[3] = mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
-    frame = s_GameClass->s_GameInfo->s_MyDave->getFrame();
-    xd[0] = s_GameClass->s_GameInfo->s_MyDave->s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_XR;
-    yd[0] = s_GameClass->s_GameInfo->s_MyDave->s_CoordY + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_YR;
-    xd[1] = s_GameClass->s_GameInfo->s_MyDave->s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_XL;
-    yd[1] = s_GameClass->s_GameInfo->s_MyDave->s_CoordY + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_YR;
-    xd[2] = s_GameClass->s_GameInfo->s_MyDave->s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_XL;
-    yd[2] = s_GameClass->s_GameInfo->s_MyDave->s_CoordY + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_YL;
-    xd[3] = s_GameClass->s_GameInfo->s_MyDave->s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_XR;
-    yd[3] = s_GameClass->s_GameInfo->s_MyDave->s_CoordY + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_YL;
+    frame = s_GameClass->s_GameInfo->s_MyPlayer->getFrame();
+    xd[0] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_XR;
+    yd[0] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_YR;
+    xd[1] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_XL;
+    yd[1] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_YR;
+    xd[2] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_XL;
+    yd[2] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_YL;
+    xd[3] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_XR;
+    yd[3] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_YL;
     for(int i = 0; i < 4; i++)
         for(int j = 0; j < 4; j++)
             distances[i*4 + j] = xd[i] - x[j];
@@ -844,15 +844,15 @@ int LuaBindFunctions::getDistanceToPlayerY(lua_State* s_Lua)
     y[2] = mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
     x[3] = mnst->s_CoordX + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR;
     y[3] = mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
-    frame = s_GameClass->s_GameInfo->s_MyDave->getFrame();
-    xd[0] = s_GameClass->s_GameInfo->s_MyDave->s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_XR;
-    yd[0] = s_GameClass->s_GameInfo->s_MyDave->s_CoordY + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_YR;
-    xd[1] = s_GameClass->s_GameInfo->s_MyDave->s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_XL;
-    yd[1] = s_GameClass->s_GameInfo->s_MyDave->s_CoordY + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_YR;
-    xd[2] = s_GameClass->s_GameInfo->s_MyDave->s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_XL;
-    yd[2] = s_GameClass->s_GameInfo->s_MyDave->s_CoordY + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_YL;
-    xd[3] = s_GameClass->s_GameInfo->s_MyDave->s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_XR;
-    yd[3] = s_GameClass->s_GameInfo->s_MyDave->s_CoordY + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_YL;
+    frame = s_GameClass->s_GameInfo->s_MyPlayer->getFrame();
+    xd[0] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_XR;
+    yd[0] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_YR;
+    xd[1] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_XL;
+    yd[1] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_YR;
+    xd[2] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_XL;
+    yd[2] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_YL;
+    xd[3] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_XR;
+    yd[3] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_YL;
     for(int i = 0; i < 4; i++)
         for(int j = 0; j < 4; j++)
             distances[i*4 + j] = yd[i] - y[j];
@@ -887,15 +887,15 @@ int LuaBindFunctions::getDistanceToPlayer(lua_State* s_Lua)
     y[2] = mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
     x[3] = mnst->s_CoordX + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XR;
     y[3] = mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL;
-    frame = s_GameClass->s_GameInfo->s_MyDave->getFrame();
-    xd[0] = s_GameClass->s_GameInfo->s_MyDave->s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_XR;
-    yd[0] = s_GameClass->s_GameInfo->s_MyDave->s_CoordY + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_YR;
-    xd[1] = s_GameClass->s_GameInfo->s_MyDave->s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_XL;
-    yd[1] = s_GameClass->s_GameInfo->s_MyDave->s_CoordY + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_YR;
-    xd[2] = s_GameClass->s_GameInfo->s_MyDave->s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_XL;
-    yd[2] = s_GameClass->s_GameInfo->s_MyDave->s_CoordY + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_YL;
-    xd[3] = s_GameClass->s_GameInfo->s_MyDave->s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_XR;
-    yd[3] = s_GameClass->s_GameInfo->s_MyDave->s_CoordY + s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frame].s_YL;
+    frame = s_GameClass->s_GameInfo->s_MyPlayer->getFrame();
+    xd[0] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_XR;
+    yd[0] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_YR;
+    xd[1] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_XL;
+    yd[1] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_YR;
+    xd[2] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_XL;
+    yd[2] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_YL;
+    xd[3] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_XR;
+    yd[3] = s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY + s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][frame].s_YL;
     for(int i = 0; i < 4; i++)
         for(int j = 0; j < 4; j++)
             distances[i*4 + j] = sqrt( (x[i] - xd[j])*(x[i] - xd[j]) + (y[i] - yd[j])*(y[i] - yd[j]) );
@@ -1007,8 +1007,8 @@ int LuaBindFunctions::getDistanceToPlayerXHead(lua_State* s_Lua)
     bool sign = false;
     if(n == 2) sign = (bool)lua_tonumber(s_Lua, 2);
     int frame = mnst->getFrame();
-    int frameDave = s_GameClass->s_GameInfo->s_MyDave->getFrame();
-    int dist = (-1)*(mnst->s_CoordX + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL - s_GameClass->s_GameInfo->s_MyDave->s_CoordX - s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frameDave].s_XL);
+    int framePlayer = s_GameClass->s_GameInfo->s_MyPlayer->getFrame();
+    int dist = (-1)*(mnst->s_CoordX + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL - s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX - s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][framePlayer].s_XL);
     if(sign == false) dist = abs(dist);
     lua_pushnumber(s_Lua, dist);
     return 1;
@@ -1029,8 +1029,8 @@ int LuaBindFunctions::getDistanceToPlayerYHead(lua_State* s_Lua)
     bool sign = false;
     if(n == 2) sign = (bool)lua_tonumber(s_Lua, 2);
     int frame = mnst->getFrame();
-    int frameDave = s_GameClass->s_GameInfo->s_MyDave->getFrame();
-    int dist = (-1)*(mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL - s_GameClass->s_GameInfo->s_MyDave->s_CoordY - s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frameDave].s_YL);
+    int framePlayer = s_GameClass->s_GameInfo->s_MyPlayer->getFrame();
+    int dist = (-1)*(mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL - s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY - s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][framePlayer].s_YL);
     if(sign == false) dist = abs(dist);
     lua_pushnumber(s_Lua, dist);
     return 1;
@@ -1049,9 +1049,9 @@ int LuaBindFunctions::getDistanceToPlayerHead(lua_State* s_Lua)
     if(keyMonster == -1) mnst = s_CurrentMonster;
     else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
     int frame = mnst->getFrame();
-    int frameDave = s_GameClass->s_GameInfo->s_MyDave->getFrame();
-    int d1 = abs(mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL - s_GameClass->s_GameInfo->s_MyDave->s_CoordY - s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frameDave].s_YL);
-    int d2 = abs(mnst->s_CoordX + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL - s_GameClass->s_GameInfo->s_MyDave->s_CoordX - s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][frameDave].s_XL);
+    int framePlayer = s_GameClass->s_GameInfo->s_MyPlayer->getFrame();
+    int d1 = abs(mnst->s_CoordY + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_YL - s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY - s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][framePlayer].s_YL);
+    int d2 = abs(mnst->s_CoordX + s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number-1][mnst->s_State][frame].s_XL - s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX - s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][framePlayer].s_XL);
     lua_pushnumber(s_Lua, sqrt(d1*d1 + d2*d2));
     return 1;
 }
@@ -1074,7 +1074,7 @@ int LuaBindFunctions::testCollisionPlayer(lua_State* s_Lua)
     if(keyMonster == -1) mnst = s_CurrentMonster;
     else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
     bool isCollision = false;
-    if(WorkFunctions::GameFunctions::testCollision(mnst->s_CoordX, mnst->s_CoordY, s_GameClass->s_GameInfo->s_MyDave->s_CoordX, s_GameClass->s_GameInfo->s_MyDave->s_CoordY, s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number - 1][mnst->s_State][mnst->getFrame()], s_GameClass->s_Data->s_Dave->s_Collisions[s_GameClass->s_GameInfo->s_MyDave->s_State][s_GameClass->s_GameInfo->s_MyDave->getFrame()]) == true)
+    if(WorkFunctions::GameFunctions::testCollision(mnst->s_CoordX, mnst->s_CoordY, s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX, s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY, s_GameClass->s_Data->s_Monsters->s_Collisions[mnst->s_Number - 1][mnst->s_State][mnst->getFrame()], s_GameClass->s_Data->s_Player->s_Collisions[s_GameClass->s_GameInfo->s_MyPlayer->s_State][s_GameClass->s_GameInfo->s_MyPlayer->getFrame()]) == true)
         isCollision = true;
     lua_pushnumber(s_Lua, isCollision);
     return 1;
@@ -1097,7 +1097,7 @@ int LuaBindFunctions::killPlayer(lua_State* s_Lua)
     CreatureMonster* mnst;
     if(keyMonster == -1) mnst = s_CurrentMonster;
     else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
-    s_GameClass->s_GameInfo->deathDave(mnst->s_Number);
+    s_GameClass->s_GameInfo->deathPlayer(mnst->s_Number);
     return 0;
 }
 
@@ -1121,15 +1121,15 @@ int LuaBindFunctions::killMonster(lua_State* s_Lua)
     int type = lua_tonumber(s_Lua, 2);
     int points_add = 0;
     if(n > 2) points_add = lua_tonumber(s_Lua, 3);
-    int keyDave = -1;
-    if(n > 3) keyDave = lua_tonumber(s_Lua, 4);
+    int keyPlayer = -1;
+    if(n > 3) keyPlayer = lua_tonumber(s_Lua, 4);
     mnst->kill(type);
     if(points_add == 1)
     {
         string str_pnt = "0";
         if(s_GameClass->s_Data->s_Monsters->s_MonstersInfo[mnst->s_Number - 1]->isExists("other", "points")) str_pnt = s_GameClass->s_Data->s_Monsters->s_MonstersInfo[mnst->s_Number - 1]->getValue("other", "points");
-        CreatureDave* dv = s_GameClass->s_GameInfo->s_MyDave;
-        if(keyDave != -1) dv = s_GameClass->s_GameInfo->s_Daves[keyDave];
+        CreaturePlayer* dv = s_GameClass->s_GameInfo->s_MyPlayer;
+        if(keyPlayer != -1) dv = s_GameClass->s_GameInfo->s_Players[keyPlayer];
         int CrPoints = dv->s_CurrentPoints;
         dv->s_CurrentPoints += atoi(str_pnt.c_str());
         dv->addPointsEffect(str_pnt, mnst->s_CoordX, mnst->s_CoordY);
@@ -1301,7 +1301,7 @@ int LuaBindFunctions::setPlayerValue(lua_State* s_Lua)
     string block = lua_tostring(s_Lua, 2);
     string key = lua_tostring(s_Lua, 3);
     string value = lua_tostring(s_Lua, 4);
-    s_GameClass->s_GameInfo->s_MyDave->s_Values->setValue(block, key, value);
+    s_GameClass->s_GameInfo->s_MyPlayer->s_Values->setValue(block, key, value);
     return 0;
 }
 
@@ -1324,7 +1324,7 @@ int LuaBindFunctions::getPlayerValue(lua_State* s_Lua)
     else mnst = s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters[keyMonster];
     string block = lua_tostring(s_Lua, 2);
     string key = lua_tostring(s_Lua, 3);
-    string value = s_GameClass->s_GameInfo->s_MyDave->s_Values->getValue(block, key, false);
+    string value = s_GameClass->s_GameInfo->s_MyPlayer->s_Values->getValue(block, key, false);
     lua_pushstring(s_Lua, value.c_str());
     return 1;
 }
@@ -1597,7 +1597,7 @@ int LuaBindFunctions::getCoordPlayerX(lua_State* s_Lua)
         cout<<"Error! Number of arguments of function \"getCoordPlayerX\" is incorrect!"<<endl;
         return 0;
     }
-    lua_pushnumber(s_Lua, s_GameClass->s_GameInfo->s_MyDave->s_CoordX);
+    lua_pushnumber(s_Lua, s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX);
     return 1;
 }
 
@@ -1609,7 +1609,7 @@ int LuaBindFunctions::getCoordPlayerY(lua_State* s_Lua)
         cout<<"Error! Number of arguments of function \"getCoordPlayerY\" is incorrect!"<<endl;
         return 0;
     }
-    lua_pushnumber(s_Lua, s_GameClass->s_GameInfo->s_MyDave->s_CoordY);
+    lua_pushnumber(s_Lua, s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY);
     return 1;
 }
 
@@ -1621,7 +1621,7 @@ int LuaBindFunctions::getStatePlayer(lua_State* s_Lua)
         cout<<"Error! Number of arguments of function \"getCoordPlayerY\" is incorrect!"<<endl;
         return 0;
     }
-    lua_pushstring(s_Lua, s_GameClass->s_GameInfo->s_MyDave->s_State.c_str());
+    lua_pushstring(s_Lua, s_GameClass->s_GameInfo->s_MyPlayer->s_State.c_str());
     return 1;
 }
 

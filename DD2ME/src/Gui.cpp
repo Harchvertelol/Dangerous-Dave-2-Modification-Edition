@@ -100,7 +100,7 @@ void Gui::drawFPS()
 string Gui::getSecretsText()
 {
     string cur_col_secr_str = "";
-    if(s_GameClass->s_GameInfo->s_MyDave->s_Values->isExists("GS_secrets_visited", "level_" + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel))) cur_col_secr_str = s_GameClass->s_GameInfo->s_MyDave->s_Values->getValue("GS_secrets_visited", "level_" + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel));
+    if(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->isExists("GS_secrets_visited", "level_" + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel))) cur_col_secr_str = s_GameClass->s_GameInfo->s_MyPlayer->s_Values->getValue("GS_secrets_visited", "level_" + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel));
     int cur_col_secr = 0;
     if(cur_col_secr_str != "")
     {
@@ -130,14 +130,14 @@ void Gui::drawGuiState2(int screennumber)
     int livescoordX = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "livescoordX").c_str());
     int livescoordY = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "livescoordY").c_str());
     int livesmaxobject = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "livesmaxobject").c_str());
-    string livesnamedavestate = s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "livesnamedavestate");
-    int livesframedavestate = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "livesframedavestate").c_str());
+    string livesnameplayerstate = s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "livesnameplayerstate");
+    int livesframeplayerstate = atoi(s_GameClass->s_Data->s_Screens->s_ChangeLevelInfo->getValue(screenname, "livesframeplayerstate").c_str());
     string levelname = "";
     if(s_GameClass->s_Data->s_Level->s_Params->isExists("info", "name")) levelname = s_GameClass->s_Data->s_Level->s_Params->getValue("info", "name");
     /*if(levelname == "") s_GameClass->s_Window->draw(Label("Level " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel), levelnamecoordX, levelnamecoordY, levelnamesize), Pen(0, 0, 0));
     else s_GameClass->s_Window->draw(Label(levelname, levelnamecoordX, levelnamecoordY, levelnamesize), Pen(0, 0, 0));
     s_GameClass->s_Window->draw(Label("Secrets: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_Data->s_Level->s_Params->getMapVariables()["Secrets"].size()), secretscoordX, secretscoordY, secretssize), Pen(0, 0, 0));
-    s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints), scorecoordX, scorecoordY, scoresize), Pen(0, 0, 0));
+    s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyPlayer->s_CurrentPoints), scorecoordX, scorecoordY, scoresize), Pen(0, 0, 0));
     s_GameClass->s_Window->draw(Label(WorkFunctions::ConvertFunctions::itos(0), highscorecoordX, highscorecoordY, highscoresize), Pen(0, 0, 0));*/
     sf::Font main_fnt = s_GameClass->s_Data->s_GuiData->getSFMLFont("changelevelscreen");
     Text txt;
@@ -162,7 +162,7 @@ void Gui::drawGuiState2(int screennumber)
     else txt.setFillColor(tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
     s_GameClass->s_RenderTexture->draw(txt);
 
-    string score_text = WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints);
+    string score_text = WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyPlayer->s_CurrentPoints);
     txt.setFillColor(Color(0, 0, 0, 255));
     txt.setCharacterSize(scoresize);
     txt.setPosition(Vector2f(scorecoordX, scorecoordY));
@@ -183,15 +183,15 @@ void Gui::drawGuiState2(int screennumber)
 
     for(int i = 0; i < s_GameClass->s_GameInfo->s_CurrentLives - 1 && i < livesmaxobject; i++)
     {
-        s_GameClass->s_Data->s_Dave->drawDave(livesnamedavestate, livesframedavestate, livescoordX + i * 16, livescoordY);
+        s_GameClass->s_Data->s_Player->drawPlayer(livesnameplayerstate, livesframeplayerstate, livescoordX + i * 16, livescoordY);
     }
 }
 
 void Gui::drawGuiState3()
 {
     int shiftX = 0;
-    map<int, CreatureDave*>::iterator iter;
-    for ( iter = s_GameClass->s_GameInfo->s_Daves.begin(); iter != s_GameClass->s_GameInfo->s_Daves.end(); iter++)
+    map<int, CreaturePlayer*>::iterator iter;
+    for ( iter = s_GameClass->s_GameInfo->s_Players.begin(); iter != s_GameClass->s_GameInfo->s_Players.end(); iter++)
     {
         if(iter->second->s_NickName != "")
         {
@@ -230,17 +230,17 @@ void Gui::drawGuiState3()
         }
     }
     //...
-    if(s_GameClass->s_GameInfo->s_MyDave->s_NickName != "")
+    if(s_GameClass->s_GameInfo->s_MyPlayer->s_NickName != "")
     {
-        shiftX = 8-(s_GameClass->s_GameInfo->s_MyDave->s_NickName.size())*atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namelettersizeX").c_str() )/2;
-        /*s_GameClass->s_Window->draw(CnvRectangle(shiftX + s_GameClass->s_GameInfo->s_MyDave->s_CoordX - s_GameClass->s_GameInfo->s_ScreenCoordX +
+        shiftX = 8-(s_GameClass->s_GameInfo->s_MyPlayer->s_NickName.size())*atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namelettersizeX").c_str() )/2;
+        /*s_GameClass->s_Window->draw(CnvRectangle(shiftX + s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX - s_GameClass->s_GameInfo->s_ScreenCoordX +
                                                  atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namecoordX").c_str() ),
-                                                 s_GameClass->s_GameInfo->s_MyDave->s_CoordY - s_GameClass->s_GameInfo->s_ScreenCoordY +
+                                                 s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY - s_GameClass->s_GameInfo->s_ScreenCoordY +
                                                  atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namecoordY").c_str() ),
-                                                 shiftX + s_GameClass->s_GameInfo->s_MyDave->s_CoordX - s_GameClass->s_GameInfo->s_ScreenCoordX +
+                                                 shiftX + s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX - s_GameClass->s_GameInfo->s_ScreenCoordX +
                                                  atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namecoordX").c_str() ) +
-                                                 s_GameClass->s_GameInfo->s_MyDave->s_NickName.size()*2 + (s_GameClass->s_GameInfo->s_MyDave->s_NickName.size())*atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namelettersizeX").c_str() ),
-                                                 s_GameClass->s_GameInfo->s_MyDave->s_CoordY - s_GameClass->s_GameInfo->s_ScreenCoordY +
+                                                 s_GameClass->s_GameInfo->s_MyPlayer->s_NickName.size()*2 + (s_GameClass->s_GameInfo->s_MyPlayer->s_NickName.size())*atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namelettersizeX").c_str() ),
+                                                 s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY - s_GameClass->s_GameInfo->s_ScreenCoordY +
                                                  atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namecoordY").c_str() ) +
                                                  atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namelettersizeY").c_str() )),
                                                  Pen(PS_SOLID,
@@ -252,10 +252,10 @@ void Gui::drawGuiState3()
                                                  atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "backgroundcolorR").c_str() ),
                                                  atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "backgroundcolorG").c_str() ),
                                                  atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "backgroundcolorB").c_str() )));
-        s_GameClass->s_Window->draw(Label(s_GameClass->s_GameInfo->s_MyDave->s_NickName,
-                                             shiftX + s_GameClass->s_GameInfo->s_MyDave->s_CoordX - s_GameClass->s_GameInfo->s_ScreenCoordX +
+        s_GameClass->s_Window->draw(Label(s_GameClass->s_GameInfo->s_MyPlayer->s_NickName,
+                                             shiftX + s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX - s_GameClass->s_GameInfo->s_ScreenCoordX +
                                              atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namecoordX").c_str() ),
-                                             s_GameClass->s_GameInfo->s_MyDave->s_CoordY - s_GameClass->s_GameInfo->s_ScreenCoordY +
+                                             s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY - s_GameClass->s_GameInfo->s_ScreenCoordY +
                                                 atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namecoordY").c_str() ),
                                                 atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namelettersizeY").c_str() ),
                                                 atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "namelettersizeX").c_str() ),
@@ -265,7 +265,7 @@ void Gui::drawGuiState3()
                                                 atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "lettercolorcomponentG").c_str() ),
                                                 atoi( s_GameClass->s_NetClient->s_NetInfo->getValue("gui", "lettercolorcomponentB").c_str() )));*/
     }
-    s_GameClass->s_Data->s_Dave->drawBandolier(s_GameClass->s_GameInfo->s_MyDave->s_Cartridges, 8, 8);
+    s_GameClass->s_Data->s_Player->drawBandolier(s_GameClass->s_GameInfo->s_MyPlayer->s_Cartridges, 8, 8);
     drawFPS();
 }
 
@@ -379,7 +379,7 @@ void Gui::showInfo()
     infoWindow->add(label_text);
 
     label_text = tgui::Label::create();
-    label_text->setText("Points: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyDave->s_CurrentPoints));
+    label_text->setText("Points: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_MyPlayer->s_CurrentPoints));
     label_text->setTextSize(size_text_info);
     label_text->setSize(size_text_x.c_str(), size_text_y.c_str());
     label_text->setOrigin(0.5, 0.5);

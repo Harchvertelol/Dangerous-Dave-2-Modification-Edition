@@ -4,7 +4,7 @@ function setFirstState()
 	setMonsterValue(-1, "lhand", "0")
 	setMonsterValue(-1, "rhand", "0")
 	setMonsterValue(-1, "freeze", "0")
-	setGlobalValue(-1, getNV(), "")
+	setGlobalValue(-1, "standard_last_boss_service_values", getNV(), "")
 	setMonsterValue(-1, "firsthandscreate", "0")
 	return "rightrun"
 end
@@ -30,13 +30,13 @@ function onKill(type)
 		lux, luy, rdx, rdy = getMonsterCollision(-1)
 		addMonster(getMonsterOption(-1, "other", "numberscriptclumps"), getCoordMonsterX(-1), getCoordMonsterY(-1), "init", 0, 0, -2, string.format("clumps=%s;phys_box_LU_X=%d;phys_box_LU_Y=%d;phys_box_RD_X=%d;phys_box_RD_Y=%d;", getMonsterOption(-1, "other", "clumps"), lux, luy, rdx, rdy))
 	end
-	setGlobalValue(-1, "goodfriendfreedom", "1")
-	setGlobalValue(-1, getNV(), "1")
+	setGlobalValue(-1, "standard_last_boss_service_values", "goodfriendfreedom", "1")
+	setGlobalValue(-1, "standard_last_boss_service_values", getNV(), "1")
 end
 
 function calculateHand()
 	local nv = getMonsterValue(-1, "nv")
-	local testdeath = getGlobalValue(-1, nv)
+	local testdeath = getGlobalValue(-1, "standard_last_boss_service_values", nv)
 	if testdeath ~= "" then
 		killMonster(-1, 1)
 	end
@@ -55,13 +55,13 @@ function calculateHand()
 		end
 	end
 	local lstate = 0
-	if getDistanceToDaveXHead(-1, 1) > 0 then
+	if getDistanceToPlayerXHead(-1, 1) > 0 then
 		lstate = 1
 	else
 		lstate = -1
 	end
 	local distanceFromFloor = tonumber(getMonsterOption(-1, "options", "distanceFromFloorHands"))
-	if getDistanceToDaveYHead(-1, 1) > distanceFromFloor then
+	if getDistanceToPlayerYHead(-1, 1) > distanceFromFloor then
 		local speedDown = tonumber(getMonsterOption(-1, "options", "speedDownHands"))
 		goDown(-1, speedDown, 0)
 	else
@@ -154,8 +154,8 @@ function createHands()
 end
 
 function mainFunc()
-	if testCollisionDave(-1) == 1 then
-		killDave(-1)
+	if testCollisionPlayer(-1) == 1 then
+		killPlayer(-1)
 	end
 	local statem = getState(-1)
 	if statem == "hand" then

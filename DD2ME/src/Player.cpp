@@ -1,4 +1,4 @@
-#include "Dave.h"
+#include "Player.h"
 
 #include "Game.h"
 
@@ -14,21 +14,21 @@ using namespace std;
 
 using namespace sf;
 
-Dave::Dave(Game* gameclass):
+Player::Player(Game* gameclass):
     s_GameClass(gameclass),
-    s_DaveInfo(0),
+    s_PlayerInfo(0),
     s_CacheCreated(false)
 {
     //...
 }
 
-Dave::~Dave()
+Player::~Player()
 {
-    if(s_DaveInfo != 0) delete s_DaveInfo;
+    if(s_PlayerInfo != 0) delete s_PlayerInfo;
     deleteAllGDIObjects();
 }
 
-void Dave::deleteAllGDIObjects()
+void Player::deleteAllGDIObjects()
 {
     map<string, map<int, Texture* > >::iterator iter_, iter2_;
     for (iter_ = s_Bitmaps.begin(), iter2_ = s_Bitmaps.end(); iter_ != iter2_;)
@@ -54,44 +54,44 @@ void Dave::deleteAllGDIObjects()
     }
 }
 
-bool Dave::load(string PathToDavePack)
+bool Player::load(string PathToPlayerPack)
 {
     string state = "";
     int numberofframes = 0;
     ParserInfoFile prs;
-    s_DaveInfo = prs.getParsedFromFile(PathToDavePack + "dave.dat");
-    if(!s_DaveInfo) return false;
-    string tmp_ext = "." + s_DaveInfo->getValue("other", "extensions");
+    s_PlayerInfo = prs.getParsedFromFile(PathToPlayerPack + "player.dat");
+    if(!s_PlayerInfo) return false;
+    string tmp_ext = "." + s_PlayerInfo->getValue("other", "extensions");
     map<string, string>::iterator iter;
-    for ( iter = s_DaveInfo->getMapVariables()["info"].begin(); iter != s_DaveInfo->getMapVariables()["info"].end(); iter++ )
+    for ( iter = s_PlayerInfo->getMapVariables()["info"].begin(); iter != s_PlayerInfo->getMapVariables()["info"].end(); iter++ )
     {
         state = iter->first.substr(14);
         numberofframes = atoi( iter->second.c_str() );
         for(int i = 0; i < numberofframes; i++)
         {
-            //s_Bitmaps[state][i] = new Bitmap(PathToDavePack + state + "_" + itos(i+1) + ".bmp");
+            //s_Bitmaps[state][i] = new Bitmap(PathToPlayerPack + state + "_" + itos(i+1) + ".bmp");
             s_Bitmaps[state][i] = new Texture;
-            if(!s_Bitmaps[state][i] || !s_Bitmaps[state][i]->loadFromFile(PathToDavePack + state + "_" + itos(i+1) + tmp_ext)) return false;
+            if(!s_Bitmaps[state][i] || !s_Bitmaps[state][i]->loadFromFile(PathToPlayerPack + state + "_" + itos(i+1) + tmp_ext)) return false;
             collisionAnalyze(state,i);
         }
     }
     for(int i = 0; i < 9; i++)
     {
-        //s_Bitmaps["bandolier"][i] = new Bitmap(PathToDavePack + "bandolier_" + itos(i) + ".bmp");
+        //s_Bitmaps["bandolier"][i] = new Bitmap(PathToPlayerPack + "bandolier_" + itos(i) + ".bmp");
         s_Bitmaps["bandolier"][i] = new Texture;
-        if(!s_Bitmaps["bandolier"][i] || !s_Bitmaps["bandolier"][i]->loadFromFile(PathToDavePack + "bandolier_" + itos(i) + tmp_ext)) return false;
+        if(!s_Bitmaps["bandolier"][i] || !s_Bitmaps["bandolier"][i]->loadFromFile(PathToPlayerPack + "bandolier_" + itos(i) + tmp_ext)) return false;
     }
     return true;
 }
 
-bool Dave::createCache()
+bool Player::createCache()
 {
-    cout<<"Creating dave cache..."<<endl;
+    cout<<"Creating player cache..."<<endl;
 
     int numberofframes, xSize, ySize;
     string state;
     map<string, string>::iterator iter;
-    for ( iter = s_DaveInfo->getMapVariables()["info"].begin(); iter != s_DaveInfo->getMapVariables()["info"].end(); iter++ )
+    for ( iter = s_PlayerInfo->getMapVariables()["info"].begin(); iter != s_PlayerInfo->getMapVariables()["info"].end(); iter++ )
     {
         state = iter->first.substr(14);
         numberofframes = atoi( iter->second.c_str() );
@@ -111,11 +111,11 @@ bool Dave::createCache()
         s_CacheImages["bandolier"][i] = new Sprite( *s_Bitmaps["bandolier"][i], IntRect(0, 0, xSize, ySize));
     }
     s_CacheCreated = true;
-    cout<<"Dave cache created."<<endl;
+    cout<<"Player cache created."<<endl;
     return true;
 }
 
-void Dave::drawDave(string anim, int frame, int x, int y)
+void Player::drawPlayer(string anim, int frame, int x, int y)
 {
     if(s_CacheCreated == false)
     {
@@ -134,12 +134,12 @@ void Dave::drawDave(string anim, int frame, int x, int y)
     }
 }
 
-void Dave::drawBandolier(int frame, int x, int y)
+void Player::drawBandolier(int frame, int x, int y)
 {
-    drawDave("bandolier", frame, x, y);
+    drawPlayer("bandolier", frame, x, y);
 }
 
-void Dave::collisionAnalyze(string anim, int frame)
+void Player::collisionAnalyze(string anim, int frame)
 {
     bool first = true;
     int xSize = s_Bitmaps[anim][frame]->getSize().x / 2;
@@ -163,7 +163,7 @@ void Dave::collisionAnalyze(string anim, int frame)
         }
 }
 
-void Dave::createMaskTransparent(int r, int g, int b)
+void Player::createMaskTransparent(int r, int g, int b)
 {
     map<string, map<int, Texture* > >::iterator iter_, iter2_;
     for (iter_ = s_Bitmaps.begin(), iter2_ = s_Bitmaps.end(); iter_ != iter2_;)

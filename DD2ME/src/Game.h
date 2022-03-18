@@ -68,8 +68,8 @@ class Game
         IniParser::PostParsingStruct* getObjects();
         void setObjects(IniParser::PostParsingStruct*);
         void processAllEvents(int);
-        bool insertDave(int, int, std::string);
-        bool removeDave(int);
+        bool insertPlayer(int, int, std::string);
+        bool removePlayer(int);
         void deleteAllGDIObjects();
         bool createWindow();
 };

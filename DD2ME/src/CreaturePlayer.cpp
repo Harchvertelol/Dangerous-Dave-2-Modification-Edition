@@ -1,4 +1,4 @@
-#include "CreatureDave.h"
+#include "CreaturePlayer.h"
 
 #include "Game.h"
 
@@ -16,7 +16,7 @@ using namespace IniParser;
 
 using namespace std;
 
-CreatureDave::CreatureDave(Game* gameclass):
+CreaturePlayer::CreaturePlayer(Game* gameclass):
     s_GameClass(gameclass),
     s_CurrentPoints(0),
     s_CurrentHealth(1),
@@ -49,13 +49,13 @@ CreatureDave::CreatureDave(Game* gameclass):
     s_Values = new PostParsingStruct;
 }
 
-CreatureDave::~CreatureDave()
+CreaturePlayer::~CreaturePlayer()
 {
     if(s_KeysState != 0) delete s_KeysState;
     if(s_Values != 0) delete s_Values;
 }
 
-void CreatureDave::live(bool doKey)
+void CreaturePlayer::live(bool doKey)
 {
     string oldstate = s_State;
     if(doKey)
@@ -75,7 +75,7 @@ void CreatureDave::live(bool doKey)
         }
     }
     if(s_State.find("jump") != string::npos && s_ShootNow) s_ShootNow = 0;
-    string direction, typeexit, statedave;
+    string direction, typeexit, stateplayer;
     int dir = 0, timeshoot = atoi( s_GameClass->s_IniFile->getValue("settings", "timeshoot").c_str() );
     int numberofdoors, numberofhandletiles, TileDoor, x, y;
     int SizeXLev = atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() );
@@ -94,11 +94,11 @@ void CreatureDave::live(bool doKey)
             else
             {
                 testShoot();
-                statedave = "fireshoot" + s_State.substr(0, s_State.find("shoot"));
-                s_GameClass->s_FactoryTmpImgs->addImage(s_GameClass->s_Data->s_Dave->s_Bitmaps[statedave][getFrame(statedave)],
-                                                        s_GameClass->s_Data->s_Dave->s_CacheImages[statedave][getFrame(statedave)],
-                                                        s_CoordX + atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("shoot", "coordfire" + s_State.substr(0, s_State.find("shoot")) + "X").c_str() ),
-                                                        s_CoordY + atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("shoot", "coordfire" + s_State.substr(0, s_State.find("shoot")) + "Y").c_str() ),
+                stateplayer = "fireshoot" + s_State.substr(0, s_State.find("shoot"));
+                s_GameClass->s_FactoryTmpImgs->addImage(s_GameClass->s_Data->s_Player->s_Bitmaps[stateplayer][getFrame(stateplayer)],
+                                                        s_GameClass->s_Data->s_Player->s_CacheImages[stateplayer][getFrame(stateplayer)],
+                                                        s_CoordX + atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("shoot", "coordfire" + s_State.substr(0, s_State.find("shoot")) + "X").c_str() ),
+                                                        s_CoordY + atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("shoot", "coordfire" + s_State.substr(0, s_State.find("shoot")) + "Y").c_str() ),
                                                         4, 0, 0, "fire");
                 if(s_GameClass->s_GameInfo->s_CheatGod == false) s_Cartridges--;
                 s_CoordX -= dir*2;
@@ -108,11 +108,11 @@ void CreatureDave::live(bool doKey)
         }
         else if(s_ShootNow == timeshoot/3 )
         {
-            statedave = "smokeshoot" + s_State.substr(0, s_State.find("shoot"));
-                s_GameClass->s_FactoryTmpImgs->addImage(s_GameClass->s_Data->s_Dave->s_Bitmaps[statedave][getFrame(statedave)],
-                                                        s_GameClass->s_Data->s_Dave->s_CacheImages[statedave][getFrame(statedave)],
-                                                        dir*4 + s_CoordX + atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("shoot", "coordfire" + s_State.substr(0, s_State.find("shoot")) + "X").c_str() ),
-                                                        -2 + s_CoordY + atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("shoot", "coordfire" + s_State.substr(0, s_State.find("shoot")) + "Y").c_str() ),
+            stateplayer = "smokeshoot" + s_State.substr(0, s_State.find("shoot"));
+                s_GameClass->s_FactoryTmpImgs->addImage(s_GameClass->s_Data->s_Player->s_Bitmaps[stateplayer][getFrame(stateplayer)],
+                                                        s_GameClass->s_Data->s_Player->s_CacheImages[stateplayer][getFrame(stateplayer)],
+                                                        dir*4 + s_CoordX + atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("shoot", "coordfire" + s_State.substr(0, s_State.find("shoot")) + "X").c_str() ),
+                                                        -2 + s_CoordY + atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("shoot", "coordfire" + s_State.substr(0, s_State.find("shoot")) + "Y").c_str() ),
                                                         5, 0, -1, "fire");
             s_CoordX -= dir*2;
             correctionPhys(s_CoordX + dir*2, 0);
@@ -314,19 +314,19 @@ void CreatureDave::live(bool doKey)
                 if(s_Cartridges + 1 != s_MaxCartridges) s_GameClass->s_Data->s_Sounds->play("ammo", false, false, false);
                 s_NumberOfAction++;
                 s_OldNumberOfAction = s_NumberOfAction;
-                if(s_NumberOfAction % atoi(s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("other", "rechargeframe").c_str() ) == 0 ) s_Cartridges++;
+                if(s_NumberOfAction % atoi(s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("other", "rechargeframe").c_str() ) == 0 ) s_Cartridges++;
             }
         }
     }
     int frame = getFrame();
-    int CoordXColDave = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XL;
-    int CoordYColDave = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YL;
-    int SizeCollisDaveY = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YR - s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YL + 1;
-    int SizeCollisDaveX = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XR - s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XL + 1;
-    int TileCoordX = roundNumber(s_CoordX + CoordXColDave, 16, -1);
-    int TileCoordY = roundNumber(s_CoordY + CoordYColDave + SizeCollisDaveY, 16, 1);
-    int FirstCoordX = roundNumber(s_CoordX + CoordXColDave, 16, -1);
-    int SecondCoordX = roundNumber(s_CoordX + CoordXColDave + SizeCollisDaveX, 16, 1);
+    int CoordXColPlayer = s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_XL;
+    int CoordYColPlayer = s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_YL;
+    int SizeCollisPlayerY = s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_YR - s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_YL + 1;
+    int SizeCollisPlayerX = s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_XR - s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_XL + 1;
+    int TileCoordX = roundNumber(s_CoordX + CoordXColPlayer, 16, -1);
+    int TileCoordY = roundNumber(s_CoordY + CoordYColPlayer + SizeCollisPlayerY, 16, 1);
+    int FirstCoordX = roundNumber(s_CoordX + CoordXColPlayer, 16, -1);
+    int SecondCoordX = roundNumber(s_CoordX + CoordXColPlayer + SizeCollisPlayerX, 16, 1);
     int SizeTileTypes = (SecondCoordX - FirstCoordX)/16;
     int* TileTypes = new int[SizeTileTypes];
     bool* StandCollisions = new bool[SizeTileTypes];
@@ -334,7 +334,7 @@ void CreatureDave::live(bool doKey)
     for(int i = 0; i < SizeTileTypes; i++)
     {
         TileTypes[i] = s_GameClass->s_Data->s_Level->getTileType(TileCoordX/16 + i, TileCoordY/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
-        StandCollisions[i] = testCollision(s_CoordX, s_CoordY, TileCoordX + 16*i, TileCoordY, s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15), true);
+        StandCollisions[i] = testCollision(s_CoordX, s_CoordY, TileCoordX + 16*i, TileCoordY, s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15), true);
         if( (TileTypes[i] == IMPASSABLE || TileTypes[i] == LADDER) && StandCollisions[i] )
         {
             IsStopFallNow = true;
@@ -344,8 +344,8 @@ void CreatureDave::live(bool doKey)
 
     /*int TileType1 = s_GameClass->s_Data->s_Level->getTileType(TileCoordX/16, TileCoordY/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
     int TileType2 = s_GameClass->s_Data->s_Level->getTileType(TileCoordX/16 + 1, TileCoordY/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
-    bool StandCollision1 = testCollision(s_CoordX, s_CoordY, TileCoordX, TileCoordY, s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15), true);
-    bool StandCollision2 = testCollision(s_CoordX, s_CoordY, TileCoordX + 16, TileCoordY, s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15), true);
+    bool StandCollision1 = testCollision(s_CoordX, s_CoordY, TileCoordX, TileCoordY, s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15), true);
+    bool StandCollision2 = testCollision(s_CoordX, s_CoordY, TileCoordX + 16, TileCoordY, s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15), true);
     if( ( (TileType1 == IMPASSABLE || TileType1 == LADDER) && StandCollision1 ) || ( (TileType2 == IMPASSABLE || TileType2 == LADDER) && StandCollision2 ) )*/
     if(IsStopFallNow)
     {
@@ -359,14 +359,14 @@ void CreatureDave::live(bool doKey)
             delete[] TileTypes;
             delete[] StandCollisions;
             frame = getFrame();
-            CoordXColDave = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XL;
-            CoordYColDave = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YL;
-            SizeCollisDaveY = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YR - s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YL + 1;
-            SizeCollisDaveX = s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XR - s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XL + 1;
-            TileCoordX = roundNumber(s_CoordX + CoordXColDave, 16, -1);
-            TileCoordY = roundNumber(s_CoordY + CoordYColDave + SizeCollisDaveY, 16, 1);
-            FirstCoordX = roundNumber(s_CoordX + CoordXColDave, 16, -1);
-            SecondCoordX = roundNumber(s_CoordX + CoordXColDave + SizeCollisDaveX, 16, 1);
+            CoordXColPlayer = s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_XL;
+            CoordYColPlayer = s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_YL;
+            SizeCollisPlayerY = s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_YR - s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_YL + 1;
+            SizeCollisPlayerX = s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_XR - s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_XL + 1;
+            TileCoordX = roundNumber(s_CoordX + CoordXColPlayer, 16, -1);
+            TileCoordY = roundNumber(s_CoordY + CoordYColPlayer + SizeCollisPlayerY, 16, 1);
+            FirstCoordX = roundNumber(s_CoordX + CoordXColPlayer, 16, -1);
+            SecondCoordX = roundNumber(s_CoordX + CoordXColPlayer + SizeCollisPlayerX, 16, 1);
             SizeTileTypes = (SecondCoordX - FirstCoordX)/16;
             TileTypes = new int[SizeTileTypes];
             StandCollisions = new bool[SizeTileTypes];
@@ -374,15 +374,15 @@ void CreatureDave::live(bool doKey)
             for(int i = 0; i < SizeTileTypes; i++)
             {
                 TileTypes[i] = s_GameClass->s_Data->s_Level->getTileType(TileCoordX/16 + i, TileCoordY/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
-                StandCollisions[i] = testCollision(s_CoordX, s_CoordY, TileCoordX + 16*i, TileCoordY, s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15), true);
+                StandCollisions[i] = testCollision(s_CoordX, s_CoordY, TileCoordX + 16*i, TileCoordY, s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15), true);
                 if( (TileTypes[i] == IMPASSABLE || TileTypes[i] == LADDER) && StandCollisions[i] )
                 {
                     IsStepElse = false;
                     break;
                 }
             }
-            /*StandCollision1 = testCollision(s_CoordX, s_CoordY, TileCoordX, TileCoordY, s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15), true);
-            StandCollision2 = testCollision(s_CoordX, s_CoordY, TileCoordX + 16, TileCoordY, s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15), true);
+            /*StandCollision1 = testCollision(s_CoordX, s_CoordY, TileCoordX, TileCoordY, s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15), true);
+            StandCollision2 = testCollision(s_CoordX, s_CoordY, TileCoordX + 16, TileCoordY, s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15), true);
             if( !( ( (TileType1 == IMPASSABLE || TileType1 == LADDER) && StandCollision1 ) || ( (TileType2 == IMPASSABLE || TileType2 == LADDER) && StandCollision2 ) ) )*/
             if(IsStepElse)
             {
@@ -405,8 +405,8 @@ void CreatureDave::live(bool doKey)
     delete[] StandCollisions;
     if(oldstate != s_State && s_State.find("door") == string::npos)
     {
-        int oldXColSq = s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[oldstate][getFrame()].s_XL;
-        int newXColSq = s_CoordX + s_GameClass->s_Data->s_Dave->s_Collisions[s_State][getFrame()].s_XL;
+        int oldXColSq = s_CoordX + s_GameClass->s_Data->s_Player->s_Collisions[oldstate][getFrame()].s_XL;
+        int newXColSq = s_CoordX + s_GameClass->s_Data->s_Player->s_Collisions[s_State][getFrame()].s_XL;
         int diffX = oldXColSq - newXColSq;
         //s_CoordX += diffX;
         correctionPhys(s_CoordX + diffX, 0);
@@ -420,11 +420,11 @@ void CreatureDave::live(bool doKey)
     int toLevel = testChangeLevel();
     if(toLevel > 0) s_GameClass->changeLevel(toLevel);
     int DeathType = testDeath();
-    s_GameClass->s_GameInfo->deathDave(DeathType);
+    s_GameClass->s_GameInfo->deathPlayer(DeathType);
     if(s_State.find("recharge") == string::npos) s_GameClass->s_Data->s_Sounds->stop("ammo");
 }
 
-void CreatureDave::testSmallPassage(int y)
+void CreaturePlayer::testSmallPassage(int y)
 {
     int FreezeX = s_CoordX;
     int FreezeY = s_CoordY;
@@ -488,7 +488,7 @@ void CreatureDave::testSmallPassage(int y)
     s_CoordY = FreezeY;
 }
 
-bool CreatureDave::testOpenDoor()
+bool CreaturePlayer::testOpenDoor()
 {
     int TileCoordX[6];
     int TileCoordY[6];
@@ -504,11 +504,11 @@ bool CreatureDave::testOpenDoor()
     TileCoordY[3] = roundNumber(s_CoordY, 16, -1) + 16;
     TileCoordY[4] = roundNumber(s_CoordY, 16, -1) + 32;
     TileCoordY[5] = roundNumber(s_CoordY, 16, -1) + 32;
-    int numberofframes = atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info", "numberofframes" + s_State).c_str() );
+    int numberofframes = atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info", "numberofframes" + s_State).c_str() );
     int frame = s_NumberOfAction%numberofframes;
     int SizeXLev = atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() );
     s_StateBeforeOpenDoor = s_State;
-    if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] != 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] != 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[0];
         s_CoordY = TileCoordY[0];
@@ -517,7 +517,7 @@ bool CreatureDave::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] != 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] != 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[1];
         s_CoordY = TileCoordY[1];
@@ -526,7 +526,7 @@ bool CreatureDave::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[0];
         s_CoordY = TileCoordY[0];
@@ -535,7 +535,7 @@ bool CreatureDave::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[1];
         s_CoordY = TileCoordY[1];
@@ -544,7 +544,7 @@ bool CreatureDave::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[0];
         s_CoordY = TileCoordY[0];
@@ -553,7 +553,7 @@ bool CreatureDave::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[1];
         s_CoordY = TileCoordY[1];
@@ -562,58 +562,58 @@ bool CreatureDave::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[0] - 10;
         s_CoordY = TileCoordY[0];
         s_State = "doorexit";
         s_HowDoorOpen = "exit";
-        s_NumberOfAction = -1 + s_GameClass->s_AnimationStep - s_GameClass->s_AnimationStep%atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
+        s_NumberOfAction = -1 + s_GameClass->s_AnimationStep - s_GameClass->s_AnimationStep%atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info","numberofframesdoorexit").c_str() );
         s_OldNumberOfAction = 0;
-        s_TimeDoorOpen = atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
+        s_TimeDoorOpen = atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info","numberofframesdoorexit").c_str() );
         s_OldAnSt = s_GameClass->s_AnimationStep;
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[1] - 10;
         s_CoordY = TileCoordY[1];
         s_State = "doorexit";
         s_HowDoorOpen = "exit";
-        s_NumberOfAction = -1 + s_GameClass->s_AnimationStep - s_GameClass->s_AnimationStep%atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
+        s_NumberOfAction = -1 + s_GameClass->s_AnimationStep - s_GameClass->s_AnimationStep%atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info","numberofframesdoorexit").c_str() );
         s_OldNumberOfAction = 0;
-        s_TimeDoorOpen = atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
+        s_TimeDoorOpen = atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info","numberofframesdoorexit").c_str() );
         s_OldAnSt = s_GameClass->s_AnimationStep;
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[0] - 10;
         s_CoordY = TileCoordY[0];
         s_State = "doorexit";
         s_HowDoorOpen = "exitlevel";
-        s_NumberOfAction = -1 + s_GameClass->s_AnimationStep - s_GameClass->s_AnimationStep%atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
+        s_NumberOfAction = -1 + s_GameClass->s_AnimationStep - s_GameClass->s_AnimationStep%atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info","numberofframesdoorexit").c_str() );
         s_OldNumberOfAction = 0;
-        s_TimeDoorOpen = atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
+        s_TimeDoorOpen = atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info","numberofframesdoorexit").c_str() );
         s_OldAnSt = s_GameClass->s_AnimationStep;
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[1] - 10;
         s_CoordY = TileCoordY[1];
         s_State = "doorexit";
         s_HowDoorOpen = "exitlevel";
-        s_NumberOfAction = -1 + s_GameClass->s_AnimationStep - s_GameClass->s_AnimationStep%atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
+        s_NumberOfAction = -1 + s_GameClass->s_AnimationStep - s_GameClass->s_AnimationStep%atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info","numberofframesdoorexit").c_str() );
         s_OldNumberOfAction = 0;
-        s_TimeDoorOpen = atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info","numberofframesdoorexit").c_str() );
+        s_TimeDoorOpen = atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info","numberofframesdoorexit").c_str() );
         s_OldAnSt = s_GameClass->s_AnimationStep;
         return true;
     }
     return false;
 }
 
-int CreatureDave::testChangeLevel()
+int CreaturePlayer::testChangeLevel()
 {
     int TileCoordX[6];
     int TileCoordY[6];
@@ -630,12 +630,12 @@ int CreatureDave::testChangeLevel()
     TileCoordY[4] = roundNumber(s_CoordY, 16, -1) + 32;
     TileCoordY[5] = roundNumber(s_CoordY, 16, -1) + 32;
     int TileType = 0;
-    int numberofframes = atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info", "numberofframes" + s_State).c_str() );
+    int numberofframes = atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info", "numberofframes" + s_State).c_str() );
     int frame = s_NumberOfAction%numberofframes;
     for(int i = 0; i < 6; i++)
     {
         TileType = s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i]/16, TileCoordY[i]/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
-        if(testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)))
+        if(testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)))
         {
             string toLevel_str = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_to_level");
             string isTp = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_teleport");
@@ -670,7 +670,7 @@ int CreatureDave::testChangeLevel()
     return 0;
 }
 
-int CreatureDave::testDeath()
+int CreaturePlayer::testDeath()
 {
     int TileCoordX[6];
     int TileCoordY[6];
@@ -687,18 +687,18 @@ int CreatureDave::testDeath()
     TileCoordY[4] = roundNumber(s_CoordY, 16, -1) + 32;
     TileCoordY[5] = roundNumber(s_CoordY, 16, -1) + 32;
     int TileType = 0;
-    int numberofframes = atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info", "numberofframes" + s_State).c_str() );
+    int numberofframes = atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info", "numberofframes" + s_State).c_str() );
     int frame = s_NumberOfAction%numberofframes;
     int sizeXLevel = atoi( s_GameClass->s_Data->s_Level->s_Params->getValue("info","sizeX").c_str() );
     for(int i = 0; i < 6; i++)
     {
         TileType = s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i]/16, TileCoordY[i]/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
-        if( TileType == DEATH && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) ) return (TileCoordY[i]*sizeXLevel/16+TileCoordX[i]/16)*(-1);
+        if( TileType == DEATH && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) ) return (TileCoordY[i]*sizeXLevel/16+TileCoordX[i]/16)*(-1);
     }
     return 0;
 }
 
-void CreatureDave::testGetBonuses()
+void CreaturePlayer::testGetBonuses()
 {
     int TileCoordX[6];
     int TileCoordY[6];
@@ -714,7 +714,7 @@ void CreatureDave::testGetBonuses()
     TileCoordY[3] = roundNumber(s_CoordY, 16, -1) + 16;
     TileCoordY[4] = roundNumber(s_CoordY, 16, -1) + 32;
     TileCoordY[5] = roundNumber(s_CoordY, 16, -1) + 32;
-    int numberofframes = atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info", "numberofframes" + s_State).c_str() );
+    int numberofframes = atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info", "numberofframes" + s_State).c_str() );
     int frame = s_NumberOfAction%numberofframes;
     int bonus, frame_bonus, CrPoints;
     int SizeXLev = atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() );
@@ -725,7 +725,7 @@ void CreatureDave::testGetBonuses()
         {
             numberofframes = atoi ( s_GameClass->s_Data->s_Bonuses->s_BonusesInfo[bonus-1]->getValue("info", "numberofframes").c_str() );
             frame_bonus = s_GameClass->s_AnimationStep%numberofframes + 1;
-            if(testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus] ) )
+            if(testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus] ) )
             {
                 CrPoints = s_CurrentPoints;
                 s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][ TileCoordY[i]*SizeXLev/16 + TileCoordX[i]/16 ] = 0;
@@ -746,7 +746,7 @@ void CreatureDave::testGetBonuses()
     }
 }
 
-void CreatureDave::addAdditionalUpsFromPoints(int CrPoints, int coordXP, int coordYP)
+void CreaturePlayer::addAdditionalUpsFromPoints(int CrPoints, int coordXP, int coordYP)
 {
     bool anim_on = false;
     if(s_GameClass->s_IniFile->getValue("video", "animation") == "true") anim_on = true;
@@ -772,7 +772,7 @@ void CreatureDave::addAdditionalUpsFromPoints(int CrPoints, int coordXP, int coo
     }
 }
 
-void CreatureDave::addPointsEffect(string name, int coordXP, int coordYP)
+void CreaturePlayer::addPointsEffect(string name, int coordXP, int coordYP)
 {
     bool anim_on = false;
     if(s_GameClass->s_IniFile->getValue("video", "animation") == "true") anim_on = true;
@@ -790,7 +790,7 @@ void CreatureDave::addPointsEffect(string name, int coordXP, int coordYP)
         true);
 }
 
-void CreatureDave::step(string direction)
+void CreaturePlayer::step(string direction)
 {
     int wh = -1;
     if(s_State.find("run") == string::npos) s_NumberOfAction = 0;
@@ -801,20 +801,20 @@ void CreatureDave::step(string direction)
     correctionPhys(s_CoordX - 4*wh, 0);
 }
 
-bool CreatureDave::correctionPhys(int coord, int what)
+bool CreaturePlayer::correctionPhys(int coord, int what)
 {
     bool yes = false;
     int frame = getFrame();
     if(s_GameClass->s_IniFile->getValue("settings", "correctionphysics") == "false") return false;
     if( (what == 0 && s_CoordX == coord) || (what == 1 && s_CoordY == coord) ) return false;
-    int SizeXDave = roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XL, 16, -1);
-    int SizeYDave = roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YL, 16, -1);
-    SizeXDave = SizeXDave/16 + 1;
-    SizeYDave = SizeYDave/16 + 1;
-    int* TileCoordX = new int[SizeXDave];
-    int* TileCoordY = new int[SizeYDave];
-    for(int i = 0; i < SizeXDave; i++) TileCoordX[i] = roundNumber(s_CoordX,16,-1) + i*16;
-    for(int i = 0; i < SizeYDave; i++) TileCoordY[i] = roundNumber(s_CoordY,16,-1) + i*16;
+    int SizeXPlayer = roundNumber(s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_XR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_XL, 16, -1);
+    int SizeYPlayer = roundNumber(s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_YR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_YL, 16, -1);
+    SizeXPlayer = SizeXPlayer/16 + 1;
+    SizeYPlayer = SizeYPlayer/16 + 1;
+    int* TileCoordX = new int[SizeXPlayer];
+    int* TileCoordY = new int[SizeYPlayer];
+    for(int i = 0; i < SizeXPlayer; i++) TileCoordX[i] = roundNumber(s_CoordX,16,-1) + i*16;
+    for(int i = 0; i < SizeYPlayer; i++) TileCoordY[i] = roundNumber(s_CoordY,16,-1) + i*16;
     bool col = false;
     int sign;
     if(what == 0) sign = (s_CoordX - coord)/abs(s_CoordX - coord);
@@ -823,23 +823,23 @@ bool CreatureDave::correctionPhys(int coord, int what)
     do
     {
         col = false;
-        for(int j = 0; j < SizeYDave; j++)
-            for(int i = 0; i < SizeXDave; i++)
+        for(int j = 0; j < SizeYPlayer; j++)
+            for(int i = 0; i < SizeXPlayer; i++)
             {
                 TileType = s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i]/16, TileCoordY[j]/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
-                if( TileType == IMPASSABLE && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[j], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) ) col = true;
+                if( TileType == IMPASSABLE && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[j], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) ) col = true;
                 if(true)
                 {
-                    //if( TileType == LADDER && ladder == true && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[j], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) ) col = true;
+                    //if( TileType == LADDER && ladder == true && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[j], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) ) col = true;
                     if( what == 1 && sign == 1 && TileType == LADDER &&
                        testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[j],
-                                     s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame],
+                                     s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame],
                                      Square(0,0,15,15)) &&
                        !testCollision(s_CoordX, coord, TileCoordX[i], TileCoordY[j],
-                                      s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame],
+                                      s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame],
                                       Square(0,0,15,15), true) &&
                        !testCollision(s_CoordX, coord, TileCoordX[i], TileCoordY[j],
-                                      s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame],
+                                      s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame],
                                       Square(0,0,15,15)) ) col = true;
                 }
             }
@@ -852,15 +852,15 @@ bool CreatureDave::correctionPhys(int coord, int what)
     if(what == 1) s_CoordY += sign;
     if(yes && s_GameClass->s_IniFile->getValue("loggers","correctionphysics") == "true")
     {
-        if(what == 0) cout<<"(Dave) Physics correction X: "<<"old - "<<coord<<", new - "<<s_CoordX<<endl;
-        else if(what == 1) cout<<"(Dave) Physics correction Y: "<<"old - "<<coord<<", new - "<<s_CoordY<<endl;
+        if(what == 0) cout<<"(Player) Physics correction X: "<<"old - "<<coord<<", new - "<<s_CoordX<<endl;
+        else if(what == 1) cout<<"(Player) Physics correction Y: "<<"old - "<<coord<<", new - "<<s_CoordY<<endl;
     }
     delete[] TileCoordX;
     delete[] TileCoordY;
     return yes;
 }
 
-/*bool CreatureDave::correctionPhys(int coord, int what)
+/*bool CreaturePlayer::correctionPhys(int coord, int what)
 {
     bool yes = false;
     if(s_GameClass->s_IniFile->getValue("settings", "correctionphysics") == "false") return false;
@@ -870,7 +870,7 @@ bool CreatureDave::correctionPhys(int coord, int what)
     }
     else
     {
-        cout << "Error Dave physics correction: \"what\" not 0 or 1!" << endl;
+        cout << "Error Player physics correction: \"what\" not 0 or 1!" << endl;
         return false;
     }
     int TileCoordX[6];
@@ -892,7 +892,7 @@ bool CreatureDave::correctionPhys(int coord, int what)
     if(what == 0) sign = (s_CoordX - coord)/abs(s_CoordX - coord);
     if(what == 1) sign = (s_CoordY - coord)/abs(s_CoordY - coord);
     int TileType = 0;
-    int numberofframes = atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info", "numberofframes" + s_State).c_str() );
+    int numberofframes = atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info", "numberofframes" + s_State).c_str() );
     int frame = s_NumberOfAction%numberofframes;
     do
     {
@@ -900,16 +900,16 @@ bool CreatureDave::correctionPhys(int coord, int what)
         for(int i = 0; i < 6; i++)
         {
             TileType = s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i]/16, TileCoordY[i]/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
-            if( TileType == IMPASSABLE && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame], Square(0,0,15,15)) ) col = true;
+            if( TileType == IMPASSABLE && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) ) col = true;
             if( what == 1 && sign == 1 && TileType == LADDER &&
                testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i],
-                             s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame],
+                             s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame],
                              Square(0,0,15,15)) &&
                !testCollision(s_CoordX, coord, TileCoordX[i], TileCoordY[i],
-                              s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame],
+                              s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame],
                               Square(0,0,15,15), true) &&
                !testCollision(s_CoordX, coord, TileCoordX[i], TileCoordY[i],
-                              s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame],
+                              s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame],
                               Square(0,0,15,15)) ) col = true;
         }
         if(what == 0) s_CoordX -= sign;
@@ -928,12 +928,12 @@ bool CreatureDave::correctionPhys(int coord, int what)
             axis = "X";
             correctionCoord = s_CoordX;
         }
-        cout << "(Dave) Physics correction " << axis << ": " << "old - " << coord << ", new - " << correctionCoord << ", state - " << s_State << endl;
+        cout << "(Player) Physics correction " << axis << ": " << "old - " << coord << ", new - " << correctionCoord << ", state - " << s_State << endl;
     }
     return yes;
 }*/
 
-bool CreatureDave::testSetStates(string states)
+bool CreaturePlayer::testSetStates(string states)
 {
     std::istringstream ss(states);
     std::string st;
@@ -941,32 +941,32 @@ bool CreatureDave::testSetStates(string states)
     return st == s_State;
 }
 
-int CreatureDave::getFrame()
+int CreaturePlayer::getFrame()
 {
-    return s_NumberOfAction%atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info", "numberofframes" + s_State).c_str() );
+    return s_NumberOfAction%atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info", "numberofframes" + s_State).c_str() );
 }
 
-int CreatureDave::getFrame(string anim)
+int CreaturePlayer::getFrame(string anim)
 {
-    return s_NumberOfAction%atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("info", "numberofframes" + anim).c_str() );
+    return s_NumberOfAction%atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info", "numberofframes" + anim).c_str() );
 }
 
-void CreatureDave::draw()
+void CreaturePlayer::draw()
 {
     int ScrLX = s_GameClass->s_GameInfo->s_ScreenCoordX;
     int ScrLY = s_GameClass->s_GameInfo->s_ScreenCoordY;
-    s_GameClass->s_Data->s_Dave->drawDave(s_State, getFrame(), s_CoordX - ScrLX, s_CoordY - ScrLY);
+    s_GameClass->s_Data->s_Player->drawPlayer(s_State, getFrame(), s_CoordX - ScrLX, s_CoordY - ScrLY);
     /*int frame = getFrame();
-    int SizeXDave = roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_XL, 16, -1);
-    int SizeYDave = roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Dave->s_Collisions[s_State][frame].s_YL, 16, -1);
-    SizeXDave = SizeXDave/16 + 1;
-    SizeYDave = SizeYDave/16 + 1;
-    int* TileCoordX = new int[SizeXDave];
-    int* TileCoordY = new int[SizeYDave];
-    for(int i = 0; i < SizeXDave; i++) TileCoordX[i] = roundNumber(s_CoordX,16,-1) + i*16;
-    for(int i = 0; i < SizeYDave; i++) TileCoordY[i] = roundNumber(s_CoordY,16,-1) + i*16;
+    int SizeXPlayer = roundNumber(s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_XR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_XL, 16, -1);
+    int SizeYPlayer = roundNumber(s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_YR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_YL, 16, -1);
+    SizeXPlayer = SizeXPlayer/16 + 1;
+    SizeYPlayer = SizeYPlayer/16 + 1;
+    int* TileCoordX = new int[SizeXPlayer];
+    int* TileCoordY = new int[SizeYPlayer];
+    for(int i = 0; i < SizeXPlayer; i++) TileCoordX[i] = roundNumber(s_CoordX,16,-1) + i*16;
+    for(int i = 0; i < SizeYPlayer; i++) TileCoordY[i] = roundNumber(s_CoordY,16,-1) + i*16;
     sf::RectangleShape rectangle;
-    rectangle.setSize(sf::Vector2f(SizeXDave * 16, SizeYDave * 16));
+    rectangle.setSize(sf::Vector2f(SizeXPlayer * 16, SizeYPlayer * 16));
     rectangle.setOutlineColor(sf::Color::Red);
     rectangle.setOutlineThickness(5);
     rectangle.setFillColor(sf::Color(0, 0, 0, 0));
@@ -976,13 +976,13 @@ void CreatureDave::draw()
     delete[] TileCoordY;*/
 }
 
-void CreatureDave::testShoot()
+void CreaturePlayer::testShoot()
 {
-    string statedave;
+    string stateplayer;
     string str = s_State.substr(0, s_State.find("shoot"));
-    int coordfireX = s_CoordX + atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("shoot", "coordfire" + str + "X").c_str() );
-    int coordfireY = s_CoordY + atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("shoot", "coordfire" + str + "Y").c_str() );
-    int anglefire = atoi( s_GameClass->s_Data->s_Dave->s_DaveInfo->getValue("shoot", "anglefire" + str).c_str() );
+    int coordfireX = s_CoordX + atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("shoot", "coordfire" + str + "X").c_str() );
+    int coordfireY = s_CoordY + atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("shoot", "coordfire" + str + "Y").c_str() );
+    int anglefire = atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("shoot", "anglefire" + str).c_str() );
     double pi = 3.1415926535;
     double anglefirerad = double(anglefire)*pi/180;
     double xc = double(coordfireX);
@@ -1005,9 +1005,9 @@ void CreatureDave::testShoot()
         {
             //int SizeXLev = atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() );
             //s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][tileY*SizeXLev + tileX] = 0;
-            statedave = "traceshoot";
+            stateplayer = "traceshoot";
             int tt;
-            for(tt = t; testCollision(xcc, ycc, tileX*16, tileY*16, s_GameClass->s_Data->s_Dave->s_Collisions[statedave][getFrame(statedave)], Square(0,0,15,15)); tt--)
+            for(tt = t; testCollision(xcc, ycc, tileX*16, tileY*16, s_GameClass->s_Data->s_Player->s_Collisions[stateplayer][getFrame(stateplayer)], Square(0,0,15,15)); tt--)
             {
                 xc = double(coordfireX) + tt*cos(anglefirerad);
                 yc = double(coordfireY) - tt*sin(anglefirerad);
@@ -1018,8 +1018,8 @@ void CreatureDave::testShoot()
             yc = double(coordfireY) - (tt + 4)*sin(anglefirerad);
             xcc = xc;
             ycc = yc;
-            s_GameClass->s_FactoryTmpImgs->addImage(s_GameClass->s_Data->s_Dave->s_Bitmaps[statedave][getFrame(statedave)],
-                                                        s_GameClass->s_Data->s_Dave->s_CacheImages[statedave][getFrame(statedave)],
+            s_GameClass->s_FactoryTmpImgs->addImage(s_GameClass->s_Data->s_Player->s_Bitmaps[stateplayer][getFrame(stateplayer)],
+                                                        s_GameClass->s_Data->s_Player->s_CacheImages[stateplayer][getFrame(stateplayer)],
                                                         xcc, ycc, 4, 0, 0, "traceshoot");
             s_GameClass->s_Data->s_Sounds->play("shoot_wall", false, true);
             return;
@@ -1030,11 +1030,11 @@ void CreatureDave::testShoot()
                 iter->second->s_CoordX >= s_ScreenCoordX - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
                 iter->second->s_CoordY <= s_GameClass->s_DisplayStruct->s_GameResolutionY + s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY &&
                 iter->second->s_CoordY >= s_ScreenCoordY - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY)*/
-            if(s_GameClass->s_GameInfo->s_FactoryMonsters->isMonsterInDaveRadius(this, iter->second, MDRT_LIVE))
+            if(s_GameClass->s_GameInfo->s_FactoryMonsters->isMonsterInPlayerRadius(this, iter->second, MDRT_LIVE))
                     if(iter->second->s_DeleteNow == false && iter->second->s_Activated == true && iter->second->s_CurrentLives != -2)
                     {
-                        statedave = "traceshoot";
-                        if(testCollision(xcc, ycc, iter->second->s_CoordX, iter->second->s_CoordY, s_GameClass->s_Data->s_Dave->s_Collisions[statedave][getFrame(statedave)], s_GameClass->s_Data->s_Monsters->s_Collisions[iter->second->s_Number - 1][iter->second->s_State][iter->second->getFrame()]))
+                        stateplayer = "traceshoot";
+                        if(testCollision(xcc, ycc, iter->second->s_CoordX, iter->second->s_CoordY, s_GameClass->s_Data->s_Player->s_Collisions[stateplayer][getFrame(stateplayer)], s_GameClass->s_Data->s_Monsters->s_Collisions[iter->second->s_Number - 1][iter->second->s_State][iter->second->getFrame()]))
                         {
                             if(iter->second->s_CurrentLives > 0)
                             {
@@ -1065,9 +1065,9 @@ void CreatureDave::testShoot()
                                     addAdditionalUpsFromPoints(CrPoints, iter->second->s_CoordX, iter->second->s_CoordY - (s_GameClass->s_Data->s_Monsters->s_Collisions[iter->second->s_Number - 1][iter->second->s_State][iter->second->getFrame()].s_YR - s_GameClass->s_Data->s_Monsters->s_Collisions[iter->second->s_Number - 1][iter->second->s_State][iter->second->getFrame()].s_YL) / 2);
                                 }
                             }
-                            statedave = "traceshoot";
-                            s_GameClass->s_FactoryTmpImgs->addImage(s_GameClass->s_Data->s_Dave->s_Bitmaps[statedave][getFrame(statedave)],
-                                                    s_GameClass->s_Data->s_Dave->s_CacheImages[statedave][getFrame(statedave)],
+                            stateplayer = "traceshoot";
+                            s_GameClass->s_FactoryTmpImgs->addImage(s_GameClass->s_Data->s_Player->s_Bitmaps[stateplayer][getFrame(stateplayer)],
+                                                    s_GameClass->s_Data->s_Player->s_CacheImages[stateplayer][getFrame(stateplayer)],
                                                     xcc, ycc, 4, 0, 0, "traceshoot");
                             s_GameClass->s_Data->s_Sounds->play("shoot_monster", false, true);
                             return;
@@ -1077,7 +1077,7 @@ void CreatureDave::testShoot()
     s_GameClass->s_Data->s_Sounds->play("shoot_empty", false, true);
 }
 
-void CreatureDave::calculateDoKey()
+void CreaturePlayer::calculateDoKey()
 {
     if( !(s_KeysState->s_KeyShoot) )
     {
@@ -1193,14 +1193,14 @@ void CreatureDave::calculateDoKey()
     }
 }
 
-Square CreatureDave::getCollision()
+Square CreaturePlayer::getCollision()
 {
-    return s_GameClass->s_Data->s_Dave->s_Collisions[s_State][getFrame()];
+    return s_GameClass->s_Data->s_Player->s_Collisions[s_State][getFrame()];
 }
 
 //...
 
-PostParsingStruct* CreatureDave::getKeys(string mainvariablename, PostParsingStruct* cpps)
+PostParsingStruct* CreaturePlayer::getKeys(string mainvariablename, PostParsingStruct* cpps)
 {
     if(!cpps) cpps = new PostParsingStruct;
     cpps->setValue(mainvariablename, "s_KeyLeft", WorkFunctions::ConvertFunctions::itos( (int)s_KeysState->s_KeyLeft) );
@@ -1212,7 +1212,7 @@ PostParsingStruct* CreatureDave::getKeys(string mainvariablename, PostParsingStr
     return cpps;
 }
 
-void CreatureDave::setKeys(PostParsingStruct* cpps, string mainvariablename)
+void CreaturePlayer::setKeys(PostParsingStruct* cpps, string mainvariablename)
 {
     s_KeysState->s_KeyLeft = (bool)atoi( cpps->getValue(mainvariablename, "s_KeyLeft").c_str() );
     s_KeysState->s_KeyRight = (bool)atoi( cpps->getValue(mainvariablename, "s_KeyRight").c_str() );
@@ -1222,7 +1222,7 @@ void CreatureDave::setKeys(PostParsingStruct* cpps, string mainvariablename)
     s_KeysState->s_KeyJump = (bool)atoi( cpps->getValue(mainvariablename, "s_KeyJump").c_str() );
 }
 
-void CreatureDave::mergeDave(CreatureDave* cr)
+void CreaturePlayer::mergePlayer(CreaturePlayer* cr)
 {
         s_CurrentPoints = cr->s_CurrentPoints;
         s_CurrentHealth = cr->s_CurrentHealth;
@@ -1252,7 +1252,7 @@ void CreatureDave::mergeDave(CreatureDave* cr)
         s_NickName = cr->s_NickName;
 }
 
-PostParsingStruct* CreatureDave::getListOfVariables(string mainvariablename, PostParsingStruct* dpps)
+PostParsingStruct* CreaturePlayer::getListOfVariables(string mainvariablename, PostParsingStruct* dpps)
 {
     if(!dpps) dpps = new PostParsingStruct;
     dpps->setValue(mainvariablename, "coordX", WorkFunctions::ConvertFunctions::itos(s_CoordX) );
@@ -1284,7 +1284,7 @@ PostParsingStruct* CreatureDave::getListOfVariables(string mainvariablename, Pos
     return dpps;
 }
 
-void CreatureDave::setListOfVariables(PostParsingStruct* dpps, string mainvariablename)
+void CreaturePlayer::setListOfVariables(PostParsingStruct* dpps, string mainvariablename)
 {
     int coordX = atoi( dpps->getValue(mainvariablename, "coordX").c_str() );
     int coordY = atoi( dpps->getValue(mainvariablename, "coordY").c_str() );

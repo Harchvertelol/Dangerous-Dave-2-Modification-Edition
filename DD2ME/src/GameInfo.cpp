@@ -44,16 +44,16 @@ GameInfo::GameInfo(Game* gameclass):
     s_IsGhostOn(false),
     s_IsInfoShow(false)
 {
-    s_MyDave = new CreatureDave(gameclass);
+    s_MyPlayer = new CreaturePlayer(gameclass);
     s_FactoryMonsters = new FactoryMonsters(gameclass);
 }
 
 GameInfo::~GameInfo()
 {
-    if(s_MyDave != 0) delete s_MyDave;
+    if(s_MyPlayer != 0) delete s_MyPlayer;
     if(s_FactoryMonsters != 0) delete s_FactoryMonsters;
-    map<int, CreatureDave*>::iterator iter_, iter2_;
-    for (iter_ = s_Daves.begin(), iter2_ = s_Daves.end(); iter_ != iter2_;)
+    map<int, CreaturePlayer*>::iterator iter_, iter2_;
+    for (iter_ = s_Players.begin(), iter2_ = s_Players.end(); iter_ != iter2_;)
     {
         if(iter_->second != 0) delete iter_->second;
         ++iter_;
@@ -64,20 +64,20 @@ void GameInfo::live()
 {
     s_GameClass->s_FactoryTmpImgs->live();
     s_FactoryMonsters->live();
-    map<int, CreatureDave*>::iterator iter;
-    for ( iter = s_Daves.begin(); iter != s_Daves.end(); iter++)
+    map<int, CreaturePlayer*>::iterator iter;
+    for ( iter = s_Players.begin(); iter != s_Players.end(); iter++)
     {
         iter->second->live(false);
     }
     //...
-    if(!s_Stop) s_MyDave->live();
+    if(!s_Stop) s_MyPlayer->live();
 }
 
-bool GameInfo::deathDave(int type)
+bool GameInfo::deathPlayer(int type)
 {
     if(type == 0) return false;
     if(s_CheatGod == true) return false;
-    if(s_MyDave->s_State == "doorexit") return false;
+    if(s_MyPlayer->s_State == "doorexit") return false;
     if(s_Stop) return false;
     s_Stop = true;
     s_DeathType = type;
@@ -158,8 +158,8 @@ void GameInfo::drawDeathFrame(map<int, Texture*>* bt, map<int, Sprite*>* img, in
 {
     bool CacheCreated = false;
     if((*img)[0] != 0) CacheCreated = true;
-    int x = s_MyDave->s_CoordX + 8 - (*bt)[frame]->getSize().x / 2 - s_ScreenCoordX;
-    int y = s_MyDave->s_CoordY + 16 - (*bt)[frame]->getSize().y / 2 - s_ScreenCoordY;
+    int x = s_MyPlayer->s_CoordX + 8 - (*bt)[frame]->getSize().x / 2 - s_ScreenCoordX;
+    int y = s_MyPlayer->s_CoordY + 16 - (*bt)[frame]->getSize().y / 2 - s_ScreenCoordY;
     if(CacheCreated == false)
     {
         //s_GameClass->s_Window->draw(Image(Bitmap( (*(*bt)[frame]), 0, 0, (*bt)[frame]->width(), (*bt)[frame]->height()), x, y));
@@ -176,19 +176,19 @@ void GameInfo::drawDeathFrame(map<int, Texture*>* bt, map<int, Sprite*>* img, in
     }
 }
 
-void GameInfo::correctionScreen(CreatureDave* dave)
+void GameInfo::correctionScreen(CreaturePlayer* player)
 {
-    //dave->s_ScreenCoordX = dave->s_CoordX - s_GameClass->s_DisplayStruct->s_GameResolutionX/2;
-    //dave->s_ScreenCoordY = dave->s_CoordY - s_GameClass->s_DisplayStruct->s_GameResolutionY/2;
+    //player->s_ScreenCoordX = player->s_CoordX - s_GameClass->s_DisplayStruct->s_GameResolutionX/2;
+    //player->s_ScreenCoordY = player->s_CoordY - s_GameClass->s_DisplayStruct->s_GameResolutionY/2;
 
-    if(dave->s_CoordX - dave->s_ScreenCoordX < atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXleft").c_str()) * 16) dave->s_ScreenCoordX = dave->s_CoordX - atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXleft").c_str()) * 16;
-    else if( (dave->s_ScreenCoordX + s_GameClass->s_DisplayStruct->s_GameResolutionX) - dave->s_CoordX < (atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXright").c_str()) - 1) * 16) dave->s_ScreenCoordX = dave->s_CoordX + (atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXright").c_str()) - 1) * 16 - s_GameClass->s_DisplayStruct->s_GameResolutionX;
+    if(player->s_CoordX - player->s_ScreenCoordX < atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXleft").c_str()) * 16) player->s_ScreenCoordX = player->s_CoordX - atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXleft").c_str()) * 16;
+    else if( (player->s_ScreenCoordX + s_GameClass->s_DisplayStruct->s_GameResolutionX) - player->s_CoordX < (atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXright").c_str()) - 1) * 16) player->s_ScreenCoordX = player->s_CoordX + (atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenXright").c_str()) - 1) * 16 - s_GameClass->s_DisplayStruct->s_GameResolutionX;
 
-    if(dave->s_CoordY - dave->s_ScreenCoordY < atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYup").c_str()) * 16) dave->s_ScreenCoordY = dave->s_CoordY - atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYup").c_str()) * 16;
-    else if( (dave->s_ScreenCoordY + s_GameClass->s_DisplayStruct->s_GameResolutionY) - dave->s_CoordY < (2 + atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYdown").c_str())) * 16) dave->s_ScreenCoordY = dave->s_CoordY + (2 + atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYdown").c_str())) * 16 - s_GameClass->s_DisplayStruct->s_GameResolutionY;
+    if(player->s_CoordY - player->s_ScreenCoordY < atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYup").c_str()) * 16) player->s_ScreenCoordY = player->s_CoordY - atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYup").c_str()) * 16;
+    else if( (player->s_ScreenCoordY + s_GameClass->s_DisplayStruct->s_GameResolutionY) - player->s_CoordY < (2 + atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYdown").c_str())) * 16) player->s_ScreenCoordY = player->s_CoordY + (2 + atoi(s_GameClass->s_IniFile->getValue("settings", "limitshiftscreenYdown").c_str())) * 16 - s_GameClass->s_DisplayStruct->s_GameResolutionY;
 
-    if(dave->s_ScreenCoordX + s_GameClass->s_DisplayStruct->s_GameResolutionX > 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) - 32) dave->s_ScreenCoordX = 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) - s_GameClass->s_DisplayStruct->s_GameResolutionX - 32;
-    if(dave->s_ScreenCoordX < 32) dave->s_ScreenCoordX = 32;
-    if(dave->s_ScreenCoordY + s_GameClass->s_DisplayStruct->s_GameResolutionY > 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeY") ).c_str() ) - 32) dave->s_ScreenCoordY = 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeY") ).c_str() ) - s_GameClass->s_DisplayStruct->s_GameResolutionY - 32;
-    if(dave->s_ScreenCoordY < 32) dave->s_ScreenCoordY = 32;
+    if(player->s_ScreenCoordX + s_GameClass->s_DisplayStruct->s_GameResolutionX > 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) - 32) player->s_ScreenCoordX = 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() ) - s_GameClass->s_DisplayStruct->s_GameResolutionX - 32;
+    if(player->s_ScreenCoordX < 32) player->s_ScreenCoordX = 32;
+    if(player->s_ScreenCoordY + s_GameClass->s_DisplayStruct->s_GameResolutionY > 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeY") ).c_str() ) - 32) player->s_ScreenCoordY = 16*atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeY") ).c_str() ) - s_GameClass->s_DisplayStruct->s_GameResolutionY - 32;
+    if(player->s_ScreenCoordY < 32) player->s_ScreenCoordY = 32;
 }

@@ -1,7 +1,7 @@
 function setFirstState()
 	setMonsterValue(-1, "step", "12")
 	setMonsterValue(-1, "freeze", "0")
-	setGlobalValue(-1, getNV(), "")
+	setGlobalValue(-1, "standard_first_boss_service_values", getNV(), "")
 	return "leftrun"
 end
 
@@ -32,13 +32,13 @@ function onKill(type)
 		lux, luy, rdx, rdy = getMonsterCollision(-1)
 		addMonster(getMonsterOption(-1, "other", "numberscriptclumps"), getCoordMonsterX(-1), getCoordMonsterY(-1), "init", 0, 0, -2, string.format("clumps=%s;phys_box_LU_X=%d;phys_box_LU_Y=%d;phys_box_RD_X=%d;phys_box_RD_Y=%d;", getMonsterOption(-1, "other", "clumps"), lux, luy, rdx, rdy))
 	end
-	setGlobalValue(-1, getNV(), "1")
+	setGlobalValue(-1, "standard_first_boss_service_values", getNV(), "1")
 end
 
 
 function calculateStar()
 	local nv = getMonsterValue(-1, "nv")
-	local testdeath = getGlobalValue(-1, nv)
+	local testdeath = getGlobalValue(-1, "standard_first_boss_service_values", nv)
 	if testdeath ~= "" then
 		killMonster(-1, 1)
 		return
@@ -170,8 +170,8 @@ function calculateStarClump()
 end
 
 function mainFunc()
-	if testCollisionDave(-1) == 1 then
-		killDave(-1)
+	if testCollisionPlayer(-1) == 1 then
+		killPlayer(-1)
 	end
 	if getState(-1) == "star" then
 		calculateStar()
