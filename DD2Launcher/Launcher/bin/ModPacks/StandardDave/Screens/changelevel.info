@@ -1,6 +1,6 @@
 [info]
 numberofscreens=1
-numberofbonusfordave=6
+numberofbonusforplayer=6
 
 [screen_1]
 numberoflevels=8
@@ -39,5 +39,5 @@ textcolorhighscore=0;0;0;255
 livescoordX=44
 livescoordY=164
 livesmaxobject=7
-livesnamedavestate=rightstand
-livesframedavestate=0
+livesnameplayerstate=rightstand
+livesframeplayerstate=0
