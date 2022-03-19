@@ -129,3 +129,68 @@
 	"Level.h"
 	"WorkFunctions.h"
 
+1639813877 source:d:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\from0to0.1.cpp
+	<iostream>
+	<cstdlib>
+	"IniParser/ParserInfoFile.h"
+	"Level.h"
+	"WorkFunctions.h"
+
+1639813877 d:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\iniparser\parserinfofile.h
+	<string>
+	"PostParsingStruct.h"
+
+1639813877 d:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\iniparser\postparsingstruct.h
+	<map>
+	<string>
+
+1639813877 d:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\level.h
+	<map>
+	<cstring>
+	"IniParser/PostParsingStruct.h"
+
+1639813877 d:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\workfunctions.h
+	<iostream>
+	<sstream>
+	<map>
+	"Defines.h"
+	"Square.h"
+
+1639813877 d:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\defines.h
+	<string>
+
+1639813877 d:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\square.h
+
+1639813877 source:d:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\iniparser\parserinfofile.cpp
+	<fstream>
+	<iostream>
+	"ParserInfoFile.h"
+	"PostParsingStruct.h"
+	"../WorkFunctions.h"
+	"../Defines.h"
+
+1639813877 source:d:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\iniparser\postparsingstruct.cpp
+	"PostParsingStruct.h"
+	<iostream>
+
+1647677391 source:d:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\level.cpp
+	"Level.h"
+	"IniParser/ParserInfoFile.h"
+	"WorkFunctions.h"
+	"Defines.h"
+	<fstream>
+	<iostream>
+	<stdlib.h>
+
+1639813877 source:d:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\square.cpp
+	"Square.h"
+
+1639813877 source:d:\github\dangerous-dave-2-modification-edition\dd2me\src\converters\levelformatfrom0to0.1\workfunctions.cpp
+	"WorkFunctions.h"
+	<cstdlib>
+	<sys/io.h>
+	<unistd.h>
+	<sys/stat.h>
+	<io.h>
+	<direct.h>
+

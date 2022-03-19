@@ -78,7 +78,6 @@ bool Level::convertLevel(string file_name)
     f << "name=" << endl;
     f << "type=" << s_Params->getValue("info", "type") << endl;
     f << "numberoftilesfields=1" << endl;
-    f << "background=" << endl;
     f << "levelformat=0.1" << endl;
     f << endl;
 

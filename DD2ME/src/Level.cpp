@@ -327,16 +327,13 @@ void Level::drawBackgrounds(int number)
         scrollspeedXstr = s_Params->getValue(name_val_bg, "scrollSpeedX");
         if(scrollspeedXstr == "adaptive")
         {
-            /*scrollspeedX = (float)sizebgX / (float)(SizeXLevPix - ScrXSize - 64);
-            cout << scrollspeedX << endl;
-            cout << SizeXLevPix << endl;
-            cout << sizebgX << endl;*/
+            scrollspeedX = (float)(sizebgX - ScrXSize) / (float)(SizeXLevPix - ScrXSize - 2 * shiftXspec);
         }
         else scrollspeedX = atof(scrollspeedXstr.c_str());
         scrollspeedYstr = s_Params->getValue(name_val_bg, "scrollSpeedY");
         if(scrollspeedYstr == "adaptive")
         {
-            //scrollspeedY = (float)sizebgY / (float)SizeYLevPix;
+            scrollspeedY = (float)(sizebgY - ScrYSize) / (float)(SizeYLevPix - ScrYSize - 2 * shiftYspec);
         }
         else scrollspeedY = atof(scrollspeedYstr.c_str());
 

@@ -18,7 +18,6 @@ sizeY=100
 name=Test! // Level name. It is displayed instead of Level N, if something is equal.
 type=single
 numberoftilesfields=1
-background=
 levelformat=0.1
 
 [options]
@@ -35,3 +34,13 @@ numberobjectstilesfield=1 // Optional parameter, specifies the number of the til
 1=You cool!\nVery good man!\\n! // This text will be displayed when hitting a tile with a tile parameter GS_secret=1. '\ n' - line break, "\\n" -> '\n'.
 
 // Next comes level information
+[Background2_1] // Background drawn first before the second tile layer
+countLoopX=2 // Allow repetition twice along the X axis
+countLoopY=-1 // Infinite loop in all directions along the Y axis
+image=first // Title of the background image
+scaleX=0.1 // Scale X
+scaleY=1 // Scale along the Y axis (one to one)
+scrollSpeedX=2 // Background scroll speed on X axis (twice as fast as level scrolling)
+scrollSpeedY=adaptive // ​​Background scroll speed along the Y axis (adaptive, that is, there will be a background edge at the edges of the level, the background speed adjusts to the level scroll speed)
+startShiftX=0 // Initial shift of the background along the X axis (no shift, upper left corner of the level, starting from the width of two tiles, since a two-tile edge is not displayed in the level)
+startShiftY=20 // Initial background shift along the Y axis (shift 20 pixels from the upper left corner of the level, starting from the width of two tiles, since a two-tile edge is not displayed in the level)
