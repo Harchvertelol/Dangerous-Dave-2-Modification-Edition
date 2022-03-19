@@ -9,6 +9,7 @@
 #include "Sounds.h"
 #include "Music.h"
 #include "GuiData.h"
+#include "Backgrounds.h"
 
 class Game;
 
@@ -28,6 +29,7 @@ class GameData
         std::string PathToLevelPack;
         std::string PathToPlayerPack;
         std::string PathToGuiPack;
+        std::string PathToBackgroundsPack;
         IniParser::PostParsingStruct* s_ModInfo;
         IniParser::PostParsingStruct* s_ModSettings;
         IniParser::PostParsingStruct* s_LevelsInfo;
@@ -40,6 +42,7 @@ class GameData
         Sounds* s_Sounds;
         Music* s_Music;
         GuiData* s_GuiData;
+        Backgrounds* s_Backgrounds;
         Game* s_GameClass;
         bool loadData(IniParser::PostParsingStruct*);
         bool drawScreenState0();

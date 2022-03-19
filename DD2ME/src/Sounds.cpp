@@ -39,10 +39,16 @@ bool Sounds::load(string PathToSoundPack)
     map<string, map<string, string> > list_all_vars_sounds = s_SoundsInfo->getMapVariables();
     map<string, string> list_all_sounds = list_all_vars_sounds["sounds"];
     map<string, string>::iterator iter1, iter2;
-    int i = 0;
     for (iter1 = list_all_sounds.begin(), iter2 = list_all_sounds.end(); iter1 != iter2;)
     {
-        if(iter1->second != "" && s_SoundsBuffersList.find(iter1->second) == s_SoundsBuffersList.end()) { s_SoundsBuffersList[iter1->second].loadFromFile(PathToSoundPack + iter1->second); i++; }
+        if(iter1->second != "" && s_SoundsBuffersList.find(iter1->second) == s_SoundsBuffersList.end())
+        {
+            if(!s_SoundsBuffersList[iter1->second].loadFromFile(PathToSoundPack + iter1->second))
+            {
+                cout << "Error loading " << iter1->first << " with file " << iter1->second << endl;
+                return false;
+            }
+        }
         s_SoundsList[iter1->first].setBuffer(s_SoundsBuffersList[iter1->second]);
         s_SoundsList[iter1->first].setVolume(stof(s_GameClass->s_IniFile->getValue("audio", "soundvolume")));
         iter1++;

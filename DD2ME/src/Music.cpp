@@ -32,12 +32,15 @@ bool Music::load(string PathToMusicPack)
     map<string, map<string, string> > list_all_vars_music = s_MusicInfo->getMapVariables();
     map<string, string> list_all_music = list_all_vars_music["music"];
     map<string, string>::iterator iter1, iter2;
-    int i = 0;
     for (iter1 = list_all_music.begin(), iter2 = list_all_music.end(); iter1 != iter2;)
     {
         if(iter1->second != "" && s_MusicList.find(iter1->second) == s_MusicList.end())
         {
-            if(!s_MusicList[iter1->first].openFromFile(PathToMusicPack + iter1->second)) cout << "Error loading " << iter1->first << " with file " << iter1->second << endl;
+            if(!s_MusicList[iter1->first].openFromFile(PathToMusicPack + iter1->second))
+            {
+                cout << "Error loading " << iter1->first << " with file " << iter1->second << endl;
+                return false;
+            }
             s_MusicList[iter1->first].setVolume(stof(s_GameClass->s_IniFile->getValue("audio", "musicvolume")));
         }
         iter1++;

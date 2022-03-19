@@ -295,28 +295,75 @@ bool Level::setTileParameter(int x_tile, int y_tile, string name, string value)
 
 void Level::drawBackgrounds(int number)
 {
-    int number_of_bckgrs = s_NumberBackgroundsOfFields[number], shiftX = 0, shiftY = 0, scrollspeedX = 1, scrollspeedY = 1, countloopX = -1, countloopY = -1;
-    string name_val_bg, scrollspeedXstr, scrollspeedYstr;
+    int number_of_bckgrs = s_NumberBackgroundsOfFields[number], shiftX = 0, shiftY = 0, countloopX = -1, countloopY = -1;
+    string name_val_bg, scrollspeedXstr, scrollspeedYstr, name_image;
+    float scrollspeedX = 1, scrollspeedY = 1, scaleX = 0, scaleY = 0;
     for(int i = 0; i < number_of_bckgrs; i++)
     {
         name_val_bg = getNameBackground(number, i + 1);
+        name_image = s_Params->getValue(name_val_bg, "image");
         shiftX = atoi(s_Params->getValue(name_val_bg, "startShiftX").c_str());
         shiftY = atoi(s_Params->getValue(name_val_bg, "startShiftY").c_str());
         countloopX = atoi(s_Params->getValue(name_val_bg, "countLoopX").c_str());
         countloopY = atoi(s_Params->getValue(name_val_bg, "countLoopY").c_str());
+        scaleX = atof(s_Params->getValue(name_val_bg, "scaleX").c_str());
+        scaleY = atof(s_Params->getValue(name_val_bg, "scaleY").c_str());
+
+        int shiftXspec = 16 * 2;
+        int shiftYspec = 16 * 2;
+        int SizeXLevPix = atoi( ( s_Params->getValue("info", "sizeX") ).c_str() ) * 16;
+        int SizeYLevPix = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() ) * 16;
+        int sizebgX = SizeXLevPix;
+        if(name_image != "") sizebgX = s_GameClass->s_Data->s_Backgrounds->getSizeBackgroundX(name_image);
+        int sizebgY = SizeYLevPix;
+        if(name_image != "") sizebgY = s_GameClass->s_Data->s_Backgrounds->getSizeBackgroundY(name_image);
+        sizebgX *= scaleX;
+        sizebgY *= scaleY;
+        int ScrLX = s_GameClass->s_GameInfo->s_ScreenCoordX;
+        int ScrLY = s_GameClass->s_GameInfo->s_ScreenCoordY;
+        int ScrXSize = s_GameClass->s_DisplayStruct->s_GameResolutionX;
+        int ScrYSize = s_GameClass->s_DisplayStruct->s_GameResolutionY;
+
         scrollspeedXstr = s_Params->getValue(name_val_bg, "scrollSpeedX");
         if(scrollspeedXstr == "adaptive")
         {
-            //...
+            /*scrollspeedX = (float)sizebgX / (float)(SizeXLevPix - ScrXSize - 64);
+            cout << scrollspeedX << endl;
+            cout << SizeXLevPix << endl;
+            cout << sizebgX << endl;*/
         }
-        else scrollspeedX = atoi(scrollspeedXstr.c_str());
+        else scrollspeedX = atof(scrollspeedXstr.c_str());
         scrollspeedYstr = s_Params->getValue(name_val_bg, "scrollSpeedY");
         if(scrollspeedYstr == "adaptive")
         {
-            //...
+            //scrollspeedY = (float)sizebgY / (float)SizeYLevPix;
         }
-        else scrollspeedY = atoi(scrollspeedYstr.c_str());
-        // DRAW
+        else scrollspeedY = atof(scrollspeedYstr.c_str());
+
+        int startCoordBGX = shiftX - scrollspeedX * (ScrLX - shiftXspec);
+        int startCoordBGY = shiftY - scrollspeedY * (ScrLY - shiftYspec);
+
+        int tmpRoundXD = roundNumber(0 - startCoordBGX, sizebgX, -1);
+        int tmpRoundXU = roundNumber(0 - startCoordBGX + ScrXSize, sizebgX, 1);
+        int number_bgX = (tmpRoundXU - tmpRoundXD) / sizebgX;
+
+        int tmpRoundYD = roundNumber(0 - startCoordBGY, sizebgY, -1);
+        int tmpRoundYU = roundNumber(0 - startCoordBGY + ScrYSize, sizebgY, 1);
+        int number_bgY = (tmpRoundYU - tmpRoundYD) / sizebgY;
+
+        int number_minX = tmpRoundXD / sizebgX;
+        int number_minY = tmpRoundYD / sizebgY;
+
+        //if(countloopX != -1 && number_minX + number_bgX > countloopX) number_bgX = countloopX - number_minX;
+
+        if(name_image != "")
+        {
+            //s_GameClass->s_Data->s_Backgrounds->draw(name_image, startCoordBGX, startCoordBGY, scaleX, scaleY);
+            for(int i = 0; i < number_bgX; i++)
+                for(int j = 0; j < number_bgY; j++)
+                    if( (countloopX == -1 || (number_minX + i >= 0 && number_minX + i < countloopX)) &&
+                       (countloopY == -1 || (number_minY + j >= 0 && number_minY + j < countloopY)) ) s_GameClass->s_Data->s_Backgrounds->draw(name_image, startCoordBGX + tmpRoundXD + i * sizebgX, startCoordBGY + tmpRoundYD + j * sizebgY, scaleX, scaleY);
+        }
     }
 }
 

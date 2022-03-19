@@ -35,6 +35,7 @@ GameData::GameData(Game* gameclass):
     s_Sounds = new Sounds(gameclass);
     s_Music = new Music(gameclass);
     s_GuiData = new GuiData;
+    s_Backgrounds = new Backgrounds(gameclass);
 }
 
 GameData::~GameData()
@@ -50,6 +51,7 @@ GameData::~GameData()
     if(s_Sounds != 0) delete s_Sounds;
     if(s_Music != 0) delete s_Music;
     if(s_GuiData != 0) delete s_GuiData;
+    if(s_Backgrounds != 0) delete s_Backgrounds;
 }
 
 void GameData::deleteAllGDIObjects()
@@ -143,6 +145,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     PathToLevelPack = "PacksData/LevelPacks/" + s_IniFile->getValue("resources", "levelpack") + "/";
     PathToPlayerPack = "PacksData/PlayerPacks/" + s_IniFile->getValue("resources", "playerpack") + "/";
     PathToGuiPack = "PacksData/GuiPacks/" + s_IniFile->getValue("resources", "guipack") + "/";
+    PathToBackgroundsPack = "PacksData/BackgroundsPacks/" + s_IniFile->getValue("resources", "backgroundspack") + "/";
     if( s_IniFile->getValue("resources", "standard") == "true" ) s_IniFile->getMapVariables()["resources"]["modpack"] = "StandardDave";
     if( s_IniFile->getValue("resources", "modpack") != "")
     {
@@ -200,6 +203,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             PathToLevelPack = "ModPacks/" + s_NameMod + "/Levels/";
             PathToPlayerPack = "ModPacks/" + s_NameMod + "/Player/";
             PathToGuiPack = "ModPacks/" + s_NameMod + "/Gui/";
+            PathToBackgroundsPack = "ModPacks/" + s_NameMod + "/Backgrounds/";
         }
         else
         {
@@ -212,6 +216,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             if(s_IniFile->getValue("resources", "levelpack") == "") PathToLevelPack = "ModPacks/" + s_NameMod + "/Levels/";
             if(s_IniFile->getValue("resources", "playerpack") == "") PathToPlayerPack = "ModPacks/" + s_NameMod + "/Player/";
             if(s_IniFile->getValue("resources", "guipack") == "") PathToGuiPack = "ModPacks/" + s_NameMod + "/Gui/";
+            if(s_IniFile->getValue("resources", "backgroundspack") == "") PathToBackgroundsPack = "ModPacks/" + s_NameMod + "/Backgrounds/";
         }
     }
     cout << "Loading levels information..." << endl;
@@ -243,6 +248,9 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     cout << "Loading gui..." << endl;
     if( !s_GuiData->load(PathToGuiPack) ) return false;
     cout << "Gui is loaded." << endl;
+    cout << "Loading backgrounds..." << endl;
+    if( !s_Backgrounds->load(PathToBackgroundsPack) ) return false;
+    cout << "Backgrounds is loaded." << endl;
     return true;
 }
 

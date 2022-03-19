@@ -55,6 +55,8 @@
 		</Linker>
 		<Unit filename="AI.cpp" />
 		<Unit filename="AI.h" />
+		<Unit filename="Backgrounds.cpp" />
+		<Unit filename="Backgrounds.h" />
 		<Unit filename="Bonuses.cpp" />
 		<Unit filename="Bonuses.h" />
 		<Unit filename="CreatureMonster.cpp" />

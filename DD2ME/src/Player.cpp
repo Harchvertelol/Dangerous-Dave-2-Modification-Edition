@@ -87,7 +87,6 @@ bool Player::load(string PathToPlayerPack)
 bool Player::createCache()
 {
     cout<<"Creating player cache..."<<endl;
-
     int numberofframes, xSize, ySize;
     string state;
     map<string, string>::iterator iter;
