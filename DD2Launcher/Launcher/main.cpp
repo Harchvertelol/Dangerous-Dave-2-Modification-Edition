@@ -507,7 +507,7 @@ class Launcher
             else pooling->setChecked(false);
 
             tgui::ComboBox::Ptr modpack = s_TGUI.get<tgui::ComboBox>("Modpack");
-            vector<string> modpacks = getDirs("ModPacks", "mod.info");
+            vector<string> modpacks = getDirs("ModPacks", "/About/mod.info");
             for(unsigned int i = 0; i < modpacks.size(); i++)
                 if(modpacks[i] != "StandardDave") modpack->addItem(modpacks[i]);
             if(s_DD2Ini->getValue("resources", "modpack") != "") modpack->setSelectedItem(s_DD2Ini->getValue("resources", "modpack"));

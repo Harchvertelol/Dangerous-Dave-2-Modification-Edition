@@ -150,8 +150,8 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     if( s_IniFile->getValue("resources", "modpack") != "")
     {
         s_NameMod = s_IniFile->getValue("resources", "modpack");
-        s_ModInfo = prs.getParsedFromFile("ModPacks/" + s_NameMod + "/mod.info");
-        s_ModSettings = prs.getParsedFromFile("ModPacks/" + s_NameMod + "/settings.ini");
+        s_ModInfo = prs.getParsedFromFile("ModPacks/" + s_NameMod + "/About/mod.info");
+        s_ModSettings = prs.getParsedFromFile("ModPacks/" + s_NameMod + "/About/settings.ini");
         if(!s_ModInfo || !s_ModSettings) return false;
 
         int res_compare_game_versions = compareGameVersions(STRING_CONSTANTS::SC_GAME_VERSION, s_ModInfo->getValue("info", "gameversion"));
