@@ -50,7 +50,7 @@ bool Sounds::load(string PathToSoundPack)
             }
         }
         s_SoundsList[iter1->first].setBuffer(s_SoundsBuffersList[iter1->second]);
-        s_SoundsList[iter1->first].setVolume(stof(s_GameClass->s_IniFile->getValue("audio", "soundvolume")));
+        s_SoundsList[iter1->first].setVolume(stof(s_GameClass->s_IniFile->getValue("audio", "soundsvolume")));
         iter1++;
     }
     return true;

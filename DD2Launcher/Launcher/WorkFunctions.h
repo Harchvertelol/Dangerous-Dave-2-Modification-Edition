@@ -14,13 +14,14 @@ namespace WorkFunctions
     {
         std::string FirstWord(std::string);
         std::string RemoveFirstWord(std::string);
+        std::string removeSlashes(std::string);
     };
     namespace ParserFunctions
     {
         std::string getNameMainVariable(std::string);
         std::string getNameSecondaryVariable(std::string);
         std::string getValueSecondaryVariable(std::string);
-        int splitMass(std::map<int,int>*, int, int, std::string, std::string);
+        int splitMass(std::map<int, int>*, int, int, std::string, std::string);
         int splitMassString(std::map<int, std::string>*, int, int, std::string, std::string);
         std::string addMainVariableString(std::string, std::string, std::string);
         std::string addSecondaryVariableString(std::string, std::string, std::string, std::string);

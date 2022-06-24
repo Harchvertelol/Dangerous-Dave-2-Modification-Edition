@@ -1,0 +1,29 @@
+{ "columns":3,
+ "image":"DDME_backgrounds_objects.png",
+ "imageheight":16,
+ "imagewidth":16,
+ "margin":0,
+ "name":"Backgrounds objects",
+ "spacing":0,
+ "tilecount":1,
+ "tiledversion":"1.7.1",
+ "tileheight":16,
+ "tiles":[
+        {
+         "id":0,
+         "properties":[
+                {
+                 "name":"Name",
+                 "type":"string",
+                 "value":"Empty"
+                }, 
+                {
+                 "name":"Type",
+                 "type":"string",
+                 "value":"Tile param"
+                }]
+        }],
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.6"
+}

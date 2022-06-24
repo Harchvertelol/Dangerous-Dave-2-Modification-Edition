@@ -43,24 +43,6 @@ Renderer.3 {
 Renderer.4 {
     BackgroundColor = #F5F5F5;
     BackgroundColorDisabled = #E6E6E6;
-    BackgroundColorHover = white;
-    BorderColor = #3C3C3C;
-    BorderColorDisabled = #7D7D7D;
-    BorderColorFocused = #1E1EB4;
-    BorderColorHover = black;
-    Borders = (1, 1, 1, 1);
-    CheckColor = #3C3C3C;
-    CheckColorDisabled = #7D7D7D;
-    CheckColorHover = black;
-    TextColor = #3C3C3C;
-    TextColorDisabled = #7D7D7D;
-    TextColorHover = black;
-    TextDistanceRatio = 0.2;
-}
-
-Renderer.5 {
-    BackgroundColor = #F5F5F5;
-    BackgroundColorDisabled = #E6E6E6;
     BackgroundColorDown = #EBEBEB;
     BackgroundColorHover = white;
     BorderColor = #3C3C3C;
@@ -82,15 +64,25 @@ Renderer.5 {
     TextureHover = None;
 }
 
-Renderer.6 {
-    BackgroundColor = transparent;
+Renderer.5 {
+    BackgroundColor = #F5F5F5;
+    BackgroundColorDisabled = #E6E6E6;
+    BackgroundColorHover = white;
     BorderColor = #3C3C3C;
-    Borders = (0, 0, 0, 0);
+    BorderColorDisabled = #7D7D7D;
+    BorderColorFocused = #1E1EB4;
+    BorderColorHover = black;
+    Borders = (1, 1, 1, 1);
+    CheckColor = #3C3C3C;
+    CheckColorDisabled = #7D7D7D;
+    CheckColorHover = black;
     TextColor = #3C3C3C;
-    TextureBackground = None;
+    TextColorDisabled = #7D7D7D;
+    TextColorHover = black;
+    TextDistanceRatio = 0.2;
 }
 
-Renderer.7 {
+Renderer.6 {
     BackgroundColor = #F5F5F5;
     BackgroundColorDisabled = #E6E6E6;
     BackgroundColorHover = white;
@@ -116,10 +108,18 @@ Renderer.7 {
     TextureUncheckedHover = None;
 }
 
+Renderer.7 {
+    BackgroundColor = transparent;
+    BorderColor = #3C3C3C;
+    Borders = (0, 0, 0, 0);
+    TextColor = #3C3C3C;
+    TextureBackground = None;
+}
+
 Label.DifficultyText {
     AutoSize = true;
     Position = (20, 10);
-    Renderer = &6;
+    Renderer = &7;
     ScrollbarPolicy = Never;
     Size = (65.2, 18);
     Text = "Difficulty:";
@@ -158,7 +158,7 @@ Tabs.Difficulty {
 
 CheckBox.Standard {
     Position = (20, 140);
-    Renderer = &4;
+    Renderer = &5;
     Size = (18, 18);
     Text = "Using standard modpack";
     TextSize = 13;
@@ -166,7 +166,7 @@ CheckBox.Standard {
 
 CheckBox.Pooling {
     Position = (20, 240);
-    Renderer = &4;
+    Renderer = &5;
     Size = (18, 18);
     Text = "Pooling resources";
     TextSize = 13;
@@ -175,7 +175,7 @@ CheckBox.Pooling {
 Label.ModpackText {
     AutoSize = true;
     Position = (20, 200);
-    Renderer = &6;
+    Renderer = &7;
     ScrollbarPolicy = Never;
     Size = (64.2, 18);
     Text = "Modpack:";
@@ -198,7 +198,7 @@ ComboBox.Modpack {
 Label.LevelpackText {
     AutoSize = true;
     Position = (20, 280);
-    Renderer = &6;
+    Renderer = &7;
     ScrollbarPolicy = Never;
     Size = (72.2, 18);
     Text = "Levelpack:";
@@ -221,7 +221,7 @@ ComboBox.Levelpack {
 Label.TexturepackText {
     AutoSize = true;
     Position = (20, 320);
-    Renderer = &6;
+    Renderer = &7;
     ScrollbarPolicy = Never;
     Size = (87.2, 18);
     Text = "Texturepack:";
@@ -244,7 +244,7 @@ ComboBox.Texturepack {
 Label.MonsterpackText {
     AutoSize = true;
     Position = (20, 360);
-    Renderer = &6;
+    Renderer = &7;
     ScrollbarPolicy = Never;
     Size = (89.2, 18);
     Text = "Monsterpack:";
@@ -267,7 +267,7 @@ ComboBox.Monsterpack {
 Label.BonuspackText {
     AutoSize = true;
     Position = (20, 400);
-    Renderer = &6;
+    Renderer = &7;
     ScrollbarPolicy = Never;
     Size = (77.2, 18);
     Text = "Bonuspack:";
@@ -290,7 +290,7 @@ ComboBox.Bonuspack {
 Label.ScreenpackText {
     AutoSize = true;
     Position = (20, 440);
-    Renderer = &6;
+    Renderer = &7;
     ScrollbarPolicy = Never;
     Size = (82.2, 18);
     Text = "Screenpack:";
@@ -301,7 +301,7 @@ Label.ScreenpackText {
 Label.SoundpackText {
     AutoSize = true;
     Position = (20, 480);
-    Renderer = &6;
+    Renderer = &7;
     ScrollbarPolicy = Never;
     Size = (78.2, 18);
     Text = "Soundpack:";
@@ -312,7 +312,7 @@ Label.SoundpackText {
 Label.PlayerpackText {
     AutoSize = true;
     Position = (20, 560);
-    Renderer = &6;
+    Renderer = &7;
     ScrollbarPolicy = Never;
     Size = (78.2, 18);
     Text = "Playerpack:";
@@ -389,7 +389,7 @@ Button.SaveLaunchGame {
 
 Button.SaveConfig {
     Position = (1090, 320);
-    Renderer = &5;
+    Renderer = &4;
     Size = (160, 38.6667);
     Text = "Save config";
     TextSize = 18;
@@ -397,7 +397,7 @@ Button.SaveConfig {
 
 Button.ResetToDefault {
     Position = (1090, 260);
-    Renderer = &5;
+    Renderer = &4;
     Size = (160, 38.6667);
     Text = "Reset to default";
     TextSize = 18;
@@ -405,7 +405,7 @@ Button.ResetToDefault {
 
 Button.EdAllVar {
     Position = (1000, 10);
-    Renderer = &5;
+    Renderer = &4;
     Size = (250, 51.3333);
     Text = "Edit all variables (expert)";
     TextSize = 18;
@@ -414,7 +414,7 @@ Button.EdAllVar {
 Button.GoToServer {
     Enabled = false;
     Position = (1000, 80);
-    Renderer = &5;
+    Renderer = &4;
     Size = (250, 51.3333);
     Text = "Go to server...";
     TextSize = 18;
@@ -438,7 +438,7 @@ Label.TextDifficulty {
 
 Button.Keys {
     Position = (1090, 208.48);
-    Renderer = &5;
+    Renderer = &4;
     Size = (160, 32.8533);
     Text = Keys;
     TextSize = 18;
@@ -477,7 +477,7 @@ Button.Exit {
 
 Button.Editor {
     Position = (1000, 150);
-    Renderer = &5;
+    Renderer = &4;
     Size = (110, 38.6667);
     Text = Editor;
     TextSize = 18;
@@ -491,7 +491,7 @@ Group.RadioButtonsDaveVersion {
 
     RadioButton.DD1 {
         Position = (0, 10);
-        Renderer = &7;
+        Renderer = &6;
         Size = (18, 18);
         Text = "Dangerous Dave 1";
         TextSize = 13;
@@ -500,7 +500,7 @@ Group.RadioButtonsDaveVersion {
     RadioButton.DD2 {
         Checked = true;
         Position = (150, 10);
-        Renderer = &7;
+        Renderer = &6;
         Size = (18, 18);
         Text = "Dangerous Dave 2";
         TextSize = 13;
@@ -508,7 +508,7 @@ Group.RadioButtonsDaveVersion {
 
     RadioButton.DD3 {
         Position = (0, 40);
-        Renderer = &7;
+        Renderer = &6;
         Size = (18, 18);
         Text = "Dangerous Dave 3";
         TextSize = 13;
@@ -516,7 +516,7 @@ Group.RadioButtonsDaveVersion {
 
     RadioButton.DD4 {
         Position = (150, 40);
-        Renderer = &7;
+        Renderer = &6;
         Size = (18, 18);
         Text = "Dangerous Dave 4";
         TextSize = 13;
@@ -531,7 +531,7 @@ Group.CustomDifficlutyField {
 
     Label.TextLivesDecreasePerDeath {
         AutoSize = true;
-        Renderer = &6;
+        Renderer = &7;
         ScrollbarPolicy = Never;
         Size = (168.2, 18);
         Text = "Decrease lives per death:";
@@ -554,7 +554,7 @@ Group.CustomDifficlutyField {
 
         RadioButton.NoReloadLevel {
             Position = (80, 0);
-            Renderer = &7;
+            Renderer = &6;
             Size = (18, 18);
             Text = "No reload level";
             TextSize = 13;
@@ -563,7 +563,7 @@ Group.CustomDifficlutyField {
         RadioButton.ReloadLevel {
             Checked = true;
             Position = (210, 0);
-            Renderer = &7;
+            Renderer = &6;
             Size = (18, 18);
             Text = "Reload level";
             TextSize = 13;
@@ -571,7 +571,7 @@ Group.CustomDifficlutyField {
 
         RadioButton.PreviousLevel {
             Position = (330, 0);
-            Renderer = &7;
+            Renderer = &6;
             Size = (18, 18);
             Text = "Previous level";
             TextSize = 13;
@@ -579,7 +579,7 @@ Group.CustomDifficlutyField {
 
         RadioButton.GameOver {
             Position = (460, 0);
-            Renderer = &7;
+            Renderer = &6;
             Size = (18, 18);
             Text = "Game over";
             TextSize = 13;
@@ -588,7 +588,7 @@ Group.CustomDifficlutyField {
         Label.TextOnDeath {
             AutoSize = true;
             Position = (0, 1);
-            Renderer = &6;
+            Renderer = &7;
             ScrollbarPolicy = Never;
             Size = (67.2, 18);
             Text = "On death:";
@@ -599,7 +599,7 @@ Group.CustomDifficlutyField {
     Label.HealthPointsText {
         AutoSize = true;
         Position = (0, 60);
-        Renderer = &6;
+        Renderer = &7;
         ScrollbarPolicy = Never;
         Size = (92.2, 18);
         Text = "Health points:";
@@ -619,7 +619,7 @@ Group.CustomDifficlutyField {
 Label.MusicPackText {
     AutoSize = true;
     Position = (20, 520);
-    Renderer = &6;
+    Renderer = &7;
     ScrollbarPolicy = Never;
     Size = (73.2, 18);
     Text = "Musicpack:";
@@ -642,7 +642,7 @@ ComboBox.Musicpack {
 Label.GuipackText {
     AutoSize = true;
     Position = (20, 600);
-    Renderer = &6;
+    Renderer = &7;
     ScrollbarPolicy = Never;
     Size = (59.2, 18);
     Text = "Guipack:";
@@ -664,8 +664,16 @@ ComboBox.Guipack {
 
 Button.EditorSettings {
     Position = (1120, 150);
-    Renderer = &5;
+    Renderer = &4;
     Size = (130, 38.6667);
     Text = "Editor settings";
     TextSize = 15;
+}
+
+Button.Back {
+    Position = (1090, 580);
+    Renderer = &4;
+    Size = (160, 38.6667);
+    Text = "Back and save...";
+    TextSize = 18;
 }

@@ -1,5 +1,7 @@
 #include "WorkFunctions.h"
 
+#include <regex>
+
 #include <cstdlib>
 
 #ifdef _LINUX_
@@ -25,6 +27,13 @@ string WorkFunctions::WordFunctions::RemoveFirstWord(string str)
 {
     if(str == "" || str.find(" ") == string::npos) return "";
     return str.substr(str.find(" ") + 1);
+}
+
+string WorkFunctions::WordFunctions::removeSlashes(string str)
+{
+    str = std::regex_replace(str, std::regex("\\\\n"), "\n");
+    str = std::regex_replace(str, std::regex("\\\\\\n"), "\\n");
+    return str;
 }
 
 string WorkFunctions::ConvertFunctions::itos(int s_Number)

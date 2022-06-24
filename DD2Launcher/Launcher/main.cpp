@@ -72,57 +72,80 @@ class Launcher
             delete s_DD2General;
             delete s_LauncherConfig;
         }
-        void resetToDefault()
+        void resetToDefault(bool easylauncher)
         {
             if(!s_DD2Ini) delete s_DD2Ini;
             if(!s_DD2General) delete s_DD2General;
             ParserInfoFile prs;
             s_DD2Ini = prs.getParsedFromFile("Launcher/DD2Default.ini");
             s_DD2General = prs.getParsedFromFile("Launcher/GeneralDefault.ini");
-            loadData();
+            loadData(easylauncher);
         }
-        void saveConfig()
+        void saveConfig(bool easylauncher)
         {
             ParserInfoFile prs;
             if(!s_DD2Ini) return;
 
-            tgui::CheckBox::Ptr stnd = s_TGUI.get<tgui::CheckBox>("Standard");
-            if(stnd->isChecked()) s_DD2Ini->setValue("resources", "standard", "true");
-            else s_DD2Ini->setValue("resources", "standard", "false");
+            if(easylauncher)
+            {
+                auto child = s_TGUI.get<tgui::Panel>("EasyLauncher");
 
-            tgui::CheckBox::Ptr pooling = s_TGUI.get<tgui::CheckBox>("Pooling");
-            if(pooling->isChecked()) s_DD2Ini->setValue("resources", "pooling", "true");
-            else s_DD2Ini->setValue("resources", "pooling", "false");
+                tgui::Slider::Ptr SoundsSlider = child->get<tgui::Slider>("SoundsSlider");
+                string soundsvolume = WorkFunctions::ConvertFunctions::ftos(SoundsSlider->getValue());
+                s_DD2Ini->setValue("audio", "soundsvolume", soundsvolume);
 
-            tgui::ComboBox::Ptr modpack = s_TGUI.get<tgui::ComboBox>("Modpack");
-            s_DD2Ini->setValue("resources", "modpack", modpack->getSelectedItem().toStdString() );
+                tgui::Slider::Ptr MusicSlider = child->get<tgui::Slider>("MusicSlider");
+                string musicvolume = WorkFunctions::ConvertFunctions::ftos(MusicSlider->getValue());
+                s_DD2Ini->setValue("audio", "musicvolume", musicvolume);
 
-            tgui::ComboBox::Ptr levelpack = s_TGUI.get<tgui::ComboBox>("Levelpack");
-            s_DD2Ini->setValue("resources", "levelpack", levelpack->getSelectedItem().toStdString() );
+                tgui::CheckBox::Ptr SoundsCheckBox = child->get<tgui::CheckBox>("SoundsCheckBox");
+                if(SoundsCheckBox->isChecked()) s_DD2Ini->setValue("audio", "sounds", "true");
+                else s_DD2Ini->setValue("audio", "sounds", "false");
 
-            tgui::ComboBox::Ptr texturepack = s_TGUI.get<tgui::ComboBox>("Texturepack");
-            s_DD2Ini->setValue("resources", "texturepack", texturepack->getSelectedItem().toStdString() );
+                tgui::CheckBox::Ptr MusicCheckBox = child->get<tgui::CheckBox>("MusicCheckBox");
+                if(MusicCheckBox->isChecked()) s_DD2Ini->setValue("audio", "music", "true");
+                else s_DD2Ini->setValue("audio", "music", "false");
+            }
+            else
+            {
+                tgui::CheckBox::Ptr stnd = s_TGUI.get<tgui::CheckBox>("Standard");
+                if(stnd->isChecked()) s_DD2Ini->setValue("resources", "standard", "true");
+                else s_DD2Ini->setValue("resources", "standard", "false");
 
-            tgui::ComboBox::Ptr monsterpack = s_TGUI.get<tgui::ComboBox>("Monsterpack");
-            s_DD2Ini->setValue("resources", "monsterpack", monsterpack->getSelectedItem().toStdString() );
+                tgui::CheckBox::Ptr pooling = s_TGUI.get<tgui::CheckBox>("Pooling");
+                if(pooling->isChecked()) s_DD2Ini->setValue("resources", "pooling", "true");
+                else s_DD2Ini->setValue("resources", "pooling", "false");
 
-            tgui::ComboBox::Ptr bonuspack = s_TGUI.get<tgui::ComboBox>("Bonuspack");
-            s_DD2Ini->setValue("resources", "bonuspack", bonuspack->getSelectedItem().toStdString() );
+                tgui::ComboBox::Ptr modpack = s_TGUI.get<tgui::ComboBox>("Modpack");
+                s_DD2Ini->setValue("resources", "modpack", modpack->getSelectedItem().toStdString() );
 
-            tgui::ComboBox::Ptr screenpack = s_TGUI.get<tgui::ComboBox>("Screenpack");
-            s_DD2Ini->setValue("resources", "screenpack", screenpack->getSelectedItem().toStdString() );
+                tgui::ComboBox::Ptr levelpack = s_TGUI.get<tgui::ComboBox>("Levelpack");
+                s_DD2Ini->setValue("resources", "levelpack", levelpack->getSelectedItem().toStdString() );
 
-            tgui::ComboBox::Ptr soundpack = s_TGUI.get<tgui::ComboBox>("Soundpack");
-            s_DD2Ini->setValue("resources", "soundpack", soundpack->getSelectedItem().toStdString() );
+                tgui::ComboBox::Ptr texturepack = s_TGUI.get<tgui::ComboBox>("Texturepack");
+                s_DD2Ini->setValue("resources", "texturepack", texturepack->getSelectedItem().toStdString() );
 
-            tgui::ComboBox::Ptr musicpack = s_TGUI.get<tgui::ComboBox>("Musicpack");
-            s_DD2Ini->setValue("resources", "musicpack", musicpack->getSelectedItem().toStdString() );
+                tgui::ComboBox::Ptr monsterpack = s_TGUI.get<tgui::ComboBox>("Monsterpack");
+                s_DD2Ini->setValue("resources", "monsterpack", monsterpack->getSelectedItem().toStdString() );
 
-            tgui::ComboBox::Ptr playerpack = s_TGUI.get<tgui::ComboBox>("Playerpack");
-            s_DD2Ini->setValue("resources", "playerpack", (sf::String)playerpack->getSelectedItem());
+                tgui::ComboBox::Ptr bonuspack = s_TGUI.get<tgui::ComboBox>("Bonuspack");
+                s_DD2Ini->setValue("resources", "bonuspack", bonuspack->getSelectedItem().toStdString() );
 
-            tgui::ComboBox::Ptr guipack = s_TGUI.get<tgui::ComboBox>("Guipack");
-            s_DD2Ini->setValue("resources", "guipack", guipack->getSelectedItem().toStdString() );
+                tgui::ComboBox::Ptr screenpack = s_TGUI.get<tgui::ComboBox>("Screenpack");
+                s_DD2Ini->setValue("resources", "screenpack", screenpack->getSelectedItem().toStdString() );
+
+                tgui::ComboBox::Ptr soundpack = s_TGUI.get<tgui::ComboBox>("Soundpack");
+                s_DD2Ini->setValue("resources", "soundpack", soundpack->getSelectedItem().toStdString() );
+
+                tgui::ComboBox::Ptr musicpack = s_TGUI.get<tgui::ComboBox>("Musicpack");
+                s_DD2Ini->setValue("resources", "musicpack", musicpack->getSelectedItem().toStdString() );
+
+                tgui::ComboBox::Ptr playerpack = s_TGUI.get<tgui::ComboBox>("Playerpack");
+                s_DD2Ini->setValue("resources", "playerpack", (sf::String)playerpack->getSelectedItem());
+
+                tgui::ComboBox::Ptr guipack = s_TGUI.get<tgui::ComboBox>("Guipack");
+                s_DD2Ini->setValue("resources", "guipack", guipack->getSelectedItem().toStdString() );
+            }
 
             prs.writeParsedToFile(s_DD2Ini, "DD2.ini");
         }
@@ -277,6 +300,196 @@ class Launcher
             button->onPress([=](){ s_TGUI.remove(child); });
             child->add(button);
         }
+        void loadEasyLauncherWidgets()
+        {
+            auto childRemove = s_TGUI.get<tgui::Panel>("EasyLauncher");
+            if(childRemove) s_TGUI.remove(childRemove);
+
+            auto child = tgui::Panel::create();
+            child->setSize("100%", "100%");
+            child->setWidgetName("EasyLauncher");
+            s_TGUI.add(child);
+
+            child->loadWidgetsFromFile(s_EasyLauncherGuiFile);
+
+            tgui::Button::Ptr resetdefault = child->get<tgui::Button>("ResetToDefault");
+            resetdefault->onPress(Launcher::resetToDefault, this, true);
+
+            tgui::Button::Ptr saveconfig = child->get<tgui::Button>("SaveConfig");
+            saveconfig->onPress(Launcher::saveConfig, this, true);
+
+            tgui::Button::Ptr exitbutton = child->get<tgui::Button>("Exit");
+            exitbutton->onPress([=](){ s_Window->close(); });
+
+            tgui::Button::Ptr Keys = child->get<tgui::Button>("Keys");
+            Keys->onPress(Launcher::keys, this);
+
+            tgui::Button::Ptr More = child->get<tgui::Button>("More");
+            More->onPress([=](){ this->saveConfig(true); this->loadData(false); });
+
+            tgui::Slider::Ptr SoundsSlider = child->get<tgui::Slider>("SoundsSlider");
+            SoundsSlider->setValue(stof(s_DD2Ini->getValue("audio", "soundsvolume")));
+
+            tgui::Slider::Ptr MusicSlider = child->get<tgui::Slider>("MusicSlider");
+            MusicSlider->setValue(stof(s_DD2Ini->getValue("audio", "musicvolume")));
+
+            tgui::CheckBox::Ptr SoundsCheckBox = child->get<tgui::CheckBox>("SoundsCheckBox");
+            if(s_DD2Ini->getValue("audio", "sounds") == "true") SoundsCheckBox->setChecked(true);
+            else SoundsCheckBox->setChecked(false);
+
+            tgui::CheckBox::Ptr MusicCheckBox = child->get<tgui::CheckBox>("MusicCheckBox");
+            if(s_DD2Ini->getValue("audio", "music") == "true") MusicCheckBox->setChecked(true);
+            else MusicCheckBox->setChecked(false);
+
+            tgui::ScrollablePanel::Ptr ModpacksScrollablePanel = child->get<tgui::ScrollablePanel>("ModpacksScrollablePanel");
+            int mspX = ModpacksScrollablePanel->getSize().x;
+            int mspY = ModpacksScrollablePanel->getSize().y;
+
+            vector<string> modpacks = getDirs("ModPacks", "/About/mod.info");
+            float shift_y_pos = 0;
+            for(unsigned int i = 0; i < modpacks.size(); i++)
+            {
+                ParserInfoFile prs;
+                string pathtomodpackinfo = "ModPacks/" + modpacks[i] + "/About/";
+                PostParsingStruct* pps = prs.getParsedFromFile(pathtomodpackinfo + "mod.info");
+                string desc = pps->getValue("info", "desc");
+                string name = pps->getValue("info", "name");
+                if(name == "") name = "Unnamed";
+                if(desc == "") desc = "Empty";
+                desc = WorkFunctions::WordFunctions::removeSlashes(desc);
+                string logo = pps->getValue("info", "logo");
+                tgui::Picture::Ptr modpack_logo_pic;
+                auto startmodsettings =  [=]()
+                {
+                    auto child_window = tgui::ChildWindow::create();
+                    child_window->setSize("50%", "30%");
+                    child_window->setPosition("25%", "30%");
+                    child_window->setTitle("Modpack settings");
+                    child->add(child_window);
+
+                    auto label = tgui::Label::create();
+                    label->setText("In progress...");
+                    label->setSize("100%", "85%");
+                    label->setPosition("0%", "15%");
+                    label->setTextSize(25);
+                    label->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+                    child_window->add(label);
+
+                    auto button = tgui::Button::create();
+                    button->setPosition("35%", "70%");
+                    button->setText("Ok");
+                    button->setSize("30%", "20%");
+                    button->onPress([=](){ child->remove(child_window); });
+                    child_window->add(button);
+                };
+
+                auto startmodpack = [=]()
+                {
+                    auto child_window = tgui::ChildWindow::create();
+                    child_window->setSize("50%", "30%");
+                    child_window->setPosition("25%", "30%");
+                    child_window->setTitle("Starting the game...");
+                    child->add(child_window);
+
+                    auto label = tgui::Label::create();
+                    label->setText("Do you want to launch the game with the \"" + name + "\" modpack?");
+                    label->setSize("100%", "85%");
+                    label->setPosition("0%", "15%");
+                    label->setTextSize(25);
+                    label->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+                    child_window->add(label);
+
+                    auto button = tgui::Button::create();
+                    button->setPosition("10%", "70%");
+                    button->setText("No");
+                    button->setSize("30%", "20%");
+                    button->onPress([=](){ child->remove(child_window); });
+                    child_window->add(button);
+
+                    button = tgui::Button::create();
+                    button->setPosition("60%", "70%");
+                    button->setText("Yes");
+                    button->setSize("30%", "20%");
+                    button->onPress([=]()
+                                    {
+                                        if(modpacks[i] == "StandardDave")
+                                        {
+                                            this->s_DD2Ini->setValue("resources", "standard", "true");
+                                            this->s_DD2Ini->setValue("resources", "modpack", "");
+                                            this->s_DD2Ini->setValue("resources", "pooling", "false");
+                                        }
+                                        else
+                                        {
+                                            this->s_DD2Ini->setValue("resources", "standard", "false");
+                                            this->s_DD2Ini->setValue("resources", "modpack", modpacks[i]);
+                                            this->s_DD2Ini->setValue("resources", "pooling", "true");
+                                        }
+                                        this->saveLaunchGame(true);
+                                    }
+                                    );
+                    child_window->add(button);
+                };
+
+                auto modpack_settings_pic = tgui::Picture::create("Launcher/Settings_Icon.png");
+                modpack_settings_pic->setOrigin(0, 0.5);
+                modpack_settings_pic->onClick(startmodsettings);
+
+                if(logo != "") modpack_logo_pic = tgui::Picture::create( (pathtomodpackinfo + logo).c_str() );
+                else
+                {
+                    modpack_logo_pic = tgui::Picture::create();
+                    modpack_logo_pic->setSize(10, 10);
+                }
+
+                modpack_logo_pic->setOrigin(0, 0.5);
+                modpack_logo_pic->onClick(startmodpack);
+                int x_temp = modpack_logo_pic->getSize().x;
+                int y_temp = modpack_logo_pic->getSize().y;
+                int perc_for_x = 30;
+                float one_perc = float(x_temp) / perc_for_x;
+                float perc_for_y = y_temp / one_perc;
+                perc_for_y = perc_for_y * float(mspX) / float(mspY);
+                modpack_logo_pic->setSize( (WorkFunctions::ConvertFunctions::itos(perc_for_x) + "%").c_str(), (WorkFunctions::ConvertFunctions::ftos(perc_for_y) + "%").c_str() );
+
+                if(perc_for_y < 30) perc_for_y = 30;
+
+                auto modpack_name_label = tgui::Label::create();
+                modpack_name_label->setText(name);
+                float perc_for_name_y = 12;
+                modpack_name_label->setSize("52%", (WorkFunctions::ConvertFunctions::ftos(perc_for_name_y) + "%").c_str() );
+                modpack_name_label->setPosition("45%", (WorkFunctions::ConvertFunctions::ftos(shift_y_pos) + "%").c_str() );
+                modpack_name_label->setTextSize(25);
+                modpack_name_label->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+                modpack_name_label->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+                modpack_name_label->getRenderer()->setTextColor(tgui::Color(43, 224, 233, 255));
+                modpack_name_label->onClick(startmodpack);
+                ModpacksScrollablePanel->add(modpack_name_label);
+
+                tgui::Label::Ptr modpackdesclabel = tgui::Label::create();
+                modpackdesclabel->setSize("52%", (WorkFunctions::ConvertFunctions::ftos(perc_for_y - perc_for_name_y - 1) + "%").c_str());
+                modpackdesclabel->setPosition("45%", (WorkFunctions::ConvertFunctions::ftos(shift_y_pos + perc_for_name_y + 1) + "%").c_str() );
+                modpackdesclabel->setText(desc);
+                modpackdesclabel->setTextSize(15);
+                modpackdesclabel->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+                modpackdesclabel->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+                modpackdesclabel->onClick(startmodpack);
+                ModpacksScrollablePanel->add(modpackdesclabel);
+
+                string pos_y = WorkFunctions::ConvertFunctions::ftos(shift_y_pos + perc_for_y / 2) + "%";
+
+                modpack_logo_pic->setPosition("10%", pos_y.c_str());
+                modpack_settings_pic->setPosition("0%", pos_y.c_str());
+
+                ModpacksScrollablePanel->add(modpack_logo_pic);
+                ModpacksScrollablePanel->add(modpack_settings_pic);
+
+                shift_y_pos = shift_y_pos + perc_for_y + 5;
+                delete pps;
+            }
+
+            /*tgui::Button::Ptr savelaunchgame = s_TGUI.get<tgui::Button>("SaveLaunchGame");
+            savelaunchgame->onPress(Launcher::saveLaunchGame, this);*/
+        }
         void editAllVariables()
         {
             //auto child = tgui::ChildWindow::create();
@@ -341,7 +554,7 @@ class Launcher
                                 ParserInfoFile prs;
                                 prs.writeParsedToFile(s_DD2Ini, "DD2.ini");
                                 prs.writeParsedToFile(s_DD2General, "General.ini");
-                                this->loadData();
+                                this->loadData(false);
                             });
             child->add(button);
 
@@ -360,15 +573,15 @@ class Launcher
 
             tgui::Button::Ptr resetdefault = s_TGUI.get<tgui::Button>("ResetToDefault");
             //resetdefault->connect("pressed", Launcher::resetToDefault, this);
-            resetdefault->onPress(Launcher::resetToDefault, this);
+            resetdefault->onPress(Launcher::resetToDefault, this, false);
 
             tgui::Button::Ptr saveconfig = s_TGUI.get<tgui::Button>("SaveConfig");
             //saveconfig->connect("pressed", Launcher::saveConfig, this);
-            saveconfig->onPress(Launcher::saveConfig, this);
+            saveconfig->onPress(Launcher::saveConfig, this, false);
 
             tgui::Button::Ptr savelaunchgame = s_TGUI.get<tgui::Button>("SaveLaunchGame");
             //savelaunchgame->connect("pressed", Launcher::saveLaunchGame, this);
-            savelaunchgame->onPress(Launcher::saveLaunchGame, this);
+            savelaunchgame->onPress(Launcher::saveLaunchGame, this, false);
 
             tgui::Button::Ptr exitbutton = s_TGUI.get<tgui::Button>("Exit");
             //exitbutton->connect("pressed", [=](){ s_Window->close(); });
@@ -386,6 +599,9 @@ class Launcher
 
             tgui::Button::Ptr EditorSettings = s_TGUI.get<tgui::Button>("EditorSettings");
             EditorSettings->onPress(Launcher::editorSettings, this, false);
+
+            tgui::Button::Ptr Back = s_TGUI.get<tgui::Button>("Back");
+            Back->onPress([=](){ this->saveConfig(false); this->loadEasyLauncherWidgets(); });
         }
         void editorSettings(bool error_path = true)
         {
@@ -492,89 +708,93 @@ class Launcher
                 textdif->setText(textsdif[difvalue.toStdString()]);
             }
         }
-        void loadData()
+        void loadData(bool easylauncher)
         {
             if(!s_DD2Ini || s_GuiFile == "") return;
 
-            loadWidgets();
+            if(easylauncher) loadEasyLauncherWidgets();
+            else
+            {
+                loadWidgets();
 
-            tgui::CheckBox::Ptr stnd = s_TGUI.get<tgui::CheckBox>("Standard");
-            if(s_DD2Ini->getValue("resources", "standard") == "true") stnd->setChecked(true);
-            else stnd->setChecked(false);
+                tgui::CheckBox::Ptr stnd = s_TGUI.get<tgui::CheckBox>("Standard");
+                if(s_DD2Ini->getValue("resources", "standard") == "true") stnd->setChecked(true);
+                else stnd->setChecked(false);
 
-            tgui::CheckBox::Ptr pooling = s_TGUI.get<tgui::CheckBox>("Pooling");
-            if(s_DD2Ini->getValue("resources", "pooling") == "true") pooling->setChecked(true);
-            else pooling->setChecked(false);
+                tgui::CheckBox::Ptr pooling = s_TGUI.get<tgui::CheckBox>("Pooling");
+                if(s_DD2Ini->getValue("resources", "pooling") == "true") pooling->setChecked(true);
+                else pooling->setChecked(false);
 
-            tgui::ComboBox::Ptr modpack = s_TGUI.get<tgui::ComboBox>("Modpack");
-            vector<string> modpacks = getDirs("ModPacks", "/About/mod.info");
-            for(unsigned int i = 0; i < modpacks.size(); i++)
-                if(modpacks[i] != "StandardDave") modpack->addItem(modpacks[i]);
-            if(s_DD2Ini->getValue("resources", "modpack") != "") modpack->setSelectedItem(s_DD2Ini->getValue("resources", "modpack"));
-            else modpack->setSelectedItem("");
+                tgui::ComboBox::Ptr modpack = s_TGUI.get<tgui::ComboBox>("Modpack");
+                vector<string> modpacks = getDirs("ModPacks", "/About/mod.info");
+                for(unsigned int i = 0; i < modpacks.size(); i++)
+                    if(modpacks[i] != "StandardDave") modpack->addItem(modpacks[i]);
+                if(s_DD2Ini->getValue("resources", "modpack") != "") modpack->setSelectedItem(s_DD2Ini->getValue("resources", "modpack"));
+                else modpack->setSelectedItem("");
 
-            tgui::ComboBox::Ptr levelpack = s_TGUI.get<tgui::ComboBox>("Levelpack");
-            vector<string> levelpacks = getDirs("PacksData/LevelPacks", "levels.dat");
-            for(unsigned int i = 0; i < levelpacks.size(); i++) levelpack->addItem(levelpacks[i]);
-            if(s_DD2Ini->getValue("resources", "levelpack") != "") levelpack->setSelectedItem(s_DD2Ini->getValue("resources", "levelpack"));
-            else levelpack->setSelectedItem("");
+                tgui::ComboBox::Ptr levelpack = s_TGUI.get<tgui::ComboBox>("Levelpack");
+                vector<string> levelpacks = getDirs("PacksData/LevelPacks", "levels.dat");
+                for(unsigned int i = 0; i < levelpacks.size(); i++) levelpack->addItem(levelpacks[i]);
+                if(s_DD2Ini->getValue("resources", "levelpack") != "") levelpack->setSelectedItem(s_DD2Ini->getValue("resources", "levelpack"));
+                else levelpack->setSelectedItem("");
 
-            tgui::ComboBox::Ptr texturepack = s_TGUI.get<tgui::ComboBox>("Texturepack");
-            vector<string> texturepacks = getDirs("PacksData/TexturePacks", "tiles.info");
-            for(unsigned int i = 0; i < texturepacks.size(); i++) texturepack->addItem(texturepacks[i]);
-            if(s_DD2Ini->getValue("resources", "texturepack") != "") texturepack->setSelectedItem(s_DD2Ini->getValue("resources", "texturepack"));
-            else texturepack->setSelectedItem("");
+                tgui::ComboBox::Ptr texturepack = s_TGUI.get<tgui::ComboBox>("Texturepack");
+                vector<string> texturepacks = getDirs("PacksData/TexturePacks", "tiles.info");
+                for(unsigned int i = 0; i < texturepacks.size(); i++) texturepack->addItem(texturepacks[i]);
+                if(s_DD2Ini->getValue("resources", "texturepack") != "") texturepack->setSelectedItem(s_DD2Ini->getValue("resources", "texturepack"));
+                else texturepack->setSelectedItem("");
 
-            tgui::ComboBox::Ptr monsterpack = s_TGUI.get<tgui::ComboBox>("Monsterpack");
-            vector<string> monsterpacks = getDirs("PacksData/MonsterPacks", "monsters.dat");
-            for(unsigned int i = 0; i < monsterpacks.size(); i++) monsterpack->addItem(monsterpacks[i]);
-            if(s_DD2Ini->getValue("resources", "monsterpack") != "") monsterpack->setSelectedItem(s_DD2Ini->getValue("resources", "monsterpack"));
-            else monsterpack->setSelectedItem("");
+                tgui::ComboBox::Ptr monsterpack = s_TGUI.get<tgui::ComboBox>("Monsterpack");
+                vector<string> monsterpacks = getDirs("PacksData/MonsterPacks", "monsters.dat");
+                for(unsigned int i = 0; i < monsterpacks.size(); i++) monsterpack->addItem(monsterpacks[i]);
+                if(s_DD2Ini->getValue("resources", "monsterpack") != "") monsterpack->setSelectedItem(s_DD2Ini->getValue("resources", "monsterpack"));
+                else monsterpack->setSelectedItem("");
 
-            tgui::ComboBox::Ptr bonuspack = s_TGUI.get<tgui::ComboBox>("Bonuspack");
-            vector<string> bonuspacks = getDirs("PacksData/BonusPacks", "bonuses.dat");
-            for(unsigned int i = 0; i < bonuspacks.size(); i++) bonuspack->addItem(bonuspacks[i]);
-            if(s_DD2Ini->getValue("resources", "bonuspack") != "") bonuspack->setSelectedItem(s_DD2Ini->getValue("resources", "bonuspack"));
-            else bonuspack->setSelectedItem("");
+                tgui::ComboBox::Ptr bonuspack = s_TGUI.get<tgui::ComboBox>("Bonuspack");
+                vector<string> bonuspacks = getDirs("PacksData/BonusPacks", "bonuses.dat");
+                for(unsigned int i = 0; i < bonuspacks.size(); i++) bonuspack->addItem(bonuspacks[i]);
+                if(s_DD2Ini->getValue("resources", "bonuspack") != "") bonuspack->setSelectedItem(s_DD2Ini->getValue("resources", "bonuspack"));
+                else bonuspack->setSelectedItem("");
 
-            tgui::ComboBox::Ptr screenpack = s_TGUI.get<tgui::ComboBox>("Screenpack");
-            vector<string> screenpacks = getDirs("PacksData/ScreenPacks", "screens.dat");
-            for(unsigned int i = 0; i < screenpacks.size(); i++) screenpack->addItem(screenpacks[i]);
-            if(s_DD2Ini->getValue("resources", "screenpack") != "") screenpack->setSelectedItem(s_DD2Ini->getValue("resources", "screenpack"));
-            else screenpack->setSelectedItem("");
+                tgui::ComboBox::Ptr screenpack = s_TGUI.get<tgui::ComboBox>("Screenpack");
+                vector<string> screenpacks = getDirs("PacksData/ScreenPacks", "screens.dat");
+                for(unsigned int i = 0; i < screenpacks.size(); i++) screenpack->addItem(screenpacks[i]);
+                if(s_DD2Ini->getValue("resources", "screenpack") != "") screenpack->setSelectedItem(s_DD2Ini->getValue("resources", "screenpack"));
+                else screenpack->setSelectedItem("");
 
-            tgui::ComboBox::Ptr soundpack = s_TGUI.get<tgui::ComboBox>("Soundpack");
-            vector<string> soundpacks = getDirs("PacksData/SoundPacks", "sounds.info");
-            for(unsigned int i = 0; i < soundpacks.size(); i++) soundpack->addItem(soundpacks[i]);
-            if(s_DD2Ini->getValue("resources", "soundpack") != "") soundpack->setSelectedItem(s_DD2Ini->getValue("resources", "soundpack"));
-            else soundpack->setSelectedItem("");
+                tgui::ComboBox::Ptr soundpack = s_TGUI.get<tgui::ComboBox>("Soundpack");
+                vector<string> soundpacks = getDirs("PacksData/SoundPacks", "sounds.info");
+                for(unsigned int i = 0; i < soundpacks.size(); i++) soundpack->addItem(soundpacks[i]);
+                if(s_DD2Ini->getValue("resources", "soundpack") != "") soundpack->setSelectedItem(s_DD2Ini->getValue("resources", "soundpack"));
+                else soundpack->setSelectedItem("");
 
-            tgui::ComboBox::Ptr musicpack = s_TGUI.get<tgui::ComboBox>("Musicpack");
-            vector<string> musicpacks = getDirs("PacksData/MusicPacks", "music.info");
-            for(unsigned int i = 0; i < musicpacks.size(); i++) musicpack->addItem(musicpacks[i]);
-            if(s_DD2Ini->getValue("resources", "musicpack") != "") musicpack->setSelectedItem(s_DD2Ini->getValue("resources", "musicpack"));
-            else musicpack->setSelectedItem("");
+                tgui::ComboBox::Ptr musicpack = s_TGUI.get<tgui::ComboBox>("Musicpack");
+                vector<string> musicpacks = getDirs("PacksData/MusicPacks", "music.info");
+                for(unsigned int i = 0; i < musicpacks.size(); i++) musicpack->addItem(musicpacks[i]);
+                if(s_DD2Ini->getValue("resources", "musicpack") != "") musicpack->setSelectedItem(s_DD2Ini->getValue("resources", "musicpack"));
+                else musicpack->setSelectedItem("");
 
-            tgui::ComboBox::Ptr playerpack = s_TGUI.get<tgui::ComboBox>("Playerpack");
-            vector<string> playerpacks = getDirs("PacksData/PlayerPacks", "player.dat");
-            for(unsigned int i = 0; i < playerpacks.size(); i++) playerpack->addItem(playerpacks[i]);
-            if(s_DD2Ini->getValue("resources", "playerpack") != "") playerpack->setSelectedItem(s_DD2Ini->getValue("resources", "playerpack"));
-            else playerpack->setSelectedItem("");
+                tgui::ComboBox::Ptr playerpack = s_TGUI.get<tgui::ComboBox>("Playerpack");
+                vector<string> playerpacks = getDirs("PacksData/PlayerPacks", "player.dat");
+                for(unsigned int i = 0; i < playerpacks.size(); i++) playerpack->addItem(playerpacks[i]);
+                if(s_DD2Ini->getValue("resources", "playerpack") != "") playerpack->setSelectedItem(s_DD2Ini->getValue("resources", "playerpack"));
+                else playerpack->setSelectedItem("");
 
-            tgui::ComboBox::Ptr guipack = s_TGUI.get<tgui::ComboBox>("Guipack");
-            vector<string> guipacks = getDirs("PacksData/GuiPacks", "gui.info");
-            for(unsigned int i = 0; i < guipacks.size(); i++) guipack->addItem(guipacks[i]);
-            if(s_DD2Ini->getValue("resources", "guipack") != "") guipack->setSelectedItem(s_DD2Ini->getValue("resources", "guipack"));
-            else guipack->setSelectedItem("");
+                tgui::ComboBox::Ptr guipack = s_TGUI.get<tgui::ComboBox>("Guipack");
+                vector<string> guipacks = getDirs("PacksData/GuiPacks", "gui.info");
+                for(unsigned int i = 0; i < guipacks.size(); i++) guipack->addItem(guipacks[i]);
+                if(s_DD2Ini->getValue("resources", "guipack") != "") guipack->setSelectedItem(s_DD2Ini->getValue("resources", "guipack"));
+                else guipack->setSelectedItem("");
 
-            tgui::Tabs::Ptr dif = s_TGUI.get<tgui::Tabs>("Difficulty");
-            setDifficulty("Normal");
-            //dif->connect("TabSelected", Launcher::setDifficulty, this);
-            dif->onTabSelect(Launcher::setDifficulty, this);
+                tgui::Tabs::Ptr dif = s_TGUI.get<tgui::Tabs>("Difficulty");
+                setDifficulty("Normal");
+                //dif->connect("TabSelected", Launcher::setDifficulty, this);
+                dif->onTabSelect(Launcher::setDifficulty, this);
+            }
         }
-        void saveLaunchGame()
+        void saveLaunchGame(bool easylauncher)
         {
-            saveConfig();
+            saveConfig(easylauncher);
             if(s_DD2Ini->getValue("resources", "standard") == "false" && s_DD2Ini->getValue("resources", "pooling") == "false")
             {
                 auto child = tgui::ChildWindow::create();
@@ -608,6 +828,7 @@ class Launcher
         PostParsingStruct* s_DD2General;
         PostParsingStruct* s_LauncherConfig;
         string s_GuiFile;
+        string s_EasyLauncherGuiFile;
         sf::RenderWindow* s_Window;
         tgui::Gui s_TGUI;
         string s_DD2FileName;
@@ -645,10 +866,11 @@ int main()
     ln.s_DD2General = prs.getParsedFromFile("General.ini");
     ln.s_LauncherConfig = prs.getParsedFromFile("Launcher/Launcher.ini");
     ln.s_GuiFile = "Launcher/LauncherDD2.gui";
+    ln.s_EasyLauncherGuiFile = "Launcher/EasyLauncherDD2.gui";
 
     ln.loadWidgets();
 
-    ln.loadData();
+    ln.loadData(true);
 
     //ln.s_DD2FileName = "DD2Debug.exe";
     ln.s_DD2FileName = ln.s_LauncherConfig->getValue("general", "dd2_filename");
