@@ -3,6 +3,8 @@ The levels.dat file:
 [info]
 levelsformat=0.1
 numberoflevels=8
+modpack=StandardDave // An optional parameter, the name of the modpack folder for which this levelpack was made, is needed to check the compatibility of the launch, without it the levelpack will not be displayed in the Easy launcher when the modpack is selected.
+		     // Also, without this parameter or if it does not match the name of the modpack folder, a warning will be displayed when the game starts. Ignored if the levelpack is inside a modpack.
 
 [options]
 distancelivemonstersX=8 // Optional parameter for handling monsters at a distance from the edge behind the screen. More important than the analogous parameter in DD2.ini. If absent, it is taken from there.

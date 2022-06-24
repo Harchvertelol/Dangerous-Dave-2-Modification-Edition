@@ -135,6 +135,7 @@ int GameData::compareGameVersions(string first, string second)
 
 bool GameData::loadData(PostParsingStruct* s_IniFile)
 {
+    bool doTestLevelpackCompatibility = true;
     ParserInfoFile prs;
     PathToTexturePack = "PacksData/TexturePacks/" + s_IniFile->getValue("resources", "texturepack") + "/";
     PathToMonsterPack = "PacksData/MonsterPacks/" + s_IniFile->getValue("resources", "monsterpack") + "/";
@@ -172,12 +173,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             s_GameClass->s_DisplayStruct->s_GameResolutionY = atoi( (s_GameClass->s_IniFile->getValue("video", "resolutionY") ).c_str() );
             s_GameClass->s_DisplayStruct->s_WindowResolutionX = atoi( (s_GameClass->s_IniFile->getValue("video", "windowresolutionX") ).c_str() );
             s_GameClass->s_DisplayStruct->s_WindowResolutionY = atoi( (s_GameClass->s_IniFile->getValue("video", "windowresolutionY") ).c_str() );
-            /*s_GameClass->s_GameInfo->s_KeyDown = atoi( s_GameClass->s_IniFile->getValue("keys","down").c_str() );
-            s_GameClass->s_GameInfo->s_KeyUp = atoi( s_GameClass->s_IniFile->getValue("keys","up").c_str() );
-            s_GameClass->s_GameInfo->s_KeyRight = atoi( s_GameClass->s_IniFile->getValue("keys","right").c_str() );
-            s_GameClass->s_GameInfo->s_KeyLeft = atoi( s_GameClass->s_IniFile->getValue("keys","left").c_str() );
-            s_GameClass->s_GameInfo->s_KeyShoot = atoi( s_GameClass->s_IniFile->getValue("keys","shoot").c_str() );
-            s_GameClass->s_GameInfo->s_KeyJump = atoi( s_GameClass->s_IniFile->getValue("keys","jump").c_str() );*/
+            s_GameClass->s_GameInfo->readKeys(s_GameClass->s_IniFile);
             if(s_GameClass->s_DisplayStruct->s_GameResolutionY <= 0 || s_GameClass->s_DisplayStruct->s_GameResolutionX <= 0)
             {
                 cout<<"Error: Display resolution."<<endl;
@@ -191,8 +187,9 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             s_GameClass->createWindow();
             //...
         }
-        if(s_IniFile->getValue("resources","pooling") == "false")
+        if(s_IniFile->getValue("resources", "pooling") == "false")
         {
+            doTestLevelpackCompatibility = false;
             s_ModSetted = true;
             PathToTexturePack = "ModPacks/" + s_NameMod + "/Textures/";
             PathToMonsterPack = "ModPacks/" + s_NameMod + "/Monsters/";
@@ -213,7 +210,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             if(s_IniFile->getValue("resources", "screenpack") == "") PathToScreenPack = "ModPacks/" + s_NameMod + "/Screens/";
             if(s_IniFile->getValue("resources", "soundpack") == "") PathToSoundPack = "ModPacks/" + s_NameMod + "/Sounds/";
             if(s_IniFile->getValue("resources", "musicpack") == "") PathToMusicPack = "ModPacks/" + s_NameMod + "/Music/";
-            if(s_IniFile->getValue("resources", "levelpack") == "") PathToLevelPack = "ModPacks/" + s_NameMod + "/Levels/";
+            if(s_IniFile->getValue("resources", "levelpack") == "") { PathToLevelPack = "ModPacks/" + s_NameMod + "/Levels/"; doTestLevelpackCompatibility = false; }
             if(s_IniFile->getValue("resources", "playerpack") == "") PathToPlayerPack = "ModPacks/" + s_NameMod + "/Player/";
             if(s_IniFile->getValue("resources", "guipack") == "") PathToGuiPack = "ModPacks/" + s_NameMod + "/Gui/";
             if(s_IniFile->getValue("resources", "backgroundspack") == "") PathToBackgroundsPack = "ModPacks/" + s_NameMod + "/Backgrounds/";
@@ -223,6 +220,8 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     s_LevelsInfo = prs.getParsedFromFile(PathToLevelPack + "levels.dat");
     if(!s_LevelsInfo) return false;
     if(!s_LevelsInfo->isExists("info", "levelsformat") || atof(s_LevelsInfo->getValue("info", "levelsformat").c_str()) - NUMBER_CONSTANTS::NC_LEVEL_FORMAT_VERSION > NUMBER_CONSTANTS::NC_EPS) cout << "Warning: incorrect levelpack format version!" << endl;
+    if(doTestLevelpackCompatibility)
+        if(!s_LevelsInfo->isExists("info", "modpack") || s_LevelsInfo->getValue("info", "modpack") != s_NameMod) cout << "Warning: it is impossible to check the compatibility of the levelpack with the modpack!" << endl;
     cout << "Levels information is loaded." << endl;
     cout << "Loading bonuses..." << endl;
     if( !s_Bonuses->load(PathToBonusPack) ) return false;

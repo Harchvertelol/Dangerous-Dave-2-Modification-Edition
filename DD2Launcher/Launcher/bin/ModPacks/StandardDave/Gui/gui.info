@@ -4,7 +4,6 @@ changelevelscreen=arial.ttf
 popupwindow=arial.ttf
 infowindow=arial.ttf
 
-
 [gui]
 backgroundcolorpopupwindow=194;255;254;220
 bordercolorpopupwindow=0;0;0;255

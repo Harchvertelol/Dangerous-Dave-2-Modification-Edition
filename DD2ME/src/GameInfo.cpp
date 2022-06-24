@@ -60,6 +60,23 @@ GameInfo::~GameInfo()
     }
 }
 
+void GameInfo::readKeys(IniParser::PostParsingStruct* pps)
+{
+    s_KeyDown = atoi( pps->getValue("keys","down").c_str() );
+    s_KeyUp = atoi( pps->getValue("keys","up").c_str() );
+    s_KeyRight = atoi( pps->getValue("keys","right").c_str() );
+    s_KeyLeft = atoi( pps->getValue("keys","left").c_str() );
+    s_KeyLeftDown = atoi( pps->getValue("keys","leftdown").c_str() );
+    s_KeyLeftUp = atoi( pps->getValue("keys","leftup").c_str() );
+    s_KeyRightDown = atoi( pps->getValue("keys","rightdown").c_str() );
+    s_KeyRightUp = atoi( pps->getValue("keys","rightup").c_str() );
+    s_KeyShoot = atoi( pps->getValue("keys","shoot").c_str() );
+    s_KeyJump = atoi( pps->getValue("keys","jump").c_str() );
+    s_KeyConsole = atoi( pps->getValue("keys","console").c_str() );
+    s_KeyInfo = atoi( pps->getValue("keys","info").c_str() );
+    s_KeySkip = atoi( pps->getValue("keys","skip").c_str() );
+}
+
 void GameInfo::live()
 {
     s_GameClass->s_FactoryTmpImgs->live();

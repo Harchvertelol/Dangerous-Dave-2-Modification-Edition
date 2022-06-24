@@ -24,8 +24,10 @@ void fix(sf::Sprite& sprite, tgui::Gui& gui, sf::RenderWindow& window)
     //gui.setRelativeView(tgui::FloatRect(-possp.x, -possp.y, 1.f / scalesp.x * window.getSize().x, 1.f / scalesp.y * window.getSize().y));
 }
 
-vector<string> getDirs(string path, string filetest)
+vector<string> getDirs(string path, string filetest, string A = "", string B = "", string C = "")
 {
+    bool addit_test = true;
+    if(A == "" && B == "" && C == "") addit_test = false;
     vector<string> dirs;
     const char* PATH = path.c_str();
 
@@ -41,7 +43,14 @@ vector<string> getDirs(string path, string filetest)
         stat(entry->d_name, &buff);
         string fname = string(entry->d_name);
         if(fname != "." && fname != ".." && WorkFunctions::FileFunctions::isFileExists(path + "/" + fname + "/" + filetest))
-            dirs.push_back(entry->d_name);
+            if(!addit_test) dirs.push_back(entry->d_name);
+            else
+            {
+                ParserInfoFile prs;
+                PostParsingStruct* pps = prs.getParsedFromFile(path + "/" + fname + "/" + filetest);
+                if(pps->isExists(A, B) && pps->getValue(A, B) == C) dirs.push_back(entry->d_name);
+                delete pps;
+            }
 
         entry = readdir(dir);
     }
@@ -415,8 +424,10 @@ class Launcher
                     label->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
                     child_window->add(label);
 
+                    vector<string> levelpacks = getDirs("PacksData/LevelPacks", "levels.dat", "info", "modpack", modpacks[i]);
+
                     label = tgui::Label::create();
-                    label->setText("Choose levelpack (empty equals default):");
+                    label->setText("Choose levelpack (" + WorkFunctions::ConvertFunctions::itos(levelpacks.size()) + " TA) (empty equals default):");
                     label->setSize("90%", "10%");
                     label->setPosition("5%", "45%");
                     label->setTextSize(20);
@@ -430,7 +441,6 @@ class Launcher
                     combobox->addItem("");
                     combobox->setItemsToDisplay(10);
 
-                    vector<string> levelpacks = getDirs("PacksData/LevelPacks", "levels.dat");
                     for(unsigned int i = 0; i < levelpacks.size(); i++) combobox->addItem(levelpacks[i]);
                     if(s_DD2Ini->getValue("resources", "levelpack") != "" && combobox->contains(s_DD2Ini->getValue("resources", "levelpack"))) combobox->setSelectedItem(s_DD2Ini->getValue("resources", "levelpack"));
                     else combobox->setSelectedItem("");

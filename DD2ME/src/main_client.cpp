@@ -77,19 +77,7 @@ int main(int argc, char** argv)
             if(!nc->netGameStartWork())
                 return 0;
         //...
-        gm->s_GameInfo->s_KeyDown = atoi( gm->s_IniFile->getValue("keys","down").c_str() );
-        gm->s_GameInfo->s_KeyUp = atoi( gm->s_IniFile->getValue("keys","up").c_str() );
-        gm->s_GameInfo->s_KeyRight = atoi( gm->s_IniFile->getValue("keys","right").c_str() );
-        gm->s_GameInfo->s_KeyLeft = atoi( gm->s_IniFile->getValue("keys","left").c_str() );
-        gm->s_GameInfo->s_KeyLeftDown = atoi( gm->s_IniFile->getValue("keys","leftdown").c_str() );
-        gm->s_GameInfo->s_KeyLeftUp = atoi( gm->s_IniFile->getValue("keys","leftup").c_str() );
-        gm->s_GameInfo->s_KeyRightDown = atoi( gm->s_IniFile->getValue("keys","rightdown").c_str() );
-        gm->s_GameInfo->s_KeyRightUp = atoi( gm->s_IniFile->getValue("keys","rightup").c_str() );
-        gm->s_GameInfo->s_KeyShoot = atoi( gm->s_IniFile->getValue("keys","shoot").c_str() );
-        gm->s_GameInfo->s_KeyJump = atoi( gm->s_IniFile->getValue("keys","jump").c_str() );
-        gm->s_GameInfo->s_KeyConsole = atoi( gm->s_IniFile->getValue("keys","console").c_str() );
-        gm->s_GameInfo->s_KeyInfo = atoi( gm->s_IniFile->getValue("keys","info").c_str() );
-        gm->s_GameInfo->s_KeySkip = atoi( gm->s_IniFile->getValue("keys","skip").c_str() );
+        gm->s_GameInfo->readKeys(gm->s_IniFile);
         gm->s_DisplayStruct->s_GameResolutionX = atoi( (gm->s_IniFile->getValue("video","resolutionX") ).c_str() );
         gm->s_DisplayStruct->s_GameResolutionY = atoi( (gm->s_IniFile->getValue("video","resolutionY") ).c_str() );
         gm->s_DisplayStruct->s_WindowResolutionX = atoi( (gm->s_IniFile->getValue("video", "windowresolutionX") ).c_str() );

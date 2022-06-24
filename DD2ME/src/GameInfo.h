@@ -49,6 +49,7 @@ class GameInfo
         bool s_IsAIOn;
         bool s_IsGhostOn;
         bool s_IsInfoShow;
+        void readKeys(IniParser::PostParsingStruct*);
         void live();
         bool deathPlayer(int);
         void doChangeLevelOnGameOver();
