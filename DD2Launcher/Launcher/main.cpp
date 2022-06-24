@@ -83,7 +83,14 @@ class Launcher
         }
         void saveConfig(bool easylauncher)
         {
+            poolingConfig(easylauncher);
             ParserInfoFile prs;
+            if(!s_DD2Ini || !s_DD2General) return;
+            prs.writeParsedToFile(s_DD2Ini, "DD2.ini");
+            prs.writeParsedToFile(s_DD2General, "General.ini");
+        }
+        void poolingConfig(bool easylauncher)
+        {
             if(!s_DD2Ini) return;
 
             if(easylauncher)
@@ -146,8 +153,6 @@ class Launcher
                 tgui::ComboBox::Ptr guipack = s_TGUI.get<tgui::ComboBox>("Guipack");
                 s_DD2Ini->setValue("resources", "guipack", guipack->getSelectedItem().toStdString() );
             }
-
-            prs.writeParsedToFile(s_DD2Ini, "DD2.ini");
         }
         void addKeysButtons(PostParsingStruct* pps, tgui::ScrollablePanel::Ptr layout, string prefix, string subblock = "")
         {
@@ -325,7 +330,7 @@ class Launcher
             Keys->onPress(Launcher::keys, this);
 
             tgui::Button::Ptr More = child->get<tgui::Button>("More");
-            More->onPress([=](){ this->saveConfig(true); this->loadData(false); });
+            More->onPress([=](){ this->poolingConfig(true); this->loadData(false); });
 
             tgui::Slider::Ptr SoundsSlider = child->get<tgui::Slider>("SoundsSlider");
             SoundsSlider->setValue(stof(s_DD2Ini->getValue("audio", "soundsvolume")));
@@ -345,7 +350,18 @@ class Launcher
             int mspX = ModpacksScrollablePanel->getSize().x;
             int mspY = ModpacksScrollablePanel->getSize().y;
 
+            string cur_modpack = "StandardDave";
+            if(s_DD2Ini->getValue("resources", "pooling") == "true" && s_DD2Ini->getValue("resources", "modpack") != "") cur_modpack = s_DD2Ini->getValue("resources", "modpack");
+
             vector<string> modpacks = getDirs("ModPacks", "/About/mod.info");
+            for(unsigned int i = 0; i < modpacks.size(); i++)
+                if(cur_modpack == modpacks[i])
+                {
+                    for(int j = i; j > 0; j--)
+                        modpacks[j] = modpacks[j - 1];
+                    modpacks[0] = cur_modpack;
+                    break;
+                }
             float shift_y_pos = 0;
             for(unsigned int i = 0; i < modpacks.size(); i++)
             {
@@ -359,7 +375,7 @@ class Launcher
                 desc = WorkFunctions::WordFunctions::removeSlashes(desc);
                 string logo = pps->getValue("info", "logo");
                 tgui::Picture::Ptr modpack_logo_pic;
-                auto startmodsettings =  [=]()
+                auto startmodsettings = [=]()
                 {
                     auto child_window = tgui::ChildWindow::create();
                     child_window->setSize("50%", "30%");
@@ -385,31 +401,54 @@ class Launcher
 
                 auto startmodpack = [=]()
                 {
-                    auto child_window = tgui::ChildWindow::create();
-                    child_window->setSize("50%", "30%");
-                    child_window->setPosition("25%", "30%");
-                    child_window->setTitle("Starting the game...");
+                    auto child_window = tgui::Panel::create();
+                    child_window->setSize("50%", "50%");
+                    child_window->setPosition("25%", "20%");
+                    child_window->getRenderer()->setBorders(tgui::Outline(1));
                     child->add(child_window);
 
                     auto label = tgui::Label::create();
                     label->setText("Do you want to launch the game with the \"" + name + "\" modpack?");
-                    label->setSize("100%", "85%");
-                    label->setPosition("0%", "15%");
+                    label->setSize("90%", "30%");
+                    label->setPosition("5%", "10%");
                     label->setTextSize(25);
                     label->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
                     child_window->add(label);
 
+                    label = tgui::Label::create();
+                    label->setText("Choose levelpack (empty equals default):");
+                    label->setSize("90%", "10%");
+                    label->setPosition("5%", "45%");
+                    label->setTextSize(20);
+                    label->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+                    child_window->add(label);
+
+                    auto combobox = tgui::ComboBox::create();
+                    combobox->setSize("70%", "10%");
+                    combobox->setPosition("15%", "55%");
+                    combobox->setTextSize(20);
+                    combobox->addItem("");
+                    combobox->setItemsToDisplay(10);
+
+                    vector<string> levelpacks = getDirs("PacksData/LevelPacks", "levels.dat");
+                    for(unsigned int i = 0; i < levelpacks.size(); i++) combobox->addItem(levelpacks[i]);
+                    if(s_DD2Ini->getValue("resources", "levelpack") != "" && combobox->contains(s_DD2Ini->getValue("resources", "levelpack"))) combobox->setSelectedItem(s_DD2Ini->getValue("resources", "levelpack"));
+                    else combobox->setSelectedItem("");
+
+                    combobox->setChangeItemOnScroll(true);
+                    child_window->add(combobox);
+
                     auto button = tgui::Button::create();
-                    button->setPosition("10%", "70%");
+                    button->setPosition("10%", "80%");
                     button->setText("No");
-                    button->setSize("30%", "20%");
+                    button->setSize("30%", "10%");
                     button->onPress([=](){ child->remove(child_window); });
                     child_window->add(button);
 
                     button = tgui::Button::create();
-                    button->setPosition("60%", "70%");
+                    button->setPosition("60%", "80%");
                     button->setText("Yes");
-                    button->setSize("30%", "20%");
+                    button->setSize("30%", "10%");
                     button->onPress([=]()
                                     {
                                         if(modpacks[i] == "StandardDave")
@@ -423,6 +462,16 @@ class Launcher
                                             this->s_DD2Ini->setValue("resources", "standard", "false");
                                             this->s_DD2Ini->setValue("resources", "modpack", modpacks[i]);
                                             this->s_DD2Ini->setValue("resources", "pooling", "true");
+                                        }
+                                        string levelpack = combobox->getSelectedItem().toStdString();
+                                        if(levelpack != "")
+                                        {
+                                            this->s_DD2Ini->setValue("resources", "pooling", "true");
+                                            this->s_DD2Ini->setValue("resources", "levelpack", levelpack);
+                                        }
+                                        else
+                                        {
+                                            this->s_DD2Ini->setValue("resources", "levelpack", "");
                                         }
                                         this->saveLaunchGame(true);
                                     }
@@ -517,7 +566,7 @@ class Launcher
 
             auto button = tgui::Button::create();
             button->setPosition("85%", "5%");
-            button->setText("Save");
+            button->setText("Apply");
             button->setSize("10%", "5%");
             //button->connect("pressed", [=](){ child->setVisible(false); });
             button->onPress([=]()
@@ -551,9 +600,9 @@ class Launcher
                                         else if(spl[0] == "gen") s_DD2General->setValue(spl[1], spl[2], tmp_ed_box->getText().toStdString());
                                     }
                                 }
-                                ParserInfoFile prs;
+                                /*ParserInfoFile prs;
                                 prs.writeParsedToFile(s_DD2Ini, "DD2.ini");
-                                prs.writeParsedToFile(s_DD2General, "General.ini");
+                                prs.writeParsedToFile(s_DD2General, "General.ini");*/
                                 this->loadData(false);
                             });
             child->add(button);
@@ -589,7 +638,7 @@ class Launcher
 
             tgui::Button::Ptr EdAllVar = s_TGUI.get<tgui::Button>("EdAllVar");
             //EdAllVar->connect("pressed", Launcher::editAllVariables, this);
-            EdAllVar->onPress(Launcher::editAllVariables, this);
+            EdAllVar->onPress([=](){ this->poolingConfig(false); this->editAllVariables(); });
 
             tgui::Button::Ptr Keys = s_TGUI.get<tgui::Button>("Keys");
             Keys->onPress(Launcher::keys, this);
@@ -601,7 +650,7 @@ class Launcher
             EditorSettings->onPress(Launcher::editorSettings, this, false);
 
             tgui::Button::Ptr Back = s_TGUI.get<tgui::Button>("Back");
-            Back->onPress([=](){ this->saveConfig(false); this->loadEasyLauncherWidgets(); });
+            Back->onPress([=](){ this->poolingConfig(false); this->loadEasyLauncherWidgets(); });
         }
         void editorSettings(bool error_path = true)
         {

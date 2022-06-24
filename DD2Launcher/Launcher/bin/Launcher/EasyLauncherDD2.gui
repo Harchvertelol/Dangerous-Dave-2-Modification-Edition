@@ -90,7 +90,7 @@ Button.More {
     Position = (1090, 580);
     Renderer = &1;
     Size = (160, 38.6667);
-    Text = "More and save...";
+    Text = "More...";
     TextSize = 18;
 }
 
