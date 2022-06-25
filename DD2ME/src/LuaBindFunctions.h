@@ -25,6 +25,7 @@ class LuaBindFunctions
         int addImageToFactoryTemporaryImage(lua_State* s_Lua);
         int getMainValue(lua_State* s_Lua);
         int changeNextLevel(lua_State* s_Lua);
+        int changeLevel(lua_State* s_Lua);
         int playSound(lua_State* s_Lua);
         int stopSound(lua_State* s_Lua);
         int pauseSound(lua_State* s_Lua);

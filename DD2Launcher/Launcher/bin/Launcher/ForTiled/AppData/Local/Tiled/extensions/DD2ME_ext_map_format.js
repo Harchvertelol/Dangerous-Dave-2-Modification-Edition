@@ -268,14 +268,12 @@ var customMapFormat = {
 		file.write("numberoftilesfields=" + (tiles_number - 1) + "\n");
 		file.write("levelformat=0.1\n");
 		file.write("name=" + layer_params.property("name") + "\n");
-		file.write("background=" + layer_params.property("background") + "\n");
 		file.write("type=" + layer_params.property("type") + "\n");
 		file.write("\n");
 
 		allProperties = layer_params.resolvedProperties();
 
 		delete allProperties["name"];
-		delete allProperties["background"];
 		delete allProperties["type"];
 
 		file.write("[options]\n");

@@ -11,6 +11,7 @@ distancelivemonstersX=8 // Optional parameter for handling monsters at a distanc
 distancelivemonstersY=8 // Optional parameter for handling monsters at a distance from the edge behind the screen. More important than the analogous parameter in DD2.ini. If absent, it is taken from there.
 distanceactivatemonstersX=18 // Optional parameter to activate monsters at a distance from the edge behind the screen. More important than the analogous parameter in DD2.ini. If absent, it is taken from there.
 distanceactivatemonstersY=64 // Optional parameter for handling monsters at a distance from the edge behind the screen. More important than the analogous parameter in DD2.ini. If absent, it is taken from there.
+startinglevel=2 // Optional parameter, specifies which level to start from by number. Allows you to make complex links between levels. If not specified, the default is 1.
 
 N.lev file:
 
@@ -29,6 +30,8 @@ distanceactivatemonstersX=18 // Optional parameter to activate monsters at a dis
 distanceactivatemonstersY=64 // Optional parameter to activate monsters at a distance from the edge behind the screen. More important than the analogous parameter in levels.dat. If absent, it is taken from there. If absent, and there is taken from DD2.ini.
 changelevelongameover=2 // Optional parameter indicating how to change the level on Game Over. If it is just equal to the number N, then it changes to the level with the number N. If it says "+ N", then N is added to the current number (wisely,
                         // that is %cur_lev% + N> max_lev, then go to the last level). If it is "-N", then N is subtracted from the current level (wisely, if %cur_lev% - N < 1, then go to level 1).
+			// If we do not want to cut off levels less than 1 and more than the maximum, we need to add "f" at the end, that is, for example, "+5f" - we add 5 levels, and we do not do any cutoffs and recalculations. This allows, for example,
+			// to end the game if you go through the maximum level number.
 numberphysictilelayer=1 // Optional parameter, specifies the number of the physical layer of the tiles. If absent, it is equal to 1. All operations, except doors, are carried out at this level.
 numberobjectstilesfield=1 // Optional parameter, specifies the number of the tile layer, after which the objects are drawn. If absent, it is equal to "numberphysictilelayer". Door operations are carried out at this level.
 

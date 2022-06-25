@@ -14,6 +14,7 @@ class GameInfo
         ~GameInfo();
         Game* s_GameClass;
         int s_CurrentLevel;
+        int s_ChangeLevelTo;
         int s_GameState;
         int s_CurrentLives;
         std::map<int, CreaturePlayer*> s_Players;
@@ -52,6 +53,7 @@ class GameInfo
         void readKeys(IniParser::PostParsingStruct*);
         void live();
         bool deathPlayer(int);
+        int getChangeLevelTo(std::string);
         void doChangeLevelOnGameOver();
         void playDeath();
         void drawDeathFrame(std::map<int, sf::Texture* >*, std::map<int, sf::Sprite* >*, int);

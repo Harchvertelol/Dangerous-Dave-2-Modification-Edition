@@ -11,6 +11,7 @@ using namespace sf;
 GameInfo::GameInfo(Game* gameclass):
     s_GameClass(gameclass),
     s_CurrentLevel(1),
+    s_ChangeLevelTo(0),
     s_GameState(0),
     s_CurrentLives(GC_START_LIVES_NUMBER),
     s_ScreenCoordX(0),
@@ -106,17 +107,34 @@ bool GameInfo::deathPlayer(int type)
     return true;
 }
 
+int GameInfo::getChangeLevelTo(string change_level_to)
+{
+    int tmp_cur_lev = s_CurrentLevel;
+    if(change_level_to == "") change_level_to = "0";
+    bool forced = false;
+    if(change_level_to.substr(change_level_to.size() - 1) == "f")
+    {
+        change_level_to = change_level_to.substr(0, change_level_to.size() - 1);
+        forced = true;
+    }
+    int lev_tmp = atoi(change_level_to.c_str());
+    if(change_level_to.find("+") != string::npos || change_level_to.find("-") != string::npos) tmp_cur_lev += lev_tmp;
+    else tmp_cur_lev = lev_tmp;
+    if(!forced)
+    {
+        if(tmp_cur_lev <= 0) tmp_cur_lev = 1;
+        else if(tmp_cur_lev > atoi(s_GameClass->s_Data->s_LevelsInfo->getValue("info", "numberoflevels").c_str())) tmp_cur_lev = atoi(s_GameClass->s_Data->s_LevelsInfo->getValue("info", "numberoflevels").c_str());
+    }
+    return tmp_cur_lev;
+}
+
 void GameInfo::doChangeLevelOnGameOver()
 {
     s_CurrentLives = GC_START_LIVES_NUMBER;
     if(s_GameClass->s_Data->s_Level->s_Params->isExists("options", "changelevelongameover"))
     {
         string change_level_to = s_GameClass->s_Data->s_Level->s_Params->getValue("options", "changelevelongameover");
-        int lev_tmp = atoi(change_level_to.c_str());
-        if(change_level_to.find("+") != string::npos || change_level_to.find("-") != string::npos) s_CurrentLevel += lev_tmp;
-        else s_CurrentLevel = lev_tmp;
-        if(s_CurrentLevel <= 0) s_CurrentLevel = 1;
-        else if(s_CurrentLevel > atoi(s_GameClass->s_Data->s_LevelsInfo->getValue("info", "numberoflevels").c_str())) s_CurrentLevel = atoi(s_GameClass->s_Data->s_LevelsInfo->getValue("info", "numberoflevels").c_str());
+        s_CurrentLevel = getChangeLevelTo(change_level_to);
     }
     else if(s_CurrentLevel > 1) s_CurrentLevel--;
     s_GameClass->s_Data->s_Sounds->play("gameover");

@@ -452,8 +452,8 @@ void Game::drawAll()
             iter->second->draw();
         }
         s_GameInfo->s_MyPlayer->draw();
-        s_Data->drawScreenState3();
         s_Data->s_Level->draw(false);
+        s_Data->drawScreenState3();
         s_FactoryTmpImgs->drawAll(true);
         if(s_GameInfo->s_Stop == true && s_GameInfo->s_DeathType != 0) s_GameInfo->playDeath();
     }

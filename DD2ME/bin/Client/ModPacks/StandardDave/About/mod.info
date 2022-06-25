@@ -7,7 +7,7 @@ numberofmonsters=12
 numberofbonuses=6
 name=Standard Dangerous Dave 2 (Haunted Mansion)
 logo=logo.bmp
-desc=A standard Dangerous Dave 2 gamepack
+desc=A standard Dangerous Dave 2 gamepack.
 
 [other]
 inifile=

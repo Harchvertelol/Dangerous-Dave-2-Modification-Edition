@@ -222,6 +222,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
     if(!s_LevelsInfo->isExists("info", "levelsformat") || atof(s_LevelsInfo->getValue("info", "levelsformat").c_str()) - NUMBER_CONSTANTS::NC_LEVEL_FORMAT_VERSION > NUMBER_CONSTANTS::NC_EPS) cout << "Warning: incorrect levelpack format version!" << endl;
     if(doTestLevelpackCompatibility)
         if(!s_LevelsInfo->isExists("info", "modpack") || s_LevelsInfo->getValue("info", "modpack") != s_NameMod) cout << "Warning: it is impossible to check the compatibility of the levelpack with the modpack!" << endl;
+    if(s_LevelsInfo->isExists("options", "startinglevel")) s_GameClass->s_GameInfo->s_CurrentLevel = atoi(s_LevelsInfo->getValue("options", "startinglevel").c_str());
     cout << "Levels information is loaded." << endl;
     cout << "Loading bonuses..." << endl;
     if( !s_Bonuses->load(PathToBonusPack) ) return false;

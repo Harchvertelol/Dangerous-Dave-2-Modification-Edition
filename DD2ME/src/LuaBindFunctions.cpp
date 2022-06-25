@@ -1956,6 +1956,26 @@ int LuaBindFunctions::changeNextLevel(lua_State* s_Lua)
         cout<<"Error! Number of arguments of function \"changeNextLevel\" is incorrect!"<<endl;
         return 0;
     }
+    s_GameClass->s_GameInfo->s_ChangeLevelTo = s_GameClass->s_GameInfo->s_CurrentLevel + 1;
+    s_GameClass->s_GameInfo->s_ForcedChangeLevel = true;
+    return 0;
+}
+
+static int __changeLevel(lua_State* s_Lua)
+{
+    return s_LBF->changeLevel(s_Lua);
+}
+
+int LuaBindFunctions::changeLevel(lua_State* s_Lua)
+{
+    int n = lua_gettop(s_Lua);
+    if(n != 1)
+    {
+        cout<<"Error! Number of arguments of function \"changeLevel\" is incorrect!"<<endl;
+        return 0;
+    }
+    string change_level_info = lua_tostring(s_Lua, 1);
+    s_GameClass->s_GameInfo->s_ChangeLevelTo = s_GameClass->s_GameInfo->getChangeLevelTo(change_level_info);
     s_GameClass->s_GameInfo->s_ForcedChangeLevel = true;
     return 0;
 }
@@ -2111,6 +2131,7 @@ void LuaBindFunctions::registerFunctionsAll(lua_State* s_Lua)
     lua_register(s_Lua, "addPackImagesToFactoryTemporaryImage", &__addPackImagesToFactoryTemporaryImage);
     lua_register(s_Lua, "addImageToFactoryTemporaryImage", &__addImageToFactoryTemporaryImage);
     lua_register(s_Lua, "changeNextLevel", &__changeNextLevel);
+    lua_register(s_Lua, "changeLevel", &__changeLevel);
     lua_register(s_Lua, "playSound", &__playSound);
     lua_register(s_Lua, "stopSound", &__stopSound);
     lua_register(s_Lua, "pauseSound", &__pauseSound);

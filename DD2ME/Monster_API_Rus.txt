@@ -499,6 +499,10 @@ addPackImagesToFactoryTemporaryImage(pack, number, state, coordX, coordY, timeLi
 
 changeNextLevel() - сменить уровень на следующий.
 
+changeLevel(level) - сменить уровень по алгоритму в level. Алгоритм аналогичен для параметра уровня changelevelongameover, подробнее см. в Level_Params.
+	Пример: changeLevel("+4f") - добавить 4 уровня, причём форсированно, т. е. не производить обрезки при перескоке количества уровней, что позволяет закончить игру на уровне с номером, отличным от последнего.
+		changeLevel("3") - сменить уровень на 3-й.
+
 playSound(soundname, new_sound = 1, restart = 0, is_loop = 0, offset_ms = 0) - начать играть звук.
 	soundname - название звука.
 	new_sound - сделать ли звук новым (если нет, то если он играет, он либо начнётся заново в зависимости

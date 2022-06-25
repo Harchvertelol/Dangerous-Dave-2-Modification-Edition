@@ -158,7 +158,8 @@ void FactoryMonsters::live()
     }
     addMonstersFromQueue();
     if(testNoChangeLevel == true) testChangeLevel = false;
-    if(testChangeLevel == true || s_GameClass->s_GameInfo->s_ForcedChangeLevel == true) s_GameClass->changeNextLevel();
+    if(testChangeLevel == true) s_GameClass->changeNextLevel();
+    if(s_GameClass->s_GameInfo->s_ForcedChangeLevel == true) s_GameClass->changeLevel(s_GameClass->s_GameInfo->s_ChangeLevelTo);
 }
 
 void FactoryMonsters::clear()

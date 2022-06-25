@@ -270,7 +270,6 @@
 			for(var i = map.layerCount - 1; i >= 0; i--) map.removeLayerAt(i);
 
 			paramatersLayer.setProperty("name", "");
-			paramatersLayer.setProperty("background", "");
 			paramatersLayer.setProperty("type", "single");
 
 			/*{
