@@ -465,13 +465,11 @@ class Launcher
                                         {
                                             this->s_DD2Ini->setValue("resources", "standard", "true");
                                             this->s_DD2Ini->setValue("resources", "modpack", "");
-                                            this->s_DD2Ini->setValue("resources", "pooling", "false");
                                         }
                                         else
                                         {
                                             this->s_DD2Ini->setValue("resources", "standard", "false");
                                             this->s_DD2Ini->setValue("resources", "modpack", modpacks[i]);
-                                            this->s_DD2Ini->setValue("resources", "pooling", "true");
                                         }
                                         string levelpack = combobox->getSelectedItem().toStdString();
                                         if(levelpack != "")
@@ -854,16 +852,16 @@ class Launcher
         void saveLaunchGame(bool easylauncher)
         {
             saveConfig(easylauncher);
-            if(s_DD2Ini->getValue("resources", "standard") == "false" && s_DD2Ini->getValue("resources", "pooling") == "false")
+            if(s_DD2Ini->getValue("resources", "standard") == "false" && s_DD2Ini->getValue("resources", "modpack") == "" && s_DD2Ini->getValue("resources", "pooling") == "false")
             {
                 auto child = tgui::ChildWindow::create();
-                child->setSize("40%", "20%");
+                child->setSize("40%", "30%");
                 child->setPosition("30%", "30%");
                 child->setTitle("Error launch game!");
                 s_TGUI.add(child);
 
                 auto label = tgui::Label::create();
-                label->setText("Standard and Pooling variables can not be false at the same time!");
+                label->setText("Standard and Pooling variables can not be false at the same time with empty modpack variable!");
                 label->setSize("100%", "85%");
                 label->setPosition("0%", "15%");
                 label->setTextSize(25);
