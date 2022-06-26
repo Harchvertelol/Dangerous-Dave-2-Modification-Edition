@@ -353,7 +353,10 @@ void Gui::showInfo()
     infoWindow->add(label_text);
 
     label_text = tgui::Label::create();
-    label_text->setText("Level: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel));
+    string level_text;
+    if(s_GameClass->s_Data->s_Level->s_Params->isExists("info", "name")) level_text = s_GameClass->s_Data->s_Level->s_Params->getValue("info", "name");
+    if(level_text == "") level_text = WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel);
+    label_text->setText("Level: " + level_text);
     label_text->setTextSize(size_text_info);
     label_text->setSize(size_text_x.c_str(), size_text_y.c_str());
     label_text->setOrigin(0.5, 0.5);

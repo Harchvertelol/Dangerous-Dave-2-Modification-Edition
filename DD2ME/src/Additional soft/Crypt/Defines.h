@@ -25,8 +25,6 @@ namespace STRING_CONSTANTS
     const std::string NAME_FIELD_BONUSDOORS = "FieldBonusDoors";
     const std::string NAME_FIELD_DOORS = "FieldDoors";
     const std::string NAME_FIELD_EXITLEVELDOORS = "FieldExitLevelDoors";
-
-    const std::string SC_CRYPT_KEY_LEVELS = "12dfslgmjiowekjmfpowf;lksd;fl3";
 }
 
 namespace NUMBER_CONSTANTS

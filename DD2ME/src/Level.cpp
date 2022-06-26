@@ -81,6 +81,8 @@ bool Level::loadLevel(string file_name)
     s_Fields.clear();
     if(!s_Params) delete s_Params;
     ParserInfoFile prs;
+    prs.setCryptKey(STRING_CONSTANTS::SC_CRYPT_KEY_LEVELS);
+    prs.setCryptedStatus(true);
     s_Params = prs.getParsedFromFile(file_name + ".lev");
     if(!s_Params)
     {
