@@ -114,3 +114,8 @@ void IniParser::PostParsingStruct::clear()
 {
     s_Variables.clear();
 }
+
+bool IniParser::PostParsingStruct::isEmpty()
+{
+    return s_Variables.empty();
+}

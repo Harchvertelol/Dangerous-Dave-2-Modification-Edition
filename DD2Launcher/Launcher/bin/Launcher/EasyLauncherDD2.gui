@@ -1,6 +1,30 @@
 Renderer.1 {
     BackgroundColor = #F5F5F5;
     BackgroundColorDisabled = #E6E6E6;
+    BackgroundColorDown = #EBEBEB;
+    BackgroundColorHover = white;
+    BorderColor = #3C3C3C;
+    BorderColorDisabled = #7D7D7D;
+    BorderColorDown = black;
+    BorderColorFocused = #1E1EB4;
+    BorderColorHover = black;
+    Borders = (1, 1, 1, 1);
+    TextColor = #3C3C3C;
+    TextColorDisabled = #7D7D7D;
+    TextColorDown = black;
+    TextColorHover = black;
+    Texture = None;
+    TextureDisabled = None;
+    TextureDown = None;
+    TextureDownFocused = None;
+    TextureDownHover = None;
+    TextureFocused = None;
+    TextureHover = None;
+}
+
+Renderer.2 {
+    BackgroundColor = #F5F5F5;
+    BackgroundColorDisabled = #E6E6E6;
     BackgroundColorHover = white;
     BorderColor = #3C3C3C;
     BorderColorDisabled = #7D7D7D;
@@ -22,30 +46,6 @@ Renderer.1 {
     TextureUncheckedDisabled = None;
     TextureUncheckedFocused = None;
     TextureUncheckedHover = None;
-}
-
-Renderer.2 {
-    BackgroundColor = #F5F5F5;
-    BackgroundColorDisabled = #E6E6E6;
-    BackgroundColorDown = #EBEBEB;
-    BackgroundColorHover = white;
-    BorderColor = #3C3C3C;
-    BorderColorDisabled = #7D7D7D;
-    BorderColorDown = black;
-    BorderColorFocused = #1E1EB4;
-    BorderColorHover = black;
-    Borders = (1, 1, 1, 1);
-    TextColor = #3C3C3C;
-    TextColorDisabled = #7D7D7D;
-    TextColorDown = black;
-    TextColorHover = black;
-    Texture = None;
-    TextureDisabled = None;
-    TextureDown = None;
-    TextureDownFocused = None;
-    TextureDownHover = None;
-    TextureFocused = None;
-    TextureHover = None;
 }
 
 Renderer.3 {
@@ -72,7 +72,7 @@ Renderer.4 {
 
 Button.SaveConfig {
     Position = (1090, 170);
-    Renderer = &2;
+    Renderer = &1;
     Size = (160, 38.6667);
     Text = "Save config";
     TextSize = 18;
@@ -80,7 +80,7 @@ Button.SaveConfig {
 
 Button.Keys {
     Position = (1090, 118.48);
-    Renderer = &2;
+    Renderer = &1;
     Size = (160, 32.8533);
     Text = Keys;
     TextSize = 18;
@@ -88,7 +88,7 @@ Button.Keys {
 
 Button.More {
     Position = (1090, 580);
-    Renderer = &2;
+    Renderer = &1;
     Size = (160, 38.6667);
     Text = "More...";
     TextSize = 18;
@@ -96,7 +96,7 @@ Button.More {
 
 Button.ResetToDefault {
     Position = (1090, 230);
-    Renderer = &2;
+    Renderer = &1;
     Size = (160, 38.6667);
     Text = "Reset to default";
     TextSize = 18;
@@ -156,7 +156,7 @@ Label.SoundLabel {
 
 CheckBox.SoundsCheckBox {
     Position = (1000, 30);
-    Renderer = &1;
+    Renderer = &2;
     Size = (18, 18);
     TextSize = 13;
 }
@@ -172,7 +172,7 @@ Label.MusicLabel {
 
 CheckBox.MusicCheckBox {
     Position = (1000, 80);
-    Renderer = &1;
+    Renderer = &2;
     Size = (18, 18);
     TextSize = 13;
 }
@@ -212,7 +212,7 @@ ScrollablePanel.ModpacksScrollablePanel {
 Button.AddNewModpacks {
     Enabled = false;
     Position = (50, 68.48);
-    Renderer = &2;
+    Renderer = &1;
     Size = (210, 32.8533);
     Text = "Add new modpacks";
     TextSize = 18;
@@ -221,8 +221,16 @@ Button.AddNewModpacks {
 Button.AddNewLevelpacks {
     Enabled = false;
     Position = (270, 68.48);
-    Renderer = &2;
+    Renderer = &1;
     Size = (210, 32.8533);
     Text = "Add new levelpacks";
+    TextSize = 18;
+}
+
+Button.ManageSaves {
+    Position = (1090, 290);
+    Renderer = &1;
+    Size = (160, 38.6667);
+    Text = "Manage saves";
     TextSize = 18;
 }

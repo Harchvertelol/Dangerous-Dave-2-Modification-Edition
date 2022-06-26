@@ -63,6 +63,8 @@ class Game
         void drawAll();
         bool changeLevel(int, bool switchstate = true, bool playmusic = true);
         bool changeNextLevel(bool switchstate = true);
+        std::string getNameForSaveFolder();
+        std::string getNameForSaveFile();
         void onTimer(unsigned int);
         void configureForGame();
         IniParser::PostParsingStruct* getObjects();

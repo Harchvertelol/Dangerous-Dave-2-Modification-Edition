@@ -43,7 +43,7 @@ CreaturePlayer::CreaturePlayer(Game* gameclass):
     s_DopState(""),
     s_ScreenCoordX(0),
     s_ScreenCoordY(0),
-    s_NickName("")
+    s_NickName("Player")
 {
     s_KeysState = new KeysState;
     s_Values = new PostParsingStruct;

@@ -30,13 +30,27 @@ int main(int argc, char** argv)
     gm->s_NetClient = nc;
     string name = "Player", pass = "", host = "127.0.0.1";
     int port = 11237;
-    if(argc > 2)
+    bool launch_launcher = false;
+    if(argc == 1) launch_launcher = true;
+    else if(argc == 2)
+    {
+        string first_par = argv[1];
+        if(first_par  != "nolauncher") launch_launcher = true;
+    }
+    else if(argc > 2)
     {
         name = argv[1];
         pass = argv[2];
     }
     if(argc > 3) host = argv[3];
     if(argc > 4) port = atoi(argv[4]);
+
+    if(launch_launcher)
+    {
+        string file_launcher = "Launcher.exe";
+        system(("start " + file_launcher).c_str());
+        return 0;
+    }
 
     nc->s_NetInfoStruct->s_Name = name;
     nc->s_NetInfoStruct->s_Pass = pass;

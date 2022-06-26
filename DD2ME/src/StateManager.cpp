@@ -4,6 +4,8 @@
 
 #include "WorkFunctions.h"
 
+#include "IniParser/ParserInfoFile.h"
+
 #include "Game.h"
 
 using namespace std;
@@ -264,6 +266,14 @@ void StateManager::startState(int state)
     }
     if(state == 1)
     {
+        // Read save
+        string save_file = s_GameClass->getNameForSaveFolder();
+        save_file += "/" + s_GameClass->getNameForSaveFile();
+        IniParser::ParserInfoFile prs;
+        prs.setCryptKey(STRING_CONSTANTS::SC_CRYPT_KEY_SAVES);
+        prs.setCryptedStatus(true);
+        prs.getParsedFromFile(save_file, s_GameClass->s_GameInfo->s_MyPlayer->s_Values, false);
+        //...
         s_GameClass->s_Data->s_Sounds->stop("game_start");
         s_GameClass->s_Data->s_Music->play("main_menu");
         s_GameClass->s_GameInfo->s_DopScreenCoordX = 0;

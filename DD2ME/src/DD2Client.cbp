@@ -12,6 +12,7 @@
 				<Option object_output="../obj/Client/Debug/" />
 				<Option type="1" />
 				<Option compiler="mingw_730" />
+				<Option parameters="nolauncher" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -29,6 +30,7 @@
 				<Option object_output="../obj/Client/Release/" />
 				<Option type="1" />
 				<Option compiler="mingw_730" />
+				<Option parameters="nolauncher" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>

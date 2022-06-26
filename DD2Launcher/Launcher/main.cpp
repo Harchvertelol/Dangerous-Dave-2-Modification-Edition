@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <dirent.h>
+#include <cstdio>
 
 #include <sys/stat.h>
 
@@ -60,6 +61,37 @@ vector<string> getDirs(string path, string filetest, string A = "", string B = "
     return dirs;
 }
 
+vector<string> getFiles(string path, string ext = "")
+{
+    vector<string> files;
+    const char* PATH = path.c_str();
+
+    DIR *dir = opendir(PATH);
+
+    struct dirent *entry = readdir(dir);
+
+    while (entry != NULL)
+    {
+        //if (entry->d_type == DT_DIR)
+
+        struct stat buff;
+        stat(entry->d_name, &buff);
+        string fname = string(entry->d_name);
+        if(fname != "." && fname != "..")
+        {
+            bool adding = true;
+            if(ext != "" && !( string(entry->d_name).find("." + ext) != string::npos && string(entry->d_name).find("." + ext) + ext.size() + 1 == string(entry->d_name).size() ) ) adding = false;
+            if(adding) files.push_back(entry->d_name);
+        }
+
+        entry = readdir(dir);
+    }
+
+    closedir(dir);
+
+    return files;
+}
+
 class Launcher
 {
     public:
@@ -70,6 +102,7 @@ class Launcher
             s_GuiFile(""),
             s_Window(0),
             s_DD2FileName(""),
+            s_NickName("Player"),
             s_KeyEditBox(0),
             s_KeyWaitPanel(0)
         {
@@ -341,6 +374,92 @@ class Launcher
             tgui::Button::Ptr More = child->get<tgui::Button>("More");
             More->onPress([=](){ this->poolingConfig(true); this->loadData(false); });
 
+            tgui::Button::Ptr ManageSaves = child->get<tgui::Button>("ManageSaves");
+            ManageSaves->onPress([=](){
+                                        auto saves_management = tgui::Panel::create();
+                                        saves_management->setSize("100%", "100%");
+                                        saves_management->setPosition(0, 0);
+                                        saves_management->setWidgetName("SaveManagement");
+                                        child->add(saves_management);
+
+                                        auto label_pl = tgui::Label::create();
+                                        label_pl->setText("Saves list:");
+                                        label_pl->setPosition("40%", "5%");
+                                        label_pl->setSize("20%", "10%");
+                                        label_pl->setTextSize(25);
+                                        saves_management->add(label_pl);
+
+                                        auto list_saves = tgui::ListBox::create();
+                                        list_saves->setSize("51%", "80%");
+                                        //list_saves->setItemHeight(32);
+                                        list_saves->setTextSize(18);
+                                        list_saves->setPosition("20%", "12%");
+
+                                        string saves_folder = "Saves/" + s_NickName + "/";
+                                        string save_ext = "ddmesav";
+                                        vector<string> files = getFiles(saves_folder, save_ext);
+                                        for(int i = 0; i < files.size(); i++) list_saves->addItem(files[i].substr(0, files[i].size() - save_ext.size() - 1));
+                                        saves_management->add(list_saves);
+
+                                        auto button = tgui::Button::create();
+                                        button->setPosition("80%", "15%");
+                                        button->setText("Remove save");
+                                        button->setSize("15%", "5%");
+                                        button->setTextSize(18);
+                                        button->onPress([=]()
+                                                        {
+                                                            string save_name = list_saves->getSelectedItem().toStdString();
+                                                            if(save_name == "") return;
+                                                            string save_file_name = saves_folder + save_name + ".ddmesav";
+
+                                                            auto child_window = tgui::Panel::create();
+                                                            child_window->setSize("50%", "20%");
+                                                            child_window->setPosition("25%", "30%");
+                                                            child_window->getRenderer()->setBorders(tgui::Outline(1));
+                                                            saves_management->add(child_window);
+
+                                                            auto label = tgui::Label::create();
+                                                            label->setText("Do you want delete save \"" + save_name + "\"?");
+                                                            label->setSize("90%", "40%");
+                                                            label->setPosition("5%", "10%");
+                                                            label->setTextSize(20);
+                                                            label->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
+                                                            label->setVerticalAlignment(tgui::Label::VerticalAlignment::Center);
+                                                            child_window->add(label);
+
+                                                            auto button = tgui::Button::create();
+                                                            button->setPosition("10%", "65%");
+                                                            button->setTextSize(18);
+                                                            button->setText("No");
+                                                            button->setSize("30%", "25%");
+                                                            button->onPress([=](){ saves_management->remove(child_window); });
+                                                            child_window->add(button);
+
+                                                            button = tgui::Button::create();
+                                                            button->setPosition("60%", "65%");
+                                                            button->setText("Yes");
+                                                            button->setTextSize(18);
+                                                            button->setSize("30%", "25%");
+                                                            button->onPress([=]()
+                                                                                {
+                                                                                    std::remove(save_file_name.c_str());
+                                                                                    list_saves->removeItem(save_name);
+                                                                                    saves_management->remove(child_window);
+                                                                                }
+                                                                            );
+                                                            child_window->add(button);
+                                                        });
+                                        saves_management->add(button);
+
+                                        button = tgui::Button::create();
+                                        button->setPosition("80%", "22%");
+                                        button->setText("Close");
+                                        button->setTextSize(18);
+                                        button->setSize("15%", "5%");
+                                        button->onPress([=](){ child->remove(saves_management); });
+                                        saves_management->add(button);
+                                    });
+
             tgui::Slider::Ptr SoundsSlider = child->get<tgui::Slider>("SoundsSlider");
             SoundsSlider->setValue(stof(s_DD2Ini->getValue("audio", "soundsvolume")));
 
@@ -360,7 +479,7 @@ class Launcher
             int mspY = ModpacksScrollablePanel->getSize().y;
 
             string cur_modpack = "StandardDave";
-            if(s_DD2Ini->getValue("resources", "pooling") == "true" && s_DD2Ini->getValue("resources", "modpack") != "") cur_modpack = s_DD2Ini->getValue("resources", "modpack");
+            if(s_DD2Ini->getValue("resources", "standard") == "false") cur_modpack = s_DD2Ini->getValue("resources", "modpack");
 
             vector<string> modpacks = getDirs("ModPacks", "/About/mod.info");
             for(unsigned int i = 0; i < modpacks.size(); i++)
@@ -878,7 +997,7 @@ class Launcher
 
                 return;
             }
-            system(("start " + s_DD2FileName).c_str());
+            system(("start " + s_DD2FileName + " nolauncher").c_str());
             s_Window->close();
         }
         PostParsingStruct* s_DD2Ini;
@@ -889,6 +1008,7 @@ class Launcher
         sf::RenderWindow* s_Window;
         tgui::Gui s_TGUI;
         string s_DD2FileName;
+        string s_NickName;
         //For keys
         tgui::EditBox::Ptr s_KeyEditBox;
         tgui::Panel::Ptr s_KeyWaitPanel;

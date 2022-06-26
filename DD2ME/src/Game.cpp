@@ -4,6 +4,8 @@
 
 #include "Defines.h"
 
+#include "IniParser/ParserInfoFile.h"
+
 #include <ctime>
 
 using namespace IniParser;
@@ -168,8 +170,36 @@ bool Game::changeNextLevel(bool switchstate)
     return true;
 }
 
+string Game::getNameForSaveFolder()
+{
+    return "Saves/" + s_GameInfo->s_MyPlayer->s_NickName;
+}
+
+string Game::getNameForSaveFile()
+{
+    string save_file = "";
+    string modpack = s_IniFile->getValue("resources", "modpack");
+    if(s_IniFile->getValue("resources", "standard") == "true") modpack = "StandardDave";
+    if(s_IniFile->getValue("resources", "pooling") == "false") save_file = modpack;
+    else save_file = s_IniFile->getValue("resources", "levelpack");
+    save_file += ".ddmesav";
+    return save_file;
+}
+
 bool Game::changeLevel(int number, bool switchstate, bool playmusic)
 {
+    // Save
+    if(!s_GameInfo->s_MyPlayer->s_Values->isEmpty())
+    {
+        string save_folder = getNameForSaveFolder();
+        string save_file = getNameForSaveFile();
+        IniParser::ParserInfoFile prs;
+        prs.setCryptKey(STRING_CONSTANTS::SC_CRYPT_KEY_SAVES);
+        prs.setCryptedStatus(true);
+        WorkFunctions::FileFunctions::createFolders(save_folder, "/");
+        prs.writeParsedToFile(s_GameInfo->s_MyPlayer->s_Values, save_folder + "/" + save_file);
+    }
+    //...
     tgui::Timer::clearTimers();
     if(number < 1 || number > atoi( s_Data->s_LevelsInfo->getValue("info", "numberoflevels").c_str()  ) )
     {
