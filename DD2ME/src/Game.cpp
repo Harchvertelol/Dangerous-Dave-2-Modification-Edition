@@ -180,8 +180,8 @@ string Game::getNameForSaveFile()
     string save_file = "";
     string modpack = s_IniFile->getValue("resources", "modpack");
     if(s_IniFile->getValue("resources", "standard") == "true") modpack = "StandardDave";
-    if(s_IniFile->getValue("resources", "pooling") == "false") save_file = modpack;
-    else save_file = s_IniFile->getValue("resources", "levelpack");
+    save_file = modpack;
+    if(s_IniFile->getValue("resources", "levelpack") != "" && s_IniFile->getValue("resources", "pooling") == "true") save_file = s_IniFile->getValue("resources", "levelpack");
     save_file += ".ddmesav";
     return save_file;
 }
