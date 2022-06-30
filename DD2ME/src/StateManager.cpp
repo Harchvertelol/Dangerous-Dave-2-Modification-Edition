@@ -258,6 +258,7 @@ void StateManager::startState(int state)
         if(s_GameClass->s_GameInfo->s_Stop == true && s_GameClass->s_GameInfo->s_DeathType == 0)
         {
             s_GameClass->s_GameInfo->s_CurrentLevel = 1;
+            if(s_GameClass->s_Data->s_LevelsInfo->isExists("options", "startinglevel")) s_GameClass->s_GameInfo->s_CurrentLevel = atoi(s_GameClass->s_Data->s_LevelsInfo->getValue("options", "startinglevel").c_str());
             s_GameClass->s_GameInfo->s_Stop = false;
         }
         s_GameClass->s_GameInfo->s_DopScreenCoordX = 0;
