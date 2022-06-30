@@ -20,6 +20,7 @@ int main()
         q.convertLevel(itos(i));
     }
     levelsInf->setValue("info", "levelsformat", "0.1");
+    levelsInf->setValue("info", "modpack", "StandardDave");
     //system("copy levels.dat result/levels.dat");
     prs.writeParsedToFile(levelsInf, "result/levels.dat");
     system("pause");

@@ -31,6 +31,7 @@ int main()
     PostParsingStruct* levelsInf = prs.getParsedFromFile("levels.dat");
     int nol = atoi( levelsInf->getValue("info", "numberoflevels").c_str() );
     for(int i = 1; i <= nol; i++) cryptFile(itos(i) + ".lev", key);
-    //prs.writeParsedToFile(levelsInf, "result/levels.dat");
+    prs.setCryptedStatus(false);
+    prs.writeParsedToFile(levelsInf, "result/levels.dat");
     return 0;
 }
