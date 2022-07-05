@@ -117,10 +117,10 @@ function calculateFireball()
 end
 
 function createFireballs()
-	addDuplicateMonster(-1, getCoordMonsterX(-1) - 12, getCoordMonsterY(-1) + 55, "fireball", 0, 0, -2, "timelife=32;tfly=1;")
-	addDuplicateMonster(-1, getCoordMonsterX(-1) + 12, getCoordMonsterY(-1) + 67, "fireball", 0, 0, -2, "timelife=32;tfly=2;")
-	addDuplicateMonster(-1, getCoordMonsterX(-1) + 36, getCoordMonsterY(-1) + 67, "fireball", 0, 0, -2, "timelife=32;tfly=3;")
-	addDuplicateMonster(-1, getCoordMonsterX(-1) + 59, getCoordMonsterY(-1) + 55, "fireball", 0, 0, -2, "timelife=32;tfly=4;")
+	addDuplicateMonster(-1, getCoordMonsterX(-1) - 12, getCoordMonsterY(-1) + 55, "fireball", 0, 0, -2, "timelife=32;tfly=1;GS_type=standard;")
+	addDuplicateMonster(-1, getCoordMonsterX(-1) + 12, getCoordMonsterY(-1) + 67, "fireball", 0, 0, -2, "timelife=32;tfly=2;GS_type=standard;")
+	addDuplicateMonster(-1, getCoordMonsterX(-1) + 36, getCoordMonsterY(-1) + 67, "fireball", 0, 0, -2, "timelife=32;tfly=3;GS_type=standard;")
+	addDuplicateMonster(-1, getCoordMonsterX(-1) + 59, getCoordMonsterY(-1) + 55, "fireball", 0, 0, -2, "timelife=32;tfly=4;GS_type=standard;")
 end
 
 function createHands()
@@ -144,11 +144,11 @@ function createHands()
 		end
 		if rh == 0 and createrighthand == 1 then
 			setMonsterValue(-1, "rhand", "1")
-			addDuplicateMonster(-1, getCoordMonsterX(-1) - 5, getCoordMonsterY(-1) + 55, "hand", 0, 0, 2, string.format("tp=rhand;freeze=32;idBoss=%s;nv=%s;", tostring(getMonsterID()), getNV()))
+			addDuplicateMonster(-1, getCoordMonsterX(-1) - 5, getCoordMonsterY(-1) + 55, "hand", 0, 0, 2, string.format("tp=rhand;freeze=32;idBoss=%s;nv=%s;GS_type=standard;", tostring(getMonsterID()), getNV()))
 		end
 		if lh == 0 and createlefthand == 1 then
 			setMonsterValue(-1, "lhand", "1")
-			addDuplicateMonster(-1, getCoordMonsterX(-1) + 52, getCoordMonsterY(-1) + 55, "hand", 0, 0, 2, string.format("tp=lhand;freeze=32;idBoss=%s;nv=%s;", tostring(getMonsterID()), getNV()))
+			addDuplicateMonster(-1, getCoordMonsterX(-1) + 52, getCoordMonsterY(-1) + 55, "hand", 0, 0, 2, string.format("tp=lhand;freeze=32;idBoss=%s;nv=%s;GS_type=standard;", tostring(getMonsterID()), getNV()))
 		end
 	end
 end
