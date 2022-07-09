@@ -1,3 +1,4 @@
+-------------------------------------------------------------------------------------
 Changes in version 0.9 pre-beta: (July 9, 2022)
 
 - This is a pre-beta version of Dangerous Dave 2: Modification Edition.
