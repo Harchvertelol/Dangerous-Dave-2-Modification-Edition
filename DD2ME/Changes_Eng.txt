@@ -1,3 +1,98 @@
+Changes in version 0.9 pre-beta: (July 9, 2022)
+
+- This is a pre-beta version of Dangerous Dave 2: Modification Edition.
+  While there is an active search for bugs and their correction.
+  
+- Changes:
+  
+  1) Now you can set the level text that will be displayed instead of Level N.
+  2) The level format has been radically changed.
+  3) Now, when loading monsters, you can give your own parameters (for example, make the boss not a boss with the GS_type parameter, your number of lives, and so on).
+  4) Now you can give tiles your own parameters (for example, to which level to transfer or to which part of the level to transfer when touching an EXITLEVEL type tile).
+  5) Added check and warnings for the downloadable level format.
+  6) Added an optional variable in [options] for levels called changelevelongameover and controls the transition from this level after the loss of all lives. More details in Levels_Params.txt.
+  7) Added a parameter to tiles - shifting the animation of this tile. Allows you to make a shifted animation on certain tiles.
+  8) Added support for texture layers (any number).
+  9) Added support for texture transparency (if equal to -1, then transparency is disabled).
+  10) The API function that manages temporary images has been changed (a new optional parameter has been added).
+  11) Added the tile parameter GS_animation_frame_lock, if set to something, then the animation of the tile is disabled, the tile specified by the number in this variable will always be shown.
+  12) Changed rendering engine to SFML.
+  13) Added font packages.
+  14) Now all texture file formats are supported, including png and translucency.
+  15) There was a full-screen mode.
+  16) The resolution of the game is untied from the resolution of the window. Moreover, if the window resolution is set to -1, the window resolution will be calculated automatically depending on the requirements of the game resolution and scale.
+  17) There was an option to center the game in the center of the window.
+  18) The tile parameter GS_secret and the list of secrets appeared in the levels.
+  19) Dave's parameters and two functions appeared in the API for monsters: setDaveValue and getDaveValue.
+  20) The logic for storing global parameters has changed, now they are stored as an ini file. The number of parameters of the setGlobalValue and getGlobalValue functions has changed.
+  21) There was a display of secrets when visiting them (in the text '\n' is supported as a line break, '\\n' as a character '\n').
+  22) The keys are read from the first DD2.ini, but are overwritten when a new one is read from the modpack. Thus, you can prevent changing control if you put the keys in the ini file of the modpack.
+  23) Added information window. Default open/close on tab.
+  24) Added highlighting of monsters when hit. You can set a unique highlight for each monster.
+  25) There is a new parameter in the level format: numberobjectstilesfield. Responsible for the layer number after which objects will be drawn.
+  26) All interface parameters have been moved to the appropriate section of the modpack.
+  27) Added text color options on the loading screen and in the information window.
+  28) Added options for fonts on the loading screen, the text of secrets and the text of the information window.
+  29) Added a full check in the modpack for compliance with the game version.
+  30) Added support for automatic adjustment of the game scale to the window (for this you need gamescale = -1). You cannot set the window resolution and scale to -1 at the same time.
+  31) The spider now behaves more naturally around obstacles.
+  32) A major refactoring of the code has been carried out: there are no more references to Dave in it, it has been replaced with "player".
+  33) Added backgrounds in any number and order relative to tile layers. Supported options for their scrolling at any speed, shift, as well as adaptive scrolling.
+  34) Added a directory for information on the modpack, the necessary files have been transferred to it.
+  35) Added a new optional parameter to levels.dat, namely modpack. See Level_Params for details.
+  36) Added a new function to the monster API: changeLevel.
+  37) Improved customization of the level change script, added a new parameter.
+  38) Added a new optional parameter to level.dat: startinglevel, allows you to select the starting level. See Level_Params for details.
+  39) Added the ability to encrypt any files in the modpack. At the moment, only level encryption works, it will be used on some modpacks and levelpacks.
+  40) The initial rudiments of saving appeared: character variables are saved between levels. Because of this, visited secrets will also be preserved.
+  41) When launched directly, it now launches the launcher. To run the game directly, use the bat file.
+  42) Fixed small bugs in the intelligence of the last boss, due to which in some cases it was possible to finish additional levelpacks earlier.
+  43) HarchPack and Campaign Three Brothers have secrets.
+  44) Added global modpack SuperDangerousDave (Dangerous Dave in Mario world) authored by Snaiper and Grub.
+  45) Carefully redesigned launcher. Now it has become more convenient to choose modpacks and levelpacks. Also appeared save management from the launcher.
+
+- Fixed bugs:
+  
+  1) Fixed a critical error in the intellect of an invisible ghost, which could lead to a game crash in some situations.
+  2) Fixed first boss intelligence bug due to new format.
+  3) Fixed a bug in determining the first keystroke on the numpad for the first start of the level during the program.
+  4) Fixed a bug due to which it was possible to kill uncultivated monsters.
+  5) Fixed a bug where monsters could be partially displayed on the screen, but not processed.
+  6) Fixed a bug with the continuation of the sound of reloading after death.
+  7) Fixed error reading levels (and reading files with parameters): in the new format, large levels were not read.
+  8) Fixed a monster intelligence bug related to setting the initial state. Now any monster intelligence functions can be called from this function with reservations (see the explanation in Monster_Api.txt to the setFirstState() function).
+  9) Fixed giardia intelligence bug, now giardia takes the correct starting position depending on where it is (on the ceiling, on the floor, in the air).
+  10) Fixed a bug in the intelligence of giardia, now giardia will not hit the wall if it is placed close to the right wall (but at least one free tile to the left of it is required).
+  11) Fixed a bug due to which the level options were not read in the new format when loading it.
+  12) Fixed error in determining tiles around Dave.
+  13) Fixed a bug where keystrokes from the previous level could be transferred to the next level when changing the level.
+  14) Fixed a bug where door operations were performed at the level of the physical layer of tiles, not objects.
+  15) The intelligence of the spider has been fixed - now, unlike the original, there is practically no hiding from it near the right wall.
+  16) Fixed bug states in the intellect of the spider.
+  17) Now, when caching is disabled, the transparency mask works.
+  18) Fixed a small memory leak when loading a level.
+  19) Now the victory screen and bandolier are displayed on top of all texture layers.
+    
+- Found bugs:
+
+  1) Doesn't fall off solid tiles from recoil when shooting to the left. If you shoot up or down - does not fall from solid tiles (found that in the original
+     Dave also decided not to fix it yet).
+  2) Dave's quick switch to cooldown (planned to be fixed when translating Dave's mechanics to lua).
+  3) Dave doesn't go down stairs as fast as in the original (planned to be fixed when translating Dave's mechanics to lua).
+  4) No animation in flight. Incorrect jump animation (must be kicked). Should hang at the top for longer (planned to fix when translating Dave's mechanics to lua).
+  5) Running animation when hitting a wall should stop (it is planned to fix it when translating Dave's mechanics into lua).
+  6) Fix API. The goUp/goDown functions (add wall walking) and testTileDown (and the rest of them, figure out how they should work).
+  7) The animation counter does not reset when the monster's state changes. Thought: add a global parameter for each monster, giving you the ability to either manually control it yourself, or let the program automatically reset.
+  8) Bonuses in the original blink chaotically, and not harmoniously with each other.
+  9) In the original, the zombie strikes unevenly: first, a swing with a delay, and then a quick strike. In the remake, he hits evenly.
+  10) Bug of reloading sound (extra "garbage" sounds at the end).
+
+- Minuses:
+
+  1) Bugs, bugs, bugs (less than before, but still).
+  2) ALL settings are in the .ini file.
+  3) The opening screensaver is not the same as in the original Dave.
+
 -------------------------------------------------------------------------------------
 Changes in version 0.8 pre-beta: (23 July 2021)
 

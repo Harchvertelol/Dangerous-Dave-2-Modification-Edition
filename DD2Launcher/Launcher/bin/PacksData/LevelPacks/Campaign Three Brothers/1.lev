@@ -115,8 +115,10 @@ player1=288;704;
 43;4=-2
 
 [TilesParams]
+2;41=GS_secret=SecretLife;
 
 [Secrets]
+SecretLife=You found the secret life!
 
 [info]
 sizeX=50
