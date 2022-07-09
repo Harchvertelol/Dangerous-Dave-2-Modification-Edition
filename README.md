@@ -20,7 +20,7 @@ And a little preparing network mode:
 <img src="Screenshots/4.jpg" width=32% alt="screenshot">
 
 # Download
-Last version (v0.8 pre-beta, **23 july, 2021**): <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/tag/v0.8pre-beta-win" target="_blank">open</a>, <a href=https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/download/v0.8pre-beta-win/DD2MEv0.8pre-beta.rar>direct link</a><br>
+Last version (v0.9 pre-beta, **9 july, 2022**): <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/tag/v0.9pre-beta-win" target="_blank">open</a>, <a href=https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases/download/v0.9pre-beta-win/DD2MEv0.9pre-beta.rar>direct link</a><br>
 All versions: <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases" target="_blank">open</a>
 
 # Control
