@@ -28,8 +28,8 @@ Last version (v0.9 pre-beta, **9 july, 2022**): <a href="https://github.com/Harc
 All versions: <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases" target="_blank">open</a>
 
 # Support project
-If you want, you can support this project. I have been doing it for more than 10 years, I will be grateful for any support. Thanks a lot anyway! Goal: "Dangerous Dave 2: Modification Edition" (the list of donators will appear in each new release of the game).<br>
-Support link: <a href="https://www.donationalerts.com/r/harch" target="_blank">support</a>
+If you want, you can support this project. I have been doing it for more than 10 years, I will be grateful for any support. Thanks a lot anyway! The list of donators will appear in each new release of the game.<br>
+Support link: <a href="https://boosty.to/harch" target="_blank">support</a>
 
 # Control
 Arrow keys for run and aim; left ctrl - jump; left alt - shoot. This setting you can change in DD2.ini.
