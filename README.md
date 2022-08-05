@@ -32,7 +32,7 @@ Arrow keys for run and aim; left ctrl - jump; left alt - shoot. This setting you
 
 # Support project
 If you want, you can support this project. I have been doing it for more than 10 years, I will be grateful for any support. Thanks a lot anyway!
-Support link: <a href=https://www.donationalerts.com/r/harch>support</a>
+Support link: <a href=https://www.donationalerts.com/r/harch target="_blank">support</a>
 
 # Attention
 Almost all English texts in the accompanying files (documentation, readme, changes) are translated automatically, therefore, most likely, they contain any inconsistencies or incidents. If you notice something like this, then you can create issue.
