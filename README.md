@@ -28,7 +28,7 @@ Last version (v0.9 pre-beta, **9 july, 2022**): <a href="https://github.com/Harc
 All versions: <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modification-Edition/releases" target="_blank">open</a>
 
 # Support project
-If you want, you can support this project. I have been doing it for more than 10 years, I will be grateful for any support. Thanks a lot anyway! The list of donators will appear in each new release of the game.<br>
+If you want, you can support this project. I have been doing it for more than 10 years, I will be grateful for any support. Thanks a lot anyway! Both a one-time donation (in the goals section) and a subscription are available. The list of donators will appear in each new release of the game.<br>
 Support link: <a href="https://boosty.to/harch" target="_blank">support</a>
 
 # Control
