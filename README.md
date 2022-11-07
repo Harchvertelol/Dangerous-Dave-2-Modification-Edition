@@ -37,6 +37,11 @@ Arrow keys for run and aim; left ctrl - jump; left alt - shoot. This setting you
 # Attention
 Almost all English texts in the accompanying files (documentation, readme, changes) are translated automatically, therefore, most likely, they contain any inconsistencies or incidents. If you notice something like this, then you can create issue.
 
+# Level editor
+The game supports the level editor. Install Tailed 1.7.2 (and no other version, otherwise the plugin will not work) and then, which is the easiest, if you have Windows 7/8/8.1/10, launch the editor from the game launcher.
+
+More complicated: the second option is to transfer the plugin files yourself to the extensions folder of the Tiled, and also open all the game level files, after putting them near the folder DDME_TileSets. This option also works for Linux.
+
 # About versions
 Warning: game versions 0.2 and 0.3 do not have source code and are laid out with empty source code archives. This is due to the fact that initially the project was not on the repository, and its source code was not saved from version to version.
 
