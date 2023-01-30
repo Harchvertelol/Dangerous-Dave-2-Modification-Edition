@@ -45,7 +45,7 @@ bool Sounds::load(string PathToSoundPack)
         {
             if(!s_SoundsBuffersList[iter1->second].loadFromFile(PathToSoundPack + iter1->second))
             {
-                cout << "Error loading " << iter1->first << " with file " << iter1->second << endl;
+                s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error loading " + iter1->first + " with file " + iter1->second, true);
                 return false;
             }
         }

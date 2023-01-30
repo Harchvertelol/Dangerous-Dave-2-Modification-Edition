@@ -45,7 +45,7 @@ bool Backgrounds::load(string PathToBackgroundsPack)
         {
             if(!s_BackgroundsList[iter1->first].loadFromFile(PathToBackgroundsPack + iter1->second))
             {
-                cout << "Error loading " << iter1->first << " with file " << iter1->second << endl;
+                s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error loading background " + iter1->first + " with file " + iter1->second);
                 return false;
             }
         }
@@ -56,14 +56,14 @@ bool Backgrounds::load(string PathToBackgroundsPack)
 
 bool Backgrounds::createCache()
 {
-    cout<<"Creating backgrounds cache..."<<endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Creating backgrounds cache...");
     map<string, sf::Texture>::iterator iter1, iter2;
     for(iter1 = s_BackgroundsList.begin(), iter2 = s_BackgroundsList.end(); iter1 != iter2;)
     {
         s_CacheBackgroundsList[iter1->first] = sf::Sprite(iter1->second);
         iter1++;
     }
-    cout<<"Backgrounds cache created."<<endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Backgrounds cache was created.");
     s_CacheCreated = true;
     return true;
 }
@@ -72,7 +72,7 @@ void Backgrounds::draw(string name, int x, int y, float scalex, float scaley)
 {
     if(!isExists(name))
     {
-        cout << "Error: background with name \"" << name << "\" does not exists!" << endl;
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Background with name \"" + name + "\" does not exists!");
         return;
     }
     if(s_CacheCreated == false)

@@ -11,8 +11,9 @@ class Game;
 class GuiData
 {
     public:
-        GuiData();
+        GuiData(Game*);
         ~GuiData();
+        Game* s_GameClass;
         IniParser::PostParsingStruct* s_GuiInfo;
         std::map<std::string, sf::Font> s_Fonts;
         bool load(std::string);

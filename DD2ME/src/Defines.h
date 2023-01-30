@@ -50,4 +50,14 @@ enum GAME_CONSTANTS
 {
     GC_START_LIVES_NUMBER = 4
 };
+
+enum LoggerEventType
+{
+    EVENT_TYPE_ERROR, //!< Ошибка.
+    EVENT_TYPE_STANDARD, //!< Стандартное сообщение.
+    EVENT_TYPE_LOGIC_VIOLATION, //!< Логическая ошибка пользователя.
+    EVENT_TYPE_WARNING, //!< Предупреждение.
+    EVENT_TYPE_INFO, //!< Информационное сообщение.
+    EVENT_TYPE_DEBUG_INFO //!< DEBUG-сообщение. Рекомендуется их выводить только в debug-цели через #ifdef.
+};
 #endif

@@ -111,7 +111,7 @@ bool Screens::load(string PathToScreenPack)
 
 bool Screens::createCache()
 {
-    cout<<"Creating screens cache..."<<endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Creating screens cache...");
     int numberofscreens;
     /*s_CacheStandardScreens["flylogo"] = new Bitmap(*s_StandardScreens["flylogo"]);
     s_CacheStandardScreens["flybackground"] = new Bitmap(*s_StandardScreens["flybackground"]);
@@ -126,7 +126,7 @@ bool Screens::createCache()
     //for(int i = 0; i < numberofscreens; i++) s_CacheMCScreens["changelevelscreen"][i] = new Bitmap(*s_MCScreens["changelevelscreen"][i]);
     for(int i = 0; i < numberofscreens; i++) s_CacheMCScreens["changelevelscreen"][i] = new Sprite(*s_MCScreens["changelevelscreen"][i]);
     s_CacheCreated = true;
-    cout<<"Screens cache created."<<endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Screens cache was created.");
     return true;
 }
 

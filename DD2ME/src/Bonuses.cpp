@@ -178,7 +178,7 @@ void Bonuses::drawBonus(int bonus, int x, int y, bool anim)
 
 bool Bonuses::createCache()
 {
-    cout<<"Creating bonuses cache..."<<endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Creating bonuses cache...");
     int numberofframes, xSize, ySize;
     int numberofbonuses = atoi( s_GlobBonusesInfo->getValue("info", "numberofbonuses").c_str() );
     for(int i = 0; i < numberofbonuses; i++)
@@ -198,7 +198,7 @@ bool Bonuses::createCache()
         s_BonusesCache[i][numberofframes + 1] = new Bitmap( (*s_BonusesBitmaps[i][numberofframes + 1]), 0, 0, xSize, ySize);*/
     }
     s_CacheCreated = true;
-    cout<<"Bonuses cache created."<<endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Bonuses cache was created.");
     return true;
 }
 

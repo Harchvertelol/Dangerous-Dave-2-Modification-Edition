@@ -15,6 +15,7 @@
 				<Option parameters="nolauncher" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-DDEBUG" />
 				</Compiler>
 				<Linker>
 					<Add library="../../Engines/TGUI-0.9/lib/libtgui-d.a" />
@@ -88,6 +89,8 @@
 		<Unit filename="KeysState.h" />
 		<Unit filename="Level.cpp" />
 		<Unit filename="Level.h" />
+		<Unit filename="Logger.cpp" />
+		<Unit filename="Logger.h" />
 		<Unit filename="LuaBindFunctions.cpp" />
 		<Unit filename="LuaBindFunctions.h" />
 		<Unit filename="Monsters.cpp" />
@@ -245,9 +248,6 @@
 		<Unit filename="shabbynet/shabbynet.cpp" />
 		<Unit filename="shabbynet/shabbynet.hpp" />
 		<Extensions>
-			<code_completion />
-			<debugger />
-			<envvars />
 			<DoxyBlocks>
 				<comment_style block="0" line="0" />
 				<doxyfile_project />

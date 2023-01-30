@@ -103,8 +103,8 @@ bool CreatureMonster::correctionPhys(int coord, int what, bool ladder)
     if(what == 1) s_CoordY += sign;
     if(yes && s_GameClass->s_IniFile->getValue("loggers","correctionphysics") == "true")
     {
-        if(what == 0) cout<<"(monster) Physics correction X: "<<"old - "<<coord<<", new - "<<s_CoordX<<endl;
-        else if(what == 1) cout<<"(monster) Physics correction Y: "<<"old - "<<coord<<", new - "<<s_CoordY<<endl;
+        if(what == 0) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "(monster) Physics correction X: old - " + WorkFunctions::ConvertFunctions::itos(coord) + ", new - " + WorkFunctions::ConvertFunctions::itos(s_CoordX));
+        else if(what == 1) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "(monster) Physics correction Y: old - " + WorkFunctions::ConvertFunctions::itos(coord) + ", new - " + WorkFunctions::ConvertFunctions::itos(s_CoordY));
     }
     delete[] TileCoordX;
     delete[] TileCoordY;
@@ -119,7 +119,11 @@ void CreatureMonster::draw()
 
 int CreatureMonster::getFrame()
 {
-    if(!s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Number - 1]->isExists("info", "numberofframes" + s_State)) cout << "numberofframes" + s_State << endl;
+    if(!s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Number - 1]->isExists("info", "numberofframes" + s_State))
+    {
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Does not exists monster state: numberofframes" + s_State);
+        return 0;
+    }
     int numberofframes = atoi( s_GameClass->s_Data->s_Monsters->s_MonstersInfo[s_Number - 1]->getValue("info", "numberofframes" + s_State).c_str() );
     return s_NumberOfAction%numberofframes;
 }

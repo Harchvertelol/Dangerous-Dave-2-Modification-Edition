@@ -91,6 +91,7 @@ Game::Game():
     s_FactoryTmpImgs = new FactoryTemporaryImages(this);
     s_AI = new AI(this);
     s_Gui = new Gui(this);
+    s_Logger = new Logger();
 }
 
 Game::~Game()
@@ -105,6 +106,7 @@ Game::~Game()
     if(s_Data != 0) delete s_Data;
     if(s_RenderTexture != 0) delete s_RenderTexture;
     if(s_RenderWindow != 0) { s_RenderWindow->close(); delete s_RenderWindow; }
+    if(s_Logger != 0) delete s_Logger;
 }
 
 void Game::deleteAllGDIObjects()
@@ -138,12 +140,12 @@ void Game::calculateFPS(unsigned int* fps, unsigned int* calcfps, time_t* timeol
         if((*minimalfps) > (*fps)) (*minimalfps) = (*fps);
         if(s_IniFile->getValue("FPS", "ShowFPS") == "true" && s_IniFile->getValue("FPS", "ShowFPSMode") == "console")
         {
-            if(s_IniFile->getValue("FPS", "ShowFPSGameDraw") == "true" ) cout<<"FPS game draw: "<<s_GameDrawFPS<<endl;
-            if(s_IniFile->getValue("FPS", "ShowFPSGameDrawMaximal") == "true" ) cout<<"FPS game draw maximal: "<<s_GameDrawFPSMaximal<<endl;
-            if(s_IniFile->getValue("FPS", "ShowFPSGameDrawMinimal") == "true" ) cout<<"FPS game draw minimal: "<<s_GameDrawFPSMinimal<<endl;
-            if(s_IniFile->getValue("FPS", "ShowFPSTechnical") == "true" ) cout<<"FPS technical: "<<s_TechnicalFPS<<endl;
-            if(s_IniFile->getValue("FPS", "ShowFPSTechnicalMaximal") == "true" ) cout<<"FPS technical maximal: "<<s_TechnicalFPSMaximal<<endl;
-            if(s_IniFile->getValue("FPS", "ShowFPSTechnicalMinimal") == "true" ) cout<<"FPS technical minimal: "<<s_TechnicalFPSMinimal<<endl;
+            if(s_IniFile->getValue("FPS", "ShowFPSGameDraw") == "true" ) s_Logger->registerEvent(EVENT_TYPE_INFO, "FPS game draw: " + WorkFunctions::ConvertFunctions::itos(s_GameDrawFPS));
+            if(s_IniFile->getValue("FPS", "ShowFPSGameDrawMaximal") == "true" ) s_Logger->registerEvent(EVENT_TYPE_INFO, "FPS game draw maximal: " + WorkFunctions::ConvertFunctions::itos(s_GameDrawFPSMaximal));
+            if(s_IniFile->getValue("FPS", "ShowFPSGameDrawMinimal") == "true" ) s_Logger->registerEvent(EVENT_TYPE_INFO, "FPS game draw minimal: " + WorkFunctions::ConvertFunctions::itos(s_GameDrawFPSMinimal));
+            if(s_IniFile->getValue("FPS", "ShowFPSTechnical") == "true" ) s_Logger->registerEvent(EVENT_TYPE_INFO, "FPS technical: " + WorkFunctions::ConvertFunctions::itos(s_TechnicalFPS));
+            if(s_IniFile->getValue("FPS", "ShowFPSTechnicalMaximal") == "true" ) s_Logger->registerEvent(EVENT_TYPE_INFO, "FPS technical maximal: " + WorkFunctions::ConvertFunctions::itos(s_TechnicalFPSMaximal));
+            if(s_IniFile->getValue("FPS", "ShowFPSTechnicalMinimal") == "true" ) s_Logger->registerEvent(EVENT_TYPE_INFO, "FPS technical minimal: " + WorkFunctions::ConvertFunctions::itos(s_TechnicalFPSMinimal));
         }
     }
 }
@@ -156,6 +158,34 @@ unsigned int Game::getGameDrawFPS()
 unsigned int Game::getTechnicalFPS()
 {
     return s_TechnicalFPS;
+}
+
+bool Game::readConfig()
+{
+    ParserInfoFile prsfl;
+    s_IniFile = prsfl.getParsedFromFile("DD2.ini");
+    s_NetClient->s_NetInfo = prsfl.getParsedFromFile("General.ini");
+    if(!s_IniFile || !s_NetClient->s_NetInfo) return false;
+
+    if(s_IniFile->getValue("loggers", "default_standard") == "true") s_Logger->setPrintStandard(true);
+    else s_Logger->setPrintStandard(false);
+    if(s_IniFile->getValue("loggers", "default_info") == "true") s_Logger->setPrintInfo(true);
+    else s_Logger->setPrintInfo(false);
+    if(s_IniFile->getValue("loggers", "default_warning") == "true") s_Logger->setPrintWarning(true);
+    else s_Logger->setPrintWarning(false);
+    if(s_IniFile->getValue("loggers", "default_error") == "true") s_Logger->setPrintError(true);
+    else s_Logger->setPrintError(false);
+    if(s_IniFile->getValue("loggers", "default_logic_violation") == "true") s_Logger->setPrintLogicViolation(true);
+    else s_Logger->setPrintLogicViolation(false);
+    if(s_IniFile->getValue("loggers", "debug_max_info") == "true") s_Logger->setPrintDebugInfo(true);
+    else s_Logger->setPrintDebugInfo(false);
+    if(s_IniFile->getValue("loggers", "default_to_console") == "true") s_Logger->setConsolePrint(true);
+    else s_Logger->setConsolePrint(false);
+    if(s_IniFile->getValue("loggers", "default_to_file") == "true") s_Logger->setFilePrint(true);
+    else s_Logger->setFilePrint(false);
+    if(s_IniFile->isExists("loggers", "logfile")) s_Logger->setLogFileName(s_IniFile->getValue("loggers", "logfile"));
+
+    return true;
 }
 
 bool Game::loadPack()
@@ -287,7 +317,7 @@ bool Game::createWindow()
     float window_scale = atof( (s_IniFile->getValue("video", "gamescale") ).c_str() );
     if( (s_DisplayStruct->s_WindowResolutionX == -1 || s_DisplayStruct->s_WindowResolutionY == -1) && window_scale == -1 )
     {
-        cout << "Error: (window resolution x, window resolution y) and gamescale cannot be equal to -1 at the same time!" << endl;
+        s_Logger->registerEvent(EVENT_TYPE_ERROR, "(window resolution x, window resolution y) and gamescale cannot be equal to -1 at the same time!", true);
         return false;
     }
     s_RenderTexture->create(s_DisplayStruct->s_GameResolutionX, s_DisplayStruct->s_GameResolutionY, true);
@@ -393,6 +423,9 @@ void Game::onTimer(unsigned int timer_id)
 {
     if(timer_id == s_IdTimerDrawStep)
     {
+        #if defined(DEBUG) | defined(_DEBUG) | defined(NDEBUG)
+            s_Logger->registerEvent(EVENT_TYPE_DEBUG_INFO, "Timer Draw Step was ticked.");
+        #endif
         s_Data->s_Sounds->clearInactiveTempSounds();
         calculateGameDrawFPS();
         //if(s_Window != 0 && GetForegroundWindow() == s_Window->hwnd() )
@@ -403,13 +436,22 @@ void Game::onTimer(unsigned int timer_id)
             if(s_GameInfo->s_GameState == 2 && s_GameInfo->s_Stop == false) s_StateManager->s2I();
             if(s_GameInfo->s_GameState == 3 && s_GameInfo->s_Stop == false) s_StateManager->s3I();
         }
+        #if defined(DEBUG) | defined(_DEBUG) | defined(NDEBUG)
+            s_Logger->registerEvent(EVENT_TYPE_DEBUG_INFO, "State manager was ended work.");
+        #endif
         s_StateManager->doState(s_GameInfo->s_GameState);
+        #if defined(DEBUG) | defined(_DEBUG) | defined(NDEBUG)
+            s_Logger->registerEvent(EVENT_TYPE_DEBUG_INFO, "State Do function was ended.");
+        #endif
         drawAll();
     }
     if(timer_id == s_IdTimerAnimationStep)
     {
         if(s_IniFile->getValue("video", "animation") == "true")
         {
+            #if defined(DEBUG) | defined(_DEBUG) | defined(NDEBUG)
+                s_Logger->registerEvent(EVENT_TYPE_DEBUG_INFO, "Timer Animation Step was ticked.");
+            #endif
             s_AnimationStep++;
             if(s_AnimationStep > MAXIMAL_UNSIGNED_NUMBER) s_AnimationStep = 0;
         }
@@ -418,6 +460,9 @@ void Game::onTimer(unsigned int timer_id)
     {
         if(s_IniFile->getValue("video", "animation") == "true")
         {
+            #if defined(DEBUG) | defined(_DEBUG) | defined(NDEBUG)
+                s_Logger->registerEvent(EVENT_TYPE_DEBUG_INFO, "Timer Creature Animation Step was ticked.");
+            #endif
             //...
             map<int, CreaturePlayer*>::iterator iter;
             for ( iter = s_GameInfo->s_Players.begin(); iter != s_GameInfo->s_Players.end(); iter++)
@@ -434,12 +479,24 @@ void Game::onTimer(unsigned int timer_id)
     }
     if(timer_id == s_IdTimerTilesAnimationStep)
     {
+        #if defined(DEBUG) | defined(_DEBUG) | defined(NDEBUG)
+            s_Logger->registerEvent(EVENT_TYPE_DEBUG_INFO, "Timer Tiles Animation Step was ticked.");
+        #endif
         s_TileAnimationStep++;
         if(s_TileAnimationStep > MAXIMAL_UNSIGNED_NUMBER) s_TileAnimationStep = 0;
     }
     if(timer_id == s_IdTimerAIRunStep)
     {
-        if(s_GameInfo->s_GameState == 3 && s_GameInfo->s_Stop == false) s_GameInfo->live();
+        if(s_GameInfo->s_GameState == 3 && s_GameInfo->s_Stop == false)
+        {
+            #if defined(DEBUG) | defined(_DEBUG) | defined(NDEBUG)
+                s_Logger->registerEvent(EVENT_TYPE_DEBUG_INFO, "Timer AI Run Step was ticked.");
+            #endif
+            s_GameInfo->live();
+            #if defined(DEBUG) | defined(_DEBUG) | defined(NDEBUG)
+                s_Logger->registerEvent(EVENT_TYPE_DEBUG_INFO, "Game live tick was ended.");
+            #endif
+        }
     }
 }
 
@@ -497,7 +554,7 @@ void Game::drawAll()
     int res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, s_Data->s_GuiData->s_GuiInfo->getValue("gui", "fillcolorbackgroundwindow"), ";");
     if(res_col < 3)
     {
-        cout << "Error with gui parameters for popup window: fillcolorbackgroundwindow" << endl;
+        s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error with gui parameters for popup window: fillcolorbackgroundwindow");
         s_RenderWindow->clear();
     }
     else s_RenderWindow->clear(Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]));
@@ -688,7 +745,7 @@ bool Game::insertPlayer(int id, int numberOfSpawn, string nickname)
 {
     if(s_GameInfo->s_Players[id] != 0)
     {
-        cout<<"Error inserting player: this ID already used."<<endl;
+        s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error inserting player: this ID already used.");
         return false;
     }
     s_GameInfo->s_Players[id] = new CreaturePlayer(this);
@@ -696,7 +753,7 @@ bool Game::insertPlayer(int id, int numberOfSpawn, string nickname)
     string str = s_Data->s_Level->s_Params->getValue("Players", "numberofplayers");
     if(numberOfSpawn > atoi(str.c_str()))
     {
-        cout<<"Error: this level haven't point of spawn with this number."<<endl;
+        s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error: this level haven't point of spawn with this number.");
         return false;
     }
     str = s_Data->s_Level->s_Params->getValue("Players", "player" + WorkFunctions::ConvertFunctions::itos(numberOfSpawn) + "X");
@@ -713,7 +770,7 @@ bool Game::removePlayer(int id)
 {
     if(s_GameInfo->s_Players[id] == 0)
     {
-        cout<<"Error removing player: this ID is empty."<<endl;
+        s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error removing player: this ID is empty.");
         return false;
     }
     delete s_GameInfo->s_Players[id];

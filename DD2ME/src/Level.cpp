@@ -89,7 +89,7 @@ bool Level::loadLevel(string file_name)
         cerr<<"Error: Level: "<<file_name<<". Load file level."<<endl;
         return false;
     }
-    if(!s_Params->isExists("info", "levelformat") || atof(s_Params->getValue("info", "levelformat").c_str()) - NUMBER_CONSTANTS::NC_LEVEL_FORMAT_VERSION > NUMBER_CONSTANTS::NC_EPS) cout << "Warning: incorrect level format version!" << endl;
+    if(!s_Params->isExists("info", "levelformat") || atof(s_Params->getValue("info", "levelformat").c_str()) - NUMBER_CONSTANTS::NC_LEVEL_FORMAT_VERSION > NUMBER_CONSTANTS::NC_EPS) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_WARNING, "Incorrect level format version!");
     if(!s_Params->isExists("options", "numberphysictilesfield")) s_Params->setValue("options", "numberphysictilesfield", "1");
     if(!s_Params->isExists("options", "numberobjectstilesfield")) s_Params->setValue("options", "numberobjectstilesfield", s_Params->getValue("options", "numberphysictilesfield"));
     string str, NameField, nameblock, name, value;
@@ -274,8 +274,7 @@ string Level::getTileParameter(int x_tile, int y_tile, string name)
     int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
     if(y_tile >= SizeYLev || x_tile >= SizeXLev)
     {
-        cout << "Error get tile parameter! X or Y higher level." << endl;
-        cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x_tile << ", Y = " << y_tile << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error get tile parameter! X or Y higher level. Level: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel) + ", X = " + WorkFunctions::ConvertFunctions::itos(x_tile) + ", Y = " + WorkFunctions::ConvertFunctions::itos(y_tile) + ", SizeXLevel = " + WorkFunctions::ConvertFunctions::itos(SizeXLev) + ", SizeYLevel = " + WorkFunctions::ConvertFunctions::itos(SizeYLev) + ".");
         return "";
     }
     return s_TilesParams[x_tile + y_tile * SizeXLev][name];
@@ -287,8 +286,7 @@ bool Level::setTileParameter(int x_tile, int y_tile, string name, string value)
     int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
     if(y_tile >= SizeYLev || x_tile >= SizeXLev)
     {
-        cout << "Error set tile parameter! X or Y higher level." << endl;
-        cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x_tile << ", Y = " << y_tile << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error set tile parameter! X or Y higher level. Level: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel) + ", X = " + WorkFunctions::ConvertFunctions::itos(x_tile) + ", Y = " + WorkFunctions::ConvertFunctions::itos(y_tile) + ", SizeXLevel = " + WorkFunctions::ConvertFunctions::itos(SizeXLev) + ", SizeYLevel = " + WorkFunctions::ConvertFunctions::itos(SizeYLev) + ".");
         return false;
     }
     s_TilesParams[x_tile + y_tile * SizeXLev][name] = value;
@@ -449,8 +447,7 @@ int Level::getTileID(int x, int y, int numberfield)
     int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
     if(y >= SizeYLev || x >= SizeXLev)
     {
-        cout << "Error get tile ID! X or Y higher level." << endl;
-        cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x << ", Y = " << y << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error get tile ID! X or Y higher level. Level: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel) + ", X = " + WorkFunctions::ConvertFunctions::itos(x) + ", Y = " + WorkFunctions::ConvertFunctions::itos(y) + ", SizeXLevel = " + WorkFunctions::ConvertFunctions::itos(SizeXLev) + ", SizeYLevel = " + WorkFunctions::ConvertFunctions::itos(SizeYLev) + ".");
         return -1;
     }
     return s_Fields[getNameTilesField(numberfield)][y*SizeXLev + x];
@@ -462,8 +459,7 @@ bool Level::setTileID(int x, int y, int numberfield, int tileid)
     int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
     if(y >= SizeYLev || x >= SizeXLev)
     {
-        cout << "Error set tile ID! X or Y higher level." << endl;
-        cout << "Level: " << s_GameClass->s_GameInfo->s_CurrentLevel << ", X = " << x << ", Y = " << y << ", SizeXLevel = " << SizeXLev << ", SizeYLevel = " << SizeYLev << "." << endl;
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error set tile ID! X or Y higher level. Level: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel) + ", X = " + WorkFunctions::ConvertFunctions::itos(x) + ", Y = " + WorkFunctions::ConvertFunctions::itos(y) + ", SizeXLevel = " + WorkFunctions::ConvertFunctions::itos(SizeXLev) + ", SizeYLevel = " + WorkFunctions::ConvertFunctions::itos(SizeYLev) + ".");
         return false;
     }
     s_Fields[getNameTilesField(numberfield)][y*SizeXLev + x] = tileid;

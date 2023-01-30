@@ -120,7 +120,7 @@ bool Monsters::loadMonster(string PathToMonster, int number)
 
 bool Monsters::createCache()
 {
-    cout<<"Creating monsters cache..."<<endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Creating monsters cache...");
     int numberofframes, xSize, ySize;
     string state;
     int numberofmonsters = atoi( s_GlobMonstersInfo->getValue("info", "numberofmonsters").c_str() );
@@ -151,7 +151,7 @@ bool Monsters::createCache()
         }
     }
     s_CacheCreated = true;
-    cout<<"Monsters cache created."<<endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Monsters cache was created.");
     return true;
 }
 
@@ -188,7 +188,7 @@ void Monsters::drawMonster(int number, string anim, int frame, int x, int y, boo
         string str_highlighting = s_GameClass->s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "highlightingonhit");
         if(s_GameClass->s_Data->s_Monsters->s_MonstersInfo[number - 1]->isExists("other", "highlightingonhit")) str_highlighting = s_GameClass->s_Data->s_Monsters->s_MonstersInfo[number - 1]->getValue("other", "highlightingonhit");
         int res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, str_highlighting, ";");
-        if(res_col < 3) cout << "Error with parameters for highlighting monster: highlightingonhit" << endl;
+        if(res_col < 3) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error with parameters for highlighting monster: highlightingonhit");
         else spr_color = tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]);
     }
     if(s_CacheCreated == false)

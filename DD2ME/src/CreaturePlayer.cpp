@@ -640,7 +640,7 @@ int CreaturePlayer::testChangeLevel()
             string toLevel_str = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_to_level");
             string isTp = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_teleport");
             string isSecret = s_GameClass->s_Data->s_Level->getTileParameter(TileCoordX[i]/16, TileCoordY[i]/16, "GS_secret");
-            if(isSecret.find(";") != string::npos) cout << "Warning: secret name has \";\" symbol. It's error for calculating of number of visited secrets!" << endl;
+            if(isSecret.find(";") != string::npos) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_WARNING, "Secret name has \";\" symbol. It's error for calculating of number of visited secrets!");
             string cur_secr = s_Values->getValue("GS_secrets_visited", "level_" + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel), false);
             if(isSecret != "" && !(cur_secr.find(isSecret + ";") == 0 || cur_secr.find(";" + isSecret + ";") != string::npos) )
             {
@@ -852,86 +852,13 @@ bool CreaturePlayer::correctionPhys(int coord, int what)
     if(what == 1) s_CoordY += sign;
     if(yes && s_GameClass->s_IniFile->getValue("loggers","correctionphysics") == "true")
     {
-        if(what == 0) cout<<"(Player) Physics correction X: "<<"old - "<<coord<<", new - "<<s_CoordX<<endl;
-        else if(what == 1) cout<<"(Player) Physics correction Y: "<<"old - "<<coord<<", new - "<<s_CoordY<<endl;
+        if(what == 0) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "(Player) Physics correction X: old - " + WorkFunctions::ConvertFunctions::itos(coord) + ", new - " + WorkFunctions::ConvertFunctions::itos(s_CoordX));
+        else if(what == 1) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "(Player) Physics correction Y: old - " + WorkFunctions::ConvertFunctions::itos(coord) + ", new - " + WorkFunctions::ConvertFunctions::itos(s_CoordY));
     }
     delete[] TileCoordX;
     delete[] TileCoordY;
     return yes;
 }
-
-/*bool CreaturePlayer::correctionPhys(int coord, int what)
-{
-    bool yes = false;
-    if(s_GameClass->s_IniFile->getValue("settings", "correctionphysics") == "false") return false;
-    if(what == 0 || what == 1)
-    {
-        if( (coord == s_CoordX && what == 0) || (coord == s_CoordY && what == 1) ) return false;
-    }
-    else
-    {
-        cout << "Error Player physics correction: \"what\" not 0 or 1!" << endl;
-        return false;
-    }
-    int TileCoordX[6];
-    int TileCoordY[6];
-    TileCoordX[0] = roundNumber(s_CoordX, 16, -1);
-    TileCoordX[1] = roundNumber(s_CoordX, 16, -1) + 16;
-    TileCoordX[2] = roundNumber(s_CoordX, 16, -1);
-    TileCoordX[3] = roundNumber(s_CoordX, 16, -1) + 16;
-    TileCoordX[4] = roundNumber(s_CoordX, 16, -1);
-    TileCoordX[5] = roundNumber(s_CoordX, 16, -1) + 16;
-    TileCoordY[0] = roundNumber(s_CoordY, 16, -1);
-    TileCoordY[1] = roundNumber(s_CoordY, 16, -1);
-    TileCoordY[2] = roundNumber(s_CoordY, 16, -1) + 16;
-    TileCoordY[3] = roundNumber(s_CoordY, 16, -1) + 16;
-    TileCoordY[4] = roundNumber(s_CoordY, 16, -1) + 32;
-    TileCoordY[5] = roundNumber(s_CoordY, 16, -1) + 32;
-    bool col = false;
-    int sign;
-    if(what == 0) sign = (s_CoordX - coord)/abs(s_CoordX - coord);
-    if(what == 1) sign = (s_CoordY - coord)/abs(s_CoordY - coord);
-    int TileType = 0;
-    int numberofframes = atoi( s_GameClass->s_Data->s_Player->s_PlayerInfo->getValue("info", "numberofframes" + s_State).c_str() );
-    int frame = s_NumberOfAction%numberofframes;
-    do
-    {
-        col = false;
-        for(int i = 0; i < 6; i++)
-        {
-            TileType = s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i]/16, TileCoordY[i]/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
-            if( TileType == IMPASSABLE && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) ) col = true;
-            if( what == 1 && sign == 1 && TileType == LADDER &&
-               testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i],
-                             s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame],
-                             Square(0,0,15,15)) &&
-               !testCollision(s_CoordX, coord, TileCoordX[i], TileCoordY[i],
-                              s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame],
-                              Square(0,0,15,15), true) &&
-               !testCollision(s_CoordX, coord, TileCoordX[i], TileCoordY[i],
-                              s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame],
-                              Square(0,0,15,15)) ) col = true;
-        }
-        if(what == 0) s_CoordX -= sign;
-        if(what == 1) s_CoordY -= sign;
-        if(col == true) yes = true;
-    }
-    while(col == true);
-    if(what == 0) s_CoordX += sign;
-    if(what == 1) s_CoordY += sign;
-    if(yes && s_GameClass->s_IniFile->getValue("loggers","correctionphysics") == "true")
-    {
-        string axis = "Y";
-        int correctionCoord = s_CoordY;
-        if(what == 0)
-        {
-            axis = "X";
-            correctionCoord = s_CoordX;
-        }
-        cout << "(Player) Physics correction " << axis << ": " << "old - " << coord << ", new - " << correctionCoord << ", state - " << s_State << endl;
-    }
-    return yes;
-}*/
 
 bool CreaturePlayer::testSetStates(string states)
 {

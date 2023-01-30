@@ -79,7 +79,7 @@ void StateManager::s3(Event event)
             {
                 if(s_GameClass->s_IniFile->getValue("system", "consolemode") == "true")
                 {
-                    cout<<"console> ";
+                    cout << "console> ";
                     char buf[5000];
                     cin.getline(buf, 5000);
                     str = buf;
@@ -92,12 +92,12 @@ void StateManager::s3(Event event)
                         if(str.substr(str.find(" ") + 1) == "on")
                         {
                             s_GameClass->s_GameInfo->s_CheatGod = true;
-                            cout << "God on." << endl;
+                            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "God on.");
                         }
                         else if(str.substr(str.find(" ") + 1) == "off")
                         {
                             s_GameClass->s_GameInfo->s_CheatGod = false;
-                            cout << "God off." << endl;
+                            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "God off.");
                         }
                     }
                     if(str.find("AI ") == 0)
@@ -105,21 +105,21 @@ void StateManager::s3(Event event)
                         if(str.substr(str.find(" ") + 1) == "on")
                         {
                             s_GameClass->s_GameInfo->s_IsAIOn = true;
-                            cout << "AI on." << endl;
+                            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "AI on.");
                         }
                         else if(str.substr(str.find(" ") + 1) == "off")
                         {
                             s_GameClass->s_GameInfo->s_IsAIOn = false;
-                            cout << "AI off." << endl;
+                            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "AI off.");
                         }
                         else if(str.substr(str.find(" ") + 1) == "reload")
                         {
                             s_GameClass->s_GameInfo->s_FactoryMonsters->reloadAIAll();
-                            cout << "Reload AI completed." << endl;
+                            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Reload AI completed.");
                         }
                         else if(str.substr(str.find(" ") + 1) == "count")
                         {
-                            cout << "Current AI objects loaded: " << s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters.size() << endl;
+                            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Current AI objects loaded: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_FactoryMonsters->s_Monsters.size()));
                         }
                         else if(str.substr(str.find(" ") + 1).find("kill ") == 0)
                         {
@@ -137,7 +137,7 @@ void StateManager::s3(Event event)
                                 }
                                 i++;
                             }
-                            cout << "Killed " << str << " AI objects." << endl;
+                            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Killed " + str + " AI objects.");
                         }
                     }
                     if(str.find("add ") == 0)
@@ -147,14 +147,14 @@ void StateManager::s3(Event event)
                             str = str.substr(str.find(" ") + 1);
                             str = str.substr(str.find(" ") + 1);
                             s_GameClass->s_GameInfo->s_MyPlayer->s_CurrentPoints += atoi(str.c_str());
-                            cout << "Added " << str << " points." << endl;
+                            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Added " + str + " points.");
                         }
                         else if(str.substr(str.find(" ") + 1).find("lives ") == 0)
                         {
                             str = str.substr(str.find(" ") + 1);
                             str = str.substr(str.find(" ") + 1);
                             s_GameClass->s_GameInfo->s_CurrentLives += atoi(str.c_str());
-                            cout << "Added " << str << " lives." << endl;
+                            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Added " + str + " lives.");
                         }
                     }
                     if(str.find("ghost ") == 0)
@@ -162,12 +162,12 @@ void StateManager::s3(Event event)
                         if(str.substr(str.find(" ") + 1) == "on")
                         {
                             s_GameClass->s_GameInfo->s_IsGhostOn = true;
-                            cout << "Ghost on." << endl;
+                            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Ghost on.");
                         }
                         else if(str.substr(str.find(" ") + 1) == "off")
                         {
                             s_GameClass->s_GameInfo->s_IsGhostOn = false;
-                            cout << "Ghost off." << endl;
+                            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Ghost off.");
                         }
                     }
                 }

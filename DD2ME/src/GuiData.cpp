@@ -4,13 +4,15 @@
 
 #include <TGUI/Backends/SFML/BackendFontSFML.hpp>
 
+#include "Game.h"
 #include "IniParser/ParserInfoFile.h"
 
 using namespace std;
 
 using namespace IniParser;
 
-GuiData::GuiData()
+GuiData::GuiData(Game* gameclass):
+    s_GameClass(gameclass)
 {
     s_GuiInfo = new PostParsingStruct;
 }
@@ -33,7 +35,7 @@ bool GuiData::load(string PathToGuiPack)
     {
         if(iter1->second != "" && s_Fonts.find(iter1->second) == s_Fonts.end())
         {
-            if(!s_Fonts[iter1->first].loadFromFile(PathToGuiPack + iter1->second)) cout << "Error loading " << iter1->first << " with file " << iter1->second << endl;
+            if(!s_Fonts[iter1->first].loadFromFile(PathToGuiPack + iter1->second)) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error loading " + iter1->first + " with file " + iter1->second);
         }
         iter1++;
     }

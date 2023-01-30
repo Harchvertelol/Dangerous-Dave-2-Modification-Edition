@@ -28,6 +28,13 @@ int main(int argc, char** argv)
     }
     NetClient* nc = new NetClient(gm);
     gm->s_NetClient = nc;
+
+    gm->readConfig();
+
+    #if defined(DEBUG) | defined(_DEBUG) | defined(NDEBUG)
+        gm->s_Logger->registerEvent(EVENT_TYPE_DEBUG_INFO, "Config was read succesfully");
+    #endif
+
     string name = "Player", pass = "", host = "127.0.0.1";
     int port = 11237;
     bool launch_launcher = false;
@@ -62,31 +69,22 @@ int main(int argc, char** argv)
     {
         nc->s_NetInfoStruct->s_goGame = false;
         nc->s_NetInfoStruct->s_goGameOnServer = false;
-        cout<<"Singleplayer mode On..."<<endl;
+        gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Singleplayer mode On...");
         nc->s_NetInfoStruct->s_Mode = "singleplayer";
     }
     else
     {
         nc->s_NetInfoStruct->s_goGame = true;
         nc->s_NetInfoStruct->s_goGameOnServer = true;
-        cout<<"Multiplayer mode On..."<<endl;
+        gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Multiplayer mode On...");
         nc->s_NetInfoStruct->s_Mode = "multiplayer";
-        cout<<"Connecting to server ( "<<nc->s_NetInfoStruct->s_Host<<":"<<nc->s_NetInfoStruct->s_Port<<" )..."<<endl;
+        gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Connecting to server ( " + string(nc->s_NetInfoStruct->s_Host) + ":" + WorkFunctions::ConvertFunctions::itos(nc->s_NetInfoStruct->s_Port) + " )...");
         if(!nc->connect()) return 0;
-        cout<<"Connected."<<endl;
+        gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Connected.");
     }
 
     do
     {
-        ParserInfoFile* prsfl = new ParserInfoFile;
-        gm->s_IniFile = prsfl->getParsedFromFile("DD2.ini");
-        nc->s_NetInfo = prsfl->getParsedFromFile("General.ini");
-        if(!gm->s_IniFile || !nc->s_NetInfo)
-        {
-            system("pause");
-            return 0;
-        }
-        //...
         if(nc->s_NetInfoStruct->s_Mode == "multiplayer")
             if(!nc->netGameStartWork())
                 return 0;
@@ -98,7 +96,7 @@ int main(int argc, char** argv)
         gm->s_DisplayStruct->s_WindowResolutionY = atoi( (gm->s_IniFile->getValue("video", "windowresolutionY") ).c_str() );
         if(gm->s_DisplayStruct->s_GameResolutionY <= 0 || gm->s_DisplayStruct->s_GameResolutionX <= 0)
         {
-            cout<<"Error: Game resolution."<<endl;
+            gm->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Game resolution.", true);
             system("pause");
             return 0;
         }
@@ -114,14 +112,14 @@ int main(int argc, char** argv)
 
         if(!gm->createWindow())
         {
-            cout << "Error: create window!" << endl;
+            gm->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Create window.", true);
             return 0;
         }
 
         //...
         if(!gm->loadPack())
         {
-            cout<<"Error: Load game pack."<<endl;
+            gm->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Load game pack.", true);
             delete gm;
             system("pause");
             return 0;
@@ -148,18 +146,20 @@ int main(int argc, char** argv)
                 net::run( atoi( nc->s_NetInfo->getValue("internet", "sleepfornetwork").c_str() ) );
             }
             nc->leaveServer();
-            cout<<"Leaving server..."<<endl;
+            gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Leaving server...");
             for(int i = 0; nc->s_NetInfoStruct->s_WaitingConfirmLeaveServer == true; i++)
             {
                 net::run(1000);
-                cout<<".";
+                cout << ".";
                 if(i == 10)
                 {
-                    cout<<endl<<"Error: Server timeout."<<endl;
+                    cout << endl;
+                    gm->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Server timeout.");
                     return false;
                 }
             }
-            cout<<"Server leaved."<<endl;
+            cout << endl;
+            gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Server leaved.");
             nc->s_NetInfoStruct->s_goGameOnServer = true;
         }
         delete gm;
@@ -171,6 +171,7 @@ int main(int argc, char** argv)
         }
         gm->s_NetClient = nc;
         nc->s_GameClass = gm;
+        gm->readConfig();
     } while(nc->s_NetInfoStruct->s_goGame);
     delete gm;
     delete nc;

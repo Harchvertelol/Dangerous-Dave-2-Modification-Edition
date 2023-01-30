@@ -86,7 +86,7 @@ bool Player::load(string PathToPlayerPack)
 
 bool Player::createCache()
 {
-    cout<<"Creating player cache..."<<endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Creating player cache...");
     int numberofframes, xSize, ySize;
     string state;
     map<string, string>::iterator iter;
@@ -110,7 +110,7 @@ bool Player::createCache()
         s_CacheImages["bandolier"][i] = new Sprite( *s_Bitmaps["bandolier"][i], IntRect(0, 0, xSize, ySize));
     }
     s_CacheCreated = true;
-    cout<<"Player cache created."<<endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Player cache was created.");
     return true;
 }
 

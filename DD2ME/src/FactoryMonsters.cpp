@@ -63,7 +63,7 @@ void FactoryMonsters::addMonstersFromQueue()
     {
         s_Monsters[s_MaxIndex] = s_QueueForAddingMonsters[i];
         //s_Monsters[s_MaxIndex]->s_ID = s_MaxIndex;
-        if(s_MaxIndex != s_QueueForAddingMonsters[i]->s_ID) cout << "Error with monster ID!" << endl;
+        if(s_MaxIndex != s_QueueForAddingMonsters[i]->s_ID) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error with monster ID!");
         s_MaxIndex++;
     }
     s_QueueForAddingMonsters.clear();

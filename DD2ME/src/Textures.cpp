@@ -208,7 +208,7 @@ void Textures::drawTile(int tile, int x, int y, int x_tile, int y_tile)
 
 bool Textures::createCache()
 {
-    cout<<"Creating textures cache..."<<endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Creating textures cache...");
     int sizeXTiles = atoi( s_TilesInfo->getValue("info", "sizeX").c_str() );
     int sizeYTiles = atoi( s_TilesInfo->getValue("info", "sizeY").c_str() );
     int numberoftilesets = atoi( s_TilesInfo->getValue("info", "numberoftilesets").c_str() );
@@ -236,7 +236,7 @@ bool Textures::createCache()
         }
 
     s_CacheCreated = true;
-    cout<<"Textures cache created."<<endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Textures cache created.");
     return true;
 }
 

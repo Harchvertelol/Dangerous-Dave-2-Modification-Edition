@@ -34,7 +34,7 @@ GameData::GameData(Game* gameclass):
     s_Monsters = new Monsters(gameclass);
     s_Sounds = new Sounds(gameclass);
     s_Music = new Music(gameclass);
-    s_GuiData = new GuiData;
+    s_GuiData = new GuiData(gameclass);
     s_Backgrounds = new Backgrounds(gameclass);
 }
 
@@ -159,7 +159,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
         string str_error = "";
         if(res_compare_game_versions == 1) str_error = "previously";
         else if(res_compare_game_versions == -1) str_error = "newer";
-        if(str_error != "") cout << "Warning: this modpack was added for " << str_error << " version of DD2:ME! (" << "game version: " << STRING_CONSTANTS::SC_GAME_VERSION << ", modpack version: " << s_ModInfo->getValue("info", "gameversion") << ")" << endl;
+        if(str_error != "") s_GameClass->s_Logger->registerEvent(EVENT_TYPE_WARNING, "This modpack was added for " + str_error + " version of DD2:ME! (game version: " + STRING_CONSTANTS::SC_GAME_VERSION + ", modpack version: " + s_ModInfo->getValue("info", "gameversion") + ")");
 
         if(s_ModInfo->getValue("other", "inifile") != "")
         {
@@ -176,7 +176,7 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             s_GameClass->s_GameInfo->readKeys(s_GameClass->s_IniFile);
             if(s_GameClass->s_DisplayStruct->s_GameResolutionY <= 0 || s_GameClass->s_DisplayStruct->s_GameResolutionX <= 0)
             {
-                cout<<"Error: Display resolution."<<endl;
+                s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Display resolution.", true);
                 return false;
             }
             //delete s_GameClass->s_Window;
@@ -216,41 +216,41 @@ bool GameData::loadData(PostParsingStruct* s_IniFile)
             if(s_IniFile->getValue("resources", "backgroundspack") == "") PathToBackgroundsPack = "ModPacks/" + s_NameMod + "/Backgrounds/";
         }
     }
-    cout << "Loading levels information..." << endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Loading levels information...");
     s_LevelsInfo = prs.getParsedFromFile(PathToLevelPack + "levels.dat");
     if(!s_LevelsInfo) return false;
-    if(!s_LevelsInfo->isExists("info", "levelsformat") || atof(s_LevelsInfo->getValue("info", "levelsformat").c_str()) - NUMBER_CONSTANTS::NC_LEVEL_FORMAT_VERSION > NUMBER_CONSTANTS::NC_EPS) cout << "Warning: incorrect levelpack format version!" << endl;
+    if(!s_LevelsInfo->isExists("info", "levelsformat") || atof(s_LevelsInfo->getValue("info", "levelsformat").c_str()) - NUMBER_CONSTANTS::NC_LEVEL_FORMAT_VERSION > NUMBER_CONSTANTS::NC_EPS) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_WARNING, "Incorrect levelpack format version!");
     if(doTestLevelpackCompatibility)
-        if(!s_LevelsInfo->isExists("info", "modpack") || s_LevelsInfo->getValue("info", "modpack") != s_NameMod) cout << "Warning: it is impossible to check the compatibility of the levelpack with the modpack!" << endl;
+        if(!s_LevelsInfo->isExists("info", "modpack") || s_LevelsInfo->getValue("info", "modpack") != s_NameMod) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_WARNING, "It is impossible to check the compatibility of the levelpack with the modpack!");
     if(s_LevelsInfo->isExists("options", "startinglevel")) s_GameClass->s_GameInfo->s_CurrentLevel = atoi(s_LevelsInfo->getValue("options", "startinglevel").c_str());
-    cout << "Levels information is loaded." << endl;
-    cout << "Loading bonuses..." << endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Levels information is loaded.");
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Loading bonuses...");
     if( !s_Bonuses->load(PathToBonusPack) ) return false;
-    cout << "Bonuses is loaded." << endl;
-    cout << "Loading screens..." << endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Bonuses is loaded.");
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Loading screens...");
     if( !s_Screens->load(PathToScreenPack) ) return false;
-    cout << "Screens is loaded." << endl;
-    cout << "Loading textures..." << endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Screens is loaded.");
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Loading textures...");
     if( !s_Textures->load(PathToTexturePack) ) return false;
-    cout << "Textures is loaded." << endl;
-    cout << "Loading player..." << endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Textures is loaded.");
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Loading player...");
     if( !s_Player->load(PathToPlayerPack) ) return false;
-    cout << "Player is loaded." << endl;
-    cout << "Loading monsters..." << endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Player is loaded.");
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Loading monsters...");
     if( !s_Monsters->load(PathToMonsterPack) ) return false;
-    cout << "Monsters is loaded." << endl;
-    cout << "Loading sounds..." << endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Monsters is loaded.");
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Loading sounds...");
     if( !s_Sounds->load(PathToSoundPack) ) return false;
-    cout << "Sounds is loaded." << endl;
-    cout << "Loading music..." << endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Sounds is loaded.");
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Loading music...");
     if( !s_Music->load(PathToMusicPack) ) return false;
-    cout << "Music is loaded." << endl;
-    cout << "Loading gui..." << endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Music is loaded.");
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Loading gui...");
     if( !s_GuiData->load(PathToGuiPack) ) return false;
-    cout << "Gui is loaded." << endl;
-    cout << "Loading backgrounds..." << endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Gui is loaded.");
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Loading backgrounds...");
     if( !s_Backgrounds->load(PathToBackgroundsPack) ) return false;
-    cout << "Backgrounds is loaded." << endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Backgrounds is loaded.");
     return true;
 }
 

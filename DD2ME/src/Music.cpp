@@ -38,7 +38,7 @@ bool Music::load(string PathToMusicPack)
         {
             if(!s_MusicList[iter1->first].openFromFile(PathToMusicPack + iter1->second))
             {
-                cout << "Error loading " << iter1->first << " with file " << iter1->second << endl;
+                s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error loading " + iter1->first + " with file " + iter1->second, true);
                 return false;
             }
             s_MusicList[iter1->first].setVolume(stof(s_GameClass->s_IniFile->getValue("audio", "musicvolume")));

@@ -27,7 +27,7 @@ void AI::createOptions(CreatureMonster* monster, int number, bool getstate)
 {
     if(!monster->s_AILuaState)
     {
-        cout << "Error! Lua state of monster not created!" << endl;
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Lua state of monster not created!", true);
         return;
     }
     s_LuaBindFunctions->prepareAIRun();
@@ -87,12 +87,12 @@ bool AI::loadAI(CreatureMonster* monster)
     luaL_dostring(monster->s_AILuaState, ("function mainFunc()\nprint(\"Error: mainFunc is missed!\")\nend\nfunction setFirstState()\nprint(\"Error: setFirstState is missed!\")\nreturn \"errorstate\"\nend\nfunction onKill(type)\nend\nfunction onDamage(damage)\nend\nfunction getAPIVersion()\nreturn " + WorkFunctions::ConvertFunctions::ftos(NUMBER_CONSTANTS::NC_API_VERSION) + "\nend\n").c_str());
     if(luaL_dofile(monster->s_AILuaState, (s_GameClass->s_Data->PathToMonsterPack + WorkFunctions::ConvertFunctions::itos(monster->s_Number) + "/intellect.lua").c_str()))
     {
-        cout << "Error! Intellect Lua file is missing!" << endl;
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Intellect Lua file is missing!", true);
         return false;
     }
     lua_getglobal(monster->s_AILuaState, "getAPIVersion");
     lua_call(monster->s_AILuaState, 0, 1);
     float tmp_cur_mon_api_version = lua_tonumber(monster->s_AILuaState, -1);
-    if(tmp_cur_mon_api_version < NUMBER_CONSTANTS::NC_API_VERSION) cout << "Warning: monster with number " << monster->s_Number << " has an API version below the current one!" << endl;
+    if(tmp_cur_mon_api_version < NUMBER_CONSTANTS::NC_API_VERSION) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_WARNING, "Warning: monster with number " + WorkFunctions::ConvertFunctions::itos(monster->s_Number) + " has an API version below the current one!");
     return true;
 }

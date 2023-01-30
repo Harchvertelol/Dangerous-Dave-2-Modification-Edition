@@ -11,6 +11,7 @@
 #include "Gui.h"
 #include "KeysState.h"
 #include "Timers.h"
+#include "Logger.h"
 #include <SFML/Graphics.hpp>
 
 class Game
@@ -30,6 +31,7 @@ class Game
         Gui* s_Gui;
         NetClient* s_NetClient;
         Timers s_Timers;
+        Logger* s_Logger;
         float s_GameRenderScale;
         unsigned int s_AnimationStep;
         unsigned int s_TileAnimationStep;
@@ -74,5 +76,6 @@ class Game
         bool removePlayer(int);
         void deleteAllGDIObjects();
         bool createWindow();
+        bool readConfig();
 };
 #endif
