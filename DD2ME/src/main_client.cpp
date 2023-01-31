@@ -96,7 +96,7 @@ int main(int argc, char** argv)
         gm->s_DisplayStruct->s_WindowResolutionY = atoi( (gm->s_IniFile->getValue("video", "windowresolutionY") ).c_str() );
         if(gm->s_DisplayStruct->s_GameResolutionY <= 0 || gm->s_DisplayStruct->s_GameResolutionX <= 0)
         {
-            gm->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Game resolution.", true);
+            gm->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Game resolution is < 0 or equals 0.", true);
             system("pause");
             return 0;
         }

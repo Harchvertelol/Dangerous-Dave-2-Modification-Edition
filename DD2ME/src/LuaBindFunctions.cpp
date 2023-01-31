@@ -36,12 +36,12 @@ int LuaBindFunctions::setState(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 2)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"setState\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"setState\" is incorrect!");
         return 0;
     }
     if(!lua_isstring(s_Lua, 2))
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Second argument of function \"setState\" is not string!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Second argument of function \"setState\" is not string!");
         return 0;
     }
     //...
@@ -64,7 +64,7 @@ int LuaBindFunctions::getState(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getState\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getState\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -85,7 +85,7 @@ int LuaBindFunctions::goLeft(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 3 && n != 4 && n != 5)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"goLeft\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"goLeft\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -187,7 +187,7 @@ int LuaBindFunctions::goRight(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 3 && n != 4 && n != 5)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"goRight\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"goRight\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -289,7 +289,7 @@ int LuaBindFunctions::goUp(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 3 /* && n != 4*/ )
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"goUp\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"goUp\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -370,7 +370,7 @@ int LuaBindFunctions::goDown(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 3 && n != 4 /* && n != 5 */ )
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"goDown\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"goDown\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -454,7 +454,7 @@ int LuaBindFunctions::setNumberOfAction(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 2)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"setNumberOfAction\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"setNumberOfAction\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -476,7 +476,7 @@ int LuaBindFunctions::nextNumberOfAction(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"nextNumberOfAction\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"nextNumberOfAction\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -497,7 +497,7 @@ int LuaBindFunctions::setNullNumberOfAction(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"setNullNumberOfAction\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"setNullNumberOfAction\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -518,7 +518,7 @@ int LuaBindFunctions::getNumberOfAction(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getNumberOfAction\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getNumberOfAction\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -554,7 +554,7 @@ int LuaBindFunctions::setAdditionalNumberOfAction(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 2)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"setAdditionalNumberOfAction\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"setAdditionalNumberOfAction\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -571,7 +571,7 @@ int LuaBindFunctions::getAdditionalNumberOfAction(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getAdditionalNumberOfAction\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getAdditionalNumberOfAction\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -587,7 +587,7 @@ int LuaBindFunctions::nextAdditionalNumberOfAction(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"nextAdditionalNumberOfAction\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"nextAdditionalNumberOfAction\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -603,7 +603,7 @@ int LuaBindFunctions::setNullAdditionalNumberOfAction(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"setNullAdditionalNumberOfAction\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"setNullAdditionalNumberOfAction\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -624,7 +624,7 @@ int LuaBindFunctions::getMonsterOption(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 3)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getMonsterOption\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getMonsterOption\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -647,7 +647,7 @@ int LuaBindFunctions::getMainValue(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 2)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getMainValue\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getMainValue\" is incorrect!");
         return 0;
     }
     string s1 = lua_tostring(s_Lua, 1);
@@ -671,7 +671,7 @@ int LuaBindFunctions::testLookPlayerX(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"testLookPlayerX\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"testLookPlayerX\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -707,7 +707,7 @@ int LuaBindFunctions::testLookPlayerY(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"testLookPlayerY\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"testLookPlayerY\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -748,7 +748,7 @@ int LuaBindFunctions::getMonsterFrame(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getMonsterFrame\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getMonsterFrame\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -779,7 +779,7 @@ int LuaBindFunctions::getDistanceToPlayerX(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1 && n != 2)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getDistanceToPlayerX\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getDistanceToPlayerX\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -824,7 +824,7 @@ int LuaBindFunctions::getDistanceToPlayerY(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1 && n != 2)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getDistanceToPlayerY\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getDistanceToPlayerY\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -869,7 +869,7 @@ int LuaBindFunctions::getDistanceToPlayer(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getDistanceToPlayer\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getDistanceToPlayer\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -916,7 +916,7 @@ int LuaBindFunctions::testTileTypeDown(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 3 && n != 4)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"testTileTypeDown\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"testTileTypeDown\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -997,7 +997,7 @@ int LuaBindFunctions::getDistanceToPlayerXHead(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1 && n != 2)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getDistanceToPlayerXHead\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getDistanceToPlayerXHead\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1019,7 +1019,7 @@ int LuaBindFunctions::getDistanceToPlayerYHead(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1 && n != 2)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getDistanceToPlayerYHead\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getDistanceToPlayerYHead\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1041,7 +1041,7 @@ int LuaBindFunctions::getDistanceToPlayerHead(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getDistanceToPlayerHead\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getDistanceToPlayerHead\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1066,7 +1066,7 @@ int LuaBindFunctions::testCollisionPlayer(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"testCollisionPlayer\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"testCollisionPlayer\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1090,7 +1090,7 @@ int LuaBindFunctions::killPlayer(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"killPlayer\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"killPlayer\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1111,7 +1111,7 @@ int LuaBindFunctions::killMonster(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 2 && n != 3 && n != 4)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"killMonster\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"killMonster\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1148,7 +1148,7 @@ int LuaBindFunctions::addDuplicateMonster(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 6 && n != 7 && n != 8)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"addDuplicateMonster\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"addDuplicateMonster\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1198,7 +1198,7 @@ int LuaBindFunctions::addMonster(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 6 && n != 7 && n != 8)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"addMonster\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"addMonster\" is incorrect!");
         return 0;
     }
     int numberMonster = lua_tonumber(s_Lua, 1);
@@ -1245,7 +1245,7 @@ int LuaBindFunctions::setMonsterValue(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 3)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"setMonsterValue\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"setMonsterValue\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1268,7 +1268,7 @@ int LuaBindFunctions::getMonsterValue(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 2)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getMonsterValue\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getMonsterValue\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1291,7 +1291,7 @@ int LuaBindFunctions::setPlayerValue(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 4)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"setPlayerValue\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"setPlayerValue\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1315,7 +1315,7 @@ int LuaBindFunctions::getPlayerValue(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 3)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getPlayerValue\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getPlayerValue\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1349,7 +1349,7 @@ int LuaBindFunctions::testTileTypeRight(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 3 && n != 4)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"testTileTypeRight\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"testTileTypeRight\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1415,7 +1415,7 @@ int LuaBindFunctions::testTileTypeLeft(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 3 && n != 4)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"testTileTypeLeft\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"testTileTypeLeft\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1475,7 +1475,7 @@ int LuaBindFunctions::testTileTypeUp(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 3 && n != 4)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"testTileTypeUp\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"testTileTypeUp\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1545,7 +1545,7 @@ int LuaBindFunctions::getCoordMonsterX(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getCoordMonsterX\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getCoordMonsterX\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1562,7 +1562,7 @@ int LuaBindFunctions::getCoordMonsterY(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getCoordMonsterY\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getCoordMonsterY\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1594,7 +1594,7 @@ int LuaBindFunctions::getCoordPlayerX(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 0)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getCoordPlayerX\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getCoordPlayerX\" is incorrect!");
         return 0;
     }
     lua_pushnumber(s_Lua, s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX);
@@ -1606,7 +1606,7 @@ int LuaBindFunctions::getCoordPlayerY(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 0)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getCoordPlayerY\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getCoordPlayerY\" is incorrect!");
         return 0;
     }
     lua_pushnumber(s_Lua, s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY);
@@ -1618,7 +1618,7 @@ int LuaBindFunctions::getStatePlayer(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 0)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getCoordPlayerY\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getCoordPlayerY\" is incorrect!");
         return 0;
     }
     lua_pushstring(s_Lua, s_GameClass->s_GameInfo->s_MyPlayer->s_State.c_str());
@@ -1640,7 +1640,7 @@ int LuaBindFunctions::getNumberOfLives(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getNumberOfLives\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getNumberOfLives\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1656,7 +1656,7 @@ int LuaBindFunctions::setNumberOfLives(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 2)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"setNumberOfLives\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"setNumberOfLives\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1678,7 +1678,7 @@ int LuaBindFunctions::setGlobalValue(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 4)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"setGlobalValue\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"setGlobalValue\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1702,7 +1702,7 @@ int LuaBindFunctions::getGlobalValue(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 3)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getGlobalValue\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getGlobalValue\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1726,7 +1726,7 @@ int LuaBindFunctions::setModSettingsValue(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 4)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"setModSettingsValue\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"setModSettingsValue\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1750,7 +1750,7 @@ int LuaBindFunctions::getModSettingsValue(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 3)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getModSettingsValue\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getModSettingsValue\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1773,7 +1773,7 @@ int LuaBindFunctions::getMonsterID(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n > 0)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getMonsterID\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getMonsterID\" is incorrect!");
         return 0;
     }
     lua_pushnumber(s_Lua, s_CurrentMonster->s_ID);
@@ -1790,7 +1790,7 @@ int LuaBindFunctions::getMonsterCollision(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"getMonsterCollision\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"getMonsterCollision\" is incorrect!");
         return 0;
     }
     int keyMonster = lua_tonumber(s_Lua, 1);
@@ -1880,7 +1880,7 @@ int LuaBindFunctions::addPackImagesToFactoryTemporaryImage(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 11 && n != 12)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"addPackImagesToFactoryTemporaryImage\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"addPackImagesToFactoryTemporaryImage\" is incorrect!");
         return 0;
     }
     string pack = lua_tostring(s_Lua, 1);
@@ -1917,7 +1917,7 @@ int LuaBindFunctions::addImageToFactoryTemporaryImage(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 10 && n != 11)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"addImageToFactoryTemporaryImage\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"addImageToFactoryTemporaryImage\" is incorrect!");
         return 0;
     }
     string pack = lua_tostring(s_Lua, 1);
@@ -1953,7 +1953,7 @@ int LuaBindFunctions::changeNextLevel(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n > 0)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"changeNextLevel\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"changeNextLevel\" is incorrect!");
         return 0;
     }
     s_GameClass->s_GameInfo->s_ChangeLevelTo = s_GameClass->s_GameInfo->s_CurrentLevel + 1;
@@ -1971,7 +1971,7 @@ int LuaBindFunctions::changeLevel(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"changeLevel\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"changeLevel\" is incorrect!");
         return 0;
     }
     string change_level_info = lua_tostring(s_Lua, 1);
@@ -1990,7 +1990,7 @@ int LuaBindFunctions::playSound(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1 && n != 2 && n != 3 && n != 4 && n != 5)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"playSound\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"playSound\" is incorrect!");
         return 0;
     }
     string soundname = lua_tostring(s_Lua, 1);
@@ -2017,7 +2017,7 @@ int LuaBindFunctions::stopSound(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"stopSound\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"stopSound\" is incorrect!");
         return 0;
     }
     string soundname = lua_tostring(s_Lua, 1);
@@ -2036,7 +2036,7 @@ int LuaBindFunctions::pauseSound(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"pauseSound\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"pauseSound\" is incorrect!");
         return 0;
     }
     string soundname = lua_tostring(s_Lua, 1);
@@ -2055,7 +2055,7 @@ int LuaBindFunctions::playMusic(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1 && n != 2 && n != 3 && n != 4)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"playMusic\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"playMusic\" is incorrect!");
         return 0;
     }
     string musicname = lua_tostring(s_Lua, 1);
@@ -2080,7 +2080,7 @@ int LuaBindFunctions::stopMusic(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"stopMusic\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"stopMusic\" is incorrect!");
         return 0;
     }
     string musicname = lua_tostring(s_Lua, 1);
@@ -2099,7 +2099,7 @@ int LuaBindFunctions::pauseMusic(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 1)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"pauseMusic\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"pauseMusic\" is incorrect!");
         return 0;
     }
     string musicname = lua_tostring(s_Lua, 1);
@@ -2118,7 +2118,7 @@ int LuaBindFunctions::stopAllMusic(lua_State* s_Lua)
     int n = lua_gettop(s_Lua);
     if(n != 0)
     {
-        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Number of arguments of function \"stopAllMusic\" is incorrect!");
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Number of arguments of function \"stopAllMusic\" is incorrect!");
         return 0;
     }
     s_GameClass->s_Data->s_Music->stopAllMusic();

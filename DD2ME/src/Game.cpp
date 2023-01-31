@@ -317,7 +317,7 @@ bool Game::createWindow()
     float window_scale = atof( (s_IniFile->getValue("video", "gamescale") ).c_str() );
     if( (s_DisplayStruct->s_WindowResolutionX == -1 || s_DisplayStruct->s_WindowResolutionY == -1) && window_scale == -1 )
     {
-        s_Logger->registerEvent(EVENT_TYPE_ERROR, "(window resolution x, window resolution y) and gamescale cannot be equal to -1 at the same time!", true);
+        s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "(window resolution x, window resolution y) and gamescale cannot be equal to -1 at the same time!", true);
         return false;
     }
     s_RenderTexture->create(s_DisplayStruct->s_GameResolutionX, s_DisplayStruct->s_GameResolutionY, true);

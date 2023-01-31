@@ -55,6 +55,11 @@ void CreatureMonster::live()
 
 bool CreatureMonster::correctionPhys(int coord, int what, bool ladder)
 {
+    if(coord == s_CoordX)
+    {
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Coordinate monster equals old coordinate of monster for physics correction.");
+        return false;
+    }
     bool yes = false;
     int frame = getFrame();
     if(s_GameClass->s_IniFile->getValue("settings", "correctionphysics") == "false") return false;
