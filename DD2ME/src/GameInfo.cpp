@@ -98,7 +98,16 @@ bool GameInfo::deathPlayer(int type)
     if(s_MyPlayer->s_State == "doorexit") return false;
     if(s_Stop) return false;
     s_Stop = true;
-    s_DeathType = type;
+    if(type < 0)
+    {
+        int type_tmp = (-1)*type - 1;
+        int SizeXLev = atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() );
+        int SizeYLev = atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeY") ).c_str() );
+        int tile_x = type_tmp % SizeXLev;
+        int tile_y = (type_tmp - tile_x) / SizeYLev;
+        s_DeathType = (-1)*(s_GameClass->s_Data->s_Textures->getCurrentAnimationTileID(s_GameClass->s_Data->s_Level->s_Fields[s_GameClass->s_Data->s_Level->getNamePhysicTilesField()][type_tmp], tile_x, tile_y) + 1);
+    }
+    else s_DeathType = type;
     s_OldAnSt = s_GameClass->s_AnimationStep;
     s_DopFrame = -1;
     s_CurrentLives--;
@@ -150,8 +159,8 @@ void GameInfo::playDeath()
     int numberofframes;
     if(type < 0)
     {
-        type = type*(-1);
-        numberofframes = atoi( s_GameClass->s_Data->s_Textures->s_DeathTilesInfo[s_GameClass->s_Data->s_Level->s_Fields[s_GameClass->s_Data->s_Level->getNamePhysicTilesField()][type]]->getValue("info", "numberofframes").c_str() );
+        type = type*(-1) - 1;
+        numberofframes = atoi( s_GameClass->s_Data->s_Textures->s_DeathTilesInfo[type]->getValue("info", "numberofframes").c_str() );
         if(frame == numberofframes + 1)
         {
             s_Stop = false;
@@ -163,7 +172,7 @@ void GameInfo::playDeath()
             return;
         }
         if(frame >= numberofframes) frame = numberofframes - 1;
-        drawDeathFrame(&s_GameClass->s_Data->s_Textures->s_DeathTiles[s_GameClass->s_Data->s_Level->s_Fields[s_GameClass->s_Data->s_Level->getNamePhysicTilesField()][type]], &s_GameClass->s_Data->s_Textures->s_CacheDeathTiles[s_GameClass->s_Data->s_Level->s_Fields[s_GameClass->s_Data->s_Level->getNamePhysicTilesField()][type]], frame);
+        drawDeathFrame(&s_GameClass->s_Data->s_Textures->s_DeathTiles[type], &s_GameClass->s_Data->s_Textures->s_CacheDeathTiles[type], frame);
     }
     else
     {

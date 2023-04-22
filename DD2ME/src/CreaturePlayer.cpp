@@ -693,7 +693,7 @@ int CreaturePlayer::testDeath()
     for(int i = 0; i < 6; i++)
     {
         TileType = s_GameClass->s_Data->s_Level->getTileType(TileCoordX[i]/16, TileCoordY[i]/16, s_GameClass->s_Data->s_Level->getNumberPhysicTilesField());
-        if( TileType == DEATH && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) ) return (TileCoordY[i]*sizeXLevel/16+TileCoordX[i]/16)*(-1);
+        if( TileType == DEATH && testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) ) return (TileCoordY[i]*sizeXLevel/16+TileCoordX[i]/16 + 1)*(-1);
     }
     return 0;
 }
