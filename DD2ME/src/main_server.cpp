@@ -1,14 +1,14 @@
 #define CANVAS_NOSTART
 #include <ctime>
 
-#include "canvas.hpp"
-
 #include "MainServer.h"
 
 #include "IniParser/ParserInfoFile.h"
 #include "IniParser/PostParsingStruct.h"
 
 #include "WorkFunctions.h"
+
+using namespace std;
 
 int main(int argc, char** argv)
 {

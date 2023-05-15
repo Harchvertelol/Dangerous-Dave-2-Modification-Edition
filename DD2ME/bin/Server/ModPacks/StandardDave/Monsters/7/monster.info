@@ -5,10 +5,14 @@ numberofframesinvisoff=2
 
 [other]
 numberofframesdeathtiles=5
+extensions=bmp
 outputshiftX=0
 outputshiftY=0
 animationstepghost=1
 animationstepinvisoff=14
+points=200
+clumps=2
+numberscriptclumps=12
 
 [options]
 lives=-2

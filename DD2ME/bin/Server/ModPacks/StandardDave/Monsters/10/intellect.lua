@@ -4,7 +4,7 @@ function setFirstState()
 	setMonsterValue(-1, "lhand", "0")
 	setMonsterValue(-1, "rhand", "0")
 	setMonsterValue(-1, "freeze", "0")
-	setGlobalValue(-1, getNV(), "")
+	setGlobalValue(-1, "standard_last_boss_service_values", getNV(), "")
 	setMonsterValue(-1, "firsthandscreate", "0")
 	return "rightrun"
 end
@@ -20,15 +20,23 @@ function onKill(type)
 	if getState(-1) == "hand" then
 		local idBoss = tonumber(getMonsterValue(-1, "idBoss"))
 		setMonsterValue(idBoss, getMonsterValue(-1, "tp"), "0")
+		if type == 0 then
+			lux, luy, rdx, rdy = getMonsterCollision(-1)
+			addMonster(getMonsterOption(-1, "other", "numberscriptclumps"), getCoordMonsterX(-1), getCoordMonsterY(-1), "init", 0, 0, -2, string.format("clumps=%s;phys_box_LU_X=%d;phys_box_LU_Y=%d;phys_box_RD_X=%d;phys_box_RD_Y=%d;", getMonsterOption(-1, "other", "clumpsfromhands"), lux, luy, rdx, rdy))
+		end
 		return
 	end
-	setGlobalValue(-1, "goodfriendfreedom", "1")
-	setGlobalValue(-1, getNV(), "1")
+	if type == 0 then
+		lux, luy, rdx, rdy = getMonsterCollision(-1)
+		addMonster(getMonsterOption(-1, "other", "numberscriptclumps"), getCoordMonsterX(-1), getCoordMonsterY(-1), "init", 0, 0, -2, string.format("clumps=%s;phys_box_LU_X=%d;phys_box_LU_Y=%d;phys_box_RD_X=%d;phys_box_RD_Y=%d;", getMonsterOption(-1, "other", "clumps"), lux, luy, rdx, rdy))
+	end
+	setGlobalValue(-1, "standard_last_boss_service_values", "goodfriendfreedom", "1")
+	setGlobalValue(-1, "standard_last_boss_service_values", getNV(), "1")
 end
 
 function calculateHand()
 	local nv = getMonsterValue(-1, "nv")
-	local testdeath = getGlobalValue(-1, nv)
+	local testdeath = getGlobalValue(-1, "standard_last_boss_service_values", nv)
 	if testdeath ~= "" then
 		killMonster(-1, 1)
 	end
@@ -47,13 +55,13 @@ function calculateHand()
 		end
 	end
 	local lstate = 0
-	if getDistanceToDaveXHead(-1, 1) > 0 then
+	if getDistanceToPlayerXHead(-1, 1) > 0 then
 		lstate = 1
 	else
 		lstate = -1
 	end
 	local distanceFromFloor = tonumber(getMonsterOption(-1, "options", "distanceFromFloorHands"))
-	if getDistanceToDaveYHead(-1, 1) > distanceFromFloor then
+	if getDistanceToPlayerYHead(-1, 1) > distanceFromFloor then
 		local speedDown = tonumber(getMonsterOption(-1, "options", "speedDownHands"))
 		goDown(-1, speedDown, 0)
 	else
@@ -109,10 +117,10 @@ function calculateFireball()
 end
 
 function createFireballs()
-	addDuplicateMonster(-1, getCoordMonsterX(-1) - 12, getCoordMonsterY(-1) + 55, "fireball", 0, 0, -2, "timelife=32;tfly=1;")
-	addDuplicateMonster(-1, getCoordMonsterX(-1) + 12, getCoordMonsterY(-1) + 67, "fireball", 0, 0, -2, "timelife=32;tfly=2;")
-	addDuplicateMonster(-1, getCoordMonsterX(-1) + 36, getCoordMonsterY(-1) + 67, "fireball", 0, 0, -2, "timelife=32;tfly=3;")
-	addDuplicateMonster(-1, getCoordMonsterX(-1) + 59, getCoordMonsterY(-1) + 55, "fireball", 0, 0, -2, "timelife=32;tfly=4;")
+	addDuplicateMonster(-1, getCoordMonsterX(-1) - 12, getCoordMonsterY(-1) + 55, "fireball", 0, 0, -2, "timelife=32;tfly=1;GS_type=standard;")
+	addDuplicateMonster(-1, getCoordMonsterX(-1) + 12, getCoordMonsterY(-1) + 67, "fireball", 0, 0, -2, "timelife=32;tfly=2;GS_type=standard;")
+	addDuplicateMonster(-1, getCoordMonsterX(-1) + 36, getCoordMonsterY(-1) + 67, "fireball", 0, 0, -2, "timelife=32;tfly=3;GS_type=standard;")
+	addDuplicateMonster(-1, getCoordMonsterX(-1) + 59, getCoordMonsterY(-1) + 55, "fireball", 0, 0, -2, "timelife=32;tfly=4;GS_type=standard;")
 end
 
 function createHands()
@@ -136,18 +144,18 @@ function createHands()
 		end
 		if rh == 0 and createrighthand == 1 then
 			setMonsterValue(-1, "rhand", "1")
-			addDuplicateMonster(-1, getCoordMonsterX(-1) - 5, getCoordMonsterY(-1) + 55, "hand", 0, 0, 2, string.format("tp=rhand;freeze=32;idBoss=%s;nv=%s;", tostring(getMonsterID()), getNV()))
+			addDuplicateMonster(-1, getCoordMonsterX(-1) - 5, getCoordMonsterY(-1) + 55, "hand", 0, 0, 2, string.format("tp=rhand;freeze=32;idBoss=%s;nv=%s;GS_type=standard;", tostring(getMonsterID()), getNV()))
 		end
 		if lh == 0 and createlefthand == 1 then
 			setMonsterValue(-1, "lhand", "1")
-			addDuplicateMonster(-1, getCoordMonsterX(-1) + 52, getCoordMonsterY(-1) + 55, "hand", 0, 0, 2, string.format("tp=lhand;freeze=32;idBoss=%s;nv=%s;", tostring(getMonsterID()), getNV()))
+			addDuplicateMonster(-1, getCoordMonsterX(-1) + 52, getCoordMonsterY(-1) + 55, "hand", 0, 0, 2, string.format("tp=lhand;freeze=32;idBoss=%s;nv=%s;GS_type=standard;", tostring(getMonsterID()), getNV()))
 		end
 	end
 end
 
 function mainFunc()
-	if testCollisionDave(-1) == 1 then
-		killDave(-1)
+	if testCollisionPlayer(-1) == 1 then
+		killPlayer(-1)
 	end
 	local statem = getState(-1)
 	if statem == "hand" then
@@ -196,6 +204,7 @@ function mainFunc()
 			setMonsterValue(-1, "oldstate", statem)
 			setState(-1, "openmouth")
 			setMonsterValue(-1, "attackCounter", "32")
+			playSound("finalboss")
 		end
 		setMonsterValue(-1, "timeaction", tostring(timeaction))
 	end

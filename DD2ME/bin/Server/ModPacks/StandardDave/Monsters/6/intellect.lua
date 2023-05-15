@@ -1,7 +1,7 @@
 function setFirstState()
 	setMonsterValue(-1, "step", "12")
 	setMonsterValue(-1, "freeze", "0")
-	setGlobalValue(-1, getNV(), "")
+	setGlobalValue(-1, "standard_first_boss_service_values", getNV(), "")
 	return "leftrun"
 end
 
@@ -14,26 +14,34 @@ function onKill(type)
 		return
 	end
 	if getState(-1) == "star" then
+		addDuplicateMonster(-1, getCoordMonsterX(-1) + 8, getCoordMonsterY(-1) + 8, "starclump", 0, 0, -2, string.format("dir=1;timelive=%s;GS_type=standard;", getMonsterOption(-1, "other", "timelivestarclump")))
+		addDuplicateMonster(-1, getCoordMonsterX(-1) + 8, getCoordMonsterY(-1) + 8, "starclump", 0, 0, -2, string.format("dir=2;timelive=%s;GS_type=standard;", getMonsterOption(-1, "other", "timelivestarclump")))
 		local idMainBoss = tonumber(getMonsterValue(-1, "imb"))
 		local lives = tonumber(getNumberOfLives(idMainBoss))
 		if lives > 0 then
 			lives = lives - 1
 			if lives == 0 then
-				killMonster(idMainBoss, 0)
+				killMonster(idMainBoss, 0, 1)
 			else
 				setNumberOfLives(idMainBoss, lives)
 			end
 		end
+		return
 	end
-	setGlobalValue(-1, getNV(), "1")
+	if type == 0 then
+		lux, luy, rdx, rdy = getMonsterCollision(-1)
+		addMonster(getMonsterOption(-1, "other", "numberscriptclumps"), getCoordMonsterX(-1), getCoordMonsterY(-1), "init", 0, 0, -2, string.format("clumps=%s;phys_box_LU_X=%d;phys_box_LU_Y=%d;phys_box_RD_X=%d;phys_box_RD_Y=%d;", getMonsterOption(-1, "other", "clumps"), lux, luy, rdx, rdy))
+	end
+	setGlobalValue(-1, "standard_first_boss_service_values", getNV(), "1")
 end
 
 
 function calculateStar()
 	local nv = getMonsterValue(-1, "nv")
-	local testdeath = getGlobalValue(-1, nv)
+	local testdeath = getGlobalValue(-1, "standard_first_boss_service_values", nv)
 	if testdeath ~= "" then
 		killMonster(-1, 1)
+		return
 	end
 	nextAdditionalNumberOfAction(-1)
 	if getAdditionalNumberOfAction(-1) % getMonsterOption(-1, "other", "animationstepstar") == 0 then
@@ -106,12 +114,71 @@ function calculateStar()
 	setMonsterValue(-1, "timer", tostring(timer))
 end
 
+function calculateStarClump()
+	timelive = getMonsterValue(-1, "timelive")
+	timelive = timelive - 1
+	if timelive == 0 then
+		killMonster(-1, 1)
+		return
+	end
+	setMonsterValue(-1, "timelive", timelive)
+	dir = getMonsterValue(-1, "dir")
+	speedclumpLR = tonumber(getMonsterOption(-1, "options", "speedclump"))
+	speedclumpUD = getMonsterValue(-1, "speedclumpUD")
+	if speedclumpUD == "" then
+		speedclumpUD = speedclumpLR
+	else
+		speedclumpUD = tonumber(speedclumpUD)
+	end
+	if dir == "1" then
+		goUp(-1, speedclumpUD, 0)
+		goLeft(-1, speedclumpLR, 0)
+	end
+	if dir == "2" then
+		goUp(-1, speedclumpUD, 0)
+		goRight(-1, speedclumpLR, 0)
+	end
+	if dir == "3" then
+		goDown(-1, speedclumpUD, 0)
+		goRight(-1, speedclumpLR, 0)
+	end
+	if dir == "4" then
+		goDown(-1, speedclumpUD, 0)
+		goLeft(-1, speedclumpLR, 0)
+	end
+	changeUDspeedclump = tonumber(getMonsterOption(-1, "options", "changeUDSpeedClump"))
+	if tonumber(dir) < 3 then
+		speedclumpUD = speedclumpUD - changeUDspeedclump
+	else
+		speedclumpUD = speedclumpUD + changeUDspeedclump
+		if speedclumpUD > speedclumpLR then
+			speedclumpUD = speedclumpLR
+		end
+	end
+	if speedclumpUD <= 0 then
+		if dir == "1" then
+			setMonsterValue(-1, "dir", "4")
+		else
+			if dir == "2" then
+				setMonsterValue(-1, "dir", "3")
+			end
+		end
+		speedclumpUD = 0
+	end
+	setMonsterValue(-1, "speedclumpUD", speedclumpUD)
+	return
+end
+
 function mainFunc()
-	if testCollisionDave(-1) == 1 then
-		killDave(-1)
+	if testCollisionPlayer(-1) == 1 then
+		killPlayer(-1)
 	end
 	if getState(-1) == "star" then
 		calculateStar()
+		return
+	end
+	if getState(-1) == "starclump" then
+		calculateStarClump()
 		return
 	end
 	nextAdditionalNumberOfAction(-1)
@@ -170,10 +237,10 @@ function mainFunc()
 			local curstate = getState(-1)
 			local params = string.format("timer=13;freeze=15;nv=%s;imb=%s;", getNV(), tostring(getMonsterID()))
 			if string.find(curstate, "left") ~= nil then
-				addDuplicateMonster(-1, getCoordMonsterX(-1) + 10, getCoordMonsterY(-1) + 15, "star", 0, 0, 1, string.format("%s;dir=3;", params))
+				addDuplicateMonster(-1, getCoordMonsterX(-1) + 10, getCoordMonsterY(-1) + 15, "star", 0, 0, 1, string.format("%sdir=3;GS_no_points=true;GS_type=standard;", params))
 			else
 				if string.find(curstate, "right") ~= nil then
-					addDuplicateMonster(-1, getCoordMonsterX(-1) + 30, getCoordMonsterY(-1) + 15, "star", 0, 0, 1, string.format("%s;dir=2;", params))
+					addDuplicateMonster(-1, getCoordMonsterX(-1) + 30, getCoordMonsterY(-1) + 15, "star", 0, 0, 1, string.format("%sdir=2;GS_no_points=true;GS_type=standard;", params))
 				end
 			end
 			setMonsterValue(-1, "freeze", "8")

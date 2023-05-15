@@ -7,9 +7,13 @@ numberofframesrightstrike=3
 
 [other]
 numberofframesdeathtiles=5
+extensions=bmp
 outputshiftX=-8
 outputshiftY=-8
 animationstep=6
+points=100
+clumps=4
+numberscriptclumps=12
 
 [options]
 lives=2
@@ -18,4 +22,7 @@ speed2=6
 speed3=8
 speed4=5
 downlook=5
+startRandomShiftPlayerReaction=1
+endRandomShiftPlayerReaction=4
+multipleRandomShiftPlayerReaction=2
 type=standard

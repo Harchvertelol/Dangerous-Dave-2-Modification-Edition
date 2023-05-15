@@ -1,5 +1,31 @@
 function setFirstState()
+	setState(-1, "leftrunceiling")
+	testgo = goRight(-1, 1, 1)
+	if testgo == 0 then
+		goLeft(-1, 1, 0)
+	end
+	testgo = goUp(-1, 1, 1)
+	if testgo == 0 then
+		goDown(-1, 1, 0)
+		setState(-1, "leftrunfloor")
+		goDown(-1, 8, 1)
+		testgo = goDown(-1, 1, 1)
+		if testgo == 0 then
+			goUp(-1, 1, 0)
+			goUp(-1, 8, 0)
+			return "leftdownrun"
+		end
+		return "leftrunfloor"
+	end
 	return "leftrunceiling"
+end
+
+function onKill(type)
+	if type == 0 then
+		lux, luy, rdx, rdy = getMonsterCollision(-1)
+		addMonster(getMonsterOption(-1, "other", "numberscriptclumps"), getCoordMonsterX(-1), getCoordMonsterY(-1), "init", 0, 0, -2, string.format("clumps=%s;phys_box_LU_X=%d;phys_box_LU_Y=%d;phys_box_RD_X=%d;phys_box_RD_Y=%d;", getMonsterOption(-1, "other", "clumps"), lux, luy, rdx, rdy))
+		return
+	end
 end
 
 function changeDirection()
@@ -28,8 +54,8 @@ function setJump()
 end
 
 function mainFunc()
-	if testCollisionDave(-1) == 1 then
-		killDave(-1)
+	if testCollisionPlayer(-1) == 1 then
+		killPlayer(-1)
 	end
 	nextAdditionalNumberOfAction(-1)
 	if getAdditionalNumberOfAction(-1) % getMonsterOption(-1, "other", "animationstep") == 0 then
@@ -44,7 +70,7 @@ function mainFunc()
 	end
 	local oldstate = getState(-1)
 	if math.random(10) == 1 and (string.find(getState(-1), "leftrun") ~= nil or string.find(getState(-1), "rightrun") ~= nil) then
-		if getDistanceToDaveX(-1, 1) < 0 then
+		if getDistanceToPlayerX(-1, 1) < 0 then
 			if string.find(getState(-1), "rightrun") ~= nil then
 				changeDirection()
 				return
@@ -56,8 +82,8 @@ function mainFunc()
 			end
 		end
 	end
-	if math.random(10) == 1 and math.abs( getDistanceToDaveX(-1) - getDistanceToDaveY(-1) ) < 16 and (string.find(getState(-1), "leftrun") ~= nil or string.find(getState(-1), "rightrun") ~= nil) then
-		if getDistanceToDaveX(-1, 1) < 0 then
+	if math.random(10) == 1 and math.abs( getDistanceToPlayerX(-1) - getDistanceToPlayerY(-1) ) < 16 and (string.find(getState(-1), "leftrun") ~= nil or string.find(getState(-1), "rightrun") ~= nil) then
+		if getDistanceToPlayerX(-1, 1) < 0 then
 			if string.find(getState(-1), "rightrun") ~= nil then
 				changeDirection()
 				return
@@ -125,10 +151,12 @@ function mainFunc()
 				NewState = string.format("%sfloor", NewState)
 				setState(-1, NewState)
 				goDown(-1, 8, 1)
+				playSound("lambla")
 			else
 				NewState = string.gsub(getState(-1), "up", "")
 				NewState = string.format("%sceiling", NewState)
 				setState(-1, NewState)
+				playSound("lambla")
 			end
 		end
 	end

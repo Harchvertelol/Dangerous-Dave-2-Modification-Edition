@@ -1,0 +1,9 @@
+[info]
+levelsformat=0.1
+modpack=StandardDave
+numberoflevels=1
+
+[options]
+distancelivemonstersX=8
+distancelivemonstersY=8
+

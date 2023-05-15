@@ -1,7 +1,9 @@
 [info]
-numberofmonsters=11
+numberofmonsters=12
 
 [draw]
 transparentmaskR=204
 transparentmaskG=255
 transparentmaskB=204
+highlightingonhit=255;120;120;255
+timehighlightingonhit=250

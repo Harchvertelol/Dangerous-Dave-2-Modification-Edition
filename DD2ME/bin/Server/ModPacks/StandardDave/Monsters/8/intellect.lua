@@ -5,38 +5,52 @@ function setFirstState()
 	setMonsterValue(-1, "dirH", "1")
 	setMonsterValue(-1, "speedX", "0")
 	setMonsterValue(-1, "danger", "0")
-	setMonsterValue(-1, "oldCoordDaveX", "-1")
+	setMonsterValue(-1, "oldCoordPlayerX", "-1")
 	return "invis"
 end
 
+function onKill(type)
+	if type == 0 then
+		lux, luy, rdx, rdy = getMonsterCollision(-1)
+		addMonster(getMonsterOption(-1, "other", "numberscriptclumps"), getCoordMonsterX(-1), getCoordMonsterY(-1), "init", 0, 0, -2, string.format("clumps=%s;phys_box_LU_X=%d;phys_box_LU_Y=%d;phys_box_RD_X=%d;phys_box_RD_Y=%d;", getMonsterOption(-1, "other", "clumps"), lux, luy, rdx, rdy))
+		return
+	end
+end
+
 function mainFunc()
-	local oldCoordDaveX = tonumber(getMonsterValue(-1, "oldCoordDaveX"))
-	if oldCoordDaveX < 0 then
-		oldCoordDaveX = getCoordDaveX()
-		setMonsterValue(-1, "oldCoordDaveX", tostring(cdx))
+	local oldCoordPlayerX = getMonsterValue(-1, "oldCoordPlayerX")
+	if oldCoordPlayerX == "" then
+		oldCoordPlayerX = 0
+	else
+		oldCoordPlayerX = tonumber(oldCoordPlayerX)
+	end
+	if oldCoordPlayerX < 0 then
+		oldCoordPlayerX = getCoordPlayerX()
+		setMonsterValue(-1, "oldCoordPlayerX", tostring(cdx))
 	end
 	local danger = getMonsterValue(-1, "danger")
-	if danger == "1" and testCollisionDave(-1) == 1 then
-		killDave(-1)
+	if danger == "1" and testCollisionPlayer(-1) == 1 then
+		killPlayer(-1)
 	end
 	nextAdditionalNumberOfAction(-1)
 	local activate = tonumber(getMonsterValue(-1, "activate"))
 	if activate == 0 then
-		local cdx = getCoordDaveX()
-		setMonsterValue(-1, "oldCoordDaveX", tostring(cdx))
+		local cdx = getCoordPlayerX()
+		setMonsterValue(-1, "oldCoordPlayerX", tostring(cdx))
 		if getAdditionalNumberOfAction(-1) % getMonsterOption(-1, "other", "animationstepghost") == 0 then
 			nextNumberOfAction(-1)
 		else
 			return
 		end
-		if getDistanceToDaveXHead(-1) < 96 and getDistanceToDaveXHead(-1) > 32 then
-			local statedave = getStateDave()
-			if (testLookDaveX(-1) == 1 and cdx - oldCoordDaveX > 0 and string.find(statedave, "right") ~= nil) or (testLookDaveX(-1) == -1 and cdx - oldCoordDaveX < 0 and string.find(statedave, "left") ~= nil) then
+		if getDistanceToPlayerXHead(-1) < 96 and getDistanceToPlayerXHead(-1) > 32 then
+			local stateplayer = getStatePlayer()
+			if (testLookPlayerX(-1) == 1 and cdx - oldCoordPlayerX > 0 and string.find(stateplayer, "right") ~= nil) or (testLookPlayerX(-1) == -1 and cdx - oldCoordPlayerX < 0 and string.find(stateplayer, "left") ~= nil) then
 				setMonsterValue(-1, "activate", "1")
 				setNullNumberOfAction(-1)
 				setNullAdditionalNumberOfAction(-1)
 				setMonsterValue(-1, "stateba", getState(-1))
 				setState(-1, "invisoff")
+				playSound("ghost_view_start")
 				return
 			end
 		end
@@ -49,6 +63,7 @@ function mainFunc()
 				if getNumberOfLives(-1) < 0 then
 					setNumberOfLives(-1, 1)
 				end
+				playSound("materialisation")
 			end
 			if getMonsterFrame(-1) == 0 then
 				local stateba = getMonsterValue(-1, "stateba")
@@ -75,7 +90,7 @@ function mainFunc()
 		local dirH = tonumber(getMonsterValue(-1, "dirH"))
 		local speedX = tonumber(getMonsterValue(-1, "speedX"))
 		local maxspeed = 8
-		local cdy = getCoordDaveY()
+		local cdy = getCoordPlayerY()
 		local heightline = 0
 		local updlineY = cdy + 2 - heightline
 		local dpdlineY = cdy + 2 + heightline
@@ -112,7 +127,7 @@ function mainFunc()
 			goUp(-1, curspeedY, 0)
 		end
 
-		local cdx = getCoordDaveX()
+		local cdx = getCoordPlayerX()
 		local widthtline = 0
 		local lpdlineX = cdx + 2 - widthtline
 		local rpdlineX = cdx + 2 + widthtline

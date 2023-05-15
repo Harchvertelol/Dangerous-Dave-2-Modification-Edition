@@ -50,7 +50,7 @@ void Server::accept(NetServerCallback* c)
 
 void Server::tick()
 {
-	Message m;
+	/*Message m;
     if(m.peek())
     {
         if(m.is_timer())
@@ -58,6 +58,12 @@ void Server::tick()
             int timerid = m.timer_id();
             if(s_MainServer->s_ListTimerId[timerid] != 0) s_MainServer->s_ListTimerId[timerid]->onTimer(m.timer_id());
         }
+    }*/
+    map<string, Game*>::iterator iter, iter2;
+    for (iter = s_MainServer->s_ListGameClass.begin(), iter2 = s_MainServer->s_ListGameClass.end(); iter != iter2;)
+    {
+        iter->second->processAllEvents(atoi( iter->second->s_NetClient->s_NetInfo->getValue("internet", "maxnumberofeventsatatime").c_str() ));
+        iter++;
     }
 }
 
@@ -73,7 +79,7 @@ void Server::on_command(NetServerCallback* cl, const std::string& cmd)
         bool confirm = false;
         string name = pps->getValue("login", "name");
         string pass = pps->getValue("login", "pass");
-        PostParsingStruct* UserIni = prs.getParsedFromFile("ServerData/Users/User_" + name, false);
+        PostParsingStruct* UserIni = prs.getParsedFromFile("ServerData/Users/User_" + name, 0, false);
         if(!UserIni) confirm = false;
         else
         {

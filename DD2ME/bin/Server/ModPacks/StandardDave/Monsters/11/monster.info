@@ -3,7 +3,8 @@ numberofframeshanging=1
 numberofframesbreak=3
 
 [other]
-numberofframesdeathtiles=5
+numberofframesdeathtiles=0
+extensions=bmp
 outputshiftX=0
 outputshiftY=0
 animationstep=8

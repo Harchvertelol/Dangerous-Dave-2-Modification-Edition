@@ -5,6 +5,8 @@
 
 #include "Defines.h"
 
+using namespace std;
+
 using namespace IniParser;
 
 MainServer::MainServer()
@@ -56,29 +58,26 @@ bool MainServer::load()
             nc->s_NetInfoStruct->s_Mode = "singleplayer";
 
             ParserInfoFile prsfl;
-            gm->s_IniFile = prsfl.getParsedFromFile("DD2.ini");
-            nc->s_NetInfo = prsfl.getParsedFromFile("General.ini");
-            if(!gm->s_IniFile || !nc->s_NetInfo)
-            {
-                return false;
-            }
-            gm->s_DisplayStruct->s_ResolutionX = atoi( (gm->s_IniFile->getValue("video","gameresolutionX") ).c_str() );
-            gm->s_DisplayStruct->s_ResolutionY = atoi( (gm->s_IniFile->getValue("video","gameresolutionY") ).c_str() );
+
+            gm->readConfig();
+
+            gm->s_DisplayStruct->s_WindowResolutionX = atoi( (gm->s_IniFile->getValue("video","windowresolutionX") ).c_str() );
+            gm->s_DisplayStruct->s_WindowResolutionY = atoi( (gm->s_IniFile->getValue("video","windowresolutionY") ).c_str() );
             gm->s_GameInfo->s_KeyDown = atoi( gm->s_IniFile->getValue("keys","down").c_str() );
             gm->s_GameInfo->s_KeyUp = atoi( gm->s_IniFile->getValue("keys","up").c_str() );
             gm->s_GameInfo->s_KeyRight = atoi( gm->s_IniFile->getValue("keys","right").c_str() );
             gm->s_GameInfo->s_KeyLeft = atoi( gm->s_IniFile->getValue("keys","left").c_str() );
             gm->s_GameInfo->s_KeyShoot = atoi( gm->s_IniFile->getValue("keys","shoot").c_str() );
             gm->s_GameInfo->s_KeyJump = atoi( gm->s_IniFile->getValue("keys","jump").c_str() );
-            if(gm->s_DisplayStruct->s_ResolutionY <= 0 || gm->s_DisplayStruct->s_ResolutionX <= 0)
+            if(gm->s_DisplayStruct->s_WindowResolutionY <= 0 || gm->s_DisplayStruct->s_WindowResolutionX <= 0)
             {
                 cout<<"Error: Display resolution."<<endl;
                 return false;
             }
-            //gm->s_Window = new Window("DD2 Remake: ME v0.2 pre-beta", gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, atoi( (gm->s_IniFile->getValue("video","scale") ).c_str() ));
-            gm->s_Window = new Window(nostart);
-            gm->s_Window->geometry(gm->s_DisplayStruct->s_ResolutionX, gm->s_DisplayStruct->s_ResolutionY, atoi( (gm->s_IniFile->getValue("video", "gamescale") ).c_str() ));
-            gm->s_Window->title(STRING_CONSTANTS::SC_TITLE_WINDOW);
+            //gm->s_Window = new Window("DD2 Remake: ME v0.2 pre-beta", gm->s_DisplayStruct->s_WindowResolutionX, gm->s_DisplayStruct->s_WindowResolutionY, atoi( (gm->s_IniFile->getValue("video","scale") ).c_str() ));
+            /*gm->s_Window = new Window(nostart);
+            gm->s_Window->geometry(gm->s_DisplayStruct->s_WindowResolutionX, gm->s_DisplayStruct->s_WindowResolutionY, atoi( (gm->s_IniFile->getValue("video", "gamescale") ).c_str() ));
+            gm->s_Window->title(STRING_CONSTANTS::SC_TITLE_WINDOW);*/
             //...
             string modpack = s_ServerList->getValue(iter->first, "modpack");
             string texturepack = s_ServerList->getValue(iter->first, "texturepack");
@@ -123,8 +122,8 @@ bool MainServer::load()
             gm->s_StateManager->switchState(3);
             gm->s_GameInfo->s_MyPlayer->s_CoordX = -1000;
             gm->s_GameInfo->s_MyPlayer->s_CoordY = -1000;
-            gm->s_GameInfo->s_ScreenCoordX = -1*atoi( gm->s_IniFile->getValue("video", "gameresolutionX").c_str() ) - atoi( gm->s_IniFile->getValue("settings", "distancelivemonstersX").c_str() ) - 1000;
-            gm->s_GameInfo->s_ScreenCoordY = -1*atoi( gm->s_IniFile->getValue("video", "gameresolutionY").c_str() ) - atoi( gm->s_IniFile->getValue("settings", "distancelivemonstersY").c_str() ) - 1000;
+            gm->s_GameInfo->s_ScreenCoordX = -1*atoi( gm->s_IniFile->getValue("video", "windowresolutionX").c_str() ) - atoi( gm->s_IniFile->getValue("settings", "distancelivemonstersX").c_str() ) - 1000;
+            gm->s_GameInfo->s_ScreenCoordY = -1*atoi( gm->s_IniFile->getValue("video", "windowresolutionY").c_str() ) - atoi( gm->s_IniFile->getValue("settings", "distancelivemonstersY").c_str() ) - 1000;
         }
     }
     return true;

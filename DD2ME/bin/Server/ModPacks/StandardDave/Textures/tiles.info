@@ -1,8 +1,24 @@
 [info]
 sizeX=13
 sizeY=66
-numberofframes=1
+numberoftilesets=1
 numberofdoors=3
+numberofanimations=0
+extensions=bmp
+
+[draw]
+transparentmaskR=204
+transparentmaskG=255
+transparentmaskB=204
+
+[animation_1]
+numberofframes=3
+frame1=0
+sleep1=1
+frame2=24
+sleep2=5
+frame3=35
+sleep3=1
 
 [door_1]
 opentile1=78

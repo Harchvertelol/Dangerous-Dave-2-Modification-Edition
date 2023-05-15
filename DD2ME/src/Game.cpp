@@ -407,8 +407,18 @@ void Game::play()
 
 void Game::processAllEvents(int maxEvents)
 {
+    Event event;
+    if(s_NetClient->s_NetInfo->getValue("video", "graphicmodegame") == "true")
+    {
+        while(s_RenderWindow->pollEvent(event))
+        {
+            calculateTechnicalFPS();
+            MyWndProc(event);
+        }
+    }
     vector<int> timers_ticks = s_Timers.getTimersTicks();
     for(int i = 0; i < timers_ticks.size(); i++) onTimer(timers_ticks[i]);
+    if(s_NetClient->s_NetInfo->getValue("video", "graphicmodegame") == "true") s_Gui->s_TGUI->handleEvent(event);
     /*Message m;
     for(int i = 0; i < maxEvents && m.peek() == true; i++)
     {
@@ -750,18 +760,23 @@ bool Game::insertPlayer(int id, int numberOfSpawn, string nickname)
     }
     s_GameInfo->s_Players[id] = new CreaturePlayer(this);
     CreaturePlayer* s_Player = s_GameInfo->s_Players[id];
-    string str = s_Data->s_Level->s_Params->getValue("Players", "numberofplayers");
-    if(numberOfSpawn > atoi(str.c_str()))
+    int numberofplayers = s_Data->s_Level->s_Params->getMapVariables("Players").size();
+    if(numberOfSpawn > numberofplayers)
     {
-        s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error: this level haven't point of spawn with this number.");
+        s_Logger->registerEvent(EVENT_TYPE_ERROR, "This level haven't point of spawn with this number.");
         return false;
     }
-    str = s_Data->s_Level->s_Params->getValue("Players", "player" + WorkFunctions::ConvertFunctions::itos(numberOfSpawn) + "X");
+    /*string str = s_Data->s_Level->s_Params->getValue("Players", "player" + WorkFunctions::ConvertFunctions::itos(numberOfSpawn) + "X");
     if(str == "") str = "0";
     s_Player->s_CoordX = 16*atoi( str.c_str() );
     str = s_Data->s_Level->s_Params->getValue("Players", "player" + WorkFunctions::ConvertFunctions::itos(numberOfSpawn) + "Y");
     if(str == "") str = "0";
-    s_Player->s_CoordY = 16*atoi( str.c_str() );
+    s_Player->s_CoordY = 16*atoi( str.c_str() );*/
+    string str = s_Data->s_Level->s_Params->getValue("Players", "player" + WorkFunctions::ConvertFunctions::itos(numberOfSpawn));
+    map<int, string> tmp_mas;
+    WorkFunctions::ParserFunctions::splitMassString(&tmp_mas, 0, 0, str, ";");
+    s_Player->s_CoordX = 16*atoi( tmp_mas[0].c_str() );
+    s_Player->s_CoordY = 16*atoi( tmp_mas[1].c_str() );
     s_Player->s_NickName = nickname;
     return true;
 }

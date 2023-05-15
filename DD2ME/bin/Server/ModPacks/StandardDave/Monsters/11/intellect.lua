@@ -20,7 +20,7 @@ function mainFunc()
 			end
 		end
 	end
-	local testFreedom = getGlobalValue(-1, "goodfriendfreedom")
+	local testFreedom = getGlobalValue(-1, "standard_last_boss_service_values", "goodfriendfreedom")
 	if testFreedom == "1" then
 		if getState(-1) ~= "break" then
 			local speedFall = getMonsterOption(-1, "options", "speedFall")
