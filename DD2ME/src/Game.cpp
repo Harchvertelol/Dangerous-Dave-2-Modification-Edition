@@ -417,7 +417,7 @@ void Game::processAllEvents(int maxEvents)
         }
     }
     vector<int> timers_ticks = s_Timers.getTimersTicks();
-    for(int i = 0; i < timers_ticks.size(); i++) onTimer(timers_ticks[i]);
+    for(int i = 0; i < timers_ticks.size() && i < maxEvents; i++) onTimer(timers_ticks[i]);
     if(s_NetClient->s_NetInfo->getValue("video", "graphicmodegame") == "true") s_Gui->s_TGUI->handleEvent(event);
     /*Message m;
     for(int i = 0; i < maxEvents && m.peek() == true; i++)
@@ -598,11 +598,16 @@ PostParsingStruct* Game::getObjects()
                 cpps->setValue("AIMonsterValues_monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), iter1->first, iter1->second );
             }
         }
-    map<string, string>::iterator iter1m;
-    /*for( iter1m = s_GameInfo->s_FactoryMonsters->s_AIMonstersValues.begin(); iter1m != s_GameInfo->s_FactoryMonsters->s_AIMonstersValues.end(); iter1m++)
+    map< string, map<string, string> >::iterator iter1m;
+    for(iter1m = s_GameInfo->s_FactoryMonsters->s_AIMonstersValues->getMapVariables().begin(); iter1m != s_GameInfo->s_FactoryMonsters->s_AIMonstersValues->getMapVariables().end(); iter1m++)
     {
-        cpps->setValue("AIMonstersValues", iter1m->first, iter1m->second );
-    }*/
+        map<string, string>::iterator iter2m;
+        for(iter2m = iter1m->second.begin(); iter2m != iter1m->second.end(); iter2m++)
+        {
+            cpps->setValue("AIMonstersValues_" + iter1m->first, iter2m->first, iter2m->second );
+        }
+    }
+
     map<int, CreaturePlayer*>::iterator iter1;
     for( iter1 = s_GameInfo->s_Players.begin(); iter1 != s_GameInfo->s_Players.end(); iter1++)
     {
@@ -698,17 +703,15 @@ void Game::setObjects(PostParsingStruct* cpps)
             s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_AdditionalNumberOfAction = dopNumberOfAction;
             map<string, string>::iterator iter1;
             for( iter1 = cpps->getMapVariables()["AIMonsterValues_monster_" + monsterid].begin(); iter1 != cpps->getMapVariables()["AIMonsterValues_monster_" + monsterid].end(); iter1++)
-            {
                 s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_AIMonsterValues[iter1->first] = iter1->second;
-            }
         }
-        else if(iter->first.find("AIMonstersValues") == 0)
+        else if(iter->first.find("AIMonstersValues_") == 0)
         {
+            string blockname = iter->first.substr(17);
+            cout << "BLOCKNAME: " << blockname << endl;
             map<string, string>::iterator iter1;
-            /*for( iter1 = cpps->getMapVariables()["AIMonstersValues"].begin(); iter1 != cpps->getMapVariables()["AIMonstersValues"].end(); iter1++)
-            {
-                s_GameInfo->s_FactoryMonsters->s_AIMonstersValues[iter1->first] = iter1->second;
-            }*/
+            for(iter1 = cpps->getMapVariables()[iter->first].begin(); iter1 != cpps->getMapVariables()[iter->first].end(); iter1++)
+                s_GameInfo->s_FactoryMonsters->s_AIMonstersValues->setValue(blockname, iter1->first, iter1->second);
         }
         else if(iter->first.find("player_") == 0)
         {

@@ -28,6 +28,8 @@ namespace STRING_CONSTANTS
 
     const std::string SC_CRYPT_KEY_LEVELS = "12dfslgmjiowekjmfpowf;lksd;fl3";
     const std::string SC_CRYPT_KEY_SAVES = "23489*(&*3ROFIHENSP324 V8 9*#(*(*#";
+
+    const std::string SC_CRYPT_KEY_NET = "sdlfjoisjfoiewjfoij89322*((&*34ioj";
 }
 
 namespace NUMBER_CONSTANTS

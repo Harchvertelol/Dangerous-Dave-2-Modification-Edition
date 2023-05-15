@@ -12,6 +12,9 @@
 
 using namespace std;
 
+using namespace irr;
+using namespace net;
+
 using namespace WorkFunctions;
 using namespace ParserFunctions;
 using namespace STRING_CONSTANTS;
@@ -22,7 +25,7 @@ NetClient::NetClient(Game* gameclass):
     s_GameClass(gameclass),
     s_NetInfo(0)
 {
-    s_Client = new NetClientCallback(this);
+    s_NetClientCallback = new NetClientCallback(this);
     s_NetInfoStruct = new NetInfoStruct;
     s_NetInfoStruct->s_Error = "";
     s_NetInfoStruct->s_ServerList = 0;
@@ -34,7 +37,7 @@ NetClient::NetClient(Game* gameclass):
 
 NetClient::~NetClient()
 {
-    if(s_Client != 0) delete s_Client;
+    if(s_NetClientCallback != 0) delete s_NetClientCallback;
     if(s_NetInfoStruct != 0) delete s_NetInfoStruct;
     if(s_NetInfo != 0) delete s_NetInfo;
 }
@@ -44,12 +47,40 @@ void NetClient::tick()
 	//...
 }
 
+void NetClient::sendOutPacket(SOutPacket& outpacket, const s32 playerId, const u32 channelID)
+{
+    outpacket.compressPacket();
+    outpacket.encryptPacket(STRING_CONSTANTS::SC_CRYPT_KEY_NET.c_str());
+	s_NetManager->sendOutPacket(outpacket, playerId, channelID);
+}
+
+void NetClient::sendOutPacketUnreliable(SOutPacket& outpacket, const s32 playerId, const u32 channelID, bool isUnsequenced)
+{
+    outpacket.compressPacket();
+    outpacket.encryptPacket(STRING_CONSTANTS::SC_CRYPT_KEY_NET.c_str());
+	s_NetManager->sendOutPacketUnreliable(outpacket, playerId, channelID, isUnsequenced);
+}
+
 bool NetClient::connect()
 {
     try
     {
-        s_Client->connect(s_NetInfoStruct->s_Host, s_NetInfoStruct->s_Port);
-        cout<<"Connected"<<endl;
+        SNetParams snp;
+        snp.numberChannels = 2;
+        snp.connectionTimeout = atoi( s_NetInfo->getValue("internet", "timeoutconnect").c_str() ) * 1000;
+        snp.downBandwidth = atoi( s_NetInfo->getValue("internet", "downbandwidth").c_str() );
+        snp.upBandwidth = atoi( s_NetInfo->getValue("internet", "upbandwidth").c_str() );
+
+        NetClientCallback* clientCallback = new NetClientCallback(this);
+		s_NetManager = createIrrNetClient(clientCallback, s_NetInfoStruct->s_Host.c_str(), s_NetInfoStruct->s_Port, snp);
+		//s_NetManager->setVerbose(true);
+
+		if(s_NetManager->getConnectionStatus() != net::EICS_FAILED) cout<< "Connected" <<endl;
+		else
+        {
+            cout << "Error connection!" << endl;
+            return false;
+        }
     }
     catch(std::exception& e)
 	{
@@ -60,7 +91,7 @@ bool NetClient::connect()
 	cout<<"Waiting confirm..."<<endl;
 	for(int i = 0; s_NetInfoStruct->s_Sleep_1 == true; i++)
     {
-        net::run(1000);
+        s_NetManager->update(1000);
         cout<<".";
         if(i == 10)
         {
@@ -70,19 +101,21 @@ bool NetClient::connect()
     }
     cout<<endl<<"Confirmed."<<endl;
     cout<<"Authorization..."<<endl;
-	string str_send = "";
+    string str_send = "";
 	str_send = addMainVariableString(str_send, "login", SPLITTER_STR_VARIABLE);
 	str_send = addSecondaryVariableString(str_send, "name", s_NetInfoStruct->s_Name, SPLITTER_STR_VARIABLE);
 	str_send = addSecondaryVariableString(str_send, "pass", s_NetInfoStruct->s_Pass, SPLITTER_STR_VARIABLE);
 	str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
 	str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_CLIENT_IDS_MESSAGES::FCIM_PlayerAuth, SPLITTER_STR_VARIABLE);
-	str_send += "\n";
-	s_Client->send(str_send);
-	str_send = "";
+
+	SOutPacket packet;
+	packet << str_send;
+	sendOutPacket(packet);
+
 	s_NetInfoStruct->s_Sleep_2 = true;
 	for(int i = 0; s_NetInfoStruct->s_Sleep_2 == true; i++)
     {
-        net::run(1000);
+        s_NetManager->update(1000);
         cout<<".";
         if(i == 10)
         {
@@ -97,7 +130,7 @@ bool NetClient::connect()
         return false;
     }
     cout<<"You are logged."<<endl;
-	return true;
+    return true;
 }
 
 bool NetClient::netGameStartWork()
@@ -123,7 +156,7 @@ bool NetClient::getServerList()
     s_NetInfoStruct->s_Sleep_3 = true;
     for(int i = 0; s_NetInfoStruct->s_Sleep_3 == true; i++)
     {
-        net::run(1000);
+        s_NetManager->update(1000);
         cout<<".";
         if(i == atoi( s_NetInfo->getValue("internet", "timeoutconnect").c_str() ) )
         {
@@ -165,7 +198,7 @@ bool NetClient::choiceServer()
         s_NetInfoStruct->s_Sleep_4 = true;
         for(int i = 0; s_NetInfoStruct->s_Sleep_4 == true; i++)
         {
-            net::run(1000);
+            s_NetManager->update(1000);
             cout<<".";
             if(i == atoi( s_NetInfo->getValue("internet", "timeoutconnect").c_str() ) )
             {
@@ -185,16 +218,17 @@ void NetClient::getCreaturesList()
 
 void NetClient::sendInfoFromClient()
 {
-    //PostParsingStruct* pps = s_GameClass->s_GameInfo->s_MyPlayer->getKeys("Keys");
-    //s_GameClass->s_GameInfo->s_MyPlayer->getListOfVariables("player", pps);
-    PostParsingStruct* pps = s_GameClass->s_GameInfo->s_MyPlayer->getListOfVariables("player");
+    /*PostParsingStruct* pps = s_GameClass->s_GameInfo->s_MyPlayer->getListOfVariables("player");
     ParserInfoFile prs;
     string str_send = prs.convertPostParsingStructToString(pps, SPLITTER_STR_VARIABLE);
     str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
     str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_CLIENT_IDS_MESSAGES::FCIM_InfoFromClient, SPLITTER_STR_VARIABLE);
-	str_send += "\n";
-	s_Client->send(str_send);
-	s_NetInfoStruct->s_WaitingConfirmGettingInfoFromClient = true;
+
+	SOutPacket packet;
+	packet << str_send;
+	sendOutPacket(packet);
+
+	s_NetInfoStruct->s_WaitingConfirmGettingInfoFromClient = true;*/
 }
 
 void NetClient::leaveServer()
@@ -211,6 +245,8 @@ void NetClient::sendCommandToServer(string command)
     str_send = addMainVariableString(str_send, "command", SPLITTER_STR_VARIABLE);
 	str_send = addSecondaryVariableString(str_send, "do", command, SPLITTER_STR_VARIABLE);
 	str_send = addSecondaryVariableString(str_send, "id", WorkFunctions::ConvertFunctions::itos(s_NetInfoStruct->s_ServerIdNow), SPLITTER_STR_VARIABLE);
-	str_send += "\n";
-	s_Client->send(str_send);
+
+	SOutPacket packet;
+	packet << str_send;
+	sendOutPacket(packet);
 }

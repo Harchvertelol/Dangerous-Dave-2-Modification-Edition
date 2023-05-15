@@ -1,29 +1,29 @@
-#ifndef CLIENT_H
-#define CLIENT_H
+#ifndef CLIENTCALLBACK_H
+#define CLIENTCALLBACK_H
 
 #include <string>
 
-#include "../shabbynet/shabbynet.hpp"
+#include <irrNet.h>
 
 #include "../IniParser/PostParsingStruct.h"
 
 class NetClient;
 
-class NetClientCallback: public Socket
+class NetClientCallback: public irr::net::INetCallback
 {
     public:
         NetClientCallback(NetClient*);
         ~NetClientCallback();
         NetClient* s_NetClient;
-        std::string s_ReceiveBuffer;
         void workStr(std::string);
         void doCommand(NetClientCallback*, std::string, IniParser::PostParsingStruct*);
         void connect(const std::string&, int port);
-
     private:
-        void on_received(const char*, int);
+        void handlePacket(irr::net::SInPacket& packet, irr::u32 channelID);
+        void onConnect(const irr::u16 playerId);
+        void onDisconnect(const irr::u16 playerId);
 };
 
-#endif // CLIENT_H
+#endif // CLIENTCALLBACK_H
 
 

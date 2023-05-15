@@ -1,25 +1,20 @@
-#ifndef SCLIENT_H
-#define SCLIENT_H
+#ifndef NETSERVERCALLBACK_H
+#define NETSERVERCALLBACK_H
 
-#include "../shabbynet/shabbynet.hpp"
+#include <irrNet.h>
 
-class UserData;
 class Server;
 
-class NetServerCallback: public Socket
+class NetServerCallback: public irr::net::INetCallback
 {
     public:
         NetServerCallback(Server*);
         ~NetServerCallback();
-        int s_ID;
         Server* s_Server;
-        UserData* s_UserData;
-        std::string s_ReceiveBuffer;
-
     private:
-        void on_received(const char*, int);
-        void on_connected();
-        void on_closed();
+        void handlePacket(irr::net::SInPacket& packet, irr::u32 channelID);
+        void onConnect(const irr::u16 playerId);
+        void onDisconnect(const irr::u16 playerId);
 };
 
-#endif // SCLIENT_H
+#endif // NETSERVERCALLBACK_H

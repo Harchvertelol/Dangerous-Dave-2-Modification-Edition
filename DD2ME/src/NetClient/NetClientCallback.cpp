@@ -13,6 +13,9 @@
 
 using namespace std;
 
+using namespace irr;
+using namespace net;
+
 using namespace WorkFunctions;
 using namespace ParserFunctions;
 using namespace STRING_CONSTANTS;
@@ -20,8 +23,7 @@ using namespace STRING_CONSTANTS;
 using namespace IniParser;
 
 NetClientCallback::NetClientCallback(NetClient* g):
-    s_NetClient(g),
-    s_ReceiveBuffer("")
+    s_NetClient(g)
 {
     //...
 }
@@ -31,36 +33,27 @@ NetClientCallback::~NetClientCallback()
     //...
 }
 
-void NetClientCallback::connect(const std::string& host, int port)
+void NetClientCallback::onConnect(const u16 playerId)
 {
-	Socket::connect(host, port);
-	read_some();
+	cout << "Connected to server" << endl;
 }
 
-void NetClientCallback::on_received(const char* buf, int len)
+void NetClientCallback::onDisconnect(const u16 playerId)
 {
-	if(len < 0)
+    cout << "Disconnected from server" << endl;
+}
+
+void NetClientCallback::handlePacket(SInPacket& packet, u32 channelID)
+{
+	packet.decryptPacket(STRING_CONSTANTS::SC_CRYPT_KEY_NET.c_str());
+    packet.deCompressPacket();
+
+    if(channelID == 0)
     {
-        cout<<"Error! Length < 0."<<endl;
-        read_some();
-        return;
+        string str;
+        packet >> str;
+        workStr(str);
     }
-    string str, buffer;
-    buffer.append(buf, len);
-    buffer = s_ReceiveBuffer + buffer;
-    for(;;) // вдруг у нас несколько строк
-    {
-        const size_t pos = buffer.find('\n');
-        if(pos != string::npos) // есть строка
-        {
-            str = buffer.substr(0, pos);
-            buffer.erase(0, pos+1);
-            workStr(str);
-        }
-        else break;
-    }
-    s_ReceiveBuffer = buffer;
-	read_some();
 }
 
 void NetClientCallback::workStr(string s)

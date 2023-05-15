@@ -22,6 +22,9 @@
 					<Add library="../../Engines/SFML/lib/libsfml-graphics-d.a" />
 					<Add library="../../Engines/SFML/lib/libsfml-window-d.a" />
 					<Add library="../../Engines/SFML/lib/libsfml-system-d.a" />
+					<Add library="../../Engines/HarchIrrNetLite/lib/CodeBlocks/Debug/libIrrNetLite.a" />
+					<Add library="libws2_32.a" />
+					<Add library="libwinmm.a" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -40,6 +43,9 @@
 					<Add library="../../Engines/SFML/lib/libsfml-graphics.a" />
 					<Add library="../../Engines/SFML/lib/libsfml-window.a" />
 					<Add library="../../Engines/SFML/lib/libsfml-system.a" />
+					<Add library="../../Engines/HarchIrrNetLite/lib/CodeBlocks/Release/libIrrNetLite.a" />
+					<Add library="libws2_32.a" />
+					<Add library="libwinmm.a" />
 				</Linker>
 			</Target>
 		</Build>
@@ -49,9 +55,9 @@
 			<Add option="-DWIN32" />
 			<Add directory="../../Engines/SFML/include" />
 			<Add directory="../../Engines/TGUI-0.9/include" />
+			<Add directory="../../Engines/HarchIrrNetLite/include" />
 		</Compiler>
 		<Linker>
-			<Add library="libws2_32.a" />
 			<Add directory="../../Engines/SFML/lib" />
 		</Linker>
 		<Unit filename="AI.cpp" />
@@ -249,8 +255,6 @@
 		</Unit>
 		<Unit filename="lua/lzio.h" />
 		<Unit filename="main_server.cpp" />
-		<Unit filename="shabbynet/shabbynet.cpp" />
-		<Unit filename="shabbynet/shabbynet.hpp" />
 		<Extensions>
 			<DoxyBlocks>
 				<comment_style block="0" line="0" />

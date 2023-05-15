@@ -16,7 +16,10 @@ MainServer::MainServer()
 
 MainServer::~MainServer()
 {
-    //...
+    delete s_Server;
+    delete s_ServerList;
+    map<string, Game*>::iterator iter1, iter2;
+    for(iter1 = s_ListGameClass.begin(), iter2 = s_ListGameClass.end(); iter1 != iter2; iter1++) if(iter1->second != 0) delete iter1->second;
 }
 
 bool MainServer::load()
@@ -86,10 +89,11 @@ bool MainServer::load()
             string screenpack = s_ServerList->getValue(iter->first, "screenpack");
             string soundpack = s_ServerList->getValue(iter->first, "soundpack");
             string musicpack = s_ServerList->getValue(iter->first, "musicpack");
+            string guipack = s_ServerList->getValue(iter->first, "guipack");
             string levelpack = s_ServerList->getValue(iter->first, "levelpack");
             string playerpack = s_ServerList->getValue(iter->first, "playerpack");
             bool changeAll = false;
-            if(modpack != "standard" || texturepack != "" || monsterpack != "" || bonuspack != "" || screenpack != "" || soundpack != "" || soundpack == "" || levelpack != "" || playerpack != "")
+            if(modpack != "standard" || texturepack != "" || monsterpack != "" || bonuspack != "" || screenpack != "" || soundpack != "" || soundpack == "" || levelpack != "" || playerpack != "" || musicpack != "" || guipack != "")
             {
                 if(gm->s_IniFile->getValue("resources", "pooling") == "false")
                 {
@@ -108,6 +112,8 @@ bool MainServer::load()
             if(changeAll || musicpack != "") gm->s_IniFile->setValue("resources", "musicpack", musicpack);
             if(changeAll || levelpack != "") gm->s_IniFile->setValue("resources", "levelpack", levelpack);
             if(changeAll || playerpack != "") gm->s_IniFile->setValue("resources", "playerpack", playerpack);
+            if(changeAll || musicpack != "") gm->s_IniFile->setValue("resources", "musicpack", musicpack);
+            if(changeAll || guipack != "") gm->s_IniFile->setValue("resources", "guipack", guipack);
             //...
             if(!gm->loadPack())
             {
@@ -115,9 +121,6 @@ bool MainServer::load()
                 return false;
             }
             gm->startGame(id_srv);
-            s_ListTimerId[gm->s_IdTimerAnimationStep] = gm;
-            s_ListTimerId[gm->s_IdTimerCreaturesAnimationStep] = gm;
-            s_ListTimerId[gm->s_IdTimerDrawStep] = gm;
             gm->changeLevel( atoi(s_ServerList->getValue(iter->first, "level").c_str() ) );
             gm->s_StateManager->switchState(3);
             gm->s_GameInfo->s_MyPlayer->s_CoordX = -1000;

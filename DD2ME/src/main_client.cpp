@@ -138,20 +138,21 @@ int main(int argc, char** argv)
                 }
             }
             gm->changeLevel(atoi( nc->s_NetInfoStruct->s_ServerList->getValue(keySL, "level").c_str() ), false);
+            int sleep_tmp = atoi( nc->s_NetInfo->getValue("internet", "sleepfornetwork").c_str() );
             while(nc->s_NetInfoStruct->s_goGameOnServer)
             {
                 if(nc->s_NetInfoStruct->s_WaitingGettingCreatureList == false) nc->getCreaturesList();
                 if(nc->s_NetInfoStruct->s_WaitingConfirmGettingInfoFromClient == false) nc->sendInfoFromClient();
                 gm->processAllEvents( atoi( nc->s_NetInfo->getValue("internet", "maxnumberofeventsatatime").c_str() ) );
-                net::run( atoi( nc->s_NetInfo->getValue("internet", "sleepfornetwork").c_str() ) );
+                gm->s_NetClient->s_NetManager->update(sleep_tmp);
             }
             nc->leaveServer();
             gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Leaving server...");
             for(int i = 0; nc->s_NetInfoStruct->s_WaitingConfirmLeaveServer == true; i++)
             {
-                net::run(1000);
+                gm->s_NetClient->s_NetManager->update(1000);
                 cout << ".";
-                if(i == 10)
+                if(i == atoi( gm->s_NetClient->s_NetInfo->getValue("internet", "timeoutconnect").c_str() ))
                 {
                     cout << endl;
                     gm->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Server timeout.");

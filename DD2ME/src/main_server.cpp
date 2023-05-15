@@ -1,4 +1,3 @@
-#define CANVAS_NOSTART
 #include <ctime>
 
 #include "MainServer.h"

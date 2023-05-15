@@ -3,7 +3,8 @@
 
 #include <string>
 
-#include "../shabbynet/shabbynet.hpp"
+#include <irrNet.h>
+
 #include "NetClientCallback.h"
 #include "NetInfoStruct.h"
 #include "../IniParser/PostParsingStruct.h"
@@ -15,7 +16,7 @@ class NetClient
     public:
         NetClient(Game*);
         ~NetClient();
-        NetClientCallback* s_Client;
+        NetClientCallback* s_NetClientCallback;
         NetInfoStruct* s_NetInfoStruct;
         Game* s_GameClass;
         IniParser::PostParsingStruct* s_NetInfo;
@@ -27,7 +28,9 @@ class NetClient
         void sendInfoFromClient();
         void leaveServer();
         void sendCommandToServer(std::string);
-
+        void sendOutPacket(irr::net::SOutPacket& outpacket, const irr::s32 playerId = -1, const irr::u32 channelID = 0);
+        void sendOutPacketUnreliable(irr::net::SOutPacket& outpacket, const irr::s32 playerId = -1, const irr::u32 channelID = 0, bool isUnsequenced = false);
+        irr::net::INetManager* s_NetManager;
     private:
         void tick();
 };

@@ -25,8 +25,8 @@ FactoryMonsters::FactoryMonsters(Game* gameclass):
 
 FactoryMonsters::~FactoryMonsters()
 {
-    if(s_AIMonstersValues != 0) delete s_AIMonstersValues;
     clear();
+    if(s_AIMonstersValues != 0) delete s_AIMonstersValues;
 }
 
 void FactoryMonsters::removeMonster(int key)
