@@ -43,6 +43,7 @@ class CreaturePlayer
         int s_ScreenCoordY;
         std::string s_NickName;
         IniParser::PostParsingStruct* s_Values;
+        bool s_IsControlled;
         void live(bool doKey = true);
         bool correctionPhys(int,int);
         void step(std::string);

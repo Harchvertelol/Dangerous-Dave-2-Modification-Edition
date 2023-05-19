@@ -23,14 +23,15 @@ using namespace IniParser;
 
 NetClient::NetClient(Game* gameclass):
     s_GameClass(gameclass),
-    s_NetInfo(0)
+    s_NetInfo(0),
+    s_MyID(-1)
 {
     s_NetClientCallback = new NetClientCallback(this);
     s_NetInfoStruct = new NetInfoStruct;
     s_NetInfoStruct->s_Error = "";
     s_NetInfoStruct->s_ServerList = 0;
     s_NetInfoStruct->s_ServerIdNow = 0;
-    s_NetInfoStruct->s_WaitingConfirmGettingInfoFromClient = false;
+    s_NetInfoStruct->s_WaitingConfirmGettingFullInfoFromClient = false;
     s_NetInfoStruct->s_WaitingGettingCreatureList = false;
     s_NetInfoStruct->s_WaitingConfirmLeaveServer = false;
 }
@@ -54,11 +55,11 @@ void NetClient::sendOutPacket(SOutPacket& outpacket, const s32 playerId, const u
 	s_NetManager->sendOutPacket(outpacket, playerId, channelID);
 }
 
-void NetClient::sendOutPacketUnreliable(SOutPacket& outpacket, const s32 playerId, const u32 channelID, bool isUnsequenced)
+void NetClient::sendOutPacketUnreliable(SOutPacket& outpacket, const s32 playerId, const u32 channelID, bool isSequenced)
 {
     outpacket.compressPacket();
     outpacket.encryptPacket(STRING_CONSTANTS::SC_CRYPT_KEY_NET.c_str());
-	s_NetManager->sendOutPacketUnreliable(outpacket, playerId, channelID, isUnsequenced);
+	s_NetManager->sendOutPacketUnreliable(outpacket, playerId, channelID, isSequenced);
 }
 
 bool NetClient::connect()
@@ -207,28 +208,45 @@ bool NetClient::choiceServer()
             }
         }
     }
+    getCreaturesList();
 	return true;
 }
 
-void NetClient::getCreaturesList()
+void NetClient::getCreaturesList(bool notfullfornetmode)
 {
-    sendCommandToServer(SERVER_COMMANDS_FROM_CLIENT::SCFC_getCreaturesList);
+    string params = "notfullfornetmode";
+    if(!notfullfornetmode) params = "";
+    sendCommandToServer(SERVER_COMMANDS_FROM_CLIENT::SCFC_getCreaturesList, params);
 	s_NetInfoStruct->s_WaitingGettingCreatureList = true;
 }
 
-void NetClient::sendInfoFromClient()
+void NetClient::sendFullInfoFromClient()
 {
-    /*PostParsingStruct* pps = s_GameClass->s_GameInfo->s_MyPlayer->getListOfVariables("player");
+    PostParsingStruct* pps = s_GameClass->s_GameInfo->s_MyPlayer->getListOfVariables("player");
     ParserInfoFile prs;
     string str_send = prs.convertPostParsingStructToString(pps, SPLITTER_STR_VARIABLE);
     str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
-    str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_CLIENT_IDS_MESSAGES::FCIM_InfoFromClient, SPLITTER_STR_VARIABLE);
+    str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_CLIENT_IDS_MESSAGES::FCIM_FullInfoFromClient, SPLITTER_STR_VARIABLE);
 
 	SOutPacket packet;
 	packet << str_send;
 	sendOutPacket(packet);
 
-	s_NetInfoStruct->s_WaitingConfirmGettingInfoFromClient = true;*/
+	s_NetInfoStruct->s_WaitingConfirmGettingFullInfoFromClient = true;
+}
+
+void NetClient::sendInfoFromClient()
+{
+    SOutPacket packet;
+
+    packet << PT_PLAYER_COORDS << s_GameClass->s_GameInfo->s_MyPlayer->s_CoordX << s_GameClass->s_GameInfo->s_MyPlayer->s_CoordY;
+    sendOutPacketUnreliable(packet, -1, 2, true);
+    packet.clearData();
+
+    packet << PT_PLAYER_STATE << s_GameClass->s_GameInfo->s_MyPlayer->s_State << s_GameClass->s_GameInfo->s_MyPlayer->s_StateBeforeOpenDoor << s_GameClass->s_GameInfo->s_MyPlayer->s_Cartridges <<
+                    s_GameClass->s_GameInfo->s_MyPlayer->s_NumberOfAction << s_GameClass->s_GameInfo->s_MyPlayer->s_AdditionalNumberOfAction << s_GameClass->s_GameInfo->s_MyPlayer->s_OldNumberOfAction << s_GameClass->s_GameInfo->s_MyPlayer->s_ShootNow;
+    sendOutPacketUnreliable(packet, -1, 2, true);
+    packet.clearData();
 }
 
 void NetClient::leaveServer()
@@ -237,7 +255,7 @@ void NetClient::leaveServer()
 	s_NetInfoStruct->s_WaitingConfirmLeaveServer = true;
 }
 
-void NetClient::sendCommandToServer(string command)
+void NetClient::sendCommandToServer(string command, string params)
 {
     string str_send = "";
     str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
@@ -245,8 +263,11 @@ void NetClient::sendCommandToServer(string command)
     str_send = addMainVariableString(str_send, "command", SPLITTER_STR_VARIABLE);
 	str_send = addSecondaryVariableString(str_send, "do", command, SPLITTER_STR_VARIABLE);
 	str_send = addSecondaryVariableString(str_send, "id", WorkFunctions::ConvertFunctions::itos(s_NetInfoStruct->s_ServerIdNow), SPLITTER_STR_VARIABLE);
+	str_send = addSecondaryVariableString(str_send, "params", params, SPLITTER_STR_VARIABLE);
 
 	SOutPacket packet;
 	packet << str_send;
 	sendOutPacket(packet);
+
+	s_MyID = -1;
 }

@@ -64,18 +64,16 @@ bool MainServer::load()
 
             gm->readConfig();
 
-            gm->s_DisplayStruct->s_WindowResolutionX = atoi( (gm->s_IniFile->getValue("video","windowresolutionX") ).c_str() );
-            gm->s_DisplayStruct->s_WindowResolutionY = atoi( (gm->s_IniFile->getValue("video","windowresolutionY") ).c_str() );
-            gm->s_GameInfo->s_KeyDown = atoi( gm->s_IniFile->getValue("keys","down").c_str() );
-            gm->s_GameInfo->s_KeyUp = atoi( gm->s_IniFile->getValue("keys","up").c_str() );
-            gm->s_GameInfo->s_KeyRight = atoi( gm->s_IniFile->getValue("keys","right").c_str() );
-            gm->s_GameInfo->s_KeyLeft = atoi( gm->s_IniFile->getValue("keys","left").c_str() );
-            gm->s_GameInfo->s_KeyShoot = atoi( gm->s_IniFile->getValue("keys","shoot").c_str() );
-            gm->s_GameInfo->s_KeyJump = atoi( gm->s_IniFile->getValue("keys","jump").c_str() );
-            if(gm->s_DisplayStruct->s_WindowResolutionY <= 0 || gm->s_DisplayStruct->s_WindowResolutionX <= 0)
+            gm->s_GameInfo->readKeys(gm->s_IniFile);
+            gm->s_DisplayStruct->s_GameResolutionX = atoi( (gm->s_IniFile->getValue("video","resolutionX") ).c_str() );
+            gm->s_DisplayStruct->s_GameResolutionY = atoi( (gm->s_IniFile->getValue("video","resolutionY") ).c_str() );
+            gm->s_DisplayStruct->s_WindowResolutionX = atoi( (gm->s_IniFile->getValue("video", "windowresolutionX") ).c_str() );
+            gm->s_DisplayStruct->s_WindowResolutionY = atoi( (gm->s_IniFile->getValue("video", "windowresolutionY") ).c_str() );
+            if(gm->s_DisplayStruct->s_GameResolutionY <= 0 || gm->s_DisplayStruct->s_GameResolutionX <= 0)
             {
-                cout<<"Error: Display resolution."<<endl;
-                return false;
+                gm->s_Logger->registerEvent(EVENT_TYPE_LOGIC_VIOLATION, "Game resolution is < 0 or equals 0.", true);
+                system("pause");
+                return 0;
             }
             //gm->s_Window = new Window("DD2 Remake: ME v0.2 pre-beta", gm->s_DisplayStruct->s_WindowResolutionX, gm->s_DisplayStruct->s_WindowResolutionY, atoi( (gm->s_IniFile->getValue("video","scale") ).c_str() ));
             /*gm->s_Window = new Window(nostart);

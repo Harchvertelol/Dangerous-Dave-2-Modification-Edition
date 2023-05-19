@@ -17,7 +17,7 @@ namespace FROM_CLIENT_IDS_MESSAGES
 {
     const std::string FCIM_PlayerAuth = "PlayerAuth";
     const std::string FCIM_Command = "Command";
-    const std::string FCIM_InfoFromClient = "InfoFromClient";
+    const std::string FCIM_FullInfoFromClient = "FullInfoFromClient";
 }
 
 namespace FROM_SERVER_IDS_MESSAGES
@@ -27,10 +27,17 @@ namespace FROM_SERVER_IDS_MESSAGES
     const std::string FSIM_ServerList = "ServerList";
     const std::string FSIM_MainIniFile = "MainIniFile";
     const std::string FSIM_ListCreatures = "ListCreatures";
-    const std::string FSIM_ConfirmGettingInfoFromClient = "ConfirmGettingInfoFromClient";
+    const std::string FSIM_ConfirmGettingFullInfoFromClient = "ConfirmGettingFullInfoFromClient";
     const std::string FSIM_ConfirmLeaveServer = "ConfirmLeaveServer";
     const std::string FSIM_Command = "Command";
 }
+
+enum PACKETS_TYPES
+{
+    PT_PLAYER_COORDS = 1,
+    PT_PLAYER_CONNECTED,
+    PT_PLAYER_STATE
+};
 
 struct NetInfoStruct
 {
@@ -53,7 +60,7 @@ struct NetInfoStruct
     std::string s_Mode;
     //...
     bool s_WaitingGettingCreatureList;
-    bool s_WaitingConfirmGettingInfoFromClient;
+    bool s_WaitingConfirmGettingFullInfoFromClient;
     bool s_WaitingConfirmLeaveServer;
     //...
     IniParser::PostParsingStruct* s_ServerList;

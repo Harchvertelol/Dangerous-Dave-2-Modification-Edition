@@ -75,7 +75,7 @@ int main(int argc, char** argv)
     else
     {
         nc->s_NetInfoStruct->s_goGame = true;
-        nc->s_NetInfoStruct->s_goGameOnServer = true;
+        nc->s_NetInfoStruct->s_goGameOnServer = false;
         gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Multiplayer mode On...");
         nc->s_NetInfoStruct->s_Mode = "multiplayer";
         gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Connecting to server ( " + string(nc->s_NetInfoStruct->s_Host) + ":" + WorkFunctions::ConvertFunctions::itos(nc->s_NetInfoStruct->s_Port) + " )...");
@@ -137,15 +137,30 @@ int main(int argc, char** argv)
                     keySL = iter__->first;
                 }
             }
-            gm->changeLevel(atoi( nc->s_NetInfoStruct->s_ServerList->getValue(keySL, "level").c_str() ), false);
+            gm->changeLevel(atoi( nc->s_NetInfoStruct->s_ServerList->getValue(keySL, "level").c_str() ));
+            cout << "Waiting objects list..." << endl;
+            for(int i = 0; nc->s_NetInfoStruct->s_WaitingGettingCreatureList; i++)
+            {
+                gm->s_NetClient->s_NetManager->update(1000);
+                cout<<".";
+                if(i == atoi( nc->s_NetInfo->getValue("internet", "timeoutconnect").c_str() ) )
+                {
+                    cout<<endl<<"Error: Server timeout."<<endl;
+                    return false;
+                }
+            }
+            cout << "Objects list was recieved." << endl;
             int sleep_tmp = atoi( nc->s_NetInfo->getValue("internet", "sleepfornetwork").c_str() );
+            nc->s_NetInfoStruct->s_goGameOnServer = true;
             while(nc->s_NetInfoStruct->s_goGameOnServer)
             {
-                if(nc->s_NetInfoStruct->s_WaitingGettingCreatureList == false) nc->getCreaturesList();
-                if(nc->s_NetInfoStruct->s_WaitingConfirmGettingInfoFromClient == false) nc->sendInfoFromClient();
+                //if(nc->s_NetInfoStruct->s_WaitingGettingCreatureList == false) nc->getCreaturesList(true);
+                //if(nc->s_NetInfoStruct->s_WaitingConfirmGettingFullInfoFromClient == false) nc->sendFullInfoFromClient();
+                nc->sendInfoFromClient();
                 gm->processAllEvents( atoi( nc->s_NetInfo->getValue("internet", "maxnumberofeventsatatime").c_str() ) );
                 gm->s_NetClient->s_NetManager->update(sleep_tmp);
             }
+            nc->s_NetInfoStruct->s_goGameOnServer = false;
             nc->leaveServer();
             gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Leaving server...");
             for(int i = 0; nc->s_NetInfoStruct->s_WaitingConfirmLeaveServer == true; i++)
@@ -161,7 +176,6 @@ int main(int argc, char** argv)
             }
             cout << endl;
             gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Server leaved.");
-            nc->s_NetInfoStruct->s_goGameOnServer = true;
         }
         delete gm;
         gm = new Game;

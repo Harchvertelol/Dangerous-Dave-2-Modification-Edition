@@ -69,10 +69,10 @@ class Game
         std::string getNameForSaveFile();
         void onTimer(unsigned int);
         void configureForGame();
-        IniParser::PostParsingStruct* getObjects();
-        void setObjects(IniParser::PostParsingStruct*);
+        IniParser::PostParsingStruct* getObjects(bool notfullfornetmode, CreaturePlayer* cr_player = 0);
+        void setObjects(IniParser::PostParsingStruct*, bool notfullfornetmode);
         void processAllEvents(int);
-        bool insertPlayer(int, int, std::string);
+        bool insertPlayer(int, int, std::string, bool iscontrolled = true);
         bool removePlayer(int);
         void deleteAllGDIObjects();
         bool createWindow();

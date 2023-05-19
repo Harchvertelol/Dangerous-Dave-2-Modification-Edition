@@ -87,7 +87,9 @@ bool FactoryMonsters::isMonsterInPlayerRadius(CreaturePlayer* player, CreatureMo
         mnst->s_CoordY <= s_GameClass->s_DisplayStruct->s_GameResolutionY + player->s_ScreenCoordY + 16 * radiusY &&
         mnst->s_CoordY >= player->s_ScreenCoordY - 16 * radiusY)
             return true;*/
-    if(testCollision(player->s_ScreenCoordX - 16 * radiusX, player->s_ScreenCoordY - 16 * radiusY, mnst->s_CoordX, mnst->s_CoordY, Square(0, 0, s_GameClass->s_DisplayStruct->s_GameResolutionX + 2 * 16 * radiusX, s_GameClass->s_DisplayStruct->s_GameResolutionY + 2 * 16 * radiusY), mnst->getCollision())) return true;
+    if(testCollision(player->s_ScreenCoordX - 16 * radiusX, player->s_ScreenCoordY - 16 * radiusY, mnst->s_CoordX, mnst->s_CoordY,
+                     Square(0, 0, s_GameClass->s_DisplayStruct->s_GameResolutionX + 2 * 16 * radiusX, s_GameClass->s_DisplayStruct->s_GameResolutionY + 2 * 16 * radiusY),
+                     mnst->getCollision())) return true;
     return false;
 }
 

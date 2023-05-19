@@ -20,16 +20,18 @@ class NetClient
         NetInfoStruct* s_NetInfoStruct;
         Game* s_GameClass;
         IniParser::PostParsingStruct* s_NetInfo;
+        int s_MyID;
         bool connect();
         bool netGameStartWork();
         bool getServerList();
-        void getCreaturesList();
+        void getCreaturesList(bool notfullfornetmode = false);
         bool choiceServer();
+        void sendFullInfoFromClient();
         void sendInfoFromClient();
         void leaveServer();
-        void sendCommandToServer(std::string);
+        void sendCommandToServer(std::string, std::string params = "");
         void sendOutPacket(irr::net::SOutPacket& outpacket, const irr::s32 playerId = -1, const irr::u32 channelID = 0);
-        void sendOutPacketUnreliable(irr::net::SOutPacket& outpacket, const irr::s32 playerId = -1, const irr::u32 channelID = 0, bool isUnsequenced = false);
+        void sendOutPacketUnreliable(irr::net::SOutPacket& outpacket, const irr::s32 playerId = -1, const irr::u32 channelID = 0, bool isSequenced = false);
         irr::net::INetManager* s_NetManager;
     private:
         void tick();

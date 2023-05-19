@@ -574,7 +574,7 @@ void Game::drawAll()
     s_RenderWindow->display();
 }
 
-PostParsingStruct* Game::getObjects()
+PostParsingStruct* Game::getObjects(bool notfullfornetmode, CreaturePlayer* cr_player)
 {
     PostParsingStruct* cpps = new PostParsingStruct;
     unsigned int monsterid = 0;
@@ -583,19 +583,32 @@ PostParsingStruct* Game::getObjects()
     for( iter = s_GameInfo->s_FactoryMonsters->s_Monsters.begin(); iter != s_GameInfo->s_FactoryMonsters->s_Monsters.end(); iter++)
         if(iter->second->s_DeleteNow == false)
         {
-            monsterid++;
-            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "coordX", WorkFunctions::ConvertFunctions::itos(iter->second->s_CoordX) );
-            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "coordY", WorkFunctions::ConvertFunctions::itos(iter->second->s_CoordY) );
-            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "currentLives", WorkFunctions::ConvertFunctions::itos(iter->second->s_CurrentLives) );
-            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "state", iter->second->s_State);
-            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "number", WorkFunctions::ConvertFunctions::itos(iter->second->s_Number) );
-            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "numberOfAction", WorkFunctions::ConvertFunctions::itos(iter->second->s_NumberOfAction) );
-            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "dopNumberOfAction", WorkFunctions::ConvertFunctions::itos(iter->second->s_AdditionalNumberOfAction) );
-            cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "id", WorkFunctions::ConvertFunctions::itos(monsterid) );
-            map<string, string>::iterator iter1;
-            for( iter1 = iter->second->s_AIMonsterValues.begin(); iter1 != iter->second->s_AIMonsterValues.end(); iter1++)
+            bool is_get = true;
+            if(notfullfornetmode)
             {
-                cpps->setValue("AIMonsterValues_monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), iter1->first, iter1->second );
+                if(cr_player == 0)
+                {
+                    s_Logger->registerEvent(EVENT_TYPE_ERROR, "Pointer of CreaturePlayer is equal 0 in getObjects for not full for netmode");
+                    is_get = false;
+                }
+                else if(!s_GameInfo->s_FactoryMonsters->isMonsterInPlayerRadius(cr_player, iter->second, MDRT_LIVE)) is_get = false;
+            }
+            if(is_get)
+            {
+                monsterid++;
+                cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "coordX", WorkFunctions::ConvertFunctions::itos(iter->second->s_CoordX) );
+                cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "coordY", WorkFunctions::ConvertFunctions::itos(iter->second->s_CoordY) );
+                cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "currentLives", WorkFunctions::ConvertFunctions::itos(iter->second->s_CurrentLives) );
+                cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "state", iter->second->s_State);
+                cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "number", WorkFunctions::ConvertFunctions::itos(iter->second->s_Number) );
+                cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "numberOfAction", WorkFunctions::ConvertFunctions::itos(iter->second->s_NumberOfAction) );
+                cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "dopNumberOfAction", WorkFunctions::ConvertFunctions::itos(iter->second->s_AdditionalNumberOfAction) );
+                cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "id", WorkFunctions::ConvertFunctions::itos(monsterid) );
+                map<string, string>::iterator iter1;
+                for( iter1 = iter->second->s_AIMonsterValues.begin(); iter1 != iter->second->s_AIMonsterValues.end(); iter1++)
+                {
+                    cpps->setValue("AIMonsterValues_monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), iter1->first, iter1->second );
+                }
             }
         }
     map< string, map<string, string> >::iterator iter1m;
@@ -607,24 +620,26 @@ PostParsingStruct* Game::getObjects()
             cpps->setValue("AIMonstersValues_" + iter1m->first, iter2m->first, iter2m->second );
         }
     }
-
-    map<int, CreaturePlayer*>::iterator iter1;
-    for( iter1 = s_GameInfo->s_Players.begin(); iter1 != s_GameInfo->s_Players.end(); iter1++)
+    if(!notfullfornetmode)
     {
-        //playerid++;
-        playerid = iter1->first;
-        PostParsingStruct* gdpps = iter1->second->getListOfVariables("player_" + WorkFunctions::ConvertFunctions::itos(playerid));
-        cpps->addPostParsingStruct(gdpps);
-        delete gdpps;
+        map<int, CreaturePlayer*>::iterator iter1;
+        for( iter1 = s_GameInfo->s_Players.begin(); iter1 != s_GameInfo->s_Players.end(); iter1++)
+        {
+            //playerid++;
+            playerid = iter1->first;
+            PostParsingStruct* gdpps = iter1->second->getListOfVariables("player_" + WorkFunctions::ConvertFunctions::itos(playerid));
+            cpps->addPostParsingStruct(gdpps);
+            delete gdpps;
 
-        cpps->setValue("player_" + WorkFunctions::ConvertFunctions::itos(playerid), "id", WorkFunctions::ConvertFunctions::itos(playerid) );
-        //...
-        cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyLeft", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyLeft) );
-        cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyRight", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyRight) );
-        cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyUp", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyUp) );
-        cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyDown", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyDown) );
-        cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyShoot", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyShoot) );
-        cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyJump", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyJump) );
+            cpps->setValue("player_" + WorkFunctions::ConvertFunctions::itos(playerid), "id", WorkFunctions::ConvertFunctions::itos(playerid) );
+            //...
+            cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyLeft", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyLeft) );
+            cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyRight", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyRight) );
+            cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyUp", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyUp) );
+            cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyDown", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyDown) );
+            cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyShoot", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyShoot) );
+            cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyJump", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyJump) );
+        }
     }
     int size_x_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeX").c_str() );
     int size_y_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeY").c_str() );
@@ -654,25 +669,31 @@ PostParsingStruct* Game::getObjects()
     return cpps;
 }
 
-void Game::setObjects(PostParsingStruct* cpps)
+void Game::setObjects(PostParsingStruct* cpps, bool notfullfornetmode)
 {
+    ParserInfoFile prs;
+    prs.writeParsedToFile(cpps, "OBJECTS.txt");
+
     int keymonster = 0, playerkey = 0;
     int coordX, coordY, currentLives, number, numberOfAction, dopNumberOfAction;
     string state;
     s_GameInfo->s_FactoryMonsters->clear();
-    map<int, CreaturePlayer*>::iterator iter_, iter2_;
-    for (iter_ = s_GameInfo->s_Players.begin(), iter2_ = s_GameInfo->s_Players.end(); iter_ != iter2_;)
+    if(!notfullfornetmode)
     {
-        if(iter_->second != 0)
+        map<int, CreaturePlayer*>::iterator iter_, iter2_;
+        for (iter_ = s_GameInfo->s_Players.begin(), iter2_ = s_GameInfo->s_Players.end(); iter_ != iter2_;)
         {
-            if(!cpps->isExists("player_" + WorkFunctions::ConvertFunctions::itos(iter_->first)))
+            if(iter_->second != 0)
             {
-                delete iter_->second;
-                s_GameInfo->s_Players.erase(iter_++);
+                if(!cpps->isExists("player_" + WorkFunctions::ConvertFunctions::itos(iter_->first)))
+                {
+                    delete iter_->second;
+                    s_GameInfo->s_Players.erase(iter_++);
+                }
+                else ++iter_;
             }
             else ++iter_;
         }
-        else ++iter_;
     }
     int size_x_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeX").c_str() );
     int size_y_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeY").c_str() );
@@ -713,7 +734,7 @@ void Game::setObjects(PostParsingStruct* cpps)
             for(iter1 = cpps->getMapVariables()[iter->first].begin(); iter1 != cpps->getMapVariables()[iter->first].end(); iter1++)
                 s_GameInfo->s_FactoryMonsters->s_AIMonstersValues->setValue(blockname, iter1->first, iter1->second);
         }
-        else if(iter->first.find("player_") == 0)
+        else if(iter->first.find("player_") == 0 && !notfullfornetmode)
         {
             //playerkey++;
             string playerid = cpps->getValue(iter->first, "id");
@@ -754,7 +775,7 @@ void Game::setObjects(PostParsingStruct* cpps)
         }
 }
 
-bool Game::insertPlayer(int id, int numberOfSpawn, string nickname)
+bool Game::insertPlayer(int id, int numberOfSpawn, string nickname, bool iscontrolled)
 {
     if(s_GameInfo->s_Players[id] != 0)
     {
@@ -763,24 +784,19 @@ bool Game::insertPlayer(int id, int numberOfSpawn, string nickname)
     }
     s_GameInfo->s_Players[id] = new CreaturePlayer(this);
     CreaturePlayer* s_Player = s_GameInfo->s_Players[id];
-    int numberofplayers = s_Data->s_Level->s_Params->getMapVariables("Players").size();
-    if(numberOfSpawn > numberofplayers)
+    int numberofplayersspawns = s_Data->s_Level->s_Params->getMapVariables("Players").size();
+    if(numberOfSpawn > numberofplayersspawns)
     {
         s_Logger->registerEvent(EVENT_TYPE_ERROR, "This level haven't point of spawn with this number.");
         return false;
     }
-    /*string str = s_Data->s_Level->s_Params->getValue("Players", "player" + WorkFunctions::ConvertFunctions::itos(numberOfSpawn) + "X");
-    if(str == "") str = "0";
-    s_Player->s_CoordX = 16*atoi( str.c_str() );
-    str = s_Data->s_Level->s_Params->getValue("Players", "player" + WorkFunctions::ConvertFunctions::itos(numberOfSpawn) + "Y");
-    if(str == "") str = "0";
-    s_Player->s_CoordY = 16*atoi( str.c_str() );*/
     string str = s_Data->s_Level->s_Params->getValue("Players", "player" + WorkFunctions::ConvertFunctions::itos(numberOfSpawn));
     map<int, string> tmp_mas;
     WorkFunctions::ParserFunctions::splitMassString(&tmp_mas, 0, 0, str, ";");
-    s_Player->s_CoordX = 16*atoi( tmp_mas[0].c_str() );
-    s_Player->s_CoordY = 16*atoi( tmp_mas[1].c_str() );
+    s_Player->s_CoordX = atoi( tmp_mas[0].c_str() );
+    s_Player->s_CoordY = atoi( tmp_mas[1].c_str() );
     s_Player->s_NickName = nickname;
+    s_Player->s_IsControlled = iscontrolled;
     return true;
 }
 

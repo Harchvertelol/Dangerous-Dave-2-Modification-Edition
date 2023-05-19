@@ -54,6 +54,66 @@ void NetClientCallback::handlePacket(SInPacket& packet, u32 channelID)
         packet >> str;
         workStr(str);
     }
+    else if(channelID == 2)
+    {
+        int packet_type;
+        packet >> packet_type;
+        if(s_NetClient->s_NetInfoStruct->s_goGameOnServer)
+        {
+            if(packet_type == PT_PLAYER_COORDS)
+            {
+                int pl_id, new_x, new_y;
+                packet >> pl_id;
+                if(pl_id == s_NetClient->s_MyID || s_NetClient->s_MyID == -1) return;
+                packet >> new_x;
+                packet >> new_y;
+                if(s_NetClient->s_GameClass->s_GameInfo->s_Players.find(pl_id) != s_NetClient->s_GameClass->s_GameInfo->s_Players.end())
+                {
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_CoordX = new_x;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_CoordY = new_y;
+                }
+            }
+            else if(packet_type == PT_PLAYER_CONNECTED)
+            {
+                int pl_id;
+                packet >> pl_id;
+                if(pl_id == s_NetClient->s_MyID || s_NetClient->s_MyID == -1) return;
+                string str;
+                packet >> str;
+                if(s_NetClient->s_GameClass->s_GameInfo->s_Players.find(pl_id) != s_NetClient->s_GameClass->s_GameInfo->s_Players.end()) delete s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id];
+                s_NetClient->s_GameClass->insertPlayer(pl_id, 1, "", false);
+                ParserInfoFile prs;
+                PostParsingStruct* dpps = prs.getParsedFromString(str, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+                s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->setListOfVariables(dpps, "player");
+                delete dpps;
+            }
+            else if(packet_type == PT_PLAYER_STATE)
+            {
+                int pl_id;
+                packet >> pl_id;
+                if(pl_id == s_NetClient->s_MyID || s_NetClient->s_MyID == -1) return;
+                string state, statebod;
+                int cartridges, numberoa, addnumberoa, oldnumberoa, shootnow;
+                packet >> state;
+                packet >> statebod;
+                packet >> cartridges;
+                packet >> numberoa;
+                packet >> addnumberoa;
+                packet >> oldnumberoa;
+                packet >> shootnow;
+                if(s_NetClient->s_GameClass->s_GameInfo->s_Players.find(pl_id) != s_NetClient->s_GameClass->s_GameInfo->s_Players.end())
+                {
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_State = state;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_StateBeforeOpenDoor = statebod;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_Cartridges = cartridges;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_NumberOfAction = numberoa;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_AdditionalNumberOfAction = addnumberoa;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_OldNumberOfAction = oldnumberoa;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_ShootNow = shootnow;
+                }
+            }
+        }
+    }
 }
 
 void NetClientCallback::workStr(string s)
@@ -96,16 +156,24 @@ void NetClientCallback::workStr(string s)
     }
     else if(pps->getValue("SystemInfo", "ID_MESSAGE") == FROM_SERVER_IDS_MESSAGES::FSIM_ListCreatures)
     {
-        s_NetClient->s_GameClass->setObjects(pps);
         int MyID = atoi( pps->getValue("SystemInfo", "MyID").c_str() );
-        //s_NetClient->s_GameClass->s_GameInfo->s_MyPlayer->mergePlayer(s_NetClient->s_GameClass->s_GameInfo->s_Players[MyID]);
-        s_NetClient->s_GameClass->s_GameInfo->s_MyPlayer->s_NickName = s_NetClient->s_GameClass->s_GameInfo->s_Players[MyID]->s_NickName;
-        s_NetClient->s_GameClass->removePlayer(MyID);
+        string params = pps->getValue("SystemInfo", "params");
+        bool notfullfornetmode = false;
+        if(params == "notfullfornetmode") notfullfornetmode = true;
+        if(notfullfornetmode) prs.writeParsedToFile(pps, "TECHNICAL.txt");
+        s_NetClient->s_GameClass->setObjects(pps, notfullfornetmode);
+        if(!notfullfornetmode)
+        {
+            //s_NetClient->s_GameClass->s_GameInfo->s_MyPlayer->mergePlayer(s_NetClient->s_GameClass->s_GameInfo->s_Players[MyID]);
+            s_NetClient->s_GameClass->s_GameInfo->s_MyPlayer->s_NickName = s_NetClient->s_GameClass->s_GameInfo->s_Players[MyID]->s_NickName;
+            s_NetClient->s_GameClass->removePlayer(MyID);
+        }
         s_NetClient->s_NetInfoStruct->s_WaitingGettingCreatureList = false;
+        s_NetClient->s_MyID = MyID;
     }
-    else if(pps->getValue("SystemInfo", "ID_MESSAGE") == FROM_SERVER_IDS_MESSAGES::FSIM_ConfirmGettingInfoFromClient)
+    else if(pps->getValue("SystemInfo", "ID_MESSAGE") == FROM_SERVER_IDS_MESSAGES::FSIM_ConfirmGettingFullInfoFromClient)
     {
-        s_NetClient->s_NetInfoStruct->s_WaitingConfirmGettingInfoFromClient = false;
+        s_NetClient->s_NetInfoStruct->s_WaitingConfirmGettingFullInfoFromClient = false;
     }
     else if(pps->getValue("SystemInfo", "ID_MESSAGE") == FROM_SERVER_IDS_MESSAGES::FSIM_ConfirmLeaveServer)
     {

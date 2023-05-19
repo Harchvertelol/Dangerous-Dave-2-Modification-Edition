@@ -40,11 +40,11 @@ void Server::sendOutPacket(SOutPacket& outpacket, const s32 playerId, const u32 
 	s_NetManager->sendOutPacket(outpacket, playerId, channelID);
 }
 
-void Server::sendOutPacketUnreliable(SOutPacket& outpacket, const s32 playerId, const u32 channelID, bool isUnsequenced)
+void Server::sendOutPacketUnreliable(SOutPacket& outpacket, const s32 playerId, const u32 channelID, bool isSequenced)
 {
     outpacket.compressPacket();
     outpacket.encryptPacket(STRING_CONSTANTS::SC_CRYPT_KEY_NET.c_str());
-	s_NetManager->sendOutPacketUnreliable(outpacket, playerId, channelID, isUnsequenced);
+	s_NetManager->sendOutPacketUnreliable(outpacket, playerId, channelID, isSequenced);
 }
 
 void Server::accept(const int playerId)
@@ -117,18 +117,20 @@ void Server::onCommand(const int playerId, const std::string& cmd)
         close(playerId);
         return;
     }
-    /*if(pps->getValue("SystemInfo", "ID_MESSAGE") == FROM_CLIENT_IDS_MESSAGES::FCIM_InfoFromClient && s_Clients[playerId].s_IdServerConnected != STRING_CONSTANTS::MISSING_ID_SERVER)
+    if(pps->getValue("SystemInfo", "ID_MESSAGE") == FROM_CLIENT_IDS_MESSAGES::FCIM_FullInfoFromClient && s_Clients[playerId].s_IdServerConnected != STRING_CONSTANTS::MISSING_ID_SERVER)
     {
         //s_MainServer->s_ListGameClass[s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->setKeys(pps, "Keys");
         string playernickname = s_MainServer->s_ListGameClass[s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_NickName;
         s_MainServer->s_ListGameClass[s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->setListOfVariables(pps, "player");
         s_MainServer->s_ListGameClass[s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_NickName = playernickname;
         string str_send = "";
-        str_send = addMainVariableString(str_send, "SystemInfo", SPLITTER_STR_VARIABLE);
-        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_ConfirmGettingInfoFromClient, SPLITTER_STR_VARIABLE);
-        str_send += "\n";
-        cl->send(str_send);
-    }*/
+        str_send = addMainVariableString(str_send, "SystemInfo", STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_ConfirmGettingFullInfoFromClient, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+
+        SOutPacket packet;
+        packet << str_send;
+        sendOutPacket(packet, playerId);
+    }
     if(pps->getValue("SystemInfo", "ID_MESSAGE") == FROM_CLIENT_IDS_MESSAGES::FCIM_Command)
     {
         doCommand(playerId, pps->getValue("command", "do"), pps);
@@ -156,7 +158,7 @@ void Server::doCommand(const int playerId, string command, PostParsingStruct* pp
         packet << str_send;
         sendOutPacket(packet, playerId);
     }
-    /*else if(command == SERVER_COMMANDS_FROM_CLIENT::SCFC_connectToServer)
+    else if(command == SERVER_COMMANDS_FROM_CLIENT::SCFC_connectToServer)
     {
         string id = pps->getValue("command", "id");
         ParserInfoFile prs;
@@ -168,10 +170,11 @@ void Server::doCommand(const int playerId, string command, PostParsingStruct* pp
         {
             return;
         }
-        if(!s_MainServer->s_ListGameClass[id]->insertPlayer(playerId, 1, s_Clients[playerId].s_UserInfo->getValue("login", "name")))
+        if(!s_MainServer->s_ListGameClass[id]->insertPlayer(playerId, 1, s_Clients[playerId].s_UserInfo->getValue("login", "name"), false))
         {
             return;
         }
+
         str_send = prs.convertPostParsingStructToString(s_MainServer->s_ListGameClass[id]->s_IniFile, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
         str_send = addMainVariableString(str_send, "SystemInfo", STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
         str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_MainIniFile, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
@@ -181,6 +184,14 @@ void Server::doCommand(const int playerId, string command, PostParsingStruct* pp
         sendOutPacket(packet, playerId);
 
         s_Clients[playerId].s_IdServerConnected = id;
+
+        PostParsingStruct* dpps = s_MainServer->s_ListGameClass[id]->s_GameInfo->s_Players[playerId]->getListOfVariables("player");
+        str_send = prs.convertPostParsingStructToString(dpps, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+        delete dpps;
+
+        packet.clearData();
+        packet << PT_PLAYER_CONNECTED << playerId << str_send;
+        sendOutPacketUnreliable(packet, -1, 2, true);
     }
     else if(command == SERVER_COMMANDS_FROM_CLIENT::SCFC_getCreaturesList)
     {
@@ -189,12 +200,16 @@ void Server::doCommand(const int playerId, string command, PostParsingStruct* pp
             return;
         }
         string id = pps->getValue("command", "id");
+        string params = pps->getValue("command", "params");
+        bool notfullfornetmode = false;
+        if(params == "notfullfornetmode") notfullfornetmode = true;
         ParserInfoFile prs;
-        PostParsingStruct* cpps = s_MainServer->s_ListGameClass[id]->getObjects();
+        PostParsingStruct* cpps = s_MainServer->s_ListGameClass[id]->getObjects(notfullfornetmode, s_MainServer->s_ListGameClass[id]->s_GameInfo->s_Players[playerId]);
         str_send = prs.convertPostParsingStructToString(cpps, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
         str_send = addMainVariableString(str_send, "SystemInfo", STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
         str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_ListCreatures, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
         str_send = addSecondaryVariableString(str_send, "MyID", itos(playerId), STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+        str_send = addSecondaryVariableString(str_send, "params", params, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
 
         SOutPacket packet;
         packet << str_send;
@@ -211,7 +226,7 @@ void Server::doCommand(const int playerId, string command, PostParsingStruct* pp
         SOutPacket packet;
         packet << str_send;
         sendOutPacket(packet, playerId);
-    }*/
+    }
 }
 
 void Server::close(const int playerId)
