@@ -31,6 +31,8 @@ All versions: <a href="https://github.com/Harchvertelol/Dangerous-Dave-2-Modific
 If you want, you can support this project. I have been doing it for more than 10 years, I will be grateful for any support. Thanks a lot anyway! Both a one-time donation (in the goals section) and a subscription are available. The list of donators will appear in each new release of the game.<br>
 Support link: <a href="https://boosty.to/harch/donate" target="_blank">support</a>
 
+**Thanks for support project:** Winda Winda
+
 # Control
 Arrow keys for run and aim; left ctrl - jump; left alt - shoot. This setting you can change in DD2.ini.
 
