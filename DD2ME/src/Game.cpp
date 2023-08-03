@@ -218,7 +218,18 @@ string Game::getNameForSaveFile()
 
 bool Game::changeLevel(int number, bool switchstate, bool playmusic)
 {
+    if(number < 1 || number > atoi( s_Data->s_LevelsInfo->getValue("info", "numberoflevels").c_str()  ) )
+    {
+        s_GameInfo->s_Stop = true;
+        return false;
+    }
+    s_GameInfo->s_CurrentLevel = number;
+
     // Save
+    s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "level", WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_CurrentLevel));
+    s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "score", WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_MyPlayer->s_CurrentPoints));
+    s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "health", WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_MyPlayer->s_CurrentHealth));
+    s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "lives", WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_CurrentLives));
     if(!s_GameInfo->s_MyPlayer->s_Values->isEmpty())
     {
         string save_folder = getNameForSaveFolder();
@@ -230,13 +241,8 @@ bool Game::changeLevel(int number, bool switchstate, bool playmusic)
         prs.writeParsedToFile(s_GameInfo->s_MyPlayer->s_Values, save_folder + "/" + save_file);
     }
     //...
+
     tgui::Timer::clearTimers();
-    if(number < 1 || number > atoi( s_Data->s_LevelsInfo->getValue("info", "numberoflevels").c_str()  ) )
-    {
-        s_GameInfo->s_Stop = true;
-        return false;
-    }
-    s_GameInfo->s_CurrentLevel = number;
     s_GameInfo->s_FactoryMonsters->clear();
     if(!s_Data->s_Level->loadLevel( s_Data->PathToLevelPack + WorkFunctions::ConvertFunctions::itos(number))) return false;
 

@@ -274,6 +274,12 @@ void StateManager::startState(int state)
         prs.setCryptKey(STRING_CONSTANTS::SC_CRYPT_KEY_SAVES);
         prs.setCryptedStatus(true);
         prs.getParsedFromFile(save_file, s_GameClass->s_GameInfo->s_MyPlayer->s_Values, false);
+
+        if(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->isExists("GS_game_info", "level")) s_GameClass->s_GameInfo->s_CurrentLevel = atoi(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->getValue("GS_game_info", "level").c_str());
+        if(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->isExists("GS_game_info", "score")) s_GameClass->s_GameInfo->s_MyPlayer->s_CurrentPoints = atoi(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->getValue("GS_game_info", "score").c_str());
+        if(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->isExists("GS_game_info", "health")) s_GameClass->s_GameInfo->s_MyPlayer->s_CurrentHealth = atoi(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->getValue("GS_game_info", "health").c_str());
+        if(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->isExists("GS_game_info", "lives")) s_GameClass->s_GameInfo->s_CurrentLives = atoi(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->getValue("GS_game_info", "lives").c_str());
+
         //...
         s_GameClass->s_Data->s_Sounds->stop("game_start");
         s_GameClass->s_Data->s_Music->play("main_menu");
