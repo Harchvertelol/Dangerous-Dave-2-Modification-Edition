@@ -72,7 +72,7 @@ void StateManager::s3(Event event)
         case Event::KeyPressed:
             if(event.key.code == s_GameClass->s_GameInfo->s_KeySkip)
             {
-                switchState(0);
+                switchState(2);
                 if(s_GameClass->s_GameInfo->s_CurrentLives <= 0) s_GameClass->s_GameInfo->doChangeLevelOnGameOver();
             }
             else if(event.key.code == s_GameClass->s_GameInfo->s_KeyConsole)
@@ -205,7 +205,7 @@ void StateManager::s2I()
 
 void StateManager::s3I()
 {
-    if(s_GameClass->s_NetClient->s_NetInfo->getValue("settings", "keysaction") == "false") return;
+    if(s_GameClass->s_NetClient->s_NetInfo->getValue("gamesettings", "keysaction") == "false") return;
 
     if(!sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeft))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyLeft = false;
     if(sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(s_GameClass->s_GameInfo->s_KeyLeft))) s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyLeft = true;
@@ -268,18 +268,21 @@ void StateManager::startState(int state)
     if(state == 1)
     {
         // Read save
-        string save_file = s_GameClass->getNameForSaveFolder();
-        save_file += "/" + s_GameClass->getNameForSaveFile();
-        IniParser::ParserInfoFile prs;
-        prs.setCryptKey(STRING_CONSTANTS::SC_CRYPT_KEY_SAVES);
-        prs.setCryptedStatus(true);
-        prs.getParsedFromFile(save_file, s_GameClass->s_GameInfo->s_MyPlayer->s_Values, false);
-
-        if(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->isExists("GS_game_info", "level")) s_GameClass->s_GameInfo->s_CurrentLevel = atoi(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->getValue("GS_game_info", "level").c_str());
-        if(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->isExists("GS_game_info", "score")) s_GameClass->s_GameInfo->s_MyPlayer->s_CurrentPoints = atoi(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->getValue("GS_game_info", "score").c_str());
-        if(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->isExists("GS_game_info", "health")) s_GameClass->s_GameInfo->s_MyPlayer->s_CurrentHealth = atoi(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->getValue("GS_game_info", "health").c_str());
-        if(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->isExists("GS_game_info", "lives")) s_GameClass->s_GameInfo->s_CurrentLives = atoi(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->getValue("GS_game_info", "lives").c_str());
-
+        if(s_GameClass->s_IniFile->getValue("settings", "saves") == "true")
+        {
+            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Loading saves...");
+            string save_file = s_GameClass->getNameForSaveFolder();
+            save_file += "/" + s_GameClass->getNameForSaveFile();
+            IniParser::ParserInfoFile prs;
+            prs.setCryptKey(STRING_CONSTANTS::SC_CRYPT_KEY_SAVES);
+            prs.setCryptedStatus(true);
+            prs.getParsedFromFile(save_file, s_GameClass->s_GameInfo->s_MyPlayer->s_Values, false);
+            if(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->isExists("GS_game_info", "level")) s_GameClass->s_GameInfo->s_CurrentLevel = atoi(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->getValue("GS_game_info", "level").c_str());
+            if(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->isExists("GS_game_info", "score")) s_GameClass->s_GameInfo->s_MyPlayer->s_CurrentPoints = atoi(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->getValue("GS_game_info", "score").c_str());
+            if(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->isExists("GS_game_info", "health")) s_GameClass->s_GameInfo->s_MyPlayer->s_CurrentHealth = atoi(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->getValue("GS_game_info", "health").c_str());
+            if(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->isExists("GS_game_info", "lives")) s_GameClass->s_GameInfo->s_CurrentLives = atoi(s_GameClass->s_GameInfo->s_MyPlayer->s_Values->getValue("GS_game_info", "lives").c_str());
+            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Saves loaded.");
+        }
         //...
         s_GameClass->s_Data->s_Sounds->stop("game_start");
         s_GameClass->s_Data->s_Music->play("main_menu");

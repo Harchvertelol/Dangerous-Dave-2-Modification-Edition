@@ -77,7 +77,7 @@ void CreaturePlayer::live(bool doKey)
     }
     if(s_State.find("jump") != string::npos && s_ShootNow) s_ShootNow = 0;
     string direction, typeexit, stateplayer;
-    int dir = 0, timeshoot = atoi( s_GameClass->s_IniFile->getValue("settings", "timeshoot").c_str() );
+    int dir = 0, timeshoot = atoi( s_GameClass->s_IniFile->getValue("gamesettings", "timeshoot").c_str() );
     int numberofdoors, numberofhandletiles, TileDoor, x, y;
     int SizeXLev = atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() );
     if(s_State.find("right") == 0) dir = 1;
@@ -133,15 +133,15 @@ void CreaturePlayer::live(bool doKey)
     {
         s_Acceleration++;
         y = s_CoordY;
-        if(s_Acceleration > atoi( s_GameClass->s_IniFile->getValue("settings","jumpstep").c_str() ) * atoi( s_GameClass->s_IniFile->getValue("settings","maxnumberoftilesforjump").c_str() ) )
+        if(s_Acceleration > atoi( s_GameClass->s_IniFile->getValue("gamesettings","jumpstep").c_str() ) * atoi( s_GameClass->s_IniFile->getValue("gamesettings","maxnumberoftilesforjump").c_str() ) )
         {
-            s_CoordY += 2*atoi( s_GameClass->s_IniFile->getValue("settings","gravity").c_str() );
-            correctionPhys(s_CoordY - 2*atoi( s_GameClass->s_IniFile->getValue("settings","gravity").c_str() ), 1);
+            s_CoordY += 2*atoi( s_GameClass->s_IniFile->getValue("gamesettings","gravity").c_str() );
+            correctionPhys(s_CoordY - 2*atoi( s_GameClass->s_IniFile->getValue("gamesettings","gravity").c_str() ), 1);
         }
         else
         {
-            s_CoordY += atoi( s_GameClass->s_IniFile->getValue("settings","gravity").c_str() );
-            correctionPhys(s_CoordY - atoi( s_GameClass->s_IniFile->getValue("settings","gravity").c_str() ), 1);
+            s_CoordY += atoi( s_GameClass->s_IniFile->getValue("gamesettings","gravity").c_str() );
+            correctionPhys(s_CoordY - atoi( s_GameClass->s_IniFile->getValue("gamesettings","gravity").c_str() ), 1);
         }
         if(roundNumber(y,16,1) == roundNumber(s_CoordY,16,-1)) testSmallPassage(y);
     }
@@ -149,16 +149,16 @@ void CreaturePlayer::live(bool doKey)
     {
         s_JumpStep--;
         y = s_CoordY;
-        s_CoordY -= atoi( s_GameClass->s_IniFile->getValue("settings","jumpspeed").c_str() );
-        bool cor = correctionPhys(s_CoordY + atoi( s_GameClass->s_IniFile->getValue("settings","jumpspeed").c_str() ), 1);
-        if(cor == true && s_FreezeJump == false && s_GameClass->s_IniFile->getValue("settings", "realisticphysics") == "true") s_JumpStep = 0;
+        s_CoordY -= atoi( s_GameClass->s_IniFile->getValue("gamesettings","jumpspeed").c_str() );
+        bool cor = correctionPhys(s_CoordY + atoi( s_GameClass->s_IniFile->getValue("gamesettings","jumpspeed").c_str() ), 1);
+        if(cor == true && s_FreezeJump == false && s_GameClass->s_IniFile->getValue("gamesettings", "realisticphysics") == "true") s_JumpStep = 0;
         else if(cor == true && s_FreezeJump == false) s_JumpStep--;
         direction = s_State.substr(0, s_State.find("jumpup"));
         if(s_JumpStep <= 0)
         {
             s_State = direction + "jumpstand";
-            if(s_GameClass->s_IniFile->getValue("settings", "realisticphysics") == "true") s_FreezeJump = atoi( s_GameClass->s_IniFile->getValue("settings","timefreezejump").c_str() );
-            else s_FreezeJump = atoi( s_GameClass->s_IniFile->getValue("settings","timefreezejump").c_str() );
+            if(s_GameClass->s_IniFile->getValue("gamesettings", "realisticphysics") == "true") s_FreezeJump = atoi( s_GameClass->s_IniFile->getValue("gamesettings","timefreezejump").c_str() );
+            else s_FreezeJump = atoi( s_GameClass->s_IniFile->getValue("gamesettings","timefreezejump").c_str() );
         }
         if(roundNumber(y,16,-1) == roundNumber(s_CoordY,16,1)) testSmallPassage(y);
     }
@@ -227,7 +227,7 @@ void CreaturePlayer::live(bool doKey)
     else if(s_State == "doorexit")
     {
         s_NumberOfAction = s_OldNumberOfAction;
-        if(s_GameClass->s_AnimationStep - s_OldAnSt > (unsigned int)atoi( s_GameClass->s_IniFile->getValue("settings", "timeexitdoor").c_str() ) )
+        if(s_GameClass->s_AnimationStep - s_OldAnSt > (unsigned int)atoi( s_GameClass->s_IniFile->getValue("gamesettings", "timeexitdoor").c_str() ) )
         {
             s_TimeDoorOpen--;
             s_NumberOfAction = s_OldNumberOfAction + 1;
@@ -310,7 +310,7 @@ void CreaturePlayer::live(bool doKey)
         {
             s_NumberOfAction--;
             s_AdditionalNumberOfAction++;
-            if(s_AdditionalNumberOfAction % atoi( s_GameClass->s_IniFile->getValue("settings", "rechargetime").c_str() ) == 0 )
+            if(s_AdditionalNumberOfAction % atoi( s_GameClass->s_IniFile->getValue("gamesettings", "rechargetime").c_str() ) == 0 )
             {
                 if(s_Cartridges + 1 != s_MaxCartridges) s_GameClass->s_Data->s_Sounds->play("ammo", false, false, false);
                 s_NumberOfAction++;
@@ -515,7 +515,7 @@ bool CreaturePlayer::testOpenDoor()
         s_CoordY = TileCoordY[0];
         s_State = "dooropen";
         s_HowDoorOpen = "bonus";
-        s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
+        s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("gamesettings","timedooropen").c_str() );
         return true;
     }
     else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] != 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
@@ -524,7 +524,7 @@ bool CreaturePlayer::testOpenDoor()
         s_CoordY = TileCoordY[1];
         s_State = "dooropen";
         s_HowDoorOpen = "bonus";
-        s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
+        s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("gamesettings","timedooropen").c_str() );
         return true;
     }
     else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
@@ -533,7 +533,7 @@ bool CreaturePlayer::testOpenDoor()
         s_CoordY = TileCoordY[0];
         s_State = "dooropen";
         s_HowDoorOpen = "exit";
-        s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
+        s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("gamesettings","timedooropen").c_str() );
         return true;
     }
     else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
@@ -542,7 +542,7 @@ bool CreaturePlayer::testOpenDoor()
         s_CoordY = TileCoordY[1];
         s_State = "dooropen";
         s_HowDoorOpen = "exit";
-        s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
+        s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("gamesettings","timedooropen").c_str() );
         return true;
     }
     else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
@@ -551,7 +551,7 @@ bool CreaturePlayer::testOpenDoor()
         s_CoordY = TileCoordY[0];
         s_State = "dooropen";
         s_HowDoorOpen = "exitlevel";
-        s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
+        s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("gamesettings","timedooropen").c_str() );
         return true;
     }
     else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
@@ -560,7 +560,7 @@ bool CreaturePlayer::testOpenDoor()
         s_CoordY = TileCoordY[1];
         s_State = "dooropen";
         s_HowDoorOpen = "exitlevel";
-        s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("settings","timedooropen").c_str() );
+        s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("gamesettings","timedooropen").c_str() );
         return true;
     }
     else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
@@ -806,7 +806,7 @@ bool CreaturePlayer::correctionPhys(int coord, int what)
 {
     bool yes = false;
     int frame = getFrame();
-    if(s_GameClass->s_IniFile->getValue("settings", "correctionphysics") == "false") return false;
+    if(s_GameClass->s_IniFile->getValue("gamesettings", "correctionphysics") == "false") return false;
     if( (what == 0 && s_CoordX == coord) || (what == 1 && s_CoordY == coord) ) return false;
     int SizeXPlayer = roundNumber(s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_XR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_XL, 16, -1);
     int SizeYPlayer = roundNumber(s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_YR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame].s_YL, 16, -1);
@@ -916,13 +916,13 @@ void CreaturePlayer::testShoot()
     double xc = double(coordfireX);
     double yc = double(coordfireY);
     int xcc = xc, ycc = yc;
-    int stepcalculateshoot = atoi( s_GameClass->s_IniFile->getValue("settings", "stepcalculateshoot").c_str() );
+    int stepcalculateshoot = atoi( s_GameClass->s_IniFile->getValue("gamesettings", "stepcalculateshoot").c_str() );
     for(double t = 0; xcc <= s_GameClass->s_DisplayStruct->s_GameResolutionX + s_ScreenCoordX + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
             xcc >= s_ScreenCoordX - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersX &&
             ycc <= s_GameClass->s_DisplayStruct->s_GameResolutionY + s_ScreenCoordY + 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY &&
             ycc >= s_ScreenCoordY - 16 * s_GameClass->s_GameInfo->s_CurrentDistanceLiveMonstersY; t += stepcalculateshoot)
     {
-        if(atoi( s_GameClass->s_IniFile->getValue("settings", "maxdistanceshoot").c_str() ) != -1 && t > atoi( s_GameClass->s_IniFile->getValue("settings", "maxdistanceshoot").c_str() )) break;
+        if(atoi( s_GameClass->s_IniFile->getValue("gamesettings", "maxdistanceshoot").c_str() ) != -1 && t > atoi( s_GameClass->s_IniFile->getValue("gamesettings", "maxdistanceshoot").c_str() )) break;
         double xc = double(coordfireX) + t*cos(anglefirerad);
         double yc = double(coordfireY) - t*sin(anglefirerad);
         xcc = xc;
@@ -1060,22 +1060,22 @@ void CreaturePlayer::calculateDoKey()
     {
         s_ControlShootPressed = true;
         if(s_State == "recharge") s_State = s_DopState;
-        s_ShootNow = atoi( s_GameClass->s_IniFile->getValue("settings", "timeshoot").c_str() );
+        s_ShootNow = atoi( s_GameClass->s_IniFile->getValue("gamesettings", "timeshoot").c_str() );
         if(testSetStates("rightrun rightstand")) s_State = "rightshoot";
         else if(testSetStates("leftrun leftstand")) s_State = "leftshoot";
-        else s_ShootNow = 2*atoi( s_GameClass->s_IniFile->getValue("settings", "timeshoot").c_str() )/3 + 1;
+        else s_ShootNow = 2*atoi( s_GameClass->s_IniFile->getValue("gamesettings", "timeshoot").c_str() )/3 + 1;
     }
     if( testSetStates("recharge rightjumpup leftjumpup leftupshoot rightupshoot leftdownshoot rightdownshoot rightrun leftrun rightstand leftstand recharge") && (s_KeysState->s_KeyJump) )
     {
-        if(s_State.find("jumpup") != string::npos && s_ControlJumpPressed == true && s_NumberOfTilesJump != atoi( s_GameClass->s_IniFile->getValue("settings", "maxnumberoftilesforjump").c_str() ) )
+        if(s_State.find("jumpup") != string::npos && s_ControlJumpPressed == true && s_NumberOfTilesJump != atoi( s_GameClass->s_IniFile->getValue("gamesettings", "maxnumberoftilesforjump").c_str() ) )
         {
-            s_JumpStep += atoi( s_GameClass->s_IniFile->getValue("settings", "jumpstep").c_str() );
+            s_JumpStep += atoi( s_GameClass->s_IniFile->getValue("gamesettings", "jumpstep").c_str() );
             s_NumberOfTilesJump++;
         }
         else if( (s_State == "recharge" || s_State.find("stand") != string::npos || s_State.find("run") != string::npos || s_State.find("upshoot") != string::npos) && s_ControlJumpPressed == false )
         {
             s_ControlJumpPressed = true;
-            s_JumpStep = atoi( s_GameClass->s_IniFile->getValue("settings", "jumpstep").c_str() );
+            s_JumpStep = atoi( s_GameClass->s_IniFile->getValue("gamesettings", "jumpstep").c_str() );
             s_NumberOfTilesJump = 1;
             if(s_State == "recharge") s_State = s_DopState;
             if(s_State.find("right") == 0) where = "right";

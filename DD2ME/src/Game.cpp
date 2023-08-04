@@ -21,7 +21,7 @@ namespace
     //static LRESULT CALLBACK MyWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     static void MyWndProc(Event event)
     {
-        if(ourInst->s_NetClient->s_NetInfo->getValue("settings", "keysaction") == "false") return;
+        if(ourInst->s_NetClient->s_NetInfo->getValue("gamesettings", "keysaction") == "false") return;
         switch(event.type)
         {
             case Event::Closed:
@@ -219,7 +219,7 @@ string Game::getNameForSaveFile()
 bool Game::changeLevel(int number, bool switchstate, bool playmusic)
 {
     tgui::Timer::clearTimers();
-    string write_level = WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_CurrentLevel);
+    string write_level = WorkFunctions::ConvertFunctions::itos(number);
     string write_cur_points = WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_MyPlayer->s_CurrentPoints);
     string write_cur_health = WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_MyPlayer->s_CurrentHealth);
     string write_cur_lives = WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_CurrentLives);
@@ -233,23 +233,28 @@ bool Game::changeLevel(int number, bool switchstate, bool playmusic)
     }
 
     // Save
-    if(write_level != "") s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "level", write_level);
-    else s_GameInfo->s_MyPlayer->s_Values->remove("GS_game_info", "level");
-    if(write_cur_points != "") s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "score", write_cur_points);
-    else s_GameInfo->s_MyPlayer->s_Values->remove("GS_game_info", "score");
-    if(write_cur_health != "") s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "health", write_cur_health);
-    else s_GameInfo->s_MyPlayer->s_Values->remove("GS_game_info", "health");
-    if(write_cur_lives != "") s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "lives", write_cur_lives);
-    else s_GameInfo->s_MyPlayer->s_Values->remove("GS_game_info", "lives");
-    if(!s_GameInfo->s_MyPlayer->s_Values->isEmpty())
+    if(s_IniFile->getValue("settings", "saves") == "true")
     {
-        string save_folder = getNameForSaveFolder();
-        string save_file = getNameForSaveFile();
-        IniParser::ParserInfoFile prs;
-        prs.setCryptKey(STRING_CONSTANTS::SC_CRYPT_KEY_SAVES);
-        prs.setCryptedStatus(true);
-        WorkFunctions::FileFunctions::createFolders(save_folder, "/");
-        prs.writeParsedToFile(s_GameInfo->s_MyPlayer->s_Values, save_folder + "/" + save_file);
+        s_Logger->registerEvent(EVENT_TYPE_INFO, "Saving...");
+        if(write_level != "") s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "level", write_level);
+        else s_GameInfo->s_MyPlayer->s_Values->remove("GS_game_info", "level");
+        if(write_cur_points != "") s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "score", write_cur_points);
+        else s_GameInfo->s_MyPlayer->s_Values->remove("GS_game_info", "score");
+        if(write_cur_health != "") s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "health", write_cur_health);
+        else s_GameInfo->s_MyPlayer->s_Values->remove("GS_game_info", "health");
+        if(write_cur_lives != "") s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "lives", write_cur_lives);
+        else s_GameInfo->s_MyPlayer->s_Values->remove("GS_game_info", "lives");
+        if(!s_GameInfo->s_MyPlayer->s_Values->isEmpty())
+        {
+            string save_folder = getNameForSaveFolder();
+            string save_file = getNameForSaveFile();
+            IniParser::ParserInfoFile prs;
+            prs.setCryptKey(STRING_CONSTANTS::SC_CRYPT_KEY_SAVES);
+            prs.setCryptedStatus(true);
+            WorkFunctions::FileFunctions::createFolders(save_folder, "/");
+            prs.writeParsedToFile(s_GameInfo->s_MyPlayer->s_Values, save_folder + "/" + save_file);
+        }
+        s_Logger->registerEvent(EVENT_TYPE_INFO, "Saved.");
     }
     //...
 
@@ -261,17 +266,17 @@ bool Game::changeLevel(int number, bool switchstate, bool playmusic)
 
     if(s_Data->s_Level->s_Params->isExists("options", "distancelivemonstersX")) s_GameInfo->s_CurrentDistanceLiveMonstersX = atoi(s_Data->s_Level->s_Params->getValue("options", "distancelivemonstersX").c_str());
     else if(s_Data->s_LevelsInfo->isExists("options", "distancelivemonstersX")) s_GameInfo->s_CurrentDistanceLiveMonstersX = atoi(s_Data->s_LevelsInfo->getValue("options", "distancelivemonstersX").c_str());
-    else s_GameInfo->s_CurrentDistanceLiveMonstersX = atoi( s_IniFile->getValue("settings", "distancelivemonstersX").c_str() );
+    else s_GameInfo->s_CurrentDistanceLiveMonstersX = atoi( s_IniFile->getValue("gamesettings", "distancelivemonstersX").c_str() );
     if(s_Data->s_Level->s_Params->isExists("options", "distancelivemonstersY")) s_GameInfo->s_CurrentDistanceLiveMonstersY = atoi(s_Data->s_Level->s_Params->getValue("options", "distancelivemonstersY").c_str());
     else if(s_Data->s_LevelsInfo->isExists("options", "distancelivemonstersY")) s_GameInfo->s_CurrentDistanceLiveMonstersY = atoi(s_Data->s_LevelsInfo->getValue("options", "distancelivemonstersY").c_str());
-    else s_GameInfo->s_CurrentDistanceLiveMonstersY = atoi( s_IniFile->getValue("settings", "distancelivemonstersY").c_str() );
+    else s_GameInfo->s_CurrentDistanceLiveMonstersY = atoi( s_IniFile->getValue("gamesettings", "distancelivemonstersY").c_str() );
 
     if(s_Data->s_Level->s_Params->isExists("options", "distanceactivatemonstersX")) s_GameInfo->s_CurrentDistanceActivateMonstersX = atoi(s_Data->s_Level->s_Params->getValue("options", "distanceactivatemonstersX").c_str());
     else if(s_Data->s_LevelsInfo->isExists("options", "distanceactivatemonstersX")) s_GameInfo->s_CurrentDistanceActivateMonstersX = atoi(s_Data->s_LevelsInfo->getValue("options", "distanceactivatemonstersX").c_str());
-    else s_GameInfo->s_CurrentDistanceActivateMonstersX = atoi( s_IniFile->getValue("settings", "distanceactivatemonstersX").c_str() );
+    else s_GameInfo->s_CurrentDistanceActivateMonstersX = atoi( s_IniFile->getValue("gamesettings", "distanceactivatemonstersX").c_str() );
     if(s_Data->s_Level->s_Params->isExists("options", "distanceactivatemonstersY")) s_GameInfo->s_CurrentDistanceActivateMonstersY = atoi(s_Data->s_Level->s_Params->getValue("options", "distanceactivatemonstersY").c_str());
     else if(s_Data->s_LevelsInfo->isExists("options", "distanceactivatemonstersY")) s_GameInfo->s_CurrentDistanceActivateMonstersY = atoi(s_Data->s_LevelsInfo->getValue("options", "distanceactivatemonstersY").c_str());
-    else s_GameInfo->s_CurrentDistanceActivateMonstersY = atoi( s_IniFile->getValue("settings", "distanceactivatemonstersY").c_str() );
+    else s_GameInfo->s_CurrentDistanceActivateMonstersY = atoi( s_IniFile->getValue("gamesettings", "distanceactivatemonstersY").c_str() );
 
     //...
     map<int, CreaturePlayer*>::iterator iter;

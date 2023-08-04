@@ -62,7 +62,7 @@ bool CreatureMonster::correctionPhys(int coord, int what, bool ladder)
     }
     bool yes = false;
     int frame = getFrame();
-    if(s_GameClass->s_IniFile->getValue("settings", "correctionphysics") == "false") return false;
+    if(s_GameClass->s_IniFile->getValue("gamesettings", "correctionphysics") == "false") return false;
     int SizeXMonster = roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[s_Number-1][s_State][frame].s_XR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[s_Number-1][s_State][frame].s_XL, 16, -1);
     int SizeYMonster = roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[s_Number-1][s_State][frame].s_YR, 16, 1) - roundNumber(s_GameClass->s_Data->s_Monsters->s_Collisions[s_Number-1][s_State][frame].s_YL, 16, -1);
     SizeXMonster = SizeXMonster/16 + 1;
