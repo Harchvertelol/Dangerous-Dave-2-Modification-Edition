@@ -218,18 +218,29 @@ string Game::getNameForSaveFile()
 
 bool Game::changeLevel(int number, bool switchstate, bool playmusic)
 {
+    tgui::Timer::clearTimers();
+    string write_level = WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_CurrentLevel);
+    string write_cur_points = WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_MyPlayer->s_CurrentPoints);
+    string write_cur_health = WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_MyPlayer->s_CurrentHealth);
+    string write_cur_lives = WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_CurrentLives);
     if(number < 1 || number > atoi( s_Data->s_LevelsInfo->getValue("info", "numberoflevels").c_str()  ) )
     {
         s_GameInfo->s_Stop = true;
-        return false;
+        write_level = "";
+        write_cur_points = "";
+        write_cur_health = "";
+        write_cur_lives = "";
     }
-    s_GameInfo->s_CurrentLevel = number;
 
     // Save
-    s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "level", WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_CurrentLevel));
-    s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "score", WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_MyPlayer->s_CurrentPoints));
-    s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "health", WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_MyPlayer->s_CurrentHealth));
-    s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "lives", WorkFunctions::ConvertFunctions::itos(s_GameInfo->s_CurrentLives));
+    if(write_level != "") s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "level", write_level);
+    else s_GameInfo->s_MyPlayer->s_Values->remove("GS_game_info", "level");
+    if(write_cur_points != "") s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "score", write_cur_points);
+    else s_GameInfo->s_MyPlayer->s_Values->remove("GS_game_info", "score");
+    if(write_cur_health != "") s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "health", write_cur_health);
+    else s_GameInfo->s_MyPlayer->s_Values->remove("GS_game_info", "health");
+    if(write_cur_lives != "") s_GameInfo->s_MyPlayer->s_Values->setValue("GS_game_info", "lives", write_cur_lives);
+    else s_GameInfo->s_MyPlayer->s_Values->remove("GS_game_info", "lives");
     if(!s_GameInfo->s_MyPlayer->s_Values->isEmpty())
     {
         string save_folder = getNameForSaveFolder();
@@ -242,7 +253,9 @@ bool Game::changeLevel(int number, bool switchstate, bool playmusic)
     }
     //...
 
-    tgui::Timer::clearTimers();
+    if(s_GameInfo->s_Stop) return false;
+
+    s_GameInfo->s_CurrentLevel = number;
     s_GameInfo->s_FactoryMonsters->clear();
     if(!s_Data->s_Level->loadLevel( s_Data->PathToLevelPack + WorkFunctions::ConvertFunctions::itos(number))) return false;
 

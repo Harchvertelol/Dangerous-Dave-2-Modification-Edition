@@ -97,6 +97,7 @@ PostParsingStruct* IniParser::ParserInfoFile::getParsedFromFile(string s_FileNam
     {
         if(NameMainVariable != "")
         {
+            if((*s_Variables)[NameMainVariable].empty()){} // Создаём элемент, если он не существует
             //FileInfo.getline(buf, FILE_READ_SIZE_STR);
             //str = buf;
             getline(FileInfo, str);
@@ -159,10 +160,13 @@ PostParsingStruct* IniParser::ParserInfoFile::getParsedFromString(string str_s, 
     {
         if(NameMainVariable != "")
         {
+            if((*s_Variables)[NameMainVariable].empty()){} // Создаём элемент, если он не существует
             i++;
             str = str_mas[i];
+            bool was_in_cycle = false;
             while(i < numberofstr && getNameMainVariable(str) == "")
             {
+                was_in_cycle = true;
                 NameSecondaryVariable = getNameSecondaryVariable(str);
                 ValueSecondaryVariable = getValueSecondaryVariable(str);
                 if(NameSecondaryVariable != "")
@@ -172,7 +176,7 @@ PostParsingStruct* IniParser::ParserInfoFile::getParsedFromString(string str_s, 
                 str = str_mas[i];
                 i++;
             }
-            i--;
+            if(was_in_cycle) i--;
         }
         else
         {
@@ -196,6 +200,7 @@ string IniParser::ParserInfoFile::convertPostParsingStructToString(PostParsingSt
         {
             str += iter1->first + "=" + iter1->second + splitter;
         }
+        str += splitter;
     }
     return str;
 }

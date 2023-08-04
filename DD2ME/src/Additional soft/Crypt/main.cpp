@@ -22,6 +22,19 @@ void cryptFile(string file, string key)
     cout << "File crypted: " << file << endl;
 }
 
+void deCryptFile(string file, string key)
+{
+    ParserInfoFile prs;
+    prs.setCryptKey(key);
+    prs.setCryptedStatus(true);
+    PostParsingStruct* pps = prs.getParsedFromFile(file);
+    WorkFunctions::FileFunctions::createFolders("result", ";");
+    prs.setCryptedStatus(false);
+    prs.writeParsedToFile(pps, "result/" + file);
+    delete pps;
+    cout << "File decrypted: " << file << endl;
+}
+
 int main()
 {
     string key = "12dfslgmjiowekjmfpowf;lksd;fl3";
