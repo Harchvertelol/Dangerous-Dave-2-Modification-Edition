@@ -59,7 +59,7 @@ void NetClient::sendOutPacketUnreliable(SOutPacket& outpacket, const s32 playerI
 {
     outpacket.compressPacket();
     outpacket.encryptPacket(STRING_CONSTANTS::SC_CRYPT_KEY_NET.c_str());
-	s_NetManager->sendOutPacketUnreliable(outpacket, playerId, channelID, isSequenced);
+	s_NetManager->sendOutPacketUnreliable(outpacket, playerId, channelID, !isSequenced);
 }
 
 bool NetClient::connect()
@@ -67,7 +67,7 @@ bool NetClient::connect()
     try
     {
         SNetParams snp;
-        snp.numberChannels = 2;
+        snp.numberChannels = NUMBER_CONSTANTS::NC_ENET_NUMBER_CHANNELS;
         snp.connectionTimeout = atoi( s_NetInfo->getValue("internet", "timeoutconnect").c_str() ) * 1000;
         snp.downBandwidth = atoi( s_NetInfo->getValue("internet", "downbandwidth").c_str() );
         snp.upBandwidth = atoi( s_NetInfo->getValue("internet", "upbandwidth").c_str() );

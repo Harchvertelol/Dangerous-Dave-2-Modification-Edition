@@ -71,7 +71,7 @@ void NetServerCallback::handlePacket(SInPacket& packet, u32 channelID)
                 s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_State = state;
                 s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_StateBeforeOpenDoor = statebod;
                 s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_Cartridges = cartridges;
-                s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_NumberOfAction = numberoa;
+                //s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_NumberOfAction = numberoa;
                 s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_AdditionalNumberOfAction = addnumberoa;
                 s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_OldNumberOfAction = oldnumberoa;
                 s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_ShootNow = shootnow;

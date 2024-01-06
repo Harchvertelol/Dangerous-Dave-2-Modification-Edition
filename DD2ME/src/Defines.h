@@ -37,6 +37,7 @@ namespace NUMBER_CONSTANTS
     const float NC_EPS = 0.0000001;
     const float NC_API_VERSION = 0.1;
     const float NC_LEVEL_FORMAT_VERSION = 0.1;
+    const int NC_ENET_NUMBER_CHANNELS = 3;
 }
 
 enum TILEMASK

@@ -95,6 +95,15 @@ void Gui::drawFPS()
         //s_GameClass->s_Window->draw(Label(s.str(), 0, k, 10), Brush(0, 0, 0));
         k += shift;
     }
+    if(s_GameClass->s_NetClient->s_NetManager)
+    {
+        s.str("");
+        s << "Ping: "<< s_GameClass->s_NetClient->s_NetManager->getPing() << endl;
+        txt.setString(s.str());
+        txt.setPosition(Vector2f(0, k));
+        s_GameClass->s_RenderTexture->draw(txt);
+        k += shift;
+    }
 }
 
 string Gui::getSecretsText()

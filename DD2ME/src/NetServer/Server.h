@@ -29,6 +29,8 @@ class Server
         void sendOutPacket(irr::net::SOutPacket& outpacket, const irr::s32 playerId = -1, const irr::u32 channelID = 0);
         void sendOutPacketUnreliable(irr::net::SOutPacket& outpacket, const irr::s32 playerId = -1, const irr::u32 channelID = 0, bool isSequenced = false);
         void tick();
+        //...
+        void sendCreaturesList(std::string gameclassid, std::string params, bool notfullfornetmode = false, int playerId = 0, bool IsUnreliable = false);
 };
 
 #endif // SERVER_H

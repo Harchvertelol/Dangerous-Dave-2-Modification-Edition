@@ -88,11 +88,11 @@ public:
 			std::cout << "Client " << playerId << " said " << message << ", ping: " << pingclient << ", channelID: " << channelID << std::endl;
 			if(numbrem + 1 != message)
             {
-                std::cout << "ERROR! LOST " << numbrem + 1 << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+                //std::cout << "ERROR! LOST " << numbrem + 1 << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
                 if(message < numbrem)
                 {
                     std::cout << "SEQUENCED!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" << std::endl;
-                    netManager->kickClient(playerId);
+                    //netManager->kickClient(playerId);
                 }
             }
 			numbrem = message;
@@ -175,6 +175,10 @@ int main()
             }
 			netManager->update(1);
 			net::SOutPacket packet;
+			packet << i << "sdklfjdslkjfskdljfklsdjfkldsjflkjsdlkfjklsdjfjsdlksdklfjdslkjfskdljfklsdjfkldsjflkjsdlkfjklsdjfjsdlksdklfjdslkjfskdljfklsdjfkldsjflkjsdlkfjklsdjfjsdlksdklfjdslkjfskdljfklsdjfkldsjflkjsdlkfjklsdjfjsdlksdklfjdslkjfskdljfklsdjfkldsjflkjsdlkfjklsdjfjsdlksdklfjdslkjfskdljfklsdjfkldsjflkjsdlkfjklsdjfjsdlk";
+			netManager->sendOutPacketUnreliable(packet, -1, 2, true);
+			++i;
+
 			packet << i << "sdklfjdslkjfskdljfklsdjfkldsjflkjsdlkfjklsdjfjsdlk";
 			netManager->sendOutPacketUnreliable(packet, -1, 2, true);
 			++i;

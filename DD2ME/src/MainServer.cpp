@@ -123,8 +123,8 @@ bool MainServer::load()
             gm->s_StateManager->switchState(3);
             gm->s_GameInfo->s_MyPlayer->s_CoordX = -1000;
             gm->s_GameInfo->s_MyPlayer->s_CoordY = -1000;
-            gm->s_GameInfo->s_ScreenCoordX = -1*atoi( gm->s_IniFile->getValue("video", "windowresolutionX").c_str() ) - atoi( gm->s_IniFile->getValue("settings", "distancelivemonstersX").c_str() ) - 1000;
-            gm->s_GameInfo->s_ScreenCoordY = -1*atoi( gm->s_IniFile->getValue("video", "windowresolutionY").c_str() ) - atoi( gm->s_IniFile->getValue("settings", "distancelivemonstersY").c_str() ) - 1000;
+            gm->s_GameInfo->s_ScreenCoordX = -1*atoi( gm->s_IniFile->getValue("video", "windowresolutionX").c_str() ) - atoi( gm->s_IniFile->getValue("gamesettings", "distancelivemonstersX").c_str() ) - 1000;
+            gm->s_GameInfo->s_ScreenCoordY = -1*atoi( gm->s_IniFile->getValue("video", "windowresolutionY").c_str() ) - atoi( gm->s_IniFile->getValue("gamesettings", "distancelivemonstersY").c_str() ) - 1000;
         }
     }
     return true;

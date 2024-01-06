@@ -106,7 +106,7 @@ void NetClientCallback::handlePacket(SInPacket& packet, u32 channelID)
                     s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_State = state;
                     s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_StateBeforeOpenDoor = statebod;
                     s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_Cartridges = cartridges;
-                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_NumberOfAction = numberoa;
+                    //s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_NumberOfAction = numberoa;
                     s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_AdditionalNumberOfAction = addnumberoa;
                     s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_OldNumberOfAction = oldnumberoa;
                     s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_ShootNow = shootnow;

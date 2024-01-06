@@ -44,7 +44,7 @@ void Server::sendOutPacketUnreliable(SOutPacket& outpacket, const s32 playerId, 
 {
     outpacket.compressPacket();
     outpacket.encryptPacket(STRING_CONSTANTS::SC_CRYPT_KEY_NET.c_str());
-	s_NetManager->sendOutPacketUnreliable(outpacket, playerId, channelID, isSequenced);
+	s_NetManager->sendOutPacketUnreliable(outpacket, playerId, channelID, !isSequenced);
 }
 
 void Server::accept(const int playerId)
@@ -203,17 +203,7 @@ void Server::doCommand(const int playerId, string command, PostParsingStruct* pp
         string params = pps->getValue("command", "params");
         bool notfullfornetmode = false;
         if(params == "notfullfornetmode") notfullfornetmode = true;
-        ParserInfoFile prs;
-        PostParsingStruct* cpps = s_MainServer->s_ListGameClass[id]->getObjects(notfullfornetmode, s_MainServer->s_ListGameClass[id]->s_GameInfo->s_Players[playerId]);
-        str_send = prs.convertPostParsingStructToString(cpps, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
-        str_send = addMainVariableString(str_send, "SystemInfo", STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
-        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_ListCreatures, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
-        str_send = addSecondaryVariableString(str_send, "MyID", itos(playerId), STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
-        str_send = addSecondaryVariableString(str_send, "params", params, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
-
-        SOutPacket packet;
-        packet << str_send;
-        sendOutPacket(packet, playerId);
+        sendCreaturesList(id, params, notfullfornetmode, playerId);
     }
     else if(command == SERVER_COMMANDS_FROM_CLIENT::SCFC_leaveServer)
     {
@@ -226,6 +216,46 @@ void Server::doCommand(const int playerId, string command, PostParsingStruct* pp
         SOutPacket packet;
         packet << str_send;
         sendOutPacket(packet, playerId);
+    }
+}
+
+void Server::sendCreaturesList(string gameclassid, string params, bool notfullfornetmode, int playerId, bool IsUnreliable)
+{
+    if(playerId != -1)
+    {
+        ParserInfoFile prs;
+        PostParsingStruct* cpps = s_MainServer->s_ListGameClass[gameclassid]->getObjects(notfullfornetmode, s_MainServer->s_ListGameClass[gameclassid]->s_GameInfo->s_Players[playerId]);
+        string str_send = prs.convertPostParsingStructToString(cpps, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+        str_send = addMainVariableString(str_send, "SystemInfo", STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_ListCreatures, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+        str_send = addSecondaryVariableString(str_send, "MyID", itos(playerId), STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+        str_send = addSecondaryVariableString(str_send, "params", params, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+
+        SOutPacket packet;
+        packet << str_send;
+        if(!IsUnreliable) sendOutPacket(packet, playerId);
+        else sendOutPacketUnreliable(packet, playerId);
+        delete cpps;
+    }
+    else
+    {
+        map<int, CreaturePlayer*>::iterator iter;
+        for(iter = s_MainServer->s_ListGameClass[gameclassid]->s_GameInfo->s_Players.begin(); iter != s_MainServer->s_ListGameClass[gameclassid]->s_GameInfo->s_Players.end(); iter++)
+        {
+            ParserInfoFile prs;
+            PostParsingStruct* cpps = s_MainServer->s_ListGameClass[gameclassid]->getObjects(notfullfornetmode, iter->second);
+            string str_send = prs.convertPostParsingStructToString(cpps, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+            str_send = addMainVariableString(str_send, "SystemInfo", STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+            str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_ListCreatures, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+            str_send = addSecondaryVariableString(str_send, "MyID", itos(iter->first), STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+            str_send = addSecondaryVariableString(str_send, "params", params, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+
+            SOutPacket packet;
+            packet << str_send;
+            if(!IsUnreliable) sendOutPacket(packet, iter->first);
+            else sendOutPacketUnreliable(packet, iter->first, 0, true);
+            delete cpps;
+        }
     }
 }
 
@@ -250,20 +280,33 @@ void Server::run(int port)
 
 	SNetParams snp;
 
-	snp.numberChannels = 2;
+	snp.numberChannels = NUMBER_CONSTANTS::NC_ENET_NUMBER_CHANNELS;
 	snp.maxClients = atoi( s_MainServer->s_ListGameClass.begin()->second->s_NetClient->s_NetInfo->getValue("server", "maxclients").c_str() );
 	snp.downBandwidth = atoi( s_MainServer->s_ListGameClass.begin()->second->s_NetClient->s_NetInfo->getValue("internet", "downbandwidth").c_str() );
 	snp.upBandwidth = atoi( s_MainServer->s_ListGameClass.begin()->second->s_NetClient->s_NetInfo->getValue("internet", "upbandwidth").c_str() );
+
+	int timer_interval_send_creatures_list = atoi( s_MainServer->s_ListGameClass.begin()->second->s_NetClient->s_NetInfo->getValue("server", "intervalsendcreatureslist").c_str() );
 
 	s_NetManager = createIrrNetServer(0, port, snp);
     //s_NetManager->setVerbose(true);
     NetServerCallback* serverCallback = new NetServerCallback(this);
     s_NetManager->setNetCallback(serverCallback);
 
+    int timer_send_creatures_list = clock();
     while(s_NetManager->getConnectionStatus() != EICS_FAILED)
     {
-        s_NetManager->update(5);
+        s_NetManager->update(10);
         tick();
+        if(clock() - timer_send_creatures_list > timer_interval_send_creatures_list)
+        {
+            map<string, Game*>::iterator iter, iter2;
+            for (iter = s_MainServer->s_ListGameClass.begin(), iter2 = s_MainServer->s_ListGameClass.end(); iter != iter2;)
+            {
+                sendCreaturesList(iter->first, "notfullfornetmode", true, -1, true);
+                iter++;
+            }
+            timer_send_creatures_list = clock();
+        }
     }
 }
 

@@ -664,30 +664,30 @@ PostParsingStruct* Game::getObjects(bool notfullfornetmode, CreaturePlayer* cr_p
             cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyShoot", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyShoot) );
             cpps->setValue("KeysState_player_" + WorkFunctions::ConvertFunctions::itos(playerid), "keyJump", WorkFunctions::ConvertFunctions::itos( (int)iter1->second->s_KeysState->s_KeyJump) );
         }
-    }
-    int size_x_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeX").c_str() );
-    int size_y_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeY").c_str() );
-    for(int i = 0; i < size_x_level*size_y_level; i++)
-    {
-        if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i] != 0)
+        int size_x_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeX").c_str() );
+        int size_y_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeY").c_str() );
+        for(int i = 0; i < size_x_level*size_y_level; i++)
         {
-            cpps->setValue("bonuse_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i]));
-            cpps->setValue("bonuse_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
-        }
-        if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][i] != 0)
-        {
-            cpps->setValue("bonusdoor_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][i]));
-            cpps->setValue("bonusdoor_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
-        }
-        if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][i] != 0)
-        {
-            cpps->setValue("door_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][i]));
-            cpps->setValue("door_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
-        }
-        if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][i] != 0)
-        {
-            cpps->setValue("exitleveldoor_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][i]));
-            cpps->setValue("exitleveldoor_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
+            if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i] != 0)
+            {
+                cpps->setValue("bonuse_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i]));
+                cpps->setValue("bonuse_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
+            }
+            if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][i] != 0)
+            {
+                cpps->setValue("bonusdoor_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][i]));
+                cpps->setValue("bonusdoor_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
+            }
+            if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][i] != 0)
+            {
+                cpps->setValue("door_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][i]));
+                cpps->setValue("door_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
+            }
+            if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][i] != 0)
+            {
+                cpps->setValue("exitleveldoor_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][i]));
+                cpps->setValue("exitleveldoor_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
+            }
         }
     }
     return cpps;
@@ -718,15 +718,15 @@ void Game::setObjects(PostParsingStruct* cpps, bool notfullfornetmode)
             }
             else ++iter_;
         }
-    }
-    int size_x_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeX").c_str() );
-    int size_y_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeY").c_str() );
-    for(int i = 0; i < size_x_level*size_y_level; i++)
-    {
-        s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i] = 0;
-        s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][i] = 0;
-        s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][i] = 0;
-        s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][i] = 0;
+        int size_x_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeX").c_str() );
+        int size_y_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeY").c_str() );
+        for(int i = 0; i < size_x_level*size_y_level; i++)
+        {
+            s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i] = 0;
+            s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][i] = 0;
+            s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][i] = 0;
+            s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][i] = 0;
+        }
     }
     string monsterid = "";
     map<string, map<string, string> >::iterator iter;
@@ -753,7 +753,7 @@ void Game::setObjects(PostParsingStruct* cpps, bool notfullfornetmode)
         else if(iter->first.find("AIMonstersValues_") == 0)
         {
             string blockname = iter->first.substr(17);
-            cout << "BLOCKNAME: " << blockname << endl;
+            //cout << "BLOCKNAME: " << blockname << endl;
             map<string, string>::iterator iter1;
             for(iter1 = cpps->getMapVariables()[iter->first].begin(); iter1 != cpps->getMapVariables()[iter->first].end(); iter1++)
                 s_GameInfo->s_FactoryMonsters->s_AIMonstersValues->setValue(blockname, iter1->first, iter1->second);
@@ -773,25 +773,25 @@ void Game::setObjects(PostParsingStruct* cpps, bool notfullfornetmode)
             s_GameInfo->s_Players[playerkey]->s_KeysState->s_KeyShoot = (bool)atoi( cpps->getValue("KeysState_player_" + playerid, "keyShoot").c_str() );
             s_GameInfo->s_Players[playerkey]->s_KeysState->s_KeyJump = (bool)atoi( cpps->getValue("KeysState_player_" + playerid, "keyJump").c_str() );
         }
-        else if(iter->first.find("bonuse_") == 0)
+        else if(iter->first.find("bonuse_") == 0 && !notfullfornetmode)
         {
             string bonuseid = cpps->getValue(iter->first, "id");
             int key = atoi( bonuseid.c_str() );
             s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
         }
-        else if(iter->first.find("bonusdoor_") == 0)
+        else if(iter->first.find("bonusdoor_") == 0 && !notfullfornetmode)
         {
             string bonuseid = cpps->getValue(iter->first, "id");
             int key = atoi( bonuseid.c_str() );
             s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
         }
-        else if(iter->first.find("door_") == 0)
+        else if(iter->first.find("door_") == 0 && !notfullfornetmode)
         {
             string bonuseid = cpps->getValue(iter->first, "id");
             int key = atoi( bonuseid.c_str() );
             s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
         }
-        else if(iter->first.find("exitleveldoor_") == 0)
+        else if(iter->first.find("exitleveldoor_") == 0 && !notfullfornetmode)
         {
             string bonuseid = cpps->getValue(iter->first, "id");
             int key = atoi( bonuseid.c_str() );
