@@ -72,26 +72,30 @@ string WorkFunctions::ParserFunctions::getValueSecondaryVariable(string str)
 
 int WorkFunctions::ParserFunctions::splitMass(map<int,int>* mas, int size, int point, string str, string splitter)
 {
-    while(str.find(splitter) != string::npos)
+    int old_point = point;
+    while(str.find(splitter) != string::npos && !(size > 0 && point == old_point + size - 1) )
     {
         (*mas)[point] = atoi( str.substr(0, str.find(splitter)).c_str() );
         str = str.substr(str.find(splitter) + splitter.size());
         point++;
     }
-    (*mas)[point] = atoi( str.substr(0, str.find(splitter)).c_str() );
+    //(*mas)[point] = atoi( str.substr(0, str.find(splitter)).c_str() );
+    (*mas)[point] = atoi( str.c_str() );
     point++;
     return point;
 }
 
 int WorkFunctions::ParserFunctions::splitMassString(map<int, string>* mas, int size, int point, string str, string splitter)
 {
-    while(str.find(splitter) != string::npos)
+    int old_point = point;
+    while(str.find(splitter) != string::npos && !(size > 0 && point == old_point + size - 1) )
     {
         (*mas)[point] = str.substr(0, str.find(splitter));
         str = str.substr(str.find(splitter) + splitter.size());
         point++;
     }
-    (*mas)[point] = str.substr(0, str.find(splitter));
+    //(*mas)[point] = str.substr(0, str.find(splitter));
+    (*mas)[point] = str;
     point++;
     return point;
 }

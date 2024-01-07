@@ -551,6 +551,7 @@ GameService variables. Variables starting with GS_:
 		GS_no_points - if it is true, then after the death of the monster, no points are given. Useful if it's part of the boss.
 		GS_type - standard or boss. Overrides the standard type.
 	Level format:
+		It is forbidden to use the symbol ";" in the values and names of variables of monsters and tiles, otherwise the loading will fail.
 		GS_lives - the number of lives of the installed monster. It can be read from the intelligence file, but the change will do nothing. Use the setNumberOfLives (id, lives) function to change the life of the monster from the intel file.
 			Example: 1=6;176;480;{super=false;GS_lives=6;GS_type=standard;};
 			Here the monster will have 6 lives, it will not be the boss (although in the original number 6 is of the boss type), and the super variable can be read with getMonsterValue() (it will be equals "false")

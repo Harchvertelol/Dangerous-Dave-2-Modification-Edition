@@ -136,6 +136,16 @@ void IniParser::ParserInfoFile::addParsedFromString(string str_s, string splitte
     getParsedFromString(str_s, splitter, prs);
 }
 
+void IniParser::ParserInfoFile::addParsedFromPostParsingStruct(PostParsingStruct* pps_main, PostParsingStruct* pps_add)
+{
+    map<string, map<string, string> >::iterator iter;
+    for(iter = pps_add->getMapVariables().begin(); iter != pps_add->getMapVariables().end(); iter++)
+    {
+        map<string, string>::iterator iter1;
+        for(iter1 = iter->second.begin(); iter1 != iter->second.end(); iter1++) pps_main->setValue(iter->first, iter1->first, iter1->second);
+    }
+}
+
 PostParsingStruct* IniParser::ParserInfoFile::getParsedFromString(string str_s, string splitter, PostParsingStruct* prs, bool fixbrbn)
 {
     if(str_s.find("cr") == 0 && isCrypted())

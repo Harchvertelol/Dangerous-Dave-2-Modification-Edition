@@ -81,7 +81,8 @@ Game::Game():
     s_TechnicalFPSMaximal(0),
     s_TechnicalFPSMinimal(MAXIMAL_UNSIGNED_NUMBER),
     s_TechnicalFPSCalc(0),
-    s_TimeStartTechnicalFPS(0)
+    s_TimeStartTechnicalFPS(0),
+    s_AIWasRunned(false)
 {
     s_RenderTexture = new RenderTexture;
     s_GameInfo = new GameInfo(this);
@@ -523,6 +524,7 @@ void Game::onTimer(unsigned int timer_id)
     {
         if(s_GameInfo->s_GameState == 3 && s_GameInfo->s_Stop == false)
         {
+            s_AIWasRunned = true;
             #if defined(DEBUG) | defined(_DEBUG) | defined(NDEBUG)
                 s_Logger->registerEvent(EVENT_TYPE_DEBUG_INFO, "Timer AI Run Step was ticked.");
             #endif

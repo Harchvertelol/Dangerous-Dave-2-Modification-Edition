@@ -112,6 +112,43 @@ void NetClientCallback::handlePacket(SInPacket& packet, u32 channelID)
                     s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_ShootNow = shootnow;
                 }
             }
+            else if(packet_type == PT_PLAYER_KEYS_STATE)
+            {
+                int pl_id;
+                packet >> pl_id;
+                if(pl_id == s_NetClient->s_MyID || s_NetClient->s_MyID == -1) return;
+
+                if(s_NetClient->s_GameClass->s_GameInfo->s_Players.find(pl_id) != s_NetClient->s_GameClass->s_GameInfo->s_Players.end())
+                {
+                    int key_down, key_jump, key_left, key_leftdown, key_leftup, key_right, key_rightdown, key_rightup, key_shoot, key_up, ctrl_jmp_prs, ctrl_sht_prs;
+
+                    packet >> key_down;
+                    packet >> key_jump;
+                    packet >> key_left;
+                    packet >> key_leftdown;
+                    packet >> key_leftup;
+                    packet >> key_right;
+                    packet >> key_rightdown;
+                    packet >> key_rightup;
+                    packet >> key_shoot;
+                    packet >> key_up;
+                    packet >> ctrl_jmp_prs;
+                    packet >> ctrl_sht_prs;
+
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_KeysState->s_KeyDown = (bool)key_down;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_KeysState->s_KeyJump = (bool)key_jump;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_KeysState->s_KeyLeft = (bool)key_left;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_KeysState->s_KeyLeftDown = (bool)key_leftdown;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_KeysState->s_KeyLeftUp = (bool)key_leftup;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_KeysState->s_KeyRight = (bool)key_right;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_KeysState->s_KeyRightDown = (bool)key_rightdown;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_KeysState->s_KeyRightUp = (bool)key_rightup;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_KeysState->s_KeyShoot = (bool)key_shoot;
+                    s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_KeysState->s_KeyUp = (bool)key_up;
+                    //s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_ControlJumpPressed = (bool)ctrl_jmp_prs;
+                    //s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_ControlShootPressed = (bool)ctrl_sht_prs;
+                }
+            }
         }
     }
 }
@@ -148,8 +185,11 @@ void NetClientCallback::workStr(string s)
     }
     else if(pps->getValue("SystemInfo", "ID_MESSAGE") == FROM_SERVER_IDS_MESSAGES::FSIM_MainIniFile)
     {
-        if(s_NetClient->s_GameClass->s_IniFile != 0) delete s_NetClient->s_GameClass->s_IniFile;
-        s_NetClient->s_GameClass->s_IniFile = pps;
+        /*if(s_NetClient->s_GameClass->s_IniFile != 0) delete s_NetClient->s_GameClass->s_IniFile;
+        s_NetClient->s_GameClass->s_IniFile = pps;*/
+        pps->remove("SystemInfo");
+        prs.addParsedFromPostParsingStruct(s_NetClient->s_GameClass->s_IniFile, pps);
+        delete pps;
         s_NetClient->s_NetInfoStruct->s_SuperSleep_1 = false;
         s_NetClient->s_NetInfoStruct->s_Sleep_4 = false;
         return;

@@ -38,6 +38,11 @@ namespace IniParser
             \return Возвращает указатель на PostParsingStruct. Он равен NULL, если обработка прошла неудачно.
             */
             void addParsedFromString(std::string str_s, std::string splitter, PostParsingStruct* prs);
+            //! Добавление результата обработки из PostParsingStruct.
+            /*! \param pps_main Указатель на PostParsingStruct, куда добавляются данные.
+            \param pps_add Указатель на PostParsingStruct, откуда берутся данные.
+            */
+            void addParsedFromPostParsingStruct(PostParsingStruct* pps_main, PostParsingStruct* pps_add);
             //! Получение результата обработки из строки.
             /*! \param str Строка, которую надо обработать.
             \param splitter Разделитель в строке вместо переноса на новую строку.

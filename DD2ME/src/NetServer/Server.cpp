@@ -175,7 +175,15 @@ void Server::doCommand(const int playerId, string command, PostParsingStruct* pp
             return;
         }
 
-        str_send = prs.convertPostParsingStructToString(s_MainServer->s_ListGameClass[id]->s_IniFile, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+        PostParsingStruct pps_tmp;
+        prs.addParsedFromPostParsingStruct(&pps_tmp, s_MainServer->s_ListGameClass[id]->s_IniFile);
+        pps_tmp.remove("video");
+        pps_tmp.remove("audio");
+        pps_tmp.remove("settings");
+        pps_tmp.remove("keys");
+        pps_tmp.remove("loggers");
+        pps_tmp.remove("FPS");
+        str_send = prs.convertPostParsingStructToString(&pps_tmp, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
         str_send = addMainVariableString(str_send, "SystemInfo", STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
         str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_MainIniFile, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
 
@@ -285,27 +293,26 @@ void Server::run(int port)
 	snp.downBandwidth = atoi( s_MainServer->s_ListGameClass.begin()->second->s_NetClient->s_NetInfo->getValue("internet", "downbandwidth").c_str() );
 	snp.upBandwidth = atoi( s_MainServer->s_ListGameClass.begin()->second->s_NetClient->s_NetInfo->getValue("internet", "upbandwidth").c_str() );
 
-	int timer_interval_send_creatures_list = atoi( s_MainServer->s_ListGameClass.begin()->second->s_NetClient->s_NetInfo->getValue("server", "intervalsendcreatureslist").c_str() );
-
 	s_NetManager = createIrrNetServer(0, port, snp);
     //s_NetManager->setVerbose(true);
     NetServerCallback* serverCallback = new NetServerCallback(this);
     s_NetManager->setNetCallback(serverCallback);
 
-    int timer_send_creatures_list = clock();
+    int sleep_tmp = atoi( s_MainServer->s_ListGameClass.begin()->second->s_NetClient->s_NetInfo->getValue("internet", "sleepfornetwork").c_str() );
+
     while(s_NetManager->getConnectionStatus() != EICS_FAILED)
     {
-        s_NetManager->update(10);
+        s_NetManager->update(sleep_tmp);
         tick();
-        if(clock() - timer_send_creatures_list > timer_interval_send_creatures_list)
+        map<string, Game*>::iterator iter, iter2;
+        for (iter = s_MainServer->s_ListGameClass.begin(), iter2 = s_MainServer->s_ListGameClass.end(); iter != iter2;)
         {
-            map<string, Game*>::iterator iter, iter2;
-            for (iter = s_MainServer->s_ListGameClass.begin(), iter2 = s_MainServer->s_ListGameClass.end(); iter != iter2;)
+            if(iter->second->s_AIWasRunned)
             {
                 sendCreaturesList(iter->first, "notfullfornetmode", true, -1, true);
-                iter++;
+                iter->second->s_AIWasRunned = false;
             }
-            timer_send_creatures_list = clock();
+            iter++;
         }
     }
 }

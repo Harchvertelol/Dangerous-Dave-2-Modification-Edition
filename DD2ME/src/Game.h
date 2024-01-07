@@ -52,6 +52,9 @@ class Game
         unsigned int s_TechnicalFPSMinimal;
         unsigned int s_TechnicalFPSCalc;
         time_t s_TimeStartTechnicalFPS;
+        // Flags
+        bool s_AIWasRunned;
+        //...
         void calculateGameDrawFPS();
         unsigned int getGameDrawFPS();
         void calculateTechnicalFPS();

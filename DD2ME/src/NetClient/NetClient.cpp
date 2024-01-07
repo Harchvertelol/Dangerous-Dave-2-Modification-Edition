@@ -247,6 +247,13 @@ void NetClient::sendInfoFromClient()
                     s_GameClass->s_GameInfo->s_MyPlayer->s_NumberOfAction << s_GameClass->s_GameInfo->s_MyPlayer->s_AdditionalNumberOfAction << s_GameClass->s_GameInfo->s_MyPlayer->s_OldNumberOfAction << s_GameClass->s_GameInfo->s_MyPlayer->s_ShootNow;
     sendOutPacketUnreliable(packet, -1, 2, true);
     packet.clearData();
+
+    packet << PT_PLAYER_KEYS_STATE << s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyDown << s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyJump << s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyLeft <<
+                    s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyLeftDown << s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyLeftUp << s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyRight <<
+                    s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyRightDown << s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyRightUp << s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyShoot <<
+                    s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyUp << s_GameClass->s_GameInfo->s_MyPlayer->s_ControlJumpPressed << s_GameClass->s_GameInfo->s_MyPlayer->s_ControlShootPressed;
+    sendOutPacketUnreliable(packet, -1, 2, true);
+    packet.clearData();
 }
 
 void NetClient::leaveServer()

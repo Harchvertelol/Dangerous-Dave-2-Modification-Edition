@@ -49,11 +49,11 @@ void NetServerCallback::handlePacket(SInPacket& packet, u32 channelID)
             {
                 s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_CoordX = new_x;
                 s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_CoordY = new_y;
-            }
 
-            SOutPacket packet;
-            packet << PT_PLAYER_COORDS << playerId << new_x << new_y;
-            s_Server->sendOutPacketUnreliable(packet, -1, 2, true);
+                SOutPacket packetOut;
+                packetOut << PT_PLAYER_COORDS << playerId << new_x << new_y;
+                s_Server->sendOutPacketUnreliable(packetOut, -1, 2, true);
+            }
         }
         else if(packet_type == PT_PLAYER_STATE)
         {
@@ -76,11 +76,47 @@ void NetServerCallback::handlePacket(SInPacket& packet, u32 channelID)
                 s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_OldNumberOfAction = oldnumberoa;
                 s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_ShootNow = shootnow;
 
+                SOutPacket packetOut;
+                packetOut << PT_PLAYER_STATE << playerId << state << statebod << cartridges << numberoa << addnumberoa << oldnumberoa << shootnow;
+                s_Server->sendOutPacketUnreliable(packetOut, -1, 2, true);
             }
+        }
+        else if(packet_type == PT_PLAYER_KEYS_STATE)
+        {
+            if(s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players.find(playerId) != s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players.end())
+            {
+                int key_down, key_jump, key_left, key_leftdown, key_leftup, key_right, key_rightdown, key_rightup, key_shoot, key_up, ctrl_jmp_prs, ctrl_sht_prs;
 
-            SOutPacket packet;
-            packet << PT_PLAYER_STATE << playerId << state << statebod << cartridges << numberoa << addnumberoa << oldnumberoa << shootnow;
-            s_Server->sendOutPacketUnreliable(packet, -1, 2, true);
+                packet >> key_down;
+                packet >> key_jump;
+                packet >> key_left;
+                packet >> key_leftdown;
+                packet >> key_leftup;
+                packet >> key_right;
+                packet >> key_rightdown;
+                packet >> key_rightup;
+                packet >> key_shoot;
+                packet >> key_up;
+                packet >> ctrl_jmp_prs;
+                packet >> ctrl_sht_prs;
+
+                s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_KeysState->s_KeyDown = (bool)key_down;
+                s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_KeysState->s_KeyJump = (bool)key_jump;
+                s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_KeysState->s_KeyLeft = (bool)key_left;
+                s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_KeysState->s_KeyLeftDown = (bool)key_leftdown;
+                s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_KeysState->s_KeyLeftUp = (bool)key_leftup;
+                s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_KeysState->s_KeyRight = (bool)key_right;
+                s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_KeysState->s_KeyRightDown = (bool)key_rightdown;
+                s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_KeysState->s_KeyRightUp = (bool)key_rightup;
+                s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_KeysState->s_KeyShoot = (bool)key_shoot;
+                s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_KeysState->s_KeyUp = (bool)key_up;
+                s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_ControlJumpPressed = (bool)ctrl_jmp_prs;
+                s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_GameInfo->s_Players[playerId]->s_ControlShootPressed = (bool)ctrl_sht_prs;
+
+                SOutPacket packetOut;
+                packetOut << PT_PLAYER_KEYS_STATE << playerId << key_down << key_jump << key_left << key_leftdown << key_leftup << key_right << key_rightdown << key_rightup << key_shoot << key_up << ctrl_jmp_prs << ctrl_sht_prs;
+                s_Server->sendOutPacketUnreliable(packetOut, -1, 2, true);
+            }
         }
     }
 }

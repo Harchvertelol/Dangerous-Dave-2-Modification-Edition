@@ -11,7 +11,7 @@ enum WORK_CONSTANTS
 
 namespace STRING_CONSTANTS
 {
-    const std::string SPLITTER_STR_VARIABLE = ";";
+    const std::string SPLITTER_STR_VARIABLE = "\n";
     const std::string MISSING_ID_SERVER = "-1";
     const std::string SC_TITLE_WINDOW = "DD2 Remake: ME v0.9 pre-beta";
     const std::string SC_GAME_VERSION_DISPLAY = "pre-beta v0.9";

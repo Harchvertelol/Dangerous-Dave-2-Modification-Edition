@@ -152,15 +152,14 @@ int main(int argc, char** argv)
             cout << "Objects list was recieved." << endl;
             int sleep_tmp = atoi( nc->s_NetInfo->getValue("internet", "sleepfornetwork").c_str() );
             nc->s_NetInfoStruct->s_goGameOnServer = true;
-            int ttt = clock();
             while(nc->s_NetInfoStruct->s_goGameOnServer)
             {
                 //if(nc->s_NetInfoStruct->s_WaitingGettingCreatureList == false) nc->getCreaturesList(true);
                 //if(nc->s_NetInfoStruct->s_WaitingConfirmGettingFullInfoFromClient == false) nc->sendFullInfoFromClient();
-                //if(clock() - ttt > 20)
+                if(gm->s_AIWasRunned)
                 {
                     nc->sendInfoFromClient();
-                    ttt = clock();
+                    gm->s_AIWasRunned = false;
                 }
                 gm->processAllEvents( atoi( nc->s_NetInfo->getValue("internet", "maxnumberofeventsatatime").c_str() ) );
                 gm->s_NetClient->s_NetManager->update(sleep_tmp);
