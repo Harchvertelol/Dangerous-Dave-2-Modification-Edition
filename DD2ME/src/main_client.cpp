@@ -59,6 +59,7 @@ int main(int argc, char** argv)
         return 0;
     }
 
+    gm->s_GameInfo->s_MyPlayer->s_NickName = name;
     nc->s_NetInfoStruct->s_Name = name;
     nc->s_NetInfoStruct->s_Pass = pass;
     nc->s_NetInfoStruct->s_Host = host;
@@ -138,18 +139,20 @@ int main(int argc, char** argv)
                 }
             }
             gm->changeLevel(atoi( nc->s_NetInfoStruct->s_ServerList->getValue(keySL, "level").c_str() ));
-            cout << "Waiting objects list..." << endl;
+            gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Waiting objects list...");
             for(int i = 0; nc->s_NetInfoStruct->s_WaitingGettingCreatureList; i++)
             {
                 gm->s_NetClient->s_NetManager->update(1000);
-                cout<<".";
+                cout << ".";
                 if(i == atoi( nc->s_NetInfo->getValue("internet", "timeoutconnect").c_str() ) )
                 {
-                    cout<<endl<<"Error: Server timeout."<<endl;
+                    cout << endl;
+                    gm->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Server timeout.", true);
                     return false;
                 }
             }
-            cout << "Objects list was recieved." << endl;
+            cout << endl;
+            gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Objects list was recieved.");
             int sleep_tmp = atoi( nc->s_NetInfo->getValue("internet", "sleepfornetwork").c_str() );
             nc->s_NetInfoStruct->s_goGameOnServer = true;
             while(nc->s_NetInfoStruct->s_goGameOnServer)

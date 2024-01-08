@@ -180,6 +180,7 @@ void Server::doCommand(const int playerId, string command, PostParsingStruct* pp
         pps_tmp.remove("video");
         pps_tmp.remove("audio");
         pps_tmp.remove("settings");
+        pps_tmp.setValue("settings", "saves", "false");
         pps_tmp.remove("keys");
         pps_tmp.remove("loggers");
         pps_tmp.remove("FPS");

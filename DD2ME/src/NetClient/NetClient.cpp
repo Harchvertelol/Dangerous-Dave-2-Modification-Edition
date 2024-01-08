@@ -76,32 +76,34 @@ bool NetClient::connect()
 		s_NetManager = createIrrNetClient(clientCallback, s_NetInfoStruct->s_Host.c_str(), s_NetInfoStruct->s_Port, snp);
 		//s_NetManager->setVerbose(true);
 
-		if(s_NetManager->getConnectionStatus() != net::EICS_FAILED) cout<< "Connected" <<endl;
+		if(s_NetManager->getConnectionStatus() != net::EICS_FAILED) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Connected.");
 		else
         {
-            cout << "Error connection!" << endl;
+            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Connection error!", true);
             return false;
         }
     }
     catch(std::exception& e)
 	{
-		cout << "Error: " << e.what() << endl;
+	    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, e.what(), true);
 		return false;
 	}
 	s_NetInfoStruct->s_Sleep_1 = true;
-	cout<<"Waiting confirm..."<<endl;
+	s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Waiting confirm...");
 	for(int i = 0; s_NetInfoStruct->s_Sleep_1 == true; i++)
     {
         s_NetManager->update(1000);
-        cout<<".";
+        cout << ".";
         if(i == 10)
         {
-            cout<<endl<<"Error: Not confirm."<<endl;
+            cout << endl;
+            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Not confirm.", true);
             return false;
         }
     }
-    cout<<endl<<"Confirmed."<<endl;
-    cout<<"Authorization..."<<endl;
+    cout << endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Confirmed.");
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Authorization...");
     string str_send = "";
 	str_send = addMainVariableString(str_send, "login", SPLITTER_STR_VARIABLE);
 	str_send = addSecondaryVariableString(str_send, "name", s_NetInfoStruct->s_Name, SPLITTER_STR_VARIABLE);
@@ -117,20 +119,23 @@ bool NetClient::connect()
 	for(int i = 0; s_NetInfoStruct->s_Sleep_2 == true; i++)
     {
         s_NetManager->update(1000);
-        cout<<".";
+        cout << ".";
         if(i == 10)
         {
-            cout<<endl<<"Error: Server timeout."<<endl;
+            cout << endl;
+            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Server timeout.", true);
             return false;
         }
     }
     if(s_NetInfoStruct->s_Error != "")
     {
-        cout<<"Error: "<<s_NetInfoStruct->s_Error<<endl;
+        cout << endl;
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, s_NetInfoStruct->s_Error, true);
         s_NetInfoStruct->s_Error = "";
         return false;
     }
-    cout<<"You are logged."<<endl;
+    cout << endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "You are logged.");
     return true;
 }
 
@@ -138,12 +143,12 @@ bool NetClient::netGameStartWork()
 {
     if(!getServerList())
     {
-        cout<<"Error getting server list."<<endl;
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error getting server list.", true);
         return false;
     }
     if(!choiceServer())
     {
-        cout<<"Error choicing server."<<endl;
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Choicing server failed.", true);
         return false;
     }
     return true;
@@ -152,20 +157,22 @@ bool NetClient::netGameStartWork()
 bool NetClient::getServerList()
 {
     string str_send;
-    cout<<"Getting server list..."<<endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Getting server list...");
     sendCommandToServer(SERVER_COMMANDS_FROM_CLIENT::SCFC_getServerList);
     s_NetInfoStruct->s_Sleep_3 = true;
     for(int i = 0; s_NetInfoStruct->s_Sleep_3 == true; i++)
     {
         s_NetManager->update(1000);
-        cout<<".";
+        cout << ".";
         if(i == atoi( s_NetInfo->getValue("internet", "timeoutconnect").c_str() ) )
         {
-            cout<<endl<<"Error: Server timeout."<<endl;
+            cout << endl;
+            s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Server timeout.", true);
             return false;
         }
     }
-    cout<<"Server list getted."<<endl;
+    cout << endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Server list was getted");
     return true;
 }
 
@@ -176,7 +183,7 @@ bool NetClient::choiceServer()
     cin>>num;
     if(num == 0)
     {
-        cout<<"Exiting..."<<endl;
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Exiting...");
         return false;
     }
     map<string, map<string, string > >::iterator iter;
@@ -187,12 +194,12 @@ bool NetClient::choiceServer()
     }
     if(number != num)
     {
-        cout<<"Number of server is bad."<<endl;
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Number of server is bad.");
         return false;
     }
     s_NetInfoStruct->s_ServerIdNow = atoi( s_NetInfoStruct->s_ServerList->getValue(iter->first, "id").c_str() );
     sendCommandToServer(SERVER_COMMANDS_FROM_CLIENT::SCFC_connectToServer);
-	cout<<"Connecting to game server..."<<endl;
+    s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Connecting to game server...");
 	s_NetInfoStruct->s_SuperSleep_1 = true;
 	while(s_NetInfoStruct->s_SuperSleep_1 == true)
     {
@@ -200,14 +207,16 @@ bool NetClient::choiceServer()
         for(int i = 0; s_NetInfoStruct->s_Sleep_4 == true; i++)
         {
             s_NetManager->update(1000);
-            cout<<".";
+            cout << ".";
             if(i == atoi( s_NetInfo->getValue("internet", "timeoutconnect").c_str() ) )
             {
-                cout<<endl<<"Error: Server timeout."<<endl;
+                cout << endl;
+                s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Server timeout.", true);
                 return false;
             }
         }
     }
+    cout << endl;
     getCreaturesList();
 	return true;
 }

@@ -35,12 +35,12 @@ NetClientCallback::~NetClientCallback()
 
 void NetClientCallback::onConnect(const u16 playerId)
 {
-	cout << "Connected to server" << endl;
+    s_NetClient->s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Connected to server.");
 }
 
 void NetClientCallback::onDisconnect(const u16 playerId)
 {
-    cout << "Disconnected from server" << endl;
+    s_NetClient->s_GameClass->s_Logger->registerEvent(EVENT_TYPE_INFO, "Disconnected from server.");
 }
 
 void NetClientCallback::handlePacket(SInPacket& packet, u32 channelID)
