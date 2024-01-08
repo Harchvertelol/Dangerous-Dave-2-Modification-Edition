@@ -364,6 +364,7 @@ addMonster (number, coordX, coordY, state, numberofaction, additionalnumberofact
 	lives - number of lives, optional, defaults to infinite, counting collisions (-1)
 	params - parameters that you set to the created monster (analogous to setMonsterValue), format: "test1=34;name=PlayerKiller;gun=super;". It is very important to put a semicolon
 	at the end, otherwise the last parameter will not be processed. It is not recommended to make names of variables with the GS_ prefix (these are Game Service variables, more details in a separate block).
+	It is prohibited to use the symbol ";" in variable names and their values, otherwise the data will be processed incorrectly.
 	Returns the id of the created monster.
 	Examples: addMonster (1, 0, 0, "leftstrike", 0, 0, -2, "direction=left;timelife=10;GS_no_points=true;") - created zombies in "hit", transparent and with infinite lives and with parameters,
 	which can be obtained via getMonsterValue (). Death points are not awarded.

@@ -69,6 +69,10 @@ namespace IniParser
             void remove(std::string A);
             //! Очищает все переменные.
             void clear();
+            //! Проверяет, есть ли переменные.
+            /*! \return Возвращает true, если переменные есть, иначе false.
+            */
+            bool isEmpty();
         private:
             std::map<std::string, std::map<std::string, std::string> > s_Variables;
             std::string s_FileName;

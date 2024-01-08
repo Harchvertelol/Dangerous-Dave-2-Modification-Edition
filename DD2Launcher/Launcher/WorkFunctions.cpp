@@ -3,6 +3,7 @@
 #include <regex>
 
 #include <cstdlib>
+#include <fstream>
 
 #ifdef _LINUX_
 #include <sys/io.h>
@@ -71,26 +72,30 @@ string WorkFunctions::ParserFunctions::getValueSecondaryVariable(string str)
 
 int WorkFunctions::ParserFunctions::splitMass(map<int,int>* mas, int size, int point, string str, string splitter)
 {
-    while(str.find(splitter) != string::npos)
+    int old_point = point;
+    while(str.find(splitter) != string::npos && !(size > 0 && point == old_point + size - 1) )
     {
         (*mas)[point] = atoi( str.substr(0, str.find(splitter)).c_str() );
-        str = str.substr(str.find(splitter) + 1);
+        str = str.substr(str.find(splitter) + splitter.size());
         point++;
     }
-    (*mas)[point] = atoi( str.substr(0, str.find(splitter)).c_str() );
+    //(*mas)[point] = atoi( str.substr(0, str.find(splitter)).c_str() );
+    (*mas)[point] = atoi( str.c_str() );
     point++;
     return point;
 }
 
-int WorkFunctions::ParserFunctions::splitMassString(map<int,string>* mas, int size, int point, string str, string splitter)
+int WorkFunctions::ParserFunctions::splitMassString(map<int, string>* mas, int size, int point, string str, string splitter)
 {
-    while(str.find(splitter) != string::npos)
+    int old_point = point;
+    while(str.find(splitter) != string::npos && !(size > 0 && point == old_point + size - 1) )
     {
-        (*mas)[point] = str.substr(0, str.find(splitter)).c_str();
-        str = str.substr(str.find(splitter) + 1);
+        (*mas)[point] = str.substr(0, str.find(splitter));
+        str = str.substr(str.find(splitter) + splitter.size());
         point++;
     }
-    (*mas)[point] = str.substr(0, str.find(splitter)).c_str();
+    //(*mas)[point] = str.substr(0, str.find(splitter));
+    (*mas)[point] = str;
     point++;
     return point;
 }
@@ -103,6 +108,32 @@ string WorkFunctions::ParserFunctions::addMainVariableString(string str, string 
 string WorkFunctions::ParserFunctions::addSecondaryVariableString(string str, string name, string value, string splitter)
 {
     return str + name + "=" + value + splitter;
+}
+
+string WorkFunctions::ParserFunctions::cryptString(string str, string key)
+{
+    string ret_str = str;
+    string tmp_key = key;
+    char shift_key = tmp_key[0];
+    for(int i = 0; i < ret_str.size(); i++)
+    {
+        ret_str[i] += tmp_key[i % tmp_key.size()];
+        for(int j = 0; j < tmp_key.size(); j++) tmp_key[j] += shift_key;
+    }
+    return ret_str;
+}
+
+string WorkFunctions::ParserFunctions::decryptString(string str, string key)
+{
+    string ret_str = str;
+    string tmp_key = key;
+    char shift_key = tmp_key[0];
+    for(int i = 0; i < ret_str.size(); i++)
+    {
+        ret_str[i] -= tmp_key[i % tmp_key.size()];
+        for(int j = 0; j < tmp_key.size(); j++) tmp_key[j] += shift_key;
+    }
+    return ret_str;
 }
 
 int WorkFunctions::MathFunctions::roundNumber(int number, int divide, int change)
@@ -132,6 +163,20 @@ bool WorkFunctions::FileFunctions::createFolders(string folder, string folderspl
         tempfolder += foldersplitter;
     }
     return true;
+}
+
+string WorkFunctions::FileFunctions::fileToString(string file)
+{
+    ifstream file_read(file.c_str(), ios::binary);
+    if(!file_read)
+    {
+        cerr<< "Error open file " << file << "!" << endl;
+        file_read.close();
+        return "";
+    }
+    stringstream ss;
+    ss << file_read.rdbuf();
+    return ss.str();
 }
 
 bool WorkFunctions::GameFunctions::testCollision(int x, int y, int x1, int y1, Square ent, Square ent1, bool stand, string where)

@@ -25,6 +25,8 @@ namespace WorkFunctions
         int splitMassString(std::map<int, std::string>*, int, int, std::string, std::string);
         std::string addMainVariableString(std::string, std::string, std::string);
         std::string addSecondaryVariableString(std::string, std::string, std::string, std::string);
+        std::string cryptString(std::string, std::string);
+        std::string decryptString(std::string, std::string);
     };
     namespace ConvertFunctions
     {
@@ -40,6 +42,7 @@ namespace WorkFunctions
     {
         bool isFileExists(std::string name);
         bool createFolders(std::string folder, std::string foldersplitter = STRING_CONSTANTS::DEFAULT_FOLDER_SPLITTER);
+        std::string fileToString(std::string);
     };
     namespace GameFunctions
     {

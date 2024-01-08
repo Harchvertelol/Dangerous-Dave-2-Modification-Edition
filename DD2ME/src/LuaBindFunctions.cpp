@@ -1175,7 +1175,7 @@ int LuaBindFunctions::addDuplicateMonster(lua_State* s_Lua)
     {
         parameters = "[mnst];" + parameters;
         IniParser::ParserInfoFile prs;
-        IniParser::PostParsingStruct* pps = prs.getParsedFromString(parameters, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+        IniParser::PostParsingStruct* pps = prs.getParsedFromString(parameters, STRING_CONSTANTS::SPLITTER_STR_VARIABLE_PARAMS_LUA);
         map<string, string>::iterator iter1;
         for( iter1 = pps->getMapVariables()["mnst"].begin(); iter1 != pps->getMapVariables()["mnst"].end(); iter1++)
         {
@@ -1222,7 +1222,7 @@ int LuaBindFunctions::addMonster(lua_State* s_Lua)
     {
         parameters = "[mnst];" + parameters;
         IniParser::ParserInfoFile prs;
-        IniParser::PostParsingStruct* pps = prs.getParsedFromString(parameters, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+        IniParser::PostParsingStruct* pps = prs.getParsedFromString(parameters, STRING_CONSTANTS::SPLITTER_STR_VARIABLE_PARAMS_LUA);
         map<string, string>::iterator iter1;
         for( iter1 = pps->getMapVariables()["mnst"].begin(); iter1 != pps->getMapVariables()["mnst"].end(); iter1++)
         {
