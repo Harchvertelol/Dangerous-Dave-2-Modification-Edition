@@ -5,5 +5,6 @@ numberofmonsters=12
 transparentmaskR=204
 transparentmaskG=255
 transparentmaskB=204
-highlightingonhit=255;120;120;255
+highlightingonhit=255;255;255;255
 timehighlightingonhit=250
+highlightingonhitmode=fill

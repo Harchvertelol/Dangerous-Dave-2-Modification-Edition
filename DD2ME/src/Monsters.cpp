@@ -182,11 +182,16 @@ void Monsters::collisionAnalyze(int number, string state, int frame)
 void Monsters::drawMonster(int number, string anim, int frame, int x, int y, bool is_highlighted)
 {
     sf::Color spr_color = sf::Color(255, 255, 255, 255);
+    string str_highlite_mode = "";
     if(is_highlighted)
     {
         map<int, int> tmp_mas;
         string str_highlighting = s_GameClass->s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "highlightingonhit");
         if(s_GameClass->s_Data->s_Monsters->s_MonstersInfo[number - 1]->isExists("other", "highlightingonhit")) str_highlighting = s_GameClass->s_Data->s_Monsters->s_MonstersInfo[number - 1]->getValue("other", "highlightingonhit");
+
+        str_highlite_mode = s_GameClass->s_Data->s_Monsters->s_GlobMonstersInfo->getValue("draw", "highlightingonhitmode");
+        if(s_GameClass->s_Data->s_Monsters->s_MonstersInfo[number - 1]->isExists("other", "highlightingonhitmode")) str_highlite_mode = s_GameClass->s_Data->s_Monsters->s_MonstersInfo[number - 1]->getValue("other", "highlightingonhitmode");
+
         int res_col = WorkFunctions::ParserFunctions::splitMass(&tmp_mas, 0, 0, str_highlighting, ";");
         if(res_col < 3) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error with parameters for highlighting monster: highlightingonhit");
         else spr_color = tgui::Color(tmp_mas[0], tmp_mas[1], tmp_mas[2], tmp_mas[3]);
@@ -197,14 +202,72 @@ void Monsters::drawMonster(int number, string anim, int frame, int x, int y, boo
         Sprite spr(*s_Bitmaps[number - 1][anim][frame]);
         spr.setTextureRect(IntRect(0, 0, s_Bitmaps[number - 1][anim][frame]->getSize().x / 2, s_Bitmaps[number - 1][anim][frame]->getSize().y));
         spr.setPosition(x, y);
-        spr.setColor(spr_color);
+        if(is_highlighted && str_highlite_mode == "fill")
+        {
+            if (!sf::Shader::isAvailable()) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Shaders not avaliable!");
+            else
+            {
+                const std::string highlight_shader_code = \
+                "uniform sampler2D texture;" \
+                "uniform vec4 highlightcolor;" \
+                "void main()" \
+                "{" \
+                "vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);" \
+                "if(pixel.a == 1.0){" \
+                "gl_FragColor = vec4(highlightcolor.r, highlightcolor.g, highlightcolor.b, 1.0);" \
+                "} else {" \
+                "discard;" \
+                "}" \
+                "}";
+                Shader highlight_shader;
+                if(!highlight_shader.loadFromMemory(highlight_shader_code, Shader::Fragment)) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Highlight shader load failed!");
+                else
+                {
+                    highlight_shader.setUniform("texture", Shader::CurrentTexture);
+                    highlight_shader.setUniform("highlightcolor", Glsl::Vec4(spr_color));
+                    s_GameClass->s_RenderTexture->draw(spr, &highlight_shader);
+                    return;
+                }
+            }
+        }
+        if(str_highlite_mode == "multiply") spr.setColor(spr_color);
+        else spr.setColor(Color(255, 255, 255, 255));
         s_GameClass->s_RenderTexture->draw(spr);
     }
     else
     {
         //s_GameClass->s_Window->draw( Image( (*s_CacheImages[number - 1][anim][frame]), x, y) );
-        s_CacheImages[number - 1][anim][frame]->setColor(spr_color);
         s_CacheImages[number - 1][anim][frame]->setPosition(x, y);
+        if(is_highlighted && str_highlite_mode == "fill")
+        {
+            if (!sf::Shader::isAvailable()) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Shaders not avaliable!");
+            else
+            {
+                const std::string highlight_shader_code = \
+                "uniform sampler2D texture;" \
+                "uniform vec4 highlightcolor;" \
+                "void main()" \
+                "{" \
+                "vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);" \
+                "if(pixel.a == 1.0){" \
+                "gl_FragColor = vec4(highlightcolor.r, highlightcolor.g, highlightcolor.b, 1.0);" \
+                "} else {" \
+                "discard;" \
+                "}" \
+                "}";
+                Shader highlight_shader;
+                if(!highlight_shader.loadFromMemory(highlight_shader_code, Shader::Fragment)) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Highlight shader load failed!");
+                else
+                {
+                    highlight_shader.setUniform("texture", Shader::CurrentTexture);
+                    highlight_shader.setUniform("highlightcolor", Glsl::Vec4(spr_color));
+                    s_GameClass->s_RenderTexture->draw(*s_CacheImages[number - 1][anim][frame], &highlight_shader);
+                    return;
+                }
+            }
+        }
+        if(str_highlite_mode == "multiply") s_CacheImages[number - 1][anim][frame]->setColor(spr_color);
+        else s_CacheImages[number - 1][anim][frame]->setColor(Color(255, 255, 255, 255));
         s_GameClass->s_RenderTexture->draw(*s_CacheImages[number - 1][anim][frame]);
     }
 }

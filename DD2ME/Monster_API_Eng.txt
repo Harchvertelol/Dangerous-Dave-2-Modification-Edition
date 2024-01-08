@@ -17,6 +17,7 @@ transparentmaskG=255		// GREEN transparency mask
 transparentmaskB=204		// transparency mask BLUE
 highlightingonhit=0;0;255;255 // Highlight this monster on hit (RGBA)
 timehighlightingonhit=1200 // Time to highlight this monster on hit
+highlightingonhitmode=fill // Backlight type: fill fills completely, multiply multiplies the color by the specified
 ---
 
 Monsters are numbered from 1 to numberofmonsters inclusive. Mask of transparency - that color
@@ -60,6 +61,7 @@ outputshiftY=-8		// Here we move the monster along the Y axis.
 animationstep=6		// This variable is used for animation speed in intelligence
 highlightingonhit=0;0;255;255 // Highlight this monster on hit (takes precedence over general parameters, RGBA).
 timehighlightingonhit=1200 // Time to highlight this monster on hit (takes precedence over general parameters).
+highlightingonhitmode=fill // Backlight type: fill fills completely, multiply multiplies the color by the specified (takes precedence over general parameters).
 
 [options]
 lives=2		// The number of monster lives. If -1, then he has infinite lives, hits in him are taken into account (bullet stop).
