@@ -28,6 +28,8 @@ class NetClient
         bool choiceServer();
         void sendFullInfoFromClient();
         void sendInfoFromClient();
+        void sendOpenDoor(std::string type, int x, int y);
+        void sendSetTileID(int x, int y, int numberfield, int tileid);
         void leaveServer();
         void sendCommandToServer(std::string, std::string params = "");
         void sendOutPacket(irr::net::SOutPacket& outpacket, const irr::s32 playerId = -1, const irr::u32 channelID = 0);

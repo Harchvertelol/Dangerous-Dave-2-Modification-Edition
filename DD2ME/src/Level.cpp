@@ -5,6 +5,8 @@
 #include "Defines.h"
 #include "Game.h"
 
+#include "NetServer/Server.h"
+
 #include <fstream>
 #include <iostream>
 #include <stdlib.h>
@@ -14,6 +16,7 @@ using namespace std;
 using namespace WorkFunctions;
 using namespace ParserFunctions;
 using namespace MathFunctions;
+using namespace ConvertFunctions;
 
 using namespace IniParser;
 
@@ -453,15 +456,141 @@ int Level::getTileID(int x, int y, int numberfield)
     return s_Fields[getNameTilesField(numberfield)][y*SizeXLev + x];
 }
 
-bool Level::setTileID(int x, int y, int numberfield, int tileid)
+bool Level::setTileID(int x, int y, int numberfield, int tileid, bool sendtonet, bool addtolisttileschanges)
+{
+    int SizeXLev = atoi( ( s_Params->getValue("info", "sizeX") ).c_str() );
+    return setTileIDByIndex(y*SizeXLev + x, numberfield, tileid, sendtonet, addtolisttileschanges);
+}
+
+bool Level::setTileIDByIndex(int index, int numberfield, int tileid, bool sendtonet, bool addtolisttileschanges)
 {
     int SizeXLev = atoi( ( s_Params->getValue("info", "sizeX") ).c_str() );
     int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
+    int x = index%SizeXLev;
+    int y = (index - index%SizeXLev)/SizeXLev;
     if(y >= SizeYLev || x >= SizeXLev)
     {
         s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error set tile ID! X or Y higher level. Level: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel) + ", X = " + WorkFunctions::ConvertFunctions::itos(x) + ", Y = " + WorkFunctions::ConvertFunctions::itos(y) + ", SizeXLevel = " + WorkFunctions::ConvertFunctions::itos(SizeXLev) + ", SizeYLevel = " + WorkFunctions::ConvertFunctions::itos(SizeYLev) + ".");
         return false;
     }
-    s_Fields[getNameTilesField(numberfield)][y*SizeXLev + x] = tileid;
+    s_Fields[getNameTilesField(numberfield)][index] = tileid;
+    if(addtolisttileschanges) s_ListTilesChanges[getNameTilesField(numberfield)][index] = tileid;
+    if(sendtonet)
+    {
+        if(s_GameClass->s_NetClient->s_NetInfoStruct->s_Mode == NM_MULTIPLAYER)
+        {
+            s_GameClass->s_NetClient->sendSetTileID(x, y, numberfield, tileid);
+        }
+        else if(s_GameClass->s_NetClient->s_NetInfoStruct->s_Mode == NM_SERVER)
+        {
+            Server* srv = (Server*)s_GameClass->s_NetClient->s_NetInfoStruct->s_Server;
+            srv->sendSetTileID(x, y, numberfield, tileid);
+        }
+    }
     return true;
+}
+
+bool Level::openDoor(string type, int x_coord, int y_coord, bool sendtonet)
+{
+    int SizeXLev = atoi( ( s_Params->getValue("info", "sizeX") ).c_str() );
+    int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
+    if(y_coord >= SizeYLev || x_coord >= SizeXLev)
+    {
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error open door! X or Y higher level. Level: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel) + ", X = " + WorkFunctions::ConvertFunctions::itos(x_coord) + ", Y = " + WorkFunctions::ConvertFunctions::itos(y_coord) + ", SizeXLevel = " + WorkFunctions::ConvertFunctions::itos(SizeXLev) + ", SizeYLevel = " + WorkFunctions::ConvertFunctions::itos(SizeYLev) + ".");
+        return false;
+    }
+    string typeexit;
+    int numberofdoors, numberofhandletiles, TileDoor;
+    if(type == "bonus")
+    {
+        if(s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS].find(y_coord*SizeXLev + x_coord) == s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS].end() || s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][y_coord*SizeXLev + x_coord] == 0) return false;
+        s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][(y_coord - 1)*SizeXLev + x_coord] = s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][y_coord*SizeXLev + x_coord];
+        s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][y_coord*SizeXLev + x_coord] = 0;
+        typeexit = "bonus";
+    }
+    else if(type == "exit")
+    {
+        if(s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS].find(y_coord*SizeXLev + x_coord) == s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS].end() || s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][y_coord*SizeXLev + x_coord] >= 0) return false;
+        s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][y_coord*SizeXLev + x_coord] = s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][y_coord*SizeXLev + x_coord]*(-1);
+        typeexit = "exit";
+    }
+    else if(type == "exitlevel")
+    {
+        if(s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS].find(y_coord*SizeXLev + x_coord) == s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS].end() || s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][y_coord*SizeXLev + x_coord] >= 0) return false;
+        s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][y_coord*SizeXLev + x_coord] = s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][y_coord*SizeXLev + x_coord]*(-1);
+        typeexit = "exit";
+    }
+    TileDoor = getTileID(x_coord, y_coord, getNumberObjectsTilesField());
+    numberofdoors = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("info","numberofdoors").c_str() );
+    for(int i = 0; i < numberofdoors; i++)
+    {
+        numberofhandletiles = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"numberofhandletiles").c_str() );
+        for(int j = 0; j < numberofhandletiles; j++)
+        {
+            if( typeexit == s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"type") && atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"handletile" + itos(j+1) ).c_str() ) == TileDoor)
+            {
+                setTileID(x_coord - 1, y_coord - 1, getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() ), false);
+                setTileID(x_coord, y_coord - 1, getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() ), false);
+                setTileID(x_coord - 1, y_coord, getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() ), false);
+                setTileID(x_coord, y_coord, getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() ), false);
+                setTileID(x_coord - 1, y_coord + 1, getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() ), false);
+                setTileID(x_coord, y_coord + 1, getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() ), false);
+                break;
+                break;
+            }
+        }
+    }
+    if(sendtonet)
+    {
+        if(s_GameClass->s_NetClient->s_NetInfoStruct->s_Mode == NM_MULTIPLAYER)
+        {
+            s_GameClass->s_NetClient->sendOpenDoor(type, x_coord, y_coord);
+        }
+        else if(s_GameClass->s_NetClient->s_NetInfoStruct->s_Mode == NM_SERVER)
+        {
+            Server* srv = (Server*)s_GameClass->s_NetClient->s_NetInfoStruct->s_Server;
+            srv->sendOpenDoor(type, x_coord, y_coord);
+        }
+    }
+    return true;
+}
+
+int Level::getFieldElement(string namefield, int index)
+{
+    if(s_Fields[namefield].find(index) == s_Fields[namefield].end()) return 0;
+    return s_Fields[namefield][index];
+}
+
+bool Level::setBonus(int x, int y, int type, bool sendtonet)
+{
+    int SizeXLev = atoi( ( s_Params->getValue("info", "sizeX") ).c_str() );
+    int SizeYLev = atoi( ( s_Params->getValue("info", "sizeY") ).c_str() );
+    if(y >= SizeYLev || x >= SizeXLev)
+    {
+        s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Error set bonus! X or Y higher level. Level: " + WorkFunctions::ConvertFunctions::itos(s_GameClass->s_GameInfo->s_CurrentLevel) + ", X = " + WorkFunctions::ConvertFunctions::itos(x) + ", Y = " + WorkFunctions::ConvertFunctions::itos(y) + ", SizeXLevel = " + WorkFunctions::ConvertFunctions::itos(SizeXLev) + ", SizeYLevel = " + WorkFunctions::ConvertFunctions::itos(SizeYLev) + ".");
+        return false;
+    }
+    s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][y*SizeXLev + x] = type;
+    if(sendtonet)
+    {
+        if(s_GameClass->s_NetClient->s_NetInfoStruct->s_Mode == NM_MULTIPLAYER)
+        {
+            //s_GameClass->s_NetClient->sendSetBonus(type, x_coord, y_coord);
+        }
+        else if(s_GameClass->s_NetClient->s_NetInfoStruct->s_Mode == NM_SERVER)
+        {
+            Server* srv = (Server*)s_GameClass->s_NetClient->s_NetInfoStruct->s_Server;
+            //srv->sendSetBonus(type, x_coord, y_coord);
+        }
+    }
+}
+
+map<string, map<int, int> >& Level::getFieldsMap()
+{
+    return s_Fields;
+}
+
+map<int, int>& Level::getFieldMap(string namefield)
+{
+    return s_Fields[namefield];
 }

@@ -58,7 +58,8 @@ bool MainServer::load()
             nc->s_NetInfoStruct->s_Port = port;
 
             nc->s_NetInfoStruct->s_goGame = false;
-            nc->s_NetInfoStruct->s_Mode = "singleplayer";
+            nc->s_NetInfoStruct->s_Mode = NM_SERVER;
+            nc->s_NetInfoStruct->s_Server = s_Server;
 
             ParserInfoFile prsfl;
 

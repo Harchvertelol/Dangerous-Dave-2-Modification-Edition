@@ -200,7 +200,7 @@ void Server::doCommand(const int playerId, string command, PostParsingStruct* pp
 
         packet.clearData();
         packet << PT_PLAYER_CONNECTED << playerId << str_send;
-        sendOutPacketUnreliable(packet, -1, 2, true);
+        sendOutPacket(packet, -1, 3);
     }
     else if(command == SERVER_COMMANDS_FROM_CLIENT::SCFC_getCreaturesList)
     {
@@ -216,15 +216,7 @@ void Server::doCommand(const int playerId, string command, PostParsingStruct* pp
     }
     else if(command == SERVER_COMMANDS_FROM_CLIENT::SCFC_leaveServer)
     {
-        if(s_Clients[playerId].s_IdServerConnected != STRING_CONSTANTS::MISSING_ID_SERVER) s_MainServer->s_ListGameClass[s_Clients[playerId].s_IdServerConnected]->removePlayer(playerId);
-        s_Clients[playerId].s_IdServerConnected = STRING_CONSTANTS::MISSING_ID_SERVER;
-        str_send = "";
-        str_send = addMainVariableString(str_send, "SystemInfo", STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
-        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_ConfirmLeaveServer, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
-
-        SOutPacket packet;
-        packet << str_send;
-        sendOutPacket(packet, playerId);
+        playerLeaveServer(playerId, true);
     }
 }
 
@@ -268,10 +260,42 @@ void Server::sendCreaturesList(string gameclassid, string params, bool notfullfo
     }
 }
 
-void Server::close(const int playerId)
+void Server::sendOpenDoor(string type, int x, int y)
 {
+    SOutPacket packet;
+	packet << PT_OPEN_DOOR << type << x << y;
+	sendOutPacket(packet, -1, 3);
+}
+
+void Server::sendSetTileID(int x, int y, int numberfield, int tileid)
+{
+    SOutPacket packet;
+	packet << PT_SET_TILE_ID << x << y << numberfield << tileid;
+	sendOutPacket(packet, -1, 3);
+}
+
+void Server::playerLeaveServer(int playerId, bool sendconfirm)
+{
+    SOutPacket packet;
     if(s_Clients[playerId].s_IdServerConnected != STRING_CONSTANTS::MISSING_ID_SERVER) s_MainServer->s_ListGameClass[s_Clients[playerId].s_IdServerConnected]->removePlayer(playerId);
     s_Clients[playerId].s_IdServerConnected = STRING_CONSTANTS::MISSING_ID_SERVER;
+    if(sendconfirm)
+    {
+        string str_send = "";
+        str_send = addMainVariableString(str_send, "SystemInfo", STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+        str_send = addSecondaryVariableString(str_send, "ID_MESSAGE", FROM_SERVER_IDS_MESSAGES::FSIM_ConfirmLeaveServer, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+
+        packet << str_send;
+        sendOutPacket(packet, playerId);
+        packet.clearData();
+    }
+    packet << PT_PLAYER_DISCONNECTED_FROM_SERVER << playerId;
+    sendOutPacket(packet, -1, 3);
+}
+
+void Server::close(const int playerId)
+{
+    playerLeaveServer(playerId, false);
     s_MainServer->s_Server->s_ClientsId[s_Clients[playerId].s_UserInfo->getValue("login", "name")] = 0;
     s_MainServer->s_Server->s_ClientsId.erase(s_Clients[playerId].s_UserInfo->getValue("login", "name"));
 	s_Clients.erase(playerId);

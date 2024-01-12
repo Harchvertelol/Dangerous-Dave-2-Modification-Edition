@@ -93,6 +93,12 @@ bool FactoryMonsters::isMonsterInPlayerRadius(CreaturePlayer* player, CreatureMo
     return false;
 }
 
+CreatureMonster* FactoryMonsters::getMonsterById(int id)
+{
+    if(isExistsById(id)) return s_Monsters[id];
+    return 0;
+}
+
 void FactoryMonsters::live()
 {
     bool testChangeLevel = false, testNoChangeLevel = false;

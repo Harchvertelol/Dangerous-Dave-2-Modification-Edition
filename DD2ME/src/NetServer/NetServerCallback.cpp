@@ -119,6 +119,30 @@ void NetServerCallback::handlePacket(SInPacket& packet, u32 channelID)
             }
         }
     }
+    else if(channelID == 3)
+    {
+        int packet_type;
+        packet >> packet_type;
+        int playerId = packet.getPlayerId();
+        if(packet_type == PT_OPEN_DOOR)
+        {
+            string type;
+            int x, y;
+            packet >> type;
+            packet >> x;
+            packet >> y;
+            s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_Data->s_Level->openDoor(type, x, y);
+        }
+        else if(packet_type == PT_SET_TILE_ID)
+        {
+            int x, y, numberfield, tileid;
+            packet >> x;
+            packet >> y;
+            packet >> numberfield;
+            packet >> tileid;
+            s_Server->s_MainServer->s_ListGameClass[s_Server->s_Clients[playerId].s_IdServerConnected]->s_Data->s_Level->setTileID(x, y, numberfield, tileid);
+        }
+    }
 }
 
 void NetServerCallback::onDisconnect(const u16 playerId)

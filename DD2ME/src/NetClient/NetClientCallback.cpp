@@ -73,20 +73,6 @@ void NetClientCallback::handlePacket(SInPacket& packet, u32 channelID)
                     s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_CoordY = new_y;
                 }
             }
-            else if(packet_type == PT_PLAYER_CONNECTED)
-            {
-                int pl_id;
-                packet >> pl_id;
-                if(pl_id == s_NetClient->s_MyID || s_NetClient->s_MyID == -1) return;
-                string str;
-                packet >> str;
-                if(s_NetClient->s_GameClass->s_GameInfo->s_Players.find(pl_id) != s_NetClient->s_GameClass->s_GameInfo->s_Players.end()) delete s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id];
-                s_NetClient->s_GameClass->insertPlayer(pl_id, 1, "", false);
-                ParserInfoFile prs;
-                PostParsingStruct* dpps = prs.getParsedFromString(str, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
-                s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->setListOfVariables(dpps, "player");
-                delete dpps;
-            }
             else if(packet_type == PT_PLAYER_STATE)
             {
                 int pl_id;
@@ -148,6 +134,53 @@ void NetClientCallback::handlePacket(SInPacket& packet, u32 channelID)
                     //s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_ControlJumpPressed = (bool)ctrl_jmp_prs;
                     //s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->s_ControlShootPressed = (bool)ctrl_sht_prs;
                 }
+            }
+        }
+    }
+    else if(channelID == 3)
+    {
+        int packet_type;
+        packet >> packet_type;
+        if(s_NetClient->s_NetInfoStruct->s_goGameOnServer)
+        {
+            if(packet_type == PT_PLAYER_CONNECTED)
+            {
+                int pl_id;
+                packet >> pl_id;
+                if(pl_id == s_NetClient->s_MyID || s_NetClient->s_MyID == -1) return;
+                string str;
+                packet >> str;
+                if(s_NetClient->s_GameClass->s_GameInfo->s_Players.find(pl_id) != s_NetClient->s_GameClass->s_GameInfo->s_Players.end()) delete s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id];
+                s_NetClient->s_GameClass->insertPlayer(pl_id, 1, "", false);
+                ParserInfoFile prs;
+                PostParsingStruct* dpps = prs.getParsedFromString(str, STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
+                s_NetClient->s_GameClass->s_GameInfo->s_Players[pl_id]->setListOfVariables(dpps, "player");
+                delete dpps;
+            }
+            else if(packet_type == PT_PLAYER_DISCONNECTED_FROM_SERVER)
+            {
+                int pl_id;
+                packet >> pl_id;
+                if(pl_id == s_NetClient->s_MyID || s_NetClient->s_MyID == -1) return;
+                if(s_NetClient->s_GameClass->s_GameInfo->s_Players.find(pl_id) != s_NetClient->s_GameClass->s_GameInfo->s_Players.end()) s_NetClient->s_GameClass->removePlayer(pl_id);
+            }
+            else if(packet_type == PT_OPEN_DOOR)
+            {
+                string type;
+                int x, y;
+                packet >> type;
+                packet >> x;
+                packet >> y;
+                s_NetClient->s_GameClass->s_Data->s_Level->openDoor(type, x, y, false);
+            }
+            else if(packet_type == PT_SET_TILE_ID)
+            {
+                int x, y, numberfield, tileid;
+                packet >> x;
+                packet >> y;
+                packet >> numberfield;
+                packet >> tileid;
+                s_NetClient->s_GameClass->s_Data->s_Level->setTileID(x, y, numberfield, tileid, false);
             }
         }
     }

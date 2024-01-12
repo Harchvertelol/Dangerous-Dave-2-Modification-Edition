@@ -444,6 +444,7 @@ void Game::processAllEvents(int maxEvents)
     vector<int> timers_ticks = s_Timers.getTimersTicks();
     for(int i = 0; i < timers_ticks.size() && i < maxEvents; i++) onTimer(timers_ticks[i]);
     if(s_NetClient->s_NetInfo->getValue("video", "graphicmodegame") == "true") s_Gui->s_TGUI->handleEvent(event);
+    s_Gui->s_TGUI->updateTime();
     /*Message m;
     for(int i = 0; i < maxEvents && m.peek() == true; i++)
     {
@@ -630,6 +631,7 @@ PostParsingStruct* Game::getObjects(bool notfullfornetmode, CreaturePlayer* cr_p
                 cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "numberOfAction", WorkFunctions::ConvertFunctions::itos(iter->second->s_NumberOfAction) );
                 cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "dopNumberOfAction", WorkFunctions::ConvertFunctions::itos(iter->second->s_AdditionalNumberOfAction) );
                 cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "id", WorkFunctions::ConvertFunctions::itos(monsterid) );
+                cpps->setValue("monster_" + WorkFunctions::ConvertFunctions::itos(monsterid), "isHighlighted", WorkFunctions::ConvertFunctions::itos(iter->second->s_IsHighlighted) );
                 map<string, string>::iterator iter1;
                 for( iter1 = iter->second->s_AIMonsterValues.begin(); iter1 != iter->second->s_AIMonsterValues.end(); iter1++)
                 {
@@ -670,25 +672,38 @@ PostParsingStruct* Game::getObjects(bool notfullfornetmode, CreaturePlayer* cr_p
         int size_y_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeY").c_str() );
         for(int i = 0; i < size_x_level*size_y_level; i++)
         {
-            if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i] != 0)
+            int tmp_el = s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_BONUSES, i);
+            if(tmp_el != 0)
             {
-                cpps->setValue("bonuse_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i]));
+                cpps->setValue("bonuse_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(tmp_el));
                 cpps->setValue("bonuse_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
             }
-            if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][i] != 0)
+            tmp_el = s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_BONUSDOORS, i);
+            if(tmp_el != 0)
             {
-                cpps->setValue("bonusdoor_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][i]));
+                cpps->setValue("bonusdoor_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(tmp_el));
                 cpps->setValue("bonusdoor_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
             }
-            if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][i] != 0)
+            tmp_el = s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_DOORS, i);
+            if(tmp_el != 0)
             {
-                cpps->setValue("door_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][i]));
+                cpps->setValue("door_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(tmp_el));
                 cpps->setValue("door_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
             }
-            if(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][i] != 0)
+            tmp_el = s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS, i);
+            if(tmp_el != 0)
             {
-                cpps->setValue("exitleveldoor_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][i]));
+                cpps->setValue("exitleveldoor_" + WorkFunctions::ConvertFunctions::itos(i), "i", WorkFunctions::ConvertFunctions::itos(tmp_el));
                 cpps->setValue("exitleveldoor_" + WorkFunctions::ConvertFunctions::itos(i), "id", WorkFunctions::ConvertFunctions::itos(i) );
+            }
+        }
+        int numb_tl_fls = s_Data->s_Level->getNumberTilesFields();
+        for(int j = 1; j < numb_tl_fls + 1; j++)
+        {
+            map<int, int>::iterator iter1, iter2;
+            for(iter1 = s_Data->s_Level->s_ListTilesChanges[s_Data->s_Level->getNameTilesField(j)].begin(), iter2 = s_Data->s_Level->s_ListTilesChanges[s_Data->s_Level->getNameTilesField(j)].end(); iter1 != iter2; iter1++)
+            {
+                cpps->setValue("TilesChanges", WorkFunctions::ConvertFunctions::itos(j) + STRING_CONSTANTS::SPLITTER_STR_PARAMETERS_GAME_TILES_CHANGES_SEND + WorkFunctions::ConvertFunctions::itos(iter1->first), WorkFunctions::ConvertFunctions::itos(iter1->second));
             }
         }
     }
@@ -722,13 +737,17 @@ void Game::setObjects(PostParsingStruct* cpps, bool notfullfornetmode)
         }
         int size_x_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeX").c_str() );
         int size_y_level = atoi( s_Data->s_Level->s_Params->getValue("info", "sizeY").c_str() );
-        for(int i = 0; i < size_x_level*size_y_level; i++)
+        /*for(int i = 0; i < size_x_level*size_y_level; i++)
         {
             s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][i] = 0;
             s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][i] = 0;
             s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][i] = 0;
             s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][i] = 0;
-        }
+        }*/
+        s_Data->s_Level->getFieldMap(STRING_CONSTANTS::NAME_FIELD_BONUSES).clear();
+        s_Data->s_Level->getFieldMap(STRING_CONSTANTS::NAME_FIELD_BONUSDOORS).clear();
+        s_Data->s_Level->getFieldMap(STRING_CONSTANTS::NAME_FIELD_DOORS).clear();
+        s_Data->s_Level->getFieldMap(STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS).clear();
     }
     string monsterid = "";
     map<string, map<string, string> >::iterator iter;
@@ -743,11 +762,13 @@ void Game::setObjects(PostParsingStruct* cpps, bool notfullfornetmode)
             state = cpps->getValue("monster_" + monsterid, "state");
             numberOfAction = atoi( cpps->getValue("monster_" + monsterid, "numberOfAction").c_str() );
             dopNumberOfAction = atoi( cpps->getValue("monster_" + monsterid, "dopNumberOfAction").c_str() );
+            bool isHighlighted = atoi( cpps->getValue("monster_" + monsterid, "isHighlighted").c_str() );
             keymonster = s_GameInfo->s_FactoryMonsters->addMonsterImmediately(number, coordX, coordY, false);
             s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_CurrentLives = currentLives;
             s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_State = state;
             s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_NumberOfAction = numberOfAction;
             s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_AdditionalNumberOfAction = dopNumberOfAction;
+            s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_IsHighlighted = isHighlighted;
             map<string, string>::iterator iter1;
             for( iter1 = cpps->getMapVariables()["AIMonsterValues_monster_" + monsterid].begin(); iter1 != cpps->getMapVariables()["AIMonsterValues_monster_" + monsterid].end(); iter1++)
                 s_GameInfo->s_FactoryMonsters->s_Monsters[keymonster]->s_AIMonsterValues[iter1->first] = iter1->second;
@@ -798,6 +819,21 @@ void Game::setObjects(PostParsingStruct* cpps, bool notfullfornetmode)
             string bonuseid = cpps->getValue(iter->first, "id");
             int key = atoi( bonuseid.c_str() );
             s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][key] = atoi( cpps->getValue(iter->first, "i").c_str() );
+        }
+        else if(iter->first == "TilesChanges")
+        {
+            map<string, string> tmp_map = cpps->getMapVariables("TilesChanges");
+            map<string, string>::iterator iter1, iter2;
+            for(iter1 = tmp_map.begin(), iter2 = tmp_map.end(); iter1 != iter2; iter1++)
+            {
+                string par = iter1->first;
+                map<int, string> split_mas_tmp;
+                WorkFunctions::ParserFunctions::splitMassString(&split_mas_tmp, 2, 0, par, STRING_CONSTANTS::SPLITTER_STR_PARAMETERS_GAME_TILES_CHANGES_SEND);
+                int number_field = atoi(split_mas_tmp[0].c_str());
+                int index_in_layer = atoi(split_mas_tmp[1].c_str());
+                int tileid = atoi(iter1->second.c_str());
+                s_Data->s_Level->setTileIDByIndex(index_in_layer, number_field, tileid, false, false);
+            }
         }
 }
 

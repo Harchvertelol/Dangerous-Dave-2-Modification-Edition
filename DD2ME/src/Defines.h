@@ -13,6 +13,7 @@ namespace STRING_CONSTANTS
 {
     const std::string SPLITTER_STR_VARIABLE = "\n";
     const std::string SPLITTER_STR_VARIABLE_PARAMS_LUA = ";";
+    const std::string SPLITTER_STR_PARAMETERS_GAME_TILES_CHANGES_SEND = ",";
     const std::string MISSING_ID_SERVER = "-1";
     const std::string SC_TITLE_WINDOW = "DD2 Remake: ME v0.9 pre-beta";
     const std::string SC_GAME_VERSION_DISPLAY = "pre-beta v0.9";
@@ -38,6 +39,12 @@ namespace NUMBER_CONSTANTS
     const float NC_EPS = 0.0000001;
     const float NC_API_VERSION = 0.1;
     const float NC_LEVEL_FORMAT_VERSION = 0.1;
+    /* Информация по каналам (0, 2, 3):
+    0 - команды (доставляются обязательно)
+    1 - служебный канал irrNetLite
+    2 - канал для упорядоченных необязательных пакетов
+    3 - канал для обязательных пакетов (не команд), доставляются обязательно
+    */
     const int NC_ENET_NUMBER_CHANNELS = 3;
 }
 

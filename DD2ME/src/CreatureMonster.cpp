@@ -72,7 +72,7 @@ bool CreatureMonster::correctionPhys(int coord, int what, bool ladder)
     for(int i = 0; i < SizeXMonster; i++) TileCoordX[i] = roundNumber(s_CoordX,16,-1) + i*16;
     for(int i = 0; i < SizeYMonster; i++) TileCoordY[i] = roundNumber(s_CoordY,16,-1) + i*16;
     bool col = false;
-    int sign;
+    int sign = 0;
     if(what == 0) sign = (s_CoordX - coord)/abs(s_CoordX - coord);
     if(what == 1) sign = (s_CoordY - coord)/abs(s_CoordY - coord);
     int TileType = 0;

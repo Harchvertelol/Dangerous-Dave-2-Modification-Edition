@@ -108,6 +108,10 @@
 		<Unit filename="NetClient/NetClientCallback.cpp" />
 		<Unit filename="NetClient/NetClientCallback.h" />
 		<Unit filename="NetClient/NetInfoStruct.h" />
+		<Unit filename="NetServer/NetServerCallback.cpp" />
+		<Unit filename="NetServer/NetServerCallback.h" />
+		<Unit filename="NetServer/Server.cpp" />
+		<Unit filename="NetServer/Server.h" />
 		<Unit filename="Player.cpp" />
 		<Unit filename="Player.h" />
 		<Unit filename="Screens.cpp" />
@@ -126,6 +130,8 @@
 		<Unit filename="Thread/Thread.h" />
 		<Unit filename="Timers.cpp" />
 		<Unit filename="Timers.h" />
+		<Unit filename="UserData.cpp" />
+		<Unit filename="UserData.h" />
 		<Unit filename="Version.h" />
 		<Unit filename="WorkFunctions.cpp" />
 		<Unit filename="WorkFunctions.h" />

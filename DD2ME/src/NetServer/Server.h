@@ -31,6 +31,9 @@ class Server
         void tick();
         //...
         void sendCreaturesList(std::string gameclassid, std::string params, bool notfullfornetmode = false, int playerId = 0, bool IsUnreliable = false);
+        void playerLeaveServer(int playerId, bool sendconfirm = true);
+        void sendOpenDoor(std::string type, int x, int y);
+        void sendSetTileID(int x, int y, int numberfield, int tileid);
 };
 
 #endif // SERVER_H

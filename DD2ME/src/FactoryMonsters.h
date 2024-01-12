@@ -31,6 +31,7 @@ class FactoryMonsters
         void removeMonster(int);
         void addMonstersFromQueue();
         bool isExistsById(unsigned int);
+        CreatureMonster* getMonsterById(int id);
         void live();
         void clear();
         void reloadAIAll();

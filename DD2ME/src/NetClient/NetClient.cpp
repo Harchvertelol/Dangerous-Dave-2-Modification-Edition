@@ -24,7 +24,8 @@ using namespace IniParser;
 NetClient::NetClient(Game* gameclass):
     s_GameClass(gameclass),
     s_NetInfo(0),
-    s_MyID(-1)
+    s_MyID(-1),
+    s_NetManager(0)
 {
     s_NetClientCallback = new NetClientCallback(this);
     s_NetInfoStruct = new NetInfoStruct;
@@ -263,6 +264,20 @@ void NetClient::sendInfoFromClient()
                     s_GameClass->s_GameInfo->s_MyPlayer->s_KeysState->s_KeyUp << s_GameClass->s_GameInfo->s_MyPlayer->s_ControlJumpPressed << s_GameClass->s_GameInfo->s_MyPlayer->s_ControlShootPressed;
     sendOutPacketUnreliable(packet, -1, 2, true);
     packet.clearData();
+}
+
+void NetClient::sendOpenDoor(string type, int x, int y)
+{
+    SOutPacket packet;
+	packet << PT_OPEN_DOOR << type << x << y;
+	sendOutPacket(packet, -1, 3);
+}
+
+void NetClient::sendSetTileID(int x, int y, int numberfield, int tileid)
+{
+    SOutPacket packet;
+	packet << PT_SET_TILE_ID << x << y << numberfield << tileid;
+	sendOutPacket(packet, -1, 3);
 }
 
 void NetClient::leaveServer()

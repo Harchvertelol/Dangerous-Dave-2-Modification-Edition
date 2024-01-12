@@ -36,7 +36,8 @@ int main(int argc, char** argv)
     #endif
 
     string name = "Player", pass = "", host = "127.0.0.1";
-    int port = 11237;
+    //string name = "Dave", pass = "123", host = "127.0.0.1";
+    int port = 8001;
     bool launch_launcher = false;
     if(argc == 1) launch_launcher = true;
     else if(argc == 2)
@@ -71,14 +72,14 @@ int main(int argc, char** argv)
         nc->s_NetInfoStruct->s_goGame = false;
         nc->s_NetInfoStruct->s_goGameOnServer = false;
         gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Singleplayer mode On...");
-        nc->s_NetInfoStruct->s_Mode = "singleplayer";
+        nc->s_NetInfoStruct->s_Mode = NM_SINGLEPLAYER;
     }
     else
     {
         nc->s_NetInfoStruct->s_goGame = true;
         nc->s_NetInfoStruct->s_goGameOnServer = false;
         gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Multiplayer mode On...");
-        nc->s_NetInfoStruct->s_Mode = "multiplayer";
+        nc->s_NetInfoStruct->s_Mode = NM_MULTIPLAYER;
         gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Connecting to server ( " + string(nc->s_NetInfoStruct->s_Host) + ":" + WorkFunctions::ConvertFunctions::itos(nc->s_NetInfoStruct->s_Port) + " )...");
         if(!nc->connect()) return 0;
         gm->s_Logger->registerEvent(EVENT_TYPE_INFO, "Connected.");
@@ -86,7 +87,7 @@ int main(int argc, char** argv)
 
     do
     {
-        if(nc->s_NetInfoStruct->s_Mode == "multiplayer")
+        if(nc->s_NetInfoStruct->s_Mode == NM_MULTIPLAYER)
             if(!nc->netGameStartWork())
                 return 0;
         //...
@@ -126,8 +127,8 @@ int main(int argc, char** argv)
             return 0;
         }
         gm->startGame(0);
-        if(nc->s_NetInfoStruct->s_Mode == "singleplayer") gm->play();
-        else if(nc->s_NetInfoStruct->s_Mode == "multiplayer")
+        if(nc->s_NetInfoStruct->s_Mode == NM_SINGLEPLAYER) gm->play();
+        else if(nc->s_NetInfoStruct->s_Mode == NM_MULTIPLAYER)
         {
             string keySL = "";
             map<string, map<string, string > >::iterator iter__;

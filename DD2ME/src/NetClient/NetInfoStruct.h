@@ -37,35 +37,47 @@ enum PACKETS_TYPES
     PT_PLAYER_COORDS = 1,
     PT_PLAYER_CONNECTED,
     PT_PLAYER_STATE,
-    PT_PLAYER_KEYS_STATE
+    PT_PLAYER_KEYS_STATE,
+    PT_PLAYER_DISCONNECTED_FROM_SERVER,
+    PT_OPEN_DOOR,
+    PT_SET_TILE_ID
+};
+
+enum NET_MODE
+{
+    NM_NOTDEFINED = 0,
+    NM_SINGLEPLAYER,
+    NM_MULTIPLAYER,
+    NM_SERVER
 };
 
 struct NetInfoStruct
 {
-    bool s_goGame;
-    bool s_goGameOnServer;
-    std::string s_Name;
-    std::string s_Pass;
-    std::string s_Host;
-    int s_Port;
+    bool s_goGame = false;
+    bool s_goGameOnServer = false;
+    std::string s_Name = "";
+    std::string s_Pass = "";
+    std::string s_Host = "";
+    int s_Port = -1;
     //...
-    bool s_Sleep_1;
-    bool s_Sleep_2;
-    bool s_Sleep_3;
-    bool s_Sleep_4;
+    bool s_Sleep_1 = false;
+    bool s_Sleep_2 = false;
+    bool s_Sleep_3 = false;
+    bool s_Sleep_4 = false;
     //...
-    bool s_SuperSleep_1;
+    bool s_SuperSleep_1 = false;
     //...
-    std::string s_Error;
+    std::string s_Error = "";
     //...
-    std::string s_Mode;
+    NET_MODE s_Mode = NM_NOTDEFINED;
+    void* s_Server = 0;
     //...
-    bool s_WaitingGettingCreatureList;
-    bool s_WaitingConfirmGettingFullInfoFromClient;
-    bool s_WaitingConfirmLeaveServer;
+    bool s_WaitingGettingCreatureList = false;
+    bool s_WaitingConfirmGettingFullInfoFromClient = false;
+    bool s_WaitingConfirmLeaveServer = false;
     //...
-    IniParser::PostParsingStruct* s_ServerList;
-    unsigned int s_ServerIdNow;
+    IniParser::PostParsingStruct* s_ServerList = 0;
+    unsigned int s_ServerIdNow = -1;
 };
 
 #endif

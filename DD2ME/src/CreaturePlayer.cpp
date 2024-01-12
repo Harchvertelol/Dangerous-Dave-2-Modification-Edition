@@ -169,62 +169,19 @@ void CreaturePlayer::live(bool doKey)
         if(s_FreezeJump == 0) s_State = direction + "jumpdown";
         else s_FreezeJump--;
     }
-    else if(s_State == "dooropen")
+    else if(s_IsControlled && s_State == "dooropen")
     {
         s_GameClass->s_Data->s_Sounds->play("opendoor");
         s_TimeDoorOpen--;
         if(s_TimeDoorOpen == 0)
         {
             s_State = s_StateBeforeOpenDoor;
-            if(s_HowDoorOpen == "bonus")
-            {
-                s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][(s_CoordY - 1)/16*SizeXLev + s_CoordX/16] = s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][s_CoordY/16*SizeXLev + s_CoordX/16];
-                s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][s_CoordY/16*SizeXLev + s_CoordX/16] = 0;
-                typeexit = "bonus";
-            }
-            else if(s_HowDoorOpen == "exit")
-            {
-                s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordY/16*SizeXLev + s_CoordX/16] = s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordY/16*SizeXLev + s_CoordX/16]*(-1);
-                typeexit = "exit";
-            }
-            else if(s_HowDoorOpen == "exitlevel")
-            {
-                s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][s_CoordY/16*SizeXLev + s_CoordX/16] = s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][s_CoordY/16*SizeXLev + s_CoordX/16]*(-1);
-                typeexit = "exit";
-            }
-            //TileDoor = s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][s_CoordY/16*SizeXLev + s_CoordX/16];
-            TileDoor = s_GameClass->s_Data->s_Level->getTileID(s_CoordX/16, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField());
-            numberofdoors = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("info","numberofdoors").c_str() );
-            for(int i = 0; i < numberofdoors; i++)
-            {
-                numberofhandletiles = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"numberofhandletiles").c_str() );
-                for(int j = 0; j < numberofhandletiles; j++)
-                {
-                    if( typeexit == s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"type") && atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"handletile" + itos(j+1) ).c_str() ) == TileDoor)
-                    {
-                        /*s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() );
-                        s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() );
-                        s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() );
-                        s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() );
-                        s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() );
-                        s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() );*/
-
-                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, (s_CoordY - 16)/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() ) );
-                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, (s_CoordY - 16)/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() ) );
-                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() ) );
-                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() ) );
-                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, (s_CoordY + 16)/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() ) );
-                        s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, (s_CoordY + 16)/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() ) );
-                        break;
-                        break;
-                    }
-                }
-            }
+            s_GameClass->s_Data->s_Level->openDoor(s_HowDoorOpen, s_CoordX/16, s_CoordY/16);
             if(s_State.find("left") != string::npos) s_CoordX -= 8;
             else s_CoordX -= 4;
         }
     }
-    else if(s_State == "doorexit")
+    else if(s_IsControlled && s_State == "doorexit")
     {
         s_NumberOfAction = s_OldNumberOfAction;
         if(s_GameClass->s_AnimationStep - s_OldAnSt > (unsigned int)atoi( s_GameClass->s_IniFile->getValue("gamesettings", "timeexitdoor").c_str() ) )
@@ -240,12 +197,14 @@ void CreaturePlayer::live(bool doKey)
             s_State = s_StateBeforeOpenDoor;
             if(s_HowDoorOpen == "exit")
             {
-                x = 16*(s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordY/16*SizeXLev + s_CoordX/16]%SizeXLev + 1);
-                y = 16*((s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordY/16*SizeXLev + s_CoordX/16] - s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordX/16*SizeXLev + s_CoordY/16]%SizeXLev)/SizeXLev + 1);
+                int tmp_elem = s_GameClass->s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_DOORS, s_CoordY/16*SizeXLev + s_CoordX/16);
+                //int tmp_elem2 = s_GameClass->s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_DOORS, s_CoordX/16*SizeXLev + s_CoordY/16);
+                x = 16*(tmp_elem%SizeXLev + 1);
+                y = 16*((tmp_elem - tmp_elem%SizeXLev)/SizeXLev + 1);
                 s_CoordX = x;
                 s_CoordY = y;
                 //TileDoor = s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][s_CoordY/16*SizeXLev + s_CoordX/16];
-                TileDoor = s_GameClass->s_Data->s_Level->getTileID(s_CoordX/16, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField());
+                /*TileDoor = s_GameClass->s_Data->s_Level->getTileID(s_CoordX/16, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField());
                 numberofdoors = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("info","numberofdoors").c_str() );
                 s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordY/16*SizeXLev + s_CoordX/16] = abs(s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][s_CoordY/16*SizeXLev + s_CoordX/16]);
                 typeexit = "exit";
@@ -256,13 +215,6 @@ void CreaturePlayer::live(bool doKey)
                     {
                         if( typeexit == s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"type") && atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"handletile" + itos(j+1) ).c_str() ) == TileDoor)
                         {
-                            /*s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() );
-                            s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY - 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() );
-                            s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() );
-                            s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() );
-                            s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16 - 1] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() );
-                            s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_TILES][(s_CoordY + 16)/16*SizeXLev + s_CoordX/16] = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() );*/
-
                             s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, (s_CoordY - 16)/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(1) ).c_str() ) );
                             s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16, (s_CoordY - 16)/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(2) ).c_str() ) );
                             s_GameClass->s_Data->s_Level->setTileID(s_CoordX/16 - 1, s_CoordY/16, s_GameClass->s_Data->s_Level->getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(3) ).c_str() ) );
@@ -273,7 +225,8 @@ void CreaturePlayer::live(bool doKey)
                             break;
                         }
                     }
-                }
+                }*/
+                s_GameClass->s_Data->s_Level->openDoor(s_HowDoorOpen, s_CoordX/16, s_CoordY/16);
                 s_CoordX -= 4;
             }
             else if(s_HowDoorOpen == "exitlevel")
@@ -282,7 +235,8 @@ void CreaturePlayer::live(bool doKey)
                 s_AdditionalNumberOfAction = 0;
                 s_OldAnSt = 0;
                 s_OldNumberOfAction = 0;
-                s_GameClass->changeLevel(s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][s_CoordY/16*SizeXLev + s_CoordX/16]);
+                //s_GameClass->changeLevel(s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][s_CoordY/16*SizeXLev + s_CoordX/16]);
+                s_GameClass->changeLevel(s_GameClass->s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS, s_CoordY/16*SizeXLev + s_CoordX/16));
             }
         }
     }
@@ -509,7 +463,7 @@ bool CreaturePlayer::testOpenDoor()
     int frame = s_NumberOfAction%numberofframes;
     int SizeXLev = atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() );
     s_StateBeforeOpenDoor = s_State;
-    if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] != 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    if( s_GameClass->s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_BONUSDOORS, TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16) != 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[0];
         s_CoordY = TileCoordY[0];
@@ -518,7 +472,7 @@ bool CreaturePlayer::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("gamesettings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSDOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] != 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_BONUSDOORS, TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16) != 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[1];
         s_CoordY = TileCoordY[1];
@@ -527,7 +481,7 @@ bool CreaturePlayer::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("gamesettings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_DOORS, TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16) < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[0];
         s_CoordY = TileCoordY[0];
@@ -536,7 +490,7 @@ bool CreaturePlayer::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("gamesettings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_DOORS, TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16) < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[1];
         s_CoordY = TileCoordY[1];
@@ -545,7 +499,7 @@ bool CreaturePlayer::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("gamesettings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS, TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16) < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[0];
         s_CoordY = TileCoordY[0];
@@ -554,7 +508,7 @@ bool CreaturePlayer::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("gamesettings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS, TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16) < 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[1];
         s_CoordY = TileCoordY[1];
@@ -563,7 +517,7 @@ bool CreaturePlayer::testOpenDoor()
         s_TimeDoorOpen = atoi( s_GameClass->s_IniFile->getValue("gamesettings","timedooropen").c_str() );
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_DOORS, TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16) > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[0] - 10;
         s_CoordY = TileCoordY[0];
@@ -575,7 +529,7 @@ bool CreaturePlayer::testOpenDoor()
         s_OldAnSt = s_GameClass->s_AnimationStep;
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_DOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_DOORS, TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16) > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[1] - 10;
         s_CoordY = TileCoordY[1];
@@ -587,7 +541,7 @@ bool CreaturePlayer::testOpenDoor()
         s_OldAnSt = s_GameClass->s_AnimationStep;
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS, TileCoordY[0]/16*SizeXLev + TileCoordX[0]/16) > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[0], TileCoordY[0], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[0] - 10;
         s_CoordY = TileCoordY[0];
@@ -599,7 +553,7 @@ bool CreaturePlayer::testOpenDoor()
         s_OldAnSt = s_GameClass->s_AnimationStep;
         return true;
     }
-    else if( s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS][TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16] > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
+    else if( s_GameClass->s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_EXITLEVELDOORS, TileCoordY[1]/16*SizeXLev + TileCoordX[1]/16) > 0 && testCollision(s_CoordX, s_CoordY, TileCoordX[1], TileCoordY[1], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], Square(0,0,15,15)) )
     {
         s_CoordX = TileCoordX[1] - 10;
         s_CoordY = TileCoordY[1];
@@ -721,7 +675,7 @@ void CreaturePlayer::testGetBonuses()
     int SizeXLev = atoi( ( s_GameClass->s_Data->s_Level->s_Params->getValue("info", "sizeX") ).c_str() );
     for(int i = 0; i < 6; i++)
     {
-        bonus = s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][ TileCoordY[i]*SizeXLev/16 + TileCoordX[i]/16 ];
+        bonus = s_GameClass->s_Data->s_Level->getFieldElement(STRING_CONSTANTS::NAME_FIELD_BONUSES, TileCoordY[i]*SizeXLev/16 + TileCoordX[i]/16);
         if(bonus != 0)
         {
             numberofframes = atoi ( s_GameClass->s_Data->s_Bonuses->s_BonusesInfo[bonus-1]->getValue("info", "numberofframes").c_str() );
@@ -729,7 +683,7 @@ void CreaturePlayer::testGetBonuses()
             if(testCollision(s_CoordX, s_CoordY, TileCoordX[i], TileCoordY[i], s_GameClass->s_Data->s_Player->s_Collisions[s_State][frame], s_GameClass->s_Data->s_Bonuses->s_Collisions[bonus - 1][frame_bonus] ) )
             {
                 CrPoints = s_CurrentPoints;
-                s_GameClass->s_Data->s_Level->s_Fields[STRING_CONSTANTS::NAME_FIELD_BONUSES][ TileCoordY[i]*SizeXLev/16 + TileCoordX[i]/16 ] = 0;
+                s_GameClass->s_Data->s_Level->setBonus(TileCoordX[i]/16, TileCoordY[i]/16, 0);
                 int numb_points = atoi( s_GameClass->s_Data->s_Bonuses->s_BonusesInfo[bonus-1]->getValue("info", "point").c_str() );
                 s_CurrentPoints += numb_points;
                 int numb_ups = atoi( s_GameClass->s_Data->s_Bonuses->s_BonusesInfo[bonus-1]->getValue("info", "up").c_str() );
@@ -817,7 +771,7 @@ bool CreaturePlayer::correctionPhys(int coord, int what)
     for(int i = 0; i < SizeXPlayer; i++) TileCoordX[i] = roundNumber(s_CoordX,16,-1) + i*16;
     for(int i = 0; i < SizeYPlayer; i++) TileCoordY[i] = roundNumber(s_CoordY,16,-1) + i*16;
     bool col = false;
-    int sign;
+    int sign = 0;
     if(what == 0) sign = (s_CoordX - coord)/abs(s_CoordX - coord);
     if(what == 1) sign = (s_CoordY - coord)/abs(s_CoordY - coord);
     int TileType = 0;
@@ -977,7 +931,7 @@ void CreaturePlayer::testShoot()
                                 if(s_GameClass->s_Data->s_Monsters->s_MonstersInfo[iter->second->s_Number - 1]->isExists("other", "timehighlightingonhit")) time_highl_on_hit = atoi(s_GameClass->s_Data->s_Monsters->s_MonstersInfo[iter->second->s_Number - 1]->getValue("other", "timehighlightingonhit").c_str());
                                 tgui::Timer::scheduleCallback([=]()
                                                     {
-                                                        if(s_GameClass->s_GameInfo->s_FactoryMonsters->isExistsById(mnst_id_for_lambda_func)) iter->second->s_IsHighlighted = false;
+                                                        if(s_GameClass->s_GameInfo->s_FactoryMonsters->isExistsById(mnst_id_for_lambda_func)) s_GameClass->s_GameInfo->s_FactoryMonsters->getMonsterById(mnst_id_for_lambda_func)->s_IsHighlighted = false;
                                                     }, time_highl_on_hit);
                             }
                             if(iter->second->s_CurrentLives == 0)
