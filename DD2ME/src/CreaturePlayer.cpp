@@ -84,7 +84,7 @@ void CreaturePlayer::live(bool doKey)
     else dir = -1;
     if(s_ShootNow > 0)
     {
-        if(s_ShootNow == 2*timeshoot/3 )
+        if(s_ShootNow == 2*timeshoot/3)
         {
             if(s_Cartridges <= 0)
             {
