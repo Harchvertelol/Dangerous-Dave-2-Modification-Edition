@@ -41,7 +41,7 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add directory="E:/GitHub/HarchIrrNetLite/include/" />
+			<Add directory="../include/" />
 			<Add directory="enet/include" />
 			<Add directory="zlib" />
 		</Compiler>
