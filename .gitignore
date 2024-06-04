@@ -34,5 +34,4 @@
 # Windows special file
 Thumbs.db
 *.depend
-*.layout
 *.log
