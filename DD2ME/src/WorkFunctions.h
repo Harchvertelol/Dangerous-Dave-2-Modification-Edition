@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <map>
+#include <vector>
 
 #include "Defines.h"
 
@@ -41,8 +42,11 @@ namespace WorkFunctions
     namespace FileFunctions
     {
         bool isFileExists(std::string name);
+        bool isDirectory(std::string name);
         bool createFolders(std::string folder, std::string foldersplitter = STRING_CONSTANTS::DEFAULT_FOLDER_SPLITTER);
+        bool createFoldersForFile(std::string fullfilename, std::string foldersplitter = STRING_CONSTANTS::DEFAULT_FOLDER_SPLITTER);
         std::string fileToString(std::string);
+        std::vector<std::string> getListAllFiles(std::string foldername, std::vector<std::string> push_arr = std::vector<std::string>());
     };
     namespace GameFunctions
     {
