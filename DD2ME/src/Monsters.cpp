@@ -240,7 +240,7 @@ void Monsters::drawMonster(int number, string anim, int frame, int x, int y, boo
         s_CacheImages[number - 1][anim][frame]->setPosition(x, y);
         if(is_highlighted && str_highlite_mode == "fill")
         {
-            if (!sf::Shader::isAvailable()) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Shaders not avaliable!");
+            if(!sf::Shader::isAvailable()) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Shaders not avaliable!");
             else
             {
                 const std::string highlight_shader_code = \

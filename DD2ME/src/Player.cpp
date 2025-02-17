@@ -129,6 +129,94 @@ void Player::drawPlayer(string anim, int frame, int x, int y)
     {
         //s_GameClass->s_Window->draw( Image( (*s_CacheImages[anim][frame]), x, y) );
         s_CacheImages[anim][frame]->setPosition(x, y);
+
+        if(!sf::Shader::isAvailable()) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Shaders not avaliable!");
+        else
+        {
+            // Параметры для шейдера
+            std::vector<sf::Glsl::Vec4> colors = {
+                {0.9f, 0.3f, 0.3f, 1.0f},
+                {0.65f, 0.0f, 0.0f, 1.0f},
+                {0.0f, 0.0f, 1.0f, 1.0f}
+            };
+
+            std::vector<sf::Glsl::Vec4> deviations = {
+                {0.1f, 0.1f, 0.1f, 0.1f},
+                {0.1f, 0.1f, 0.1f, 0.1f},
+                {0.1f, 0.1f, 0.1f, 0.1f}
+            };
+
+            std::vector<sf::Glsl::Vec4> multipliers = {
+                {0.0f, 2.0f, 2.0f, 1.0f},
+                {0.0f, 2.0f, 2.0f, 1.0f},
+                {1.0f, 1.0f, 2.0f, 1.0f}
+            };
+
+            std::vector<sf::Glsl::Vec4> addValues = {
+                {0.0f, 0.0f, 0.0f, 0.0f},
+                {0.0f, 0.2f, 0.2f, 0.0f},
+                {0.0f, 0.0f, 0.0f, 0.0f}
+            };
+            int paramCount = colors.size(); // Количество параметров
+            const std::string colors_shift_shader_code = R"(
+                                                            uniform vec4 colors[10];      // Массив цветов (ARGB)
+                                                            uniform vec4 deviations[10];  // Массив отклонений (ARGB)
+                                                            uniform vec4 multipliers[10]; // Массив множителей (ARGB)
+                                                            uniform vec4 addValues[10];   // Массив сдвигов (ARGB)
+                                                            uniform int paramCount;        // Количество переданных параметров
+
+                                                            uniform sampler2D texture;   // Текстура
+
+                                                            void main() {
+                                                                vec4 pixelColor = texture2D(texture, gl_TexCoord[0].xy); // Получаем цвет пикселя из текстуры
+
+                                                                for (int i = 0; i < 10; i++) {
+                                                                    if (i >= paramCount) break; // Прерываем цикл, если достигли конца переданных параметров
+
+                                                                    vec4 targetColor = colors[i];
+                                                                    vec4 deviation = deviations[i];
+                                                                    vec4 multiplier = multipliers[i];
+                                                                    vec4 addvls = addValues[i];
+
+                                                                    // Проверяем, находится ли пиксель в диапазоне отклонения
+                                                                    bool inRange = true;
+                                                                    for (int j = 0; j < 4; j++) { // Проверяем все 4 канала (ARGB)
+                                                                        if (pixelColor[j] < targetColor[j] - deviation[j] || pixelColor[j] > targetColor[j] + deviation[j]) {
+                                                                            inRange = false;
+                                                                            break;
+                                                                        }
+                                                                    }
+
+                                                                    // Если пиксель находится в диапазоне, умножаем его цвет на множитель
+                                                                    if (inRange) {
+                                                                        pixelColor *= multiplier;
+                                                                        pixelColor += addvls;
+                                                                        break; // Прерываем цикл, так как пиксель уже обработан
+                                                                    }
+                                                                }
+
+                                                                gl_FragColor = pixelColor; // Возвращаем итоговый цвет пикселя
+                                                            }
+                                                            )";
+            Shader colors_shift_shader;
+            if(!colors_shift_shader.loadFromMemory(colors_shift_shader_code, Shader::Fragment)) s_GameClass->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Colors shift shader load failed!");
+            else
+            {
+                // Передаем параметры в шейдер
+                for (int i = 0; i < paramCount; i++) {
+                    colors_shift_shader.setUniform("colors[" + WorkFunctions::ConvertFunctions::itos(i) + "]", colors[i]);
+                    colors_shift_shader.setUniform("deviations[" + WorkFunctions::ConvertFunctions::itos(i) + "]", deviations[i]);
+                    colors_shift_shader.setUniform("multipliers[" + WorkFunctions::ConvertFunctions::itos(i) + "]", multipliers[i]);
+                    colors_shift_shader.setUniform("addValues[" + WorkFunctions::ConvertFunctions::itos(i) + "]", addValues[i]);
+                }
+                colors_shift_shader.setUniform("paramCount", paramCount);
+                colors_shift_shader.setUniform("texture", Shader::CurrentTexture);
+
+                //s_GameClass->s_RenderTexture->draw(*s_CacheImages[anim][frame], &colors_shift_shader);
+                //return;
+            }
+        }
+
         s_GameClass->s_RenderTexture->draw(*s_CacheImages[anim][frame]);
     }
 }
