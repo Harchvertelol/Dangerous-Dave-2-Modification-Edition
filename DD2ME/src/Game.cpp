@@ -45,7 +45,7 @@ namespace
                 break;
         }*/
         //if(wParam==SC_KEYMENU && (lParam>>16)<=0) return 0;
-        if(!ourInst->s_RenderWindow->hasFocus()) return;
+        if(ourInst->s_RenderWindow != 0 && !ourInst->s_RenderWindow->hasFocus()) return;
         int gameState = ourInst->s_GameInfo->s_GameState;
         /*if(gameState == 0) return ourInst->s_StateManager->s0(hwnd, uMsg, wParam, lParam);
         if(gameState == 1) return ourInst->s_StateManager->s1(hwnd, uMsg, wParam, lParam);
@@ -414,10 +414,10 @@ void Game::play()
         {
             calculateTechnicalFPS();
             MyWndProc(event);
+            s_Gui->s_TGUI->handleEvent(event);
         }
         vector<int> timers_ticks = s_Timers.getTimersTicks();
         for(int i = 0; i < timers_ticks.size(); i++) onTimer(timers_ticks[i]);
-        s_Gui->s_TGUI->handleEvent(event);
     }
 
     /*MSG msg;
@@ -439,11 +439,11 @@ void Game::processAllEvents(int maxEvents)
         {
             calculateTechnicalFPS();
             MyWndProc(event);
+            if(s_NetClient->s_NetInfo->getValue("video", "graphicmodegame") == "true") s_Gui->s_TGUI->handleEvent(event);
         }
     }
     vector<int> timers_ticks = s_Timers.getTimersTicks();
     for(int i = 0; i < timers_ticks.size() && i < maxEvents; i++) onTimer(timers_ticks[i]);
-    if(s_NetClient->s_NetInfo->getValue("video", "graphicmodegame") == "true") s_Gui->s_TGUI->handleEvent(event);
     s_Gui->s_TGUI->updateTime();
     /*Message m;
     for(int i = 0; i < maxEvents && m.peek() == true; i++)

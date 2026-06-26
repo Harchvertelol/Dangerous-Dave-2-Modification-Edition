@@ -522,7 +522,8 @@ bool Level::openDoor(string type, int x_coord, int y_coord, bool sendtonet)
     }
     TileDoor = getTileID(x_coord, y_coord, getNumberObjectsTilesField());
     numberofdoors = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("info","numberofdoors").c_str() );
-    for(int i = 0; i < numberofdoors; i++)
+    bool end_main_cycle_now = false;
+    for(int i = 0; i < numberofdoors && !end_main_cycle_now; i++)
     {
         numberofhandletiles = atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"numberofhandletiles").c_str() );
         for(int j = 0; j < numberofhandletiles; j++)
@@ -535,7 +536,7 @@ bool Level::openDoor(string type, int x_coord, int y_coord, bool sendtonet)
                 setTileID(x_coord, y_coord, getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(4) ).c_str() ), false);
                 setTileID(x_coord - 1, y_coord + 1, getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(5) ).c_str() ), false);
                 setTileID(x_coord, y_coord + 1, getNumberObjectsTilesField(), atoi( s_GameClass->s_Data->s_Textures->s_TilesInfo->getValue("door_" + itos(i+1),"opentile" + itos(6) ).c_str() ), false);
-                break;
+                end_main_cycle_now = true;
                 break;
             }
         }

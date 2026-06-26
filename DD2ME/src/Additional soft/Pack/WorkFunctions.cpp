@@ -111,7 +111,7 @@ string WorkFunctions::ParserFunctions::cryptString(string str, string key)
 {
     string ret_str = str;
     string tmp_key = key;
-    char shift_key = tmp_key[0];
+    unsigned char shift_key = tmp_key[0];
     for(size_t i = 0; i < ret_str.size(); i++)
     {
         ret_str[i] += tmp_key[i % tmp_key.size()];
@@ -124,7 +124,7 @@ string WorkFunctions::ParserFunctions::decryptString(string str, string key)
 {
     string ret_str = str;
     string tmp_key = key;
-    char shift_key = tmp_key[0];
+    unsigned char shift_key = tmp_key[0];
     for(size_t i = 0; i < ret_str.size(); i++)
     {
         ret_str[i] -= tmp_key[i % tmp_key.size()];

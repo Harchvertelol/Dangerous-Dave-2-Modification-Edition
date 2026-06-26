@@ -91,7 +91,7 @@ void Server::onCommand(const int playerId, const std::string& cmd)
             if(name != UserIni->getValue("login", "name") || pass != UserIni->getValue("login", "pass")) confirm = false;
             else confirm = true;
         }
-        if(s_MainServer->s_Server->s_ClientsId[UserIni->getValue("login", "name")] != 0) confirm = false;
+        if(UserIni && s_MainServer->s_Server->s_ClientsId[UserIni->getValue("login", "name")] != 0) confirm = false;
         if(confirm == false)
         {
             str_send = addMainVariableString(str_send, "login", STRING_CONSTANTS::SPLITTER_STR_VARIABLE);
@@ -107,9 +107,13 @@ void Server::onCommand(const int playerId, const std::string& cmd)
         packet << str_send;
         sendOutPacket(packet, playerId);
 
-        if(s_Clients[playerId].s_UserInfo != 0) delete s_Clients[playerId].s_UserInfo;
-        s_Clients[playerId].s_UserInfo = UserIni;
-        s_MainServer->s_Server->s_ClientsId[UserIni->getValue("login", "name")] = playerId;
+        if(confirm)
+        {
+            if(s_Clients[playerId].s_UserInfo != 0) delete s_Clients[playerId].s_UserInfo;
+            s_Clients[playerId].s_UserInfo = UserIni;
+            s_MainServer->s_Server->s_ClientsId[UserIni->getValue("login", "name")] = playerId;
+        }
+        else if(UserIni) delete UserIni;
     }
     if(s_Clients[playerId].s_UserInfo == 0)
     {
@@ -166,10 +170,10 @@ void Server::doCommand(const int playerId, string command, PostParsingStruct* pp
         {
             return;
         }
-        if(!s_MainServer->s_ListGameClass[id])
-        {
-            return;
-        }
+
+        auto it = s_MainServer->s_ListGameClass.find(id);
+        if(it == s_MainServer->s_ListGameClass.end() || !it->second) return;
+
         if(!s_MainServer->s_ListGameClass[id]->insertPlayer(playerId, 1, s_Clients[playerId].s_UserInfo->getValue("login", "name"), false))
         {
             return;

@@ -149,7 +149,7 @@ int main(int argc, char** argv)
                 {
                     cout << endl;
                     gm->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Server timeout.", true);
-                    return false;
+                    return 0;
                 }
             }
             cout << endl;
@@ -179,7 +179,7 @@ int main(int argc, char** argv)
                 {
                     cout << endl;
                     gm->s_Logger->registerEvent(EVENT_TYPE_ERROR, "Server timeout.");
-                    return false;
+                    return 0;
                 }
             }
             cout << endl;

@@ -15,6 +15,8 @@ using namespace MathFunctions;
 
 using namespace IniParser;
 
+using namespace std;
+
 Level::Level():
     s_Params(0)
 {}

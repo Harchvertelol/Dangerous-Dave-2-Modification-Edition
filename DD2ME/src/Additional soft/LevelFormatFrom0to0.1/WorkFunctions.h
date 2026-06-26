@@ -3,33 +3,35 @@
 #include <iostream>
 #include <sstream>
 #include <map>
+#include <vector>
 
 #include "Defines.h"
 
 #include "Square.h"
 
-using namespace std;
-
 namespace WorkFunctions
 {
     namespace WordFunctions
     {
-        string FirstWord(string);
-        string RemoveFirstWord(string);
+        std::string FirstWord(std::string);
+        std::string RemoveFirstWord(std::string);
+        std::string removeSlashes(std::string);
     };
     namespace ParserFunctions
     {
-        string getNameMainVariable(string);
-        string getNameSecondaryVariable(string);
-        string getValueSecondaryVariable(string);
-        int splitMass(map<int,int>*,int,int,string,string);
-        int splitMassString(map<int,string>*,int,int,string,string);
-        string addMainVariableString(string,string,string);
-        string addSecondaryVariableString(string,string,string,string);
+        std::string getNameMainVariable(std::string);
+        std::string getNameSecondaryVariable(std::string);
+        std::string getValueSecondaryVariable(std::string);
+        int splitMass(std::map<int, int>*, int, int, std::string, std::string);
+        int splitMassString(std::map<int, std::string>*, int, int, std::string, std::string);
+        std::string addMainVariableString(std::string, std::string, std::string);
+        std::string addSecondaryVariableString(std::string, std::string, std::string, std::string);
+        std::string cryptString(std::string, std::string);
+        std::string decryptString(std::string, std::string);
     };
     namespace ConvertFunctions
     {
-        string itos(int);
+        std::string itos(int);
         std::string ftos(float number);
     };
     namespace MathFunctions
@@ -40,11 +42,15 @@ namespace WorkFunctions
     namespace FileFunctions
     {
         bool isFileExists(std::string name);
+        bool isDirectory(std::string name);
         bool createFolders(std::string folder, std::string foldersplitter = STRING_CONSTANTS::DEFAULT_FOLDER_SPLITTER);
+        bool createFoldersForFile(std::string fullfilename, std::string foldersplitter = STRING_CONSTANTS::DEFAULT_FOLDER_SPLITTER);
+        std::string fileToString(std::string);
+        std::vector<std::string> getListAllFiles(std::string foldername, std::vector<std::string> push_arr = std::vector<std::string>());
     };
     namespace GameFunctions
     {
-        bool testCollision(int,int,int,int,Square,Square,bool stand = false, string where = "up");
+        bool testCollision(int,int,int,int,Square,Square,bool stand = false, std::string where = "up");
     };
 };
 #endif

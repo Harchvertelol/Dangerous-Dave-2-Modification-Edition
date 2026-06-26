@@ -92,7 +92,7 @@ bool MainServer::load()
             string levelpack = s_ServerList->getValue(iter->first, "levelpack");
             string playerpack = s_ServerList->getValue(iter->first, "playerpack");
             bool changeAll = false;
-            if(modpack != "standard" || texturepack != "" || monsterpack != "" || bonuspack != "" || screenpack != "" || soundpack != "" || soundpack == "" || levelpack != "" || playerpack != "" || musicpack != "" || guipack != "")
+            if(modpack != "standard" || texturepack != "" || monsterpack != "" || bonuspack != "" || screenpack != "" || soundpack != "" || levelpack != "" || playerpack != "" || musicpack != "" || guipack != "")
             {
                 if(gm->s_IniFile->getValue("resources", "pooling") == "false")
                 {

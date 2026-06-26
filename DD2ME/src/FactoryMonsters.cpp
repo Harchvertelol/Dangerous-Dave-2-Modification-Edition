@@ -80,7 +80,7 @@ bool FactoryMonsters::isMonsterInPlayerRadius(CreaturePlayer* player, CreatureMo
     if(rad_type == MDRT_ACTIVATE)
     {
         radiusX = s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersX;
-        radiusX = s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersY;
+        radiusY = s_GameClass->s_GameInfo->s_CurrentDistanceActivateMonstersY;
     }
     /*if(mnst->s_CoordX <= s_GameClass->s_DisplayStruct->s_GameResolutionX + player->s_ScreenCoordX + 16 * radiusX &&
         mnst->s_CoordX >= player->s_ScreenCoordX - 16 * radiusX &&

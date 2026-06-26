@@ -77,7 +77,7 @@ struct NetInfoStruct
     bool s_WaitingConfirmLeaveServer = false;
     //...
     IniParser::PostParsingStruct* s_ServerList = 0;
-    unsigned int s_ServerIdNow = -1;
+    int s_ServerIdNow = -1;
 };
 
 #endif

@@ -1,6 +1,10 @@
 #include "WorkFunctions.h"
 
+#include <regex>
+
 #include <cstdlib>
+#include <fstream>
+#include <dirent.h>
 
 #ifdef _LINUX_
 #include <sys/io.h>
@@ -13,6 +17,8 @@
 #include <direct.h>
 #endif
 
+using namespace std;
+
 string WorkFunctions::WordFunctions::FirstWord(string str)
 {
     if(str == "" || str.find(" ") == string::npos) return str;
@@ -23,6 +29,13 @@ string WorkFunctions::WordFunctions::RemoveFirstWord(string str)
 {
     if(str == "" || str.find(" ") == string::npos) return "";
     return str.substr(str.find(" ") + 1);
+}
+
+string WorkFunctions::WordFunctions::removeSlashes(string str)
+{
+    str = std::regex_replace(str, std::regex("\\\\n"), "\n");
+    str = std::regex_replace(str, std::regex("\\\\\\n"), "\\n");
+    return str;
 }
 
 string WorkFunctions::ConvertFunctions::itos(int s_Number)
@@ -63,7 +76,7 @@ int WorkFunctions::ParserFunctions::splitMass(map<int,int>* mas, int size, int p
     while(str.find(splitter) != string::npos)
     {
         (*mas)[point] = atoi( str.substr(0, str.find(splitter)).c_str() );
-        str = str.substr(str.find(splitter) + 1);
+        str = str.substr(str.find(splitter) + splitter.size());
         point++;
     }
     (*mas)[point] = atoi( str.substr(0, str.find(splitter)).c_str() );
@@ -71,15 +84,15 @@ int WorkFunctions::ParserFunctions::splitMass(map<int,int>* mas, int size, int p
     return point;
 }
 
-int WorkFunctions::ParserFunctions::splitMassString(map<int,string>* mas, int size, int point, string str, string splitter)
+int WorkFunctions::ParserFunctions::splitMassString(map<int, string>* mas, int size, int point, string str, string splitter)
 {
     while(str.find(splitter) != string::npos)
     {
-        (*mas)[point] = str.substr(0, str.find(splitter)).c_str();
-        str = str.substr(str.find(splitter) + 1);
+        (*mas)[point] = str.substr(0, str.find(splitter));
+        str = str.substr(str.find(splitter) + splitter.size());
         point++;
     }
-    (*mas)[point] = str.substr(0, str.find(splitter)).c_str();
+    (*mas)[point] = str.substr(0, str.find(splitter));
     point++;
     return point;
 }
@@ -94,6 +107,32 @@ string WorkFunctions::ParserFunctions::addSecondaryVariableString(string str, st
     return str + name + "=" + value + splitter;
 }
 
+string WorkFunctions::ParserFunctions::cryptString(string str, string key)
+{
+    string ret_str = str;
+    string tmp_key = key;
+    unsigned char shift_key = tmp_key[0];
+    for(size_t i = 0; i < ret_str.size(); i++)
+    {
+        ret_str[i] += tmp_key[i % tmp_key.size()];
+        for(size_t j = 0; j < tmp_key.size(); j++) tmp_key[j] += shift_key;
+    }
+    return ret_str;
+}
+
+string WorkFunctions::ParserFunctions::decryptString(string str, string key)
+{
+    string ret_str = str;
+    string tmp_key = key;
+    unsigned char shift_key = tmp_key[0];
+    for(size_t i = 0; i < ret_str.size(); i++)
+    {
+        ret_str[i] -= tmp_key[i % tmp_key.size()];
+        for(size_t j = 0; j < tmp_key.size(); j++) tmp_key[j] += shift_key;
+    }
+    return ret_str;
+}
+
 int WorkFunctions::MathFunctions::roundNumber(int number, int divide, int change)
 {
     for(; number % divide != 0; number += change);
@@ -103,6 +142,45 @@ int WorkFunctions::MathFunctions::roundNumber(int number, int divide, int change
 bool WorkFunctions::FileFunctions::isFileExists(string name)
 {
     return access(name.c_str(), 0) != -1;
+}
+
+bool WorkFunctions::FileFunctions::isDirectory(std::string name)
+{
+    if(!isFileExists(name)) return false;
+    ifstream file_test(name.c_str());
+    bool is_dir = false;
+    if(!file_test) is_dir = true;
+    file_test.close();
+    return is_dir;
+}
+
+vector<string> WorkFunctions::FileFunctions::getListAllFiles(string foldername, vector<string> push_arr)
+{
+    if(foldername == "") foldername = ".";
+    DIR *dir_ptr;
+    struct dirent *diread;
+    if( (dir_ptr = opendir(foldername.c_str())) != nullptr)
+    {
+        while ((diread = readdir(dir_ptr)) != nullptr)
+        {
+            string type = "file";
+            string filename = diread->d_name;
+            if(WorkFunctions::FileFunctions::isDirectory(foldername + STRING_CONSTANTS::DEFAULT_FOLDER_SPLITTER + filename)) type = "dir";
+            if(type == "file")
+            {
+                if(foldername != ".") push_arr.push_back(foldername + STRING_CONSTANTS::DEFAULT_FOLDER_SPLITTER + filename);
+                else push_arr.push_back(filename);
+            }
+            else if(filename != "." && filename != "..")
+            {
+                if(foldername != ".") push_arr = WorkFunctions::FileFunctions::getListAllFiles(foldername + STRING_CONSTANTS::DEFAULT_FOLDER_SPLITTER + filename, push_arr);
+                else push_arr = WorkFunctions::FileFunctions::getListAllFiles(filename, push_arr);
+            }
+        }
+        closedir(dir_ptr);
+    }
+    else cerr << "Error open directory! Name: " << foldername << endl;
+    return push_arr;
 }
 
 bool WorkFunctions::FileFunctions::createFolders(string folder, string foldersplitter)
@@ -121,6 +199,29 @@ bool WorkFunctions::FileFunctions::createFolders(string folder, string folderspl
         tempfolder += foldersplitter;
     }
     return true;
+}
+
+bool WorkFunctions::FileFunctions::createFoldersForFile(string fullfilename, string foldersplitter)
+{
+    string folder_name = "";
+    size_t found = fullfilename.find_last_of(foldersplitter);
+    if(found != string::npos) folder_name = fullfilename.substr(0, found);
+    WorkFunctions::FileFunctions::createFolders(folder_name, foldersplitter);
+    return true;
+}
+
+string WorkFunctions::FileFunctions::fileToString(string file)
+{
+    ifstream file_read(file.c_str(), ios::binary);
+    if(!file_read)
+    {
+        cerr<< "Error open file " << file << "!" << endl;
+        file_read.close();
+        return "";
+    }
+    stringstream ss;
+    ss << file_read.rdbuf();
+    return ss.str();
 }
 
 bool WorkFunctions::GameFunctions::testCollision(int x, int y, int x1, int y1, Square ent, Square ent1, bool stand, string where)
